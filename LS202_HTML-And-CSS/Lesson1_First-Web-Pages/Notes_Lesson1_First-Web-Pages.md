@@ -107,51 +107,61 @@
     ![](res/html-syntax-outline.png)
 
     - `element`  -  designator that defined the structure and content of a page; they are in the format `<element>` or `<start></end>`; the part between the angle brackets is the `element name` and the whole thing `<p></p>` is referred to as the `element`
+    
     - `tag`  -  element name surrounded by a pair of opening and closing angle bracket like for instance `<div>`; note that **both the  opening and closing portions** are referred to as `tag` (openging or closing) separately.
+
     - `self-closing elements`  -  Not all elements consist of opening and closing tags. Self closing tags consist of a single tag such as `<img>`
 
     - there are two types of `tags`:
-
-      - `opening tag`  -  marks the beginning of an element; the `<p>` marks the beginning of a `paragraph` element
+    
+    - `opening tag`  -  marks the beginning of an element; the `<p>` marks the beginning of a `paragraph` element
       - `closing tag`  -  marks the end of an element; the `</p>` marks the end of a `paragraph` element
 
     - `element content`  -  The `content` that is **between the opening and closing tags** of a given element is referred to as the `element content`
 
       For example: 
-
+    
       ```html
-      <a>Click me!</a>
+    <a>Click me!</a>
       ```
-
+    
       - `<a>` is the opening tag of the `anchor element`
-      - `</a> ` is the closing tag of the `anchor element`
+    - `</a> ` is the closing tag of the `anchor element`
       - `Click me!` is the `anchor` element's `content`
 
     - `attribute`  -  provides additional information about an element such as for example and are **defined within an element's opening tag and after the element name**. Attributes are typically defined as key-value pair but there are single word attributes.Some of the most used attributes are:
 
       - `id`  - associated an element with an id to identify this element through that id
-
-        ```html
+      **Note**: Every HTML element can only ever have a **single or no ID attribute**!
+      
+      ```html
         <p id="special">some text</p>
-        ```
-
-      - `class`  -  classifies the element
-
-        ```html
+    ```
+      
+    - `class`  -  classifies the element
+      
+      ```html
         <div class="container"></div>
-        ```
-
-      - `src`  -  specifies the source for embeddable content
-
-        ```html
+    ```
+      
+    - `src`  -  specifies the source for embeddable content
+      
+      ```html
         <img src="somesite.com/cats.jpeg">
-        ```
-
-      - `href`  -  specifies a (hyper) link to a linked resource
-
+    ```
+      
+    - `href`  -  specifies a (hyper) link to a linked resource
+      
         ```html
         <a href="github.com/meeep"></a>
         ```
+      
+    - `name`  - The browser uses this information to build key/value pairs from, for instance, form elements when sending data to the server:
+      So this is the principal mechanism used to name fields so that the server can distinguish the request data of each field using these  names.
+    
+      **When using forms, always define a name for this particular element using this attribute using semantic names!**
+    
+      **Note**: `name` attributes with the described functionality are available for input forms, **other `name` attributes are not the same thing**!
 
 - **HTML document structure**
 
@@ -292,8 +302,10 @@
 
     So when choosing HTML elements, think about the content is to be interpreted and choose elements accordingly!
 
-    **Note:** Not every HTML element has semantic values associated with to it, some like `<div>`s exist only for styling purposes, such as `<div> ` and `<span>`.
+    As help refer to [HTML element flow chart](http://html5doctor.com/downloads/h5d-sectioning-flowchart.pdf)
 
+    **Note:** Not every HTML element has semantic values associated with to it, some like `<div>`s exist only for styling purposes, such as `<div> ` and `<span>`.
+    
   - Divisions and Spans
 
     - These two elements **have no semantic meaning** and are **solely used for styling** by **just being generic containers**.
@@ -461,7 +473,7 @@
         1. the first / leftmost column **counts** `id` selectors
         2. the second / middle column **counts** `class` selectors
               3. the third / rightmost column **counts** `type` selectors
-             
+      
       
         **Important selector specificity rules**:
       
@@ -646,8 +658,11 @@
   - HTML comments `<!-- there be dragons -->`
   - CSS comments `/* there be dragons, too! */`
   - If it is not clear which element to use, choose the element that is semantically closest to the content in question
+  - When naming classes et Al. prefer semantic names, i.e. names that provide meaning rather that describe the look of things.
+    `staff` would be a better, semantic name than `blue_border` etc.
+  - In terms of CSS, **never type select** based on **an elements `name` attribute**!
+  - In HTML5 , the **only elements that do not have semantic meaning are** `div` and `span`!
 
-- 
 
 
 
@@ -668,4 +683,4 @@
   
     So just don't do it and forget about the rest.
     
-    
+  - Semantics of elements, read this at least once http://html5doctor.com/i-b-em-strong-element/

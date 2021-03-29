@@ -1,0 +1,21 @@
+Which one of the following tags are semantic and which are not?
+
+Semantic tags:
+  - article
+  - aside
+  - footer
+  - h3
+  - header
+  - section
+
+Other tags:
+  - b
+  - div
+  - span
+  - strong
+
+
+Correction: All elements excepts div and span are semantic.
+
+So it turns out the only HTML5 elements that do not have semantics
+are div and span!
