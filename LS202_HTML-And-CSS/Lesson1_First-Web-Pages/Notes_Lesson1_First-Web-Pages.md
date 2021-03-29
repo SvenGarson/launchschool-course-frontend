@@ -115,16 +115,16 @@
     - there are two types of `tags`:
     
     - `opening tag`  -  marks the beginning of an element; the `<p>` marks the beginning of a `paragraph` element
-      
+    
   - `closing tag`  -  marks the end of an element; the `</p>` marks the end of a `paragraph` element
-      
+    
   - `element content`  -  The `content` that is **between the opening and closing tags** of a given element is referred to as the `element content`
     
       For example: 
     
       ```html
     <a>Click me!</a>
-      ```
+    ```
     
       - `<a>` is the opening tag of the `anchor element`
     - `</a> ` is the closing tag of the `anchor element`
@@ -676,6 +676,14 @@
   - Again, like in the case of heading elements such as `h1` and `h2`, **do not use these elements to solely highlight/format text** but **use them for their semantic meaning**. Misusing these elements for non-semantic purposes means that search machines/ browsers and readers cannot properly interpret the web page.
   - use **`strong` over `b`** **if important text is to be highlighted using boldface** and **`em` over `i` if italics are desired to emphasize words**.
   - use the elements for their semantic meaning and adjust their look using CSS - never use an html element for the way it looks (apart from the ones that have this as semantic)
+  - The CSS color property is inheritable, which means that a color is applied to every descendant of an element unless it is overriden. Links do not take over the color of their 'parents' however as they are style differently!
+  - Websafe/Cross-browser and operating system fonts info: http://web.mit.edu/jmorzins/www/fonts.html
+  - For some reason `assigning a label to something` means to add the text to act as label as content of a `strong` element.
+  - When a font-family property value contains whitespace it should be quoted!
+    - `font-family: Verdana;` is valid
+    - `font-family: Trebuchet MS;` invalid since `Trebuchet MS` contains whitespace so should be
+      quoted like so `font-family: "Trebuchet MS";`
+  - Always set one of multiple fallback fonts in case the specified one does not work
 
 
 
@@ -704,3 +712,7 @@
   - How do HTML character entities work and how are they defined and interpreted?
   
   - When do I have to use HTML entities?
+  
+  - What does the body type selector actually select? The curriculum refers to the `body type selector` to `select most elements` so which ones are and which ones are  not selected?
+  
+  - What exactly does the font attribute `normal` refer to? Is it an identifier to keep the currently set attribute value for that specific property in the shorthand version?
