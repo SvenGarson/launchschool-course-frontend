@@ -54,8 +54,8 @@
 - Become familiar with the **three ways to use CSS in an HTML document**:
 
   1. `inline`: specify style using a `style` attribute inside an HTML tag (is this the correct vocabulary ???)
-  2. `internal`: specify style using the `<style>` tag
-  3. `external`: specify style using a dedicated file typically with the extension `.css` (is this correct ???)
+  2. `internal`: specify style using the `<style>` tag in one place in the file
+  3. `external`: specify style using a dedicated file typically with the extension `.css`
 
 - Become familiar with the **three types of CSS selectors**:
 
@@ -115,10 +115,11 @@
     - there are two types of `tags`:
     
     - `opening tag`  -  marks the beginning of an element; the `<p>` marks the beginning of a `paragraph` element
-      - `closing tag`  -  marks the end of an element; the `</p>` marks the end of a `paragraph` element
-
-    - `element content`  -  The `content` that is **between the opening and closing tags** of a given element is referred to as the `element content`
-
+      
+  - `closing tag`  -  marks the end of an element; the `</p>` marks the end of a `paragraph` element
+      
+  - `element content`  -  The `content` that is **between the opening and closing tags** of a given element is referred to as the `element content`
+    
       For example: 
     
       ```html
@@ -127,15 +128,17 @@
     
       - `<a>` is the opening tag of the `anchor element`
     - `</a> ` is the closing tag of the `anchor element`
-      - `Click me!` is the `anchor` element's `content`
-
+    
+    - `Click me!` is the `anchor` element's `content`
+    
     - `attribute`  -  provides additional information about an element such as for example and are **defined within an element's opening tag and after the element name**. Attributes are typically defined as key-value pair but there are single word attributes.Some of the most used attributes are:
-
+    
       - `id`  - associated an element with an id to identify this element through that id
       **Note**: Every HTML element can only ever have a **single or no ID attribute**!
       
       ```html
         <p id="special">some text</p>
+      ```
     ```
       
     - `class`  -  classifies the element
@@ -143,19 +146,20 @@
       ```html
         <div class="container"></div>
     ```
-      
+    
     - `src`  -  specifies the source for embeddable content
       
       ```html
         <img src="somesite.com/cats.jpeg">
+      ```
     ```
       
     - `href`  -  specifies a (hyper) link to a linked resource
       
         ```html
         <a href="github.com/meeep"></a>
-        ```
-      
+    ```
+    
     - `name`  - The browser uses this information to build key/value pairs from, for instance, form elements when sending data to the server:
       So this is the principal mechanism used to name fields so that the server can distinguish the request data of each field using these  names.
     
@@ -652,7 +656,7 @@
 
         **Note**: If no font-size is explicitly stated for a particular object using the `em` unit for some css property, then the **font-size of the closest parent with a defined font-size is used as the basis for `em`** using the same formula as mentioned above.
 
-  ### General stuff
+  ### General stuff and random things
 
   - HTML `id` and `class` attribute values should be named after the content they contain and **not the style they adhere to**!
   - HTML comments `<!-- there be dragons -->`
@@ -662,6 +666,16 @@
     `staff` would be a better, semantic name than `blue_border` etc.
   - In terms of CSS, **never type select** based on **an elements `name` attribute**!
   - In HTML5 , the **only elements that do not have semantic meaning are** `div` and `span`!
+  - Again, HTML 5 is **all about semantics** so every object should be used for the proper reason, which sometimes means that elements have to be nested to achieve these semantics.
+  - By default browser compress whitespace into a single space character
+  - In what scope can/must/should html entities be used?
+  - Do not use the `pre` tag to format text as it does not necessarily reproduce the same output in every browser and is in general a poor choice to format text
+  - if a lone `&` is followed by non-whitespace character and an `;` it may be interpreted as html entity.
+    to avoid this when we want to display the char `&` itself, simply avoid this problem by serving it as `&amp;` html entity in the first place so that there are no misunderstandings.
+  - **Note**: html validators do not complain if character are not defined as html entities. We only find out once it causes problems on a page!
+  - Again, like in the case of heading elements such as `h1` and `h2`, **do not use these elements to solely highlight/format text** but **use them for their semantic meaning**. Misusing these elements for non-semantic purposes means that search machines/ browsers and readers cannot properly interpret the web page.
+  - use **`strong` over `b`** **if important text is to be highlighted using boldface** and **`em` over `i` if italics are desired to emphasize words**.
+  - use the elements for their semantic meaning and adjust their look using CSS - never use an html element for the way it looks (apart from the ones that have this as semantic)
 
 
 
@@ -684,3 +698,9 @@
     So just don't do it and forget about the rest.
     
   - Semantics of elements, read this at least once http://html5doctor.com/i-b-em-strong-element/
+  
+  - what are the naming conventions for CSS and HTML?
+  
+  - How do HTML character entities work and how are they defined and interpreted?
+  
+  - When do I have to use HTML entities?

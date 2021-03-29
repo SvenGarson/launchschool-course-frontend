@@ -1,0 +1,10 @@
+Given the HTML from question 2, would it be appropriate to replace <sometag> with <address>
+or <blockquote>? If so, which one?
+
+The address element is definitely not appropriate since it's semantics are about representing
+contact information.
+
+The blockquote however could be an appropriate element to represent the content in the html
+given in problem 2) if the original were a section, wich given exercise number 2) could be
+an appropriate choice, and it would then be quoted from another source using the blockquote's
+'cite' attribute.
