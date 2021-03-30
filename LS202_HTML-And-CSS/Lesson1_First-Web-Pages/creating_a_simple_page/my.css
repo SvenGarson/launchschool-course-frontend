@@ -1,0 +1,31 @@
+body {
+  margin-left: 25px;
+}
+
+ul {
+  padding-left: 0;
+}
+
+.morning {
+  color: black;
+}
+
+.morning_items {
+  font-weight: bold;
+}
+
+.afternoon {
+  color: blue;
+}
+
+.afternoon_items {
+  font-style: italic;
+}
+
+.evening {
+  color: purple;
+}
+
+li {
+  list-style: none;
+}

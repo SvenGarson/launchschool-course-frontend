@@ -656,8 +656,52 @@
 
         **Note**: If no font-size is explicitly stated for a particular object using the `em` unit for some css property, then the **font-size of the closest parent with a defined font-size is used as the basis for `em`** using the same formula as mentioned above.
 
-  ### General stuff and random things
+  #### HTML and CSS style
 
+  - HTML style guide:
+  
+    - always write standards-compliant markup despite HTML's forgiving nature
+    - use semantics elements as much as possible
+    - always use the proper, standards-compliant  document structure using `doctype`, `html`, `head`, `body`
+    - keep the syntax clean
+      - element names; attributes and values should all be **lowercase letters**
+      - properly indent nested elements
+      - strictly use double quotes
+      - **Remove the forwards slash** at the end of self-closing elements
+      - omit values on boolean attributes
+      - select practical `id` and `class` attribute values that are **not named after the style of the content** 
+      - always define alternative text `alt` for images that are as descriptive as possible and can be a bit lengthy for that purpose
+      - **never use inline styling**
+      - keep the elements and nesting as simple as possible while keeping the semantics straight
+      - do not overuse `div` rather user HTML5 `structural elements` whenever appropriate
+    - refactor when necessary
+  
+  - CSS style guide:
+  
+    - use comments when appropriate for documentation
+  
+    - newline for every new selector and property as well as properly indent everything
+  
+    - class names should be lowercase and use hyphens a delimiters like so `.lean-and-mean { ... }`
+  
+    - use short selectors rather than long ones - long selectors raiser the specificity, which makes it more likely for things to break in unforeseen ways
+  
+    - keep the specificity of the selectors as low as possible i.e do not use many prequalifiers because:
+      **keep them 2-3 levels deep!**
+  
+      > more prequalifiers means higher specificity means selectors are more likely to break the CSS cascade and cause issues
+  
+    - a class selector is usually more flexible and descriptive - when selectors are used and the html changes, the style also probably breaks.
+      it is less of a pain in the ass and more specific, classes ftw!
+  
+    - use the shorthand properties and values when appropriate and the single ones when only that property needs to be set
+  
+    - use shorthand hexadecimal color values like `#ddd` over `#DDDDDD` when available using **lowercase characters**.
+  
+    - drop unit from zero values/constants because whatever the unit in context, zero is always zero!
+  
+  ### General stuff and random things
+  
   - HTML `id` and `class` attribute values should be named after the content they contain and **not the style they adhere to**!
   - HTML comments `<!-- there be dragons -->`
   - CSS comments `/* there be dragons, too! */`
@@ -684,8 +728,19 @@
     - `font-family: Trebuchet MS;` invalid since `Trebuchet MS` contains whitespace so should be
       quoted like so `font-family: "Trebuchet MS";`
   - Always set one of multiple fallback fonts in case the specified one does not work
+  - apparently there is no real naming convention for naming html attribute values, so I willl be using lowercase snakecase as I do in ruby
+  - css can select multiple type elements by separating them with a comma
+  - Links have different default styling behaviour so sometimes they need to be explicitly accounted for.
+    Specifically:
+    - Browsers do not change the default `font-family` property for links but browsers ...
+    - **do** change the default `color` of links which means it needs to be overriden
+  - Crazy CSS operators
+    - CSS `child combinator` `>` is placed **between two css selectors**. If the selector matches an element, the element is **not selected unless the right selector it is a direct child of the left selector **
+    - `Adjacent sibling combinator` - just look it up!
+  
+- #### CSS Diner for practice - https://flukeout.github.io/
 
-
+- #### Chrome Dev tools  -  https://developer.chrome.com/docs/devtools/
 
 
 - ### HTML - Special character encoding
