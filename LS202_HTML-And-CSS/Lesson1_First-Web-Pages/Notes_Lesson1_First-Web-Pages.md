@@ -661,9 +661,13 @@
   - HTML style guide:
   
     - always write standards-compliant markup despite HTML's forgiving nature
+  
     - use semantics elements as much as possible
+  
     - always use the proper, standards-compliant  document structure using `doctype`, `html`, `head`, `body`
+  
     - keep the syntax clean
+  
       - element names; attributes and values should all be **lowercase letters**
       - properly indent nested elements
       - strictly use double quotes
@@ -674,7 +678,23 @@
       - **never use inline styling**
       - keep the elements and nesting as simple as possible while keeping the semantics straight
       - do not overuse `div` rather user HTML5 `structural elements` whenever appropriate
+  
     - refactor when necessary
+  
+    - max **two elements per line** like for instance `<li><p>Hello world!</p></li>`
+  
+    - indent by either two spaces, four spaces or a single tab, does not matter, but **stay consistent**!
+  
+    - do not indent the html tag
+  
+    - can close auto closing tags with either:
+  
+      - `<img .../>`
+      - <img ... >
+  
+      Either way is fine but apparently the one with the `/` helps support older versions of HTML. **Just be consistent!**
+  
+    - When using Flex or Grid place the most significant blocks near the top of the file and least important at the bottom
   
   - CSS style guide:
   
@@ -700,41 +720,140 @@
   
     - drop unit from zero values/constants because whatever the unit in context, zero is always zero!
   
+    - the way to indent vendor prefixes apparently
+  
+      ```css
+      div {
+      background: -webkit-linear-gradient(#a1d3b0, #f6f1d3);
+      background:    -moz-linear-gradient(#a1d3b0, #f6f1d3);
+      background:         linear-gradient(#a1d3b0, #f6f1d3);
+      -webkit-box-sizing: border-box;
+         -moz-box-sizing: border-box;
+              box-sizing: border-box;
+      }
+      ```
+  
+    - styles assigned to a class should be modular enough to be reused and shared among elements as necessary and the modularity should be reflected by the class name. If it is specific, then name it so, if it is more general, then name it so.
+      This is about naming things clearly based on the intent and DRY.
+  
+    - **a single property per line** unless when defining a fallback, this should be defined on a single line and maybe even a comment added
+  
+    - format css selector curly brackets scope exactly like the following:
+  
+      ```css
+      some_tag {
+        /* css code */
+      }
+      ```
+  
+    - each css property/value dividing pair should contain a space after the `:`
+  
+      ```css
+      p {
+        really-bad:123
+        much-better: 123 /* : followed by a single space */
+      }
+      ```
+  
+    - do not lead a `; ` with whitespace
+  
+      ```css
+      li {
+        meep-deep: bad :
+        meep-eek: good;
+      }
+      ```
+  
+    - Watch the order of css properties. They do not have to be ordered in a certain way but they can have side unintentional side effects when more recent properties override previous ones like for example. Depending on the style there is either a **partial override** or a **complete override**:
+  
+      ``` css
+      p {
+        margin: 5px;
+        margin-right: 10px; /* partially overrides the margin set on the previous line for the -right side from 5 to 10*/
+      }
+      
+      h1 {
+        margin-right: 15px;
+        margin: 29px; /* completely overrides the margin set on the previous line for the -right side from 15 to 29 */
+      }
+      ```
+  
+    - Properties can **optionally** be ordered alphabetically
+  
+    - List the selectors in groups based on the elements they select
+  
+    
+    
+  
   ### General stuff and random things
   
   - HTML `id` and `class` attribute values should be named after the content they contain and **not the style they adhere to**!
+  
   - HTML comments `<!-- there be dragons -->`
+  
+  - if something does not work as intended in terms of css styling check the following:
+  
+    1. css cascade
+    2. specificity
+    3. inheritance rules
+  
+    Some linters like `styleint` can help here
+  
   - CSS comments `/* there be dragons, too! */`
+  
   - If it is not clear which element to use, choose the element that is semantically closest to the content in question
+  
   - When naming classes et Al. prefer semantic names, i.e. names that provide meaning rather that describe the look of things.
     `staff` would be a better, semantic name than `blue_border` etc.
+    
   - In terms of CSS, **never type select** based on **an elements `name` attribute**!
+  
   - In HTML5 , the **only elements that do not have semantic meaning are** `div` and `span`!
+  
   - Again, HTML 5 is **all about semantics** so every object should be used for the proper reason, which sometimes means that elements have to be nested to achieve these semantics.
+  
   - By default browser compress whitespace into a single space character
+  
   - In what scope can/must/should html entities be used?
+  
   - Do not use the `pre` tag to format text as it does not necessarily reproduce the same output in every browser and is in general a poor choice to format text
+  
   - if a lone `&` is followed by non-whitespace character and an `;` it may be interpreted as html entity.
     to avoid this when we want to display the char `&` itself, simply avoid this problem by serving it as `&amp;` html entity in the first place so that there are no misunderstandings.
+    
   - **Note**: html validators do not complain if character are not defined as html entities. We only find out once it causes problems on a page!
+  
   - Again, like in the case of heading elements such as `h1` and `h2`, **do not use these elements to solely highlight/format text** but **use them for their semantic meaning**. Misusing these elements for non-semantic purposes means that search machines/ browsers and readers cannot properly interpret the web page.
+  
   - use **`strong` over `b`** **if important text is to be highlighted using boldface** and **`em` over `i` if italics are desired to emphasize words**.
+  
   - use the elements for their semantic meaning and adjust their look using CSS - never use an html element for the way it looks (apart from the ones that have this as semantic)
+  
   - The CSS color property is inheritable, which means that a color is applied to every descendant of an element unless it is overriden. Links do not take over the color of their 'parents' however as they are style differently!
+  
   - Websafe/Cross-browser and operating system fonts info: http://web.mit.edu/jmorzins/www/fonts.html
+  
   - For some reason `assigning a label to something` means to add the text to act as label as content of a `strong` element.
+  
   - When a font-family property value contains whitespace it should be quoted!
     - `font-family: Verdana;` is valid
     - `font-family: Trebuchet MS;` invalid since `Trebuchet MS` contains whitespace so should be
       quoted like so `font-family: "Trebuchet MS";`
+    
   - Always set one of multiple fallback fonts in case the specified one does not work
+  
   - apparently there is no real naming convention for naming html attribute values, so I willl be using lowercase snakecase as I do in ruby
+  
   - css can select multiple type elements by separating them with a comma
+  
   - Links have different default styling behaviour so sometimes they need to be explicitly accounted for.
     Specifically:
+  
     - Browsers do not change the default `font-family` property for links but browsers ...
     - **do** change the default `color` of links which means it needs to be overriden
+  
   - Crazy CSS operators
+  
     - CSS `child combinator` `>` is placed **between two css selectors**. If the selector matches an element, the element is **not selected unless the right selector it is a direct child of the left selector **
     - `Adjacent sibling combinator` - just look it up!
   
@@ -771,3 +890,8 @@
   - What does the body type selector actually select? The curriculum refers to the `body type selector` to `select most elements` so which ones are and which ones are  not selected?
   
   - What exactly does the font attribute `normal` refer to? Is it an identifier to keep the currently set attribute value for that specific property in the shorthand version?
+  
+- Inspiration websites
+
+
+  - dribble.com
