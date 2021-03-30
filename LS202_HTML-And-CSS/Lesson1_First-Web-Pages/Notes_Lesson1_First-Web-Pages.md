@@ -28,6 +28,9 @@
   - `document type definition` (which is the term for the DOCTYPE, DTD)
     - **Tells the browser which markup to expect**.
     - In order to support HTML 5 and earlier, **define the `DTD` uppercase!**
+    - Doctype is case insensitive!
+    - It is **not** and HTML element!
+    - Must be a top of file
   - `attribute`
   - `selector`
   - `property`
@@ -857,6 +860,8 @@
     - CSS `child combinator` `>` is placed **between two css selectors**. If the selector matches an element, the element is **not selected unless the right selector it is a direct child of the left selector **
     - `Adjacent sibling combinator` - just look it up!
   
+  - `CSS` stands for `Cascading Style Sheets`
+  
 - #### CSS Diner for practice - https://flukeout.github.io/
 
 - #### Chrome Dev tools  -  https://developer.chrome.com/docs/devtools/
@@ -890,6 +895,8 @@
   - What does the body type selector actually select? The curriculum refers to the `body type selector` to `select most elements` so which ones are and which ones are  not selected?
   
   - What exactly does the font attribute `normal` refer to? Is it an identifier to keep the currently set attribute value for that specific property in the shorthand version?
+  
+  - What ar `rem` units in CSS?
   
 - Inspiration websites
 
