@@ -1,0 +1,40 @@
+# What size the img takes based on it's attributes
+
+  Because it is of box-sizing model 'content-box' it outsets the 
+  padding and border and the margin. So the margin affects the div
+  but is invisible.
+
+  So the dimensions needed by the img element are:
+    formula: size = axis dimension + all padding + all borders + all margin
+    width = 500 + 40 + 8 + 30 = 578px
+    height = 300 + 20 + 8 + 30 = 358px
+
+  So the img element itself takes up (w, h) = (578px, 358px)
+
+# What size the div needs to entirely contain the img element WITH
+# the img margins?
+
+  Here the logic is twisted and it is harder to apply the border-box
+  model.
+
+  I think the question asks for which exact minimum values the width
+  and height properties of the div must be set to in order for the div
+  to be able to contain the img pixel exact and have no extra space.
+
+  Because the div uses the border-box box-sizing model and it has a
+  border of 1px, this means that the available space in the div is:
+
+    available space div = (
+      div.width - 2, # because two borders horizontally
+      div.height - 2 # because two borders vertically
+    )
+
+  Dimensions of the img element are: (538px, 368px)
+
+  So in order for the div to have exactly enough space as to fit in
+  the img element, the div must be of dimensions:
+
+  asked div dimension = (
+    img.width + 2 = 578px + 2px = 580px
+    img.height + 2 = 358px + 2px = 360px
+  )

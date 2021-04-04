@@ -1,0 +1,62 @@
+First determine the actual dimensions of the em element.
+
+em element is of box sizing model 'content-box'.
+
+em_dimensions_with_margins(in pixels) = (
+  (500 + 40 + 8 + 30) = 578,
+  (300 + 20 + 8 + 30) = 358
+)
+
+Again the parent div is of box-sizing model 'border-box' which
+insets the border inside (only border because this div has padding
+and margin of zero) which means that the div needs to be twice the
+border larger on the size axis in order to fit the em block.
+
+The answer is = (
+  (578 + 2) = 580,
+  (358 + 2) = 360
+)
+
+At this point I'm sure there is something else to the answer though
+that I missed.
+
+My solutiono was completely wrong, here is my understanding of the
+solution in bullet points:
+
+  - The em element is of display model 'inline' which means that
+    the browser ignores the following elements' css properties even
+    if defined:
+      *width
+      *height
+      *top margin
+      *bottom margin
+
+  - This means that we can compute using the formulas defined by the
+    box sizing model, which in this case is 'content-box' for em
+    elements but IGNORE the properties that are ignore based on the
+    display model.
+
+  - The final computations are done using the same formula with the
+    follwing constraints:
+
+      - the actual content of the element is used as width/height
+        and NOT the css width and height properties
+      - the elements top and bottom margin are ignored
+
+  - Let me do the computations with the hypothetical content size of
+    the em elements being (50px, 20px)
+
+    em dimensions(in pixels) = (
+      (50 + 40 + 8 + 30(do not ignore horizontal margin)) = 128,
+      (20 + 20 + 8 + 0 (do     ignore vertical   margin)) = 48
+    )
+
+    And because we need to account for the div being of box-sizing model
+    'border' being inset for the 1 pixel border which means that the div
+    needs to be 2 pixels larger per axis than it's content in order to
+    fully contain that content, the div size must be
+
+    div_size = (
+      (em_dimensions.width + 2) = 130,
+      (em_dimensions.height + 2) = 50
+    )

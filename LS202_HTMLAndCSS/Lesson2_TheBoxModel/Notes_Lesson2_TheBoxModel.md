@@ -44,73 +44,79 @@
 
       Uses all box properties: width, height, padding, border and margin to determine the element size.
 
+      **Note**: When using the formula from the box-sizing model used **use all of the properties needed**
+    
     - **`inline`**
-      Same behaviour as `block` for box properties: left/right padding and margin.
-      When nested inside a `block` element only the left and right `inline` element factors affect the flow around while the top and bottom do not.
+  Same behaviour as `block` for box properties: left/right padding and margin.
+      
+Makes the browser and box-sizing model **ignore** the following css attributes:
+      
+    - the `width` and `height` properties unless the element is an `img`.
+  - top and bottom margins
+      
+Does **not** ignore:
+      
+    - borders (but may have weird behaviour)
+  - top and bottom paddings
+      
 
-      Ignores:
-
-      - the `width` and `height` properties unless the element is an `img`.
-      - top and bottom margins
-
-      Does **not** ignore:
-
-      - borders but may have weird behaviour
-      - top and bottom paddings
-
+      **Note**: When using the formula from the box-sizing model used **ignore the previously mentioned properties**
+  
     - **`inline-block`**
-
-      Act like `block` elements **but do not take up all the horizontal space when the width property is less than the available width** but then instead flow like `inline` elements. This means that multiple `inline block` elements can flow in the same and onto other lines side-by-side with other `inline` and `inline-block` elements.
-
-      **Differs from `inline` in that it considers the** `width` and `height` properties.
+    
+  Act like `block` elements **but does not take up all the horizontal space when the width property is less than the available width** but then instead flow like `inline` elements. This means that multiple `inline block` elements can flow in the same and onto other lines side-by-side with other `inline` and `inline-block` elements.
+    
+  **Differs from `inline` in that it considers the** `width`,  `height` and `vertical margin` attributes.
       The box properties `padding`, `margin` and `border` work like they do in a `block` level element.
 
       Browser can vertically align **adjacent** `inline` and/or`inline-block` elements in different ways using the `vertical-align` CSS property.
 
+      **Note**: When using the formula from the box-sizing model used **use all of the properties needed just as with the `block` visual display model**.
+
     - How and when can you change and element's display model?
-
-    - **How does the visual display model interact with margins, borders and padding?**
-
+    
     - **Other considerations**
-
+    
       - `height` and `width` values **never**  include the `margin`
       - any element can be converted to `block` or `inline` element using the `display` CSS property:
-        - `display: block;` or `display: inline;m`
+    - `display: block;` or `display: inline;m`
       - always consider the default browser interpretation of the display type of an element and explicitly set it on startup for robust results across browsers
-      - `block` and `inline-block` elements cannot be nested inside `inline` elements
+    - `block` and `inline-block` elements cannot be nested inside `inline` elements
       - more interesting and modern visual display models are: `flex` and `grid`
-
+  
   - Box sizing model [MDN docs](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing)  -  This seems to be another terms for the `Box Model` but specifically in terms of the sizing of the boxes rather than the attributes that make it up!
 
-      - `box-sizing`  -  **CCS property** choose the method of box sizing **amongst the following two**
+      The following answers the answer `**How does the visual display model interact with margins, borders and padding?**`:
+
+    - `box-sizing`  -  **CCS property** choose the method of box sizing **amongst the following two**
 
     - `content-box`  -  The default CSS behaviour where the size is calculated by adding the padding and border to the width/height. This model can result is boxes that are larger than the defined width/height.
 
       **Note:** When the size of this box needs to be accounted for, the formula of the actual box is: `size + padding + border`
 
     - `border-box`  -  This model keeps the element size to what is defined as width/height and **accounts for the padding and width** by **insetting the padding and border** rather then outsetting them.
-
-      **Note:** When the size of this box needs to be accounted for the `size` i.e. the `width` or `height` can be used directly.
-
+  
+    **Note:** When the size of this box needs to be accounted for the `size` i.e. the `width` or `height` can be used directly.
+  
     - `padding-box`  -  **Is being deprecated by CSS standard! Do not use!** 
-
-    - Resetting or setting the model to use a specific model anywhere:
+    
+  - Resetting or setting the model to use a specific model anywhere:
       **As I understand**, this reset **sets the box model to be used** and **automatically makes every selected element inherit the box model type from it's parent** which at the base of the relationships is the `html` element, from which I guess all the other inherit their box-model mode from.
-
+    
       ```css
       html {
         box-sizing: border-box;
-      }
+    }
       
-      *, *::before, *::after {
+    *, *::before, *::after {
         box-sizing: inherit;
-      }
+  }
       ```
-
+  
       
-
+    
     - How and when can you change the box sizing model for an element
-
+  
 - Dimensions
 
   - absolute units
@@ -141,6 +147,8 @@
 
 
 
-#### Questions and answers
+#### Questions answers and flashcards
 
 ---
+
+- Flashcards with images that describe how CSS shortands work when 1, 2, 3 or 4 values for `padding` et Al. are provided, check at mdn [image source](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties)

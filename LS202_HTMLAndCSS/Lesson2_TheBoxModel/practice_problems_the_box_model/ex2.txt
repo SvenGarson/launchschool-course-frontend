@@ -1,0 +1,51 @@
+First we need to determine the actual size of th section element.
+
+Because the sections element is of box-sizing model 'content-box':
+
+  formula = size(width/height) + padding + border + margin
+
+  section dimensions(in pixels) = {
+    500 + 40 + 8 + 30 = 578,
+    300 + 20 + 8 + 30 = 358 
+  }
+
+Now because the div is of box-sizing model 'border-box' and the 
+div has a border or 1 pixel defined on it:
+
+  availble dimension in div = (
+    div.width - 2px,
+    div.height - 2px
+  )
+
+Answer to - What is the minimum width and heigh of the div to fully
+            contain the section?
+
+  So the div needs to be 2 pixels larger than the section to account
+  for the inset based on the div's border is which is
+  minimum_div_dimensions = (
+    section dimensions + 2,
+    section_dimensions + 1
+  )
+
+  which is (580, 360)
+
+Answer to - How does this differ from the result of the previous
+            exercise (1)?
+
+As far as I can see the only difference is that the elements nested in
+the div is of display type 'block' rather than 'inline-block'.
+
+For the sizing in this case this changes nothing I thinkg but if the div
+now containted multiple elements, the sections element would be on it's
+own 'line' and flows any other element onto a new line because it takes
+up all of the line space that is available.
+
+After looking up the solution: My answer was correct and I recap:
+
+  Exercise 1: the img element allow other elements to flow after it
+              because the img element if of visual display model inline-block,
+              which does not take up all the space of a given 'line'.
+
+  Exercise 2: the section element does not allow other elements to flow after
+              it because it is of visual display model 'block', which means
+              that it takes up all of the horizontal space available.
