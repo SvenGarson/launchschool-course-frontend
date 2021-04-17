@@ -1,0 +1,9 @@
+The problem is that when we set both article elements on different
+lines, the browser then sees the character sequence:
+
+  \n space space space space
+
+and collapes all of this whitespace into a single whitespace.
+
+This single whitespace takes up a specific region too an this is
+enough to overflow the space that was previously enough.

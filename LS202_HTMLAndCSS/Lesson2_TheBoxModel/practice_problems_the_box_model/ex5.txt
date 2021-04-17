@@ -1,0 +1,58 @@
+1) NO Because the block display formatting model makes each box :
+    - take up the complete line
+    - flow to the next line
+
+2) Yes they are displayed side by side because:
+    - the parent div has enough width 720 for these elements
+    - the outer display type of inline causes the nested elements
+      to NOT flow to next line and only takes up as much space
+      as the content takes, which should be way less than 360px
+      per box.
+
+      The width and heigh attributes of the nested boxes are
+      ignored though because of the outer display type: inline
+
+3) Yes they are displayed side by side because:
+    - the outer display type of inline-block:
+        - does not wrap elements to the next line
+        - takes the width and height defined by the attributes
+    - the nested elements fit exactly in the the div's content region
+      of 720px width because:
+        - the div is of box model type content-box, which means the
+          padding, border and margin outset the box from the width
+          and height, so the content size is 720px wide.
+        - the nested elements are of box model type border-box, which
+          means that when their dimensions are regarded, like for this
+          case with the outer display type of inline-block, their
+          dimensions of size+padding+border is a total of 360px width
+          and 240px height given that the margin is zero
+
+4) No because the one element with box-model type box takes up
+   one whole line for itself.
+
+5) NO because again, the box-model type box element will take up
+   a whole line itself.
+
+6) Let's walk through the scenario:
+
+    > say the first element is of outer display type inline
+        - does not wrap to new line
+        - takes only as much room as it's content need because
+          width and height attributes are disregarded
+        - it's content should fit easily in the 360px width it can
+          have
+        - box model type is still border-box, and with a margin an
+          of padding of zero, and no border, this does not change
+          anything.
+    > say the second element is of outer display type inline-block
+        - does not wrap to a new line either
+        - takes the exact width and height defined, which is one of
+          the points it differs from the outer display type inline.
+
+          So because the box model type is border-box, margin, padding
+          and border are zero, this element will take up exactly
+          360px width by 240px height.
+
+          Which fits into the parent.
+
+    Conclusion: Yes they flow side-by-side on the same line

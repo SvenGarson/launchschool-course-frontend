@@ -1,0 +1,21 @@
+Given that the article element has properties:
+
+  - box-sizing: border-box
+  - display: inline-block
+
+  article width  = 500 + 30 = 530
+  article height = 300 + 30 = 330
+
+Given that the div element has properties:
+
+  - box-sizing: border-box
+  - display: inline-block
+
+  because the div has a 1 px wide border and that border is inset
+  based on the display type, the div needs to be 2px larger to account
+  for that.
+
+  div width  = article width  + 2 = 530 + 2 = 532
+  div height = article height + 2 = 330 + 2 = 332
+
+

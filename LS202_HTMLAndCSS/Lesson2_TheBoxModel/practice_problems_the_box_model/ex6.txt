@@ -1,0 +1,55 @@
+# Does the initial code display both article boxes side-by-side?
+
+  - Default outer display type of article element is block.
+
+  No.
+
+# If not, why not?
+
+  Because the two nested article elements do not display
+  side-by-side because they are of outer display type block,
+  which means that each of them takes a full line.
+
+# How would you fix it so the boxes are display side-by-side?
+
+  > What is the space available in the section element the nested
+    elements have to fit into?
+
+    content box ==> (w, h) = (900px, 400px)
+
+  > considering the options to make the boxes fit
+
+    - set outer display type of articles to inline-block, this means
+      that the width and height attributes are regarded!
+
+      The problem then here is that the total size of the articles
+      boxes are, which are of default box model type content-box:
+      section dimensions(w, h) = (
+        900*0.5 + 2x10 px padding + 2x1px border = 472px,
+        400*1.0 + 2x10 px padding + 2x1px border = 422px
+      )
+
+    The dimensions of both boxes is larger than what fits in the section
+    so this does not work unless, the padding AND the border are set
+    to zero.
+
+    We can fix this problems by setting the nested elements to a box
+    model type of content-border so that the padding and border ar
+    inset the box rather than outset and because the margin is zero,
+    there is enough room to fit both boxes side-by-side.
+
+    - set outer display type of articles to inline, this means that the
+      width and height are NOT regarded!
+
+      The content size of the article element is not larger than 450px
+      by 400px given this CSS and html, and actually should be pretty
+      small given than the content is only the text 'content' and 
+      'more content'.
+
+      Since the content boxes here are so much smaller than the parent
+      box, the padding and he border should not play a role here.
+
+      So the simplest solution is to just set the visual display model
+      to inline.
+
+
