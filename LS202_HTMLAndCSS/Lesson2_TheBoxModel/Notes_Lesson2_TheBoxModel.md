@@ -25,6 +25,20 @@ Everything in CSS has a box around it.
 - `margin`  -  Transparent are that surrounds the border and provides separation between elements.
   The margin is not counted towards the box itself but rather affects other content/elements that interacts with the margin boundings.
 
+**There a few types of box models:**
+**Note**: The margin is never counted towards the actual box size but it does affect the box surroundings!
+
+Setting the box model is achieved using the CSS `box-sizing` property.
+
+-  `content-box`  -  This is the **standard/default** box model.
+                                 The padding and border **outset** the box size.
+  Note: The dotted represents the desired dimensions and padding and border grow outwards.![](res/standard-box-model.png)
+- `border-box`  -  This is the **alternative** box model.
+                             More intuitive because the padding and border does not affect surrounding flow.
+                             The padding and border **inset** the box size.
+  Note: The dotted represents the desired dimensions and padding and border grow inwards.![](res/alternate-box-model.png)
+- `padding-box`  -  **Deprecated. Do not use.**
+
 
 
 #### Visual formatting model
@@ -49,6 +63,16 @@ In CSS we broadly work with two types of boxes which affects how the elements be
 
 
 
+**The special visual formatting model `inline-block` acts the following way:**
+
+- The middle ground between `block` and `inline`
+- Useful when an element should break onto a new line but should not take up all the line space
+  by defining a width and height.
+- `width` and `height` box properties are respected
+- only becomes larger than the content if the `width` and/or `height` are explicitly defined
+
+
+
 #### Inner and outer display type
 
 ---
@@ -62,78 +86,44 @@ There are different types of inner display types (the following is just an excer
 - `flex` sets the outer display type to `block` and the inner display type to `flex` and any direct children of this element are then laid out according to the `flex` [spec](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox).
 - `grid` ...
 
-
 **Note:** Think of all boxes to be of type block or inline unless otherwise specified like `flex` for example.
 
 
 
-
-#### Box model related vocabulary and questions
+#### Easily defining the box model to be used for all elements
 
 ---
 
-- **`Box model`**
+I understand the following CSS code:
 
-  - **`Visual display/formatting model`**  and the CSS **`display`** property  -  (*Do not memorize which elements are what display model*)
-    Defines how exactly the browser renderer lays out neighbouring elements relative to each other both horizontally and vertically.
+- specifies the single `html` element to use a specific box model
 
-    - **`inline-block`**
+- makes the selected elements inherit the box model from the parent, in this case all elements because of the wildcards.
 
-      Act like `block` elements **but does not take up all the horizontal space when the width property is less than the available width** but then instead flow like `inline` elements. This means that multiple `inline block` elements can flow in the same and onto other lines side-by-side with other `inline` and `inline-block` elements.
+  So all elements nested in the html inherit from the html element and so forth.
 
-      
-
-      **Differs from `inline` in that it considers the** `width`,  `height` and `vertical margin` attributes **too**. The box properties `padding`, `margin` and `border` work like they do in a `block` level element.
-
-      Browser can vertically align **adjacent** `inline` and/or`inline-block` elements in different ways using the `vertical-align` CSS property.
-
-        **Note**: When using the formula from the box-sizing model used **use all of the properties needed just as with the `block` visual display model**.
-
-      - How and when can you change and element's display model?
-
-      - **Other considerations**
-
-        - `height` and `width` values **never**  include the `margin`
-        - any element can be converted to `block` or `inline` element using the `display` CSS property:`display: block;` or `display: inline;`
-        
-        - always consider the default browser interpretation of the display type of an element and explicitly set it on startup for robust results across browsers
-        - `block` and `inline-block` elements cannot be nested inside `inline` elements
-        - more interesting and modern visual display models are: `flex` and `grid`
-
-  - Box sizing model [MDN docs](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing)  -  This seems to be another terms for the `Box Model` but specifically in terms of the sizing of the boxes rather than the attributes that make it up!
-
-    The following answers the answer `How does the visual display model interact with margins, borders and padding?`:
-
-    - `box-sizing`  -  **CCS property** choose the method of box sizing **amongst the following two**
-
-      - `content-box`  -  The default CSS behaviour where the size is calculated by adding the padding and border to the width/height. This model can result is boxes that are larger than the defined width/height.
-
-        **Note:** When the size of this box needs to be accounted for, the formula of the actual box is: `size + padding + border`
-
-      - `border-box`  -  This model keeps the element size to what is defined as width/height and **accounts for the padding and width** by **insetting the padding and border** rather then outsetting them.
-
-        **Note:** When the size of this box needs to be accounted for the `size` i.e. the `width` or `height` can be used directly
-
-      - `padding-box`  -  **Is being deprecated by CSS standard! Do not use!** 
-
-
-  - Resetting or setting the model to use a specific model anywhere:
-      **As I understand**, this reset **sets the box model to be used** and **automatically makes every selected element inherit the box model type from it's parent** which at the base of the relationships is the `html` element, from which I guess all the other inherit their box-model mode from.
-      
-      ```css
-      html {
-        box-sizing: border-box;
-    }
-      
-    *, *::before, *::after {
-        box-sizing: inherit;
-    }
-    ```
-  
-      
+  ```css
+  html {
+    box-sizing: border-box;
+  }
     
-    - How and when can you change the box sizing model for an element
+  *, *::before, *::after {
+      box-sizing: inherit;
+  }
+  ```
+
   
+
+
+
+
+#### Box model related vocabulary and questions from LS course
+
+---
+
+
+
+
 - Dimensions
 
   - absolute units
@@ -156,36 +146,34 @@ There are different types of inner display types (the following is just an excer
 
 ---
 
-- mind the fact that html collapes multiple whitespaces, including newlines into a single whitespace
-  **this can cause working designs to fail when whitespace take up room when, for instance, a new line is added along with some indentation because that ends up being another whitespace added from newline+spc+spc+spc to single whitespace.**
-
-  Whitespace character in terms of html seem to be the usual, non-printing characters like:
-  space, tab and newline.
-
-- A common technique to avoid additional space because of collapsed whitespace is to butt up html elements up against each other because then the tags are not separated by any whitespace.
-
-
-
-#### Further reading
-
----
-
-- [Block and inline layout in normal flow](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox)
-
-
-
-#### Everything is a box - Rendering a page
-
----
-
-- Every element requires  box-shaped segment of a page
-- Every character of text content also needs a box sized portion of a page
-- Browser renderer computes the size of these boxes based on browser defaults and provided stylesheet
+- The CSS `vertical-align` property can vertically align adjacent `inline` and `inline-block` elements in different way.
+  
+- `block` and `inline-block` outer display model boxes **cannot be nested inside** `inline` type boxes
+  
+- Because HTML collapses multiple whitespace characters into a single whitespace character, this can cause some whitespace to appear and take up room and screw up a design like in the example:
+  
+ ```html
+  <section>
+    <article>content</article>
+  <article>more content</article>
+  </section>
+   ```
+  
+  The combination of a newline and a few spaces are interpreted as single whitespace, which takes up space and can be enough to cause problems.
+  
+  This is why HTML elements are butted up against each other, to avoid this problem:
+  
+  ```html
+  <section>
+    <article>content</article><article>more content</article>
+  </section>
+  ```
 
 
 
-#### Questions answers and flashcards
+#### Questions and answers
 
 ---
 
-- Flashcards with images that describe how CSS shortands work when 1, 2, 3 or 4 values for `padding` et Al. are provided, check at mdn [image source](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties)
+- How does whitespace collapsing work exactly? See [MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Whitespace)
+- How does margin collapsing work? See [MDN docs](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model)
