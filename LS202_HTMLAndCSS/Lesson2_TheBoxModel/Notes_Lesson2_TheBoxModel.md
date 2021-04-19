@@ -112,37 +112,52 @@ I understand the following CSS code:
   }
   ```
 
-  
 
 
 
-
-#### Box model related vocabulary and questions from LS course
+#### Differences between Padding and Margin
 
 ---
 
+- Padding
+  - Lies **inside** the border and are **part of the visible and clickable region** of an element
+  - Typically have some color assigned to them
+  - **Padding** does not collapse
+  - Use cases:
+    - **Outside** of a container: Affect the visible and clickable area of an element
+    - **Inside** of a container: Horizontal separation between container edges and content
+- Margin
+  - Lies **outside** the border and is typically **invisible** and **not clickable**
+  - **Top and bottom margins collapse between `block` elements**
+    When two top/bottom margins collapse, they **end up** taking up as much as the **biggest margin of both**. This **does not happen with horizontal margins**!
+  - Use cases:
+    - General: Spacing between elements
+    - Inside of a container: Affect vertical distance between the element and the container
+
+**Note**: This is hard at the beginning and I must not follow any hard rules right now.
 
 
 
-- Dimensions
+#### Dimensions/Measurements/Units
 
-  - absolute units
-  - relative units
-  - How do `auto margins` work to center blocks horizontally?
+---
 
-- **Containers**
-  A term typically used for block elements that group other elements by nesting them.
+The length specification in terms of element properties such as: `12px`, `5rem` and `75%`.
 
+
+
+Dimensions
+
+- absolute units
+- relative units
+- CSS reference pixels
 - Why do we need to consider `reference pixels` and `physical pixels` in the wild?
   Why is this important?
-
-- CSS reference pixels
-
-- **CSS pseudo elements**  -  A **keyword added to a selector** that enables us to **style a specific part of the selected element** like for instance `p::first-line { /* style first lines */ }`
+- How do `auto margins` work to center blocks horizontally?
 
 
 
-#### Random HTML and CSS notes
+#### Random HTML and CSS notes - 
 
 ---
 
@@ -157,17 +172,38 @@ I understand the following CSS code:
     <article>content</article>
   <article>more content</article>
   </section>
-   ```
-  
+ ```
+
   The combination of a newline and a few spaces are interpreted as single whitespace, which takes up space and can be enough to cause problems.
-  
+
   This is why HTML elements are butted up against each other, to avoid this problem:
-  
+
   ```html
   <section>
     <article>content</article><article>more content</article>
   </section>
   ```
+
+
+
+#### Box model related vocabulary and questions from LS course
+
+---
+
+
+- **Containers**
+  A term typically used for block elements that group other elements by nesting them.
+
+- **CSS pseudo elements**  -  A **keyword added to a selector** that enables us to **style a specific part of the selected element** like for instance `p::first-line { /* style first lines */ }`
+
+
+
+#### Todo list
+
+---
+
+- clean up notes titled: 'box model related voc' .... into the rest of the notes if they fit
+- do the same for the 'random html and css notes'
 
 
 
