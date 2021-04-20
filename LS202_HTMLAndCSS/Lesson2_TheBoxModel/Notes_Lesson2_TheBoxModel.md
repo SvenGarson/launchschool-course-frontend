@@ -120,16 +120,24 @@ I understand the following CSS code:
 ---
 
 - Padding
-  - Lies **inside** the border and are **part of the visible and clickable region** of an element
-  - Typically have some color assigned to them
+  - Lies **inside** the border
+  - **Is** part of the **visible** and **click-able** region of an element
+  - Is typically styles through CSS
   - **Padding** does not collapse
   - Use cases:
-    - **Outside** of a container: Affect the visible and clickable area of an element
+    - **Outside** of a container: Affect the visible and click-able area of an element
     - **Inside** of a container: Horizontal separation between container edges and content
 - Margin
-  - Lies **outside** the border and is typically **invisible** and **not clickable**
+  - Lies **outside** the border
+  
+  - And is typically **invisible** and **not click-able**
+  
   - **Top and bottom margins collapse between `block` elements**
-    When two top/bottom margins collapse, they **end up** taking up as much as the **biggest margin of both**. This **does not happen with horizontal margins**!
+    When two top/bottom margins collapse, they **end up** taking up as much as the **biggest margin of both**.
+    
+    This **does not happen with horizontal margins!**
+    ![](res/margin_collapse.png)
+    
   - Use cases:
     - General: Spacing between elements
     - Inside of a container: Affect vertical distance between the element and the container
@@ -142,13 +150,30 @@ I understand the following CSS code:
 
 ---
 
-The length specification in terms of element properties such as: `12px`, `5rem` and `75%`.
+A `length specification`  is a combination of a numerical `value` and a `unit` such as `12px` where:
+
+- `12`  and `12px`  - referred to as the `measurement` and/or `dimensions`
+- `px`  -  referred to as the `measurement unit` and/or `unit`
+
+The single most important absolute unit in CSS is the `pixel`, abbreviated `px` when used as property unit. 
+We must consider the **difference between** the following **different meanings of the term `pixel`**:
+
+- **The Problem**
+  Different devices have both **vastly different sized pixels** **and vastly different pixel density**.
+  This means that the rendered image on some device X is not necessarily the same as on device Y because of all the mentioned variables.
+
+  This is why CSS distinguished between the following **two types of pixels**:
+
+- `Physical Pixel`
+  ???
+
+- `Reference Pixel`
+  ???
 
 
 
-Dimensions
+List of focus topics I have to reflect in my HTML/CSS notes based on the LS focus post for this chapter.
 
-- absolute units
 - relative units
 - CSS reference pixels
 - Why do we need to consider `reference pixels` and `physical pixels` in the wild?
@@ -157,7 +182,7 @@ Dimensions
 
 
 
-#### Random HTML and CSS notes - 
+#### Random HTML and CSS notes - Find a b
 
 ---
 
@@ -198,10 +223,11 @@ Dimensions
 
 
 
-#### Todo list
+#### Continue at
 
 ---
 
+- https://launchschool.com/lessons/f039db62/assignments/b237bc64
 - clean up notes titled: 'box model related voc' .... into the rest of the notes if they fit
 - do the same for the 'random html and css notes'
 
