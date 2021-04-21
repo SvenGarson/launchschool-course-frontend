@@ -191,18 +191,36 @@ The principal relative units to use are
 - `em`
 
   - **Proportional** to the `calculated font size`
-  - **NOT consistent in a documents** because they **compounds**
+
+  - **NOT consistent in a documents** because they **compound**
+    ![](res/em_compounds.png)
+
+    
+
   - The `calculated font size`  is the **height of the current font in pixels**
+
   - Example: If the `calculated font size = 20px` then `1.5em = 30px` because `20px * 1.5 = 30px`
 
 -  `rem`
 
   - **Proportional** to the `root font size`
   - **Consistent** meaning **anywhere in the document** i.e. `1.5rem` is **always** the same value based on the specified `root font size`
+    ![](res/rem_is_consistend.png)
   - The `root font size` is the **height of the base font for the document** which is the font size designated to the`html` element
   - Example: If the `root font size = 16px` then `1.5rem = 24px` because `16px * 1.5 = 24px`
+    
 
   **Note**: Just use the `px` unit to specify the `root font size`
+
+  **Note**: If I do want to use a  `rem` unit as the `root font size` you **must use a fallback of unit `px` to account for old/buggy browsers**
+
+  ```css
+  p {
+    font-size: 20px; font-size: 1.25rem;
+  }
+  ```
+
+  
 
   **Note**: To account for bugs in older browsers set the `root font size` on **both the html and body element using the `px` unit**
 
@@ -210,7 +228,26 @@ The principal relative units to use are
 
 
 
+#### Setting a font-size fallback for old/buggy/non-rem unit supporting browsers
 
+---
+
+Apparently most, but **not all** modern browsers use a default font-size of `16px`. This is important because we can base the CSS fallback on this, mostly common, browser behaviour. Here an example of the logic behind approach:
+
+```css
+/* setting p elements to a font-size of 1.25rem */
+/* if the browser does not support rem units */
+/* it falls back to the 20px property value*/
+p {
+  font-size: 20px; font-size: 1.25rem;
+}
+```
+
+The logic behind this approach is the following:
+
+- we assume that most browser set a default font-height of `16px`
+- because we want, in this case, `p` elements to be `1.25rem` high, the fallback is `20px` just because the common browser default is `16px`.
+  This means that in case the `rem` is not used, we still end up with a font height of `20px` because `1.25rem` is `16px * 1.25 = 20px .`
 
 
 
@@ -266,6 +303,7 @@ List of focus topics I have to reflect in my HTML/CSS notes based on the LS focu
 
 ---
 
+- finish the notes on font size fallbacks end then continue with the rest through LS link [course](https://launchschool.com/lessons/f039db62/assignments/b237bc64)
 - clean up notes titled: 'box model related voc' .... into the rest of the notes if they fit
 - do the same for the 'random html and css notes'
 
@@ -289,3 +327,5 @@ List of focus topics I have to reflect in my HTML/CSS notes based on the LS focu
   ```
 
   Is the rule maybe as easy as, along the lines of `if the rightmost property value is supported it takes precedence and if it is not  the the property value immediately to the left is used`?
+
+- What are the exact rules for compounding `em` font heights? Does it have to do with nesting? Maybe just learn the basics and then use `rem`s all the way.
