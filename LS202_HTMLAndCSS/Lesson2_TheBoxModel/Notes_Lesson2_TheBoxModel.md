@@ -155,29 +155,68 @@ A `length specification`  is a combination of a numerical `value` and a `unit` s
 - `12`  and `12px`  - referred to as the `measurement` and/or `dimensions`
 - `px`  -  referred to as the `measurement unit` and/or `unit`
 
-The single most important absolute unit in CSS is the `pixel`, abbreviated `px` when used as property unit. 
+> The single most important absolute unit in CSS is the `pixel`, abbreviated `px` when used as property unit. 
+
 We must consider the **difference between** the following **different meanings of the term `pixel`**:
 
 - **The Problem**
   Different devices have both **vastly different sized pixels** **and vastly different pixel density**.
   This means that the rendered image on some device X is not necessarily the same as on device Y because of all the mentioned variables.
 
-  This is why CSS distinguished between the following **two types of pixels**:
+  This is why CSS distinguishes between the following **two types of pixels**:
 
-- `Physical Pixel`
-  ???
+- `Physical Pixel`  -  Also referred to as `Device Pixel` or `Display Pixel`
+  The physical pixel is defined as 96 pixels per inch and **accounts for the difference in resolution/surface are i.e. pixels per inch.**
+The **browser** then renders the image and **scales** it to the target display **so that the source and destination image** take up the **same amount of horizontal and vertical pixels on both devices**.
+  
+  ![](res/physical_pixel.png)
+  
+- `CSS Reference Pixel`  -  Also referred to as `CSS Pixel` or `Reference Pixel`
+  
+  The reference pixel **accounts for the difference in display sizes and the `TVD` - Typical Viewing Distance for a specific display**.
+  The goal is to scale the images on different displays in a way that the images render at the same **perceived dimensions IF viewed from the `TVD` typical viewing distance for that specific display**.
+  
+  ![](res/css_reference_pixel.png)
 
-- `Reference Pixel`
-  ???
+**Note**: Again,  the principal absolute unit is the `px`. Other absolute units like `inch` are rarely used because their results are not always as expected.
+
+
+
+#### Relative units
+
+---
+
+The principal relative units to use are
+
+- `em`
+
+  - **Proportional** to the `calculated font size`
+  - **NOT consistent in a documents** because they **compounds**
+  - The `calculated font size`  is the **height of the current font in pixels**
+  - Example: If the `calculated font size = 20px` then `1.5em = 30px` because `20px * 1.5 = 30px`
+
+-  `rem`
+
+  - **Proportional** to the `root font size`
+  - **Consistent** meaning **anywhere in the document** i.e. `1.5rem` is **always** the same value based on the specified `root font size`
+  - The `root font size` is the **height of the base font for the document** which is the font size designated to the`html` element
+  - Example: If the `root font size = 16px` then `1.5rem = 24px` because `16px * 1.5 = 24px`
+
+  **Note**: Just use the `px` unit to specify the `root font size`
+
+  **Note**: To account for bugs in older browsers set the `root font size` on **both the html and body element using the `px` unit**
+
+-  `%`
+
+
+
+
 
 
 
 List of focus topics I have to reflect in my HTML/CSS notes based on the LS focus post for this chapter.
 
 - relative units
-- CSS reference pixels
-- Why do we need to consider `reference pixels` and `physical pixels` in the wild?
-  Why is this important?
 - How do `auto margins` work to center blocks horizontally?
 
 
@@ -227,7 +266,6 @@ List of focus topics I have to reflect in my HTML/CSS notes based on the LS focu
 
 ---
 
-- https://launchschool.com/lessons/f039db62/assignments/b237bc64
 - clean up notes titled: 'box model related voc' .... into the rest of the notes if they fit
 - do the same for the 'random html and css notes'
 
@@ -238,4 +276,16 @@ List of focus topics I have to reflect in my HTML/CSS notes based on the LS focu
 ---
 
 - How does whitespace collapsing work exactly? See [MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Whitespace)
+
 - How does margin collapsing work? See [MDN docs](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model)
+
+- How does a CSS fallback work in conjunction with functionality the browser does not support?
+  In the following CSS snippet we want the browser to prioritize the `rem` property but if that is not supported it should fallback to `px`:
+
+  ```css
+  p {
+    font-size: 20px; font-size: 1.25rem;
+  }
+  ```
+
+  Is the rule maybe as easy as, along the lines of `if the rightmost property value is supported it takes precedence and if it is not  the the property value immediately to the left is used`?
