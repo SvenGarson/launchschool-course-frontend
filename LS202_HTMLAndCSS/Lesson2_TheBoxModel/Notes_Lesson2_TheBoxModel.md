@@ -224,7 +224,49 @@ The principal relative units to use are
 
   **Note**: To account for bugs in older browsers set the `root font size` on **both the html and body element using the `px` unit**
 
--  `%`
+- `%`  -  *Technically is not a length value*
+  Can be used to define a size based on the containing elements (the container) available content region.
+
+  Using `100%` on as an element's width or height can be trick because:
+
+  - `100%` for a nested element **does not consider the margins** so the element **may end up extending beyond the container bounds**
+  - additionally to ignoring the margin, the browser also **ignores the padding, border and margin when the box model is set to `content-box`**
+
+  
+
+  The way I understand this is that `100%` bases the fitting of the nested element on the bounding box and when:
+
+  - the box model is `border-box`, padding and border are inside the bounding box and **only the margin is ignored**
+  - the box model is `content-box`, padding, border and margin are outside the bounding box and **all three of them are ignored**
+
+  which causes the nested boxes to extend beyond the container in different ways
+
+  
+
+  ![](res/percent_and_auto_quirks.png)
+
+  
+
+  ![](res/hundred_percent_box_model_quirks.png)
+
+  
+
+  **Note**: `width` and `height` have not effect on `inline` elements
+
+- `auto`  -  Is not a length value and how it works **depends on exactly where it is used**.
+  `auto` used as value for:
+
+  - `width` or `height` makes the browser **try** to fit the entire element **including it's margin** into it's surrounding container
+    **including it's padding, margin and border!**
+  - `left-margin` or `right-margin` on a **block element** makes the browser **push the element all the way right or left inside it's surrounding container**. 
+    When both the `left` and `right` margins are set to `auto`  on a **block** element, the browser centers the element in the container.
+    ![](res/auto_centering_and_pushing_to_side.png)
+  - `auto` as a `top-margin` or `bottom-margon` is **equivalent to** `0`
+  - **Padding does not accept `auto`**
+
+
+
+**Note**:  Margin centering only works on `block` elements!
 
 
 
@@ -232,7 +274,7 @@ The principal relative units to use are
 
 ---
 
-Apparently most, but **not all** modern browsers use a default font-size of `16px`. This is important because we can base the CSS fallback on this, mostly common, browser behaviour. Here an example of the logic behind approach:
+Apparently most, but **not all** modern browsers use a default font-size of `16px`. This is important because we can base the CSS fallback on this common browser behaviour. Here an example of the logic behind approach:
 
 ```css
 /* setting p elements to a font-size of 1.25rem */
@@ -249,11 +291,14 @@ The logic behind this approach is the following:
 - because we want, in this case, `p` elements to be `1.25rem` high, the fallback is `20px` just because the common browser default is `16px`.
   This means that in case the `rem` is not used, we still end up with a font height of `20px` because `1.25rem` is `16px * 1.25 = 20px .`
 
+**So using a fallback font height of `16px` on an html document is the best bet.**
 
 
-List of focus topics I have to reflect in my HTML/CSS notes based on the LS focus post for this chapter.
 
-- relative units
+#### List of focus topics I have to reflect in my HTML/CSS notes based on the LS focus post for this chapter ??? !!!
+
+---
+
 - How do `auto margins` work to center blocks horizontally?
 
 
@@ -263,9 +308,8 @@ List of focus topics I have to reflect in my HTML/CSS notes based on the LS focu
 ---
 
 - The CSS `vertical-align` property can vertically align adjacent `inline` and `inline-block` elements in different way.
-  
+- CSS property values that are set to zero should **not have a unit because they are ignored**
 - `block` and `inline-block` outer display model boxes **cannot be nested inside** `inline` type boxes
-  
 - Because HTML collapses multiple whitespace characters into a single whitespace character, this can cause some whitespace to appear and take up room and screw up a design like in the example:
   
  ```html
@@ -303,7 +347,6 @@ List of focus topics I have to reflect in my HTML/CSS notes based on the LS focu
 
 ---
 
-- finish the notes on font size fallbacks end then continue with the rest through LS link [course](https://launchschool.com/lessons/f039db62/assignments/b237bc64)
 - clean up notes titled: 'box model related voc' .... into the rest of the notes if they fit
 - do the same for the 'random html and css notes'
 
