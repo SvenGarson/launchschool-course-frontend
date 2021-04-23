@@ -251,7 +251,7 @@ The principal relative units to use are
 
   
 
-  **Note**: `width` and `height` have not effect on `inline` elements
+  **Note**: `width` and `height` have not effect on `inline` elements **with the exception of `img` elements!**
 
 - `auto`  -  Is not a length value and how it works **depends on exactly where it is used**.
   `auto` used as value for:
@@ -309,6 +309,7 @@ The logic behind this approach is the following:
 
 - The CSS `vertical-align` property can vertically align adjacent `inline` and `inline-block` elements in different way.
 - CSS property values that are set to zero should **not have a unit because they are ignored**
+- `img` elements are **not `inline-block`** by **default** elements** but **they are `inline`** elements **by default**!
 - `block` and `inline-block` outer display model boxes **cannot be nested inside** `inline` type boxes
 - Because HTML collapses multiple whitespace characters into a single whitespace character, this can cause some whitespace to appear and take up room and screw up a design like in the example:
   
@@ -347,8 +348,10 @@ The logic behind this approach is the following:
 
 ---
 
+- finalize the notes
 - clean up notes titled: 'box model related voc' .... into the rest of the notes if they fit
 - do the same for the 'random html and css notes'
+- make flashcards
 
 
 
