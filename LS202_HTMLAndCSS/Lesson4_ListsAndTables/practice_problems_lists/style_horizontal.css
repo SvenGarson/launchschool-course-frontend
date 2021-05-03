@@ -1,0 +1,35 @@
+html {
+  font-size: 20px;
+}
+
+nav ul {
+  background-color: yellow;
+  width: 100%;
+  list-style-type: none;
+  padding-left: 0;
+  font-size: 0;
+}
+
+nav li {
+  color: blue;
+  display: inline-block;
+  width: 25%;
+  text-align: center;
+  font-size: 1rem;
+}
+
+nav a {
+  box-sizing: border-box;
+  line-height: 2.5;
+  padding: 0 10px;
+  text-decoration: none;
+  display: inline-block;
+  width: 100%;
+  color: blue;
+}
+
+nav a:focus,
+nav a:hover {
+  color: yellow;
+  background-color: green;
+}
