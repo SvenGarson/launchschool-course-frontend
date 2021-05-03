@@ -1,17 +1,3 @@
-#### Focus on
-
----
-
-- Image types
-  - Understand differences between the `jpg`, `png` and `gif` types
-  - Know when to use which image type
-- Know how to
-  - add foreground and background images to a website
-  - use figures and captions
-  - use images as links
-
-
-
 #### Images types
 
 ---
@@ -101,7 +87,7 @@ The most important attributes of the `img` element are:
   Only use these for a performance boost if the actual rendering dimensions of the image are known and not changed by the CSS.
   If these are defined but overriden by CSS it may lead to a performance hit.
 
-  Really, just use CSS. Done.
+  Really, just use CSS to size the images.
 
 
 
@@ -109,11 +95,9 @@ The most important attributes of the `img` element are:
 
 ---
 
-In order to **semantically** add a caption to an image we use a `figure` element. The `figure` element:
+The `figure` element typically contains some type of media (image; audio; table; code-snippets; etc.) and an optional caption for that bit of content using the `figcaption` element which stands for `figure caption`. The caption though is optional.
 
-> designates an item as a representation of information discussed in the content
-
-and can contain all sorts of media. If only a textual caption is desired we can just use the `figcaption` nested inside the `figure` element:
+The content of a `figure` element should be referenced in the surrounding text/content for illustration purposes and it's content should be self-contained. `figure` elements are **not to be used as mere decoration** but it can be used if we desire to caption an image for example, because the `figure` semantically relates the caption to the media it follows.
 
 ```html
 <figure>
@@ -121,8 +105,6 @@ and can contain all sorts of media. If only a textual caption is desired we can 
   <figcaption>The sun sets over the dense forest</figcaption>
 </figure>
 ```
-
-These elements have strong semantics and **are not used for any image haphazardly**!
 
 
 
@@ -142,6 +124,6 @@ These elements have strong semantics and **are not used for any image haphazardl
 
 ---
 
-Background can be added to any element, including the body element by applying the `background` and `bckground-image` properties.
-CSS background images appear **behind the content of the element and it's descendatns that requested the image**!
+Background can be added to any element, including the body element by applying the `background` and `background-image` properties.
+CSS background images appear **behind the content of the element and it's descendants** that requested the image!
 
