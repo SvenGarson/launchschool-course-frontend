@@ -159,11 +159,31 @@ Tags and elements used in the table context:
 
 
 
-#### Table and CSS
+### Nesting Tables
 
 ---
 
-- elements can be selected by regex style selection where the selector mimics the attribute such as for instance: `[scope="row"]`
+In order to nest a table, the nested table element definition must occur in a nested `table data cell` element like so:
+
+```html
+<table>
+  <tr>
+    <td>
+      <table></table>
+    </td>
+  </tr>
+</table>
+```
+
+**Note:** Table data and header cells must appear in a table row apparently!
+
+
+
+#### Random Table and CSS facts
+
+---
+
+- elements can be selected by regex style selection where the selector mimics the attribute such as for instance: `[scope="row"]`  -  These are apparently referred to as `attribute value selector`
 
 
 
@@ -203,7 +223,11 @@ In order to do this the following is apparently necessary:
   </header>
   ```
 
-  
+- When writing tables always define:
+
+  - nested tables inside a `table data cell`
+  - cells must always be nested inside a row element
+  - the scope for the header cell elements
 
 #### HTML and CSS tricks
 
