@@ -151,13 +151,27 @@ Tags and elements used in the table context:
   </tfoot>
   ```
 
+  **Note:** The `thead`, `tbody` and `tfoot` elements are used to provide semantic identification of what table contents are of which type of content.
   
+- `scope`  -  This is a `table header` i.e. `<th>` element attribute and defines **which cells this particular header cell relates to**. It can be associated to the cells in it's own row, the cells in it's own column or all of them. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/th.
+
+     **Do not forget to define the scope of the header cells according to what they represent!** 
+
+
+
+#### Table and CSS
+
+---
+
+- elements can be selected by regex style selection where the selector mimics the attribute such as for instance: `[scope="row"]`
+
+
 
 #### Continue at
 
 ---
 
-- https://launchschool.com/lessons/8c6e03e3/assignments/fbba940d and finish the table tags portion
+- https://launchschool.com/lessons/8c6e03e3/assignments/10c38757 at exercise `7`
 
 
 
