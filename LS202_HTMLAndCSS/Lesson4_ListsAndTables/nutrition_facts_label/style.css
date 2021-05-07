@@ -1,0 +1,56 @@
+body {
+  font-size: 28px;
+  font-family: sans-serif, Helvetica, "Black and Helvetica";
+}
+
+article {
+  width: 680px;
+  border: 2px solid black;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+h1 {
+  margin: 0;
+  font-family: "Franklin Gothic Heavy";
+}
+
+p {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+hr {
+  border: none;
+  background-color: black;
+  margin: 0;
+}
+
+.thin_ruler {
+  height: 1px;
+}
+
+.medium_ruler {
+  height: 1rem;
+}
+
+.thick_ruler {
+  height: 1.8rem;
+}
+
+p span {
+  display: inline-block;
+  width: 50%;
+}
+
+p span:nth-child(2) {
+  text-align: right;
+}
+
+dl {
+  margin: 0 0 0.5rem 0;
+}
+
+.indent {
+  margin-left: 1rem;
+}
