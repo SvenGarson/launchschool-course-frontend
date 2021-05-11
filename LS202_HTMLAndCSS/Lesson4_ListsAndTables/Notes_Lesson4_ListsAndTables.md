@@ -228,6 +228,8 @@ In order to do this the following is apparently necessary:
   - nested tables inside a `table data cell`
   - cells must always be nested inside a row element
   - the scope for the header cell elements
+  
+- Typicall a page should include headers and footers unless there is a reason not to do so
 
 #### HTML and CSS tricks
 

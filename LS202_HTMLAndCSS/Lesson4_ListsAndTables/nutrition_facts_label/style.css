@@ -1,18 +1,24 @@
 body {
+  box-sizing: border-box;
   font-size: 28px;
   font-family: sans-serif, Helvetica, "Black and Helvetica";
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
 }
 
 article {
   width: 680px;
   border: 2px solid black;
-  padding: 15px;
   box-sizing: border-box;
+  padding: 0 15px 15px 15px;
 }
 
 h1 {
   margin: 0;
   font-family: "Franklin Gothic Heavy";
+  font-size: 4rem;
 }
 
 p {
@@ -23,7 +29,7 @@ p {
 hr {
   border: none;
   background-color: black;
-  margin: 0;
+  margin: 0.1rem 0;
 }
 
 .thin_ruler {
@@ -34,8 +40,17 @@ hr {
   height: 1rem;
 }
 
+.medium_large_ruler {
+  height: 1.25rem;
+}
+
 .thick_ruler {
-  height: 1.8rem;
+  height: 1.85rem;
+  margin-top: 0.25rem;
+}
+
+span {
+  margin: 0;
 }
 
 p span {
@@ -47,10 +62,38 @@ p span:nth-child(2) {
   text-align: right;
 }
 
+dl p:nth-child(10) {
+  color: green;
+}
+
 dl {
   margin: 0 0 0.5rem 0;
 }
 
-.indent {
+small.indent{
   margin-left: 1rem;
+}
+
+table.indent{
+  margin-left: 1rem;
+}
+
+table, table p{
+  width: 100%;
+  font-size: 1.4rem;
+}
+
+p small {
+  font-size: 1.58rem;
+}
+
+article p:nth-child(5),
+article p:nth-child(7) {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+article p:nth-child(9) {
+  margin-top: 1rem;
+  font-weight: bold;
 }
