@@ -200,13 +200,53 @@ The most commonly used are:
     **Note**: This is typically the same name for a set of options!
   - `required`  -  attribute that enforces the user to choose a button **if there is no default button**
 
-
-  
   If no button is pre-selected and no button is required, then the user can submit a form **without making a choice**, but if any button is pre-selected the the user must choose one!
 
-  
+  ```html
+  <label>
+        <input type="radio" name="color" value="blue" />
+        Blue
+      </label>
+  ```
 
-  **Note** The CSS `:checked` works the same for radio buttons as it does for the checkboxes-
+  **Note** The CSS `:checked` works the same for radio buttons as it does for the checkboxes.
+
+- `type="submit"`  -  defines a button that initiates the form data to be sent to the server.
+
+  - The `formaction` attribute can override the forms original `action` attribute 
+  - The `value` attribute sets the name displayed on the submit button
+
+  ```html
+  <input type="submit" value="Save" />
+  ```
+
+- `type="reset"`  -  defines a button that re-sets the contents of the form to the default **without initiating a request-response cylce**, in other words, on the client side.
+
+  - the `value` attribute sets the name displayed on the submit button
+
+  ```html
+  <input type="reset" value="Clear Form" />
+  ```
+
+
+
+### Input attributes in general - Probably contains duplicate notes
+
+---
+
+The following attributes work different for every input type or not at all. This is a list of attributes that are good to memorize:
+
+- `value` attribute  -  can be used by *most* input element, but the functionality varies with the `type`:
+
+  - For text based type like `text`, `email` and `number` the `value` defines the default value for the element and if none is provided, the browser uses an empty string.
+
+    ```html
+    <input type="tel" name="phone" value="503-555-1212" />
+    ```
+
+  - For `checkbox` and `radio button` types, the `value`  defines the value of the key-value pair sent to the server for a selected box/button
+
+  - 
 
 
 
@@ -221,6 +261,15 @@ The most commonly used are:
 - `Action item`  -  Group term for form elements such as buttons and input type submit buttons
   i.e. the ones that perform an action, and/or have the capability to override a forms `action` attribute using the `formaction` attribute
 - `control` or `widget`  -  elements that provides mechanisms to let the user supply information that is to be sent to the server
+
+
+
+### Continue at
+
+---
+
+Input attributes for the `value` attribute and how it works with the `submit` etc input types:
+https://launchschool.com/lessons/d4fbe0e0/assignments/db092598
 
 
 
