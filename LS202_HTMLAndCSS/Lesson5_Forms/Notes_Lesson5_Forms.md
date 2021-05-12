@@ -131,6 +131,8 @@ The most commonly used are:
 
 - `type="text"`  -  defines a text entry field in which the user can enter anything, so **this input should always be checked client and/or server side**.
 
+  **Note:**  This input type disregards some whitespace characters such as carriage returns/newlines.
+
   The `maxlength` caps the length of the input that can be entered:
 
   ```html
@@ -246,7 +248,95 @@ The following attributes work different for every input type or not at all. This
 
   - For `checkbox` and `radio button` types, the `value`  defines the value of the key-value pair sent to the server for a selected box/button
 
-  - 
+  - For button types `submit`, `reset`and `button` the `value` attribute defines the value of the label on the button
+  
+- `size` and `maxlength` attributes  -  apply to most of the text input types
+  The `size` attribute hints the browser to have at least that many characters visible but apparently , the typical behaviour is that more or less characters are displayed.
+
+  **Note**: The CSS `width` property overrides the `size` attribute for a given element.
+
+  `maxlength` just limits the number of characters that can be entered into the input field.
+
+- `placeholder`  -  applies to most text based input types
+  This defines the data to be displayed when the input element is empty and is not shown when any input occurs in the element.
+
+- `disable`  -  disables any input element and makes it not respond to anything
+  In terms of selecting through CSS:
+
+  - `disable` d element are selectable through the `:disabled` pseudo class
+  - non-disabled elements are selectable through the `:enabled` pseudo class
+
+- `require`  -  defines that the input element must be filled before the form can be submitted to server
+  until  the user fills all required field of a form.
+
+  In terms of CSS, required fields can be selected using the `:selected` pseudo class.
+
+- `autocomplete`  -  defines whether the browser should re-use previously entered input data:
+  This can be turned on and off explicitly using ` autocomplete="on"` or `autocomplete="off"`.
+
+  **Note**: The `autocomplete` attribute **does not affect** `type"password"` input types!
+
+
+
+### The Textarea input element
+
+---
+
+`textarea`  lets the user enter whitespace formatted text and does support carriage returns/newlines.
+This input type **has an opening and closing tag** and **does not use the `value` attribute** to provide default text but rather goes between the two tags:
+
+```html
+<textarea name="tweet">Default text here instead of value attribute!</textarea>
+```
+
+**Note**: Since `textarea` regards whitespace, the opening and closing tags are typically butted to avoid any unwanted whitespace bleeding into the page content.
+
+`textarea` used the attributes `rows` and `cols` to control the dimensions in number of lines and width as characters. **As with the `size`** attribute, these are **typically not precise**!
+
+Furthermore:
+
+- While the size can be defined through CSS using the `width` and `height` properties.
+- The scrolling bar appears when the content extends over the dimensions of the textarea
+- The CSS `resize` property defines whether the user can drag adjust the field or not
+
+
+
+### The Select input element
+
+---
+
+`select`  creates a drop-down list of predefines options the **user can select zero or more** of.
+
+A `select` can only have `option` and `optgroup` as child elements and uses the `name` attribute like other form input elements and **lets the user choose one option by default**.
+
+If the `select` element `multiple` attribute is defined, the user can select multiple options by shift or control clicking the list. **This seems like something to be avoided!**
+
+The `option` element defines the options that a user can select where the `option`s:
+
+- `value` attribute is the value sent to the server for that particular option as value
+
+
+
+**Simulating default values similar to a placeholder**
+
+To aid the user, the `select` element typically defines a default option that is not selectable that fulfills the same role as a default or placeholder value:
+
+```html
+<select name="color">
+  <option value="" disabled selected>Choose one</option>
+  <option value="#f00">Red</option>
+  <option value="#0f0">Green</option>
+  <option value="#00f">Blue</option>
+</select>
+```
+
+
+
+### Form layouts
+
+---
+
+- use description lists to build horizontal forms instead of divs for semantic meaning and built in styles
 
 
 
@@ -264,12 +354,26 @@ The following attributes work different for every input type or not at all. This
 
 
 
+### Random notes that do not fit anywhere else
+
+---
+
+- Do not use the input `type="button"`. Use the `<button>` element instead.
+- When a caption for input fields is required, such as for instance a `select` element, use a label!
+- When setting a border radius, the default style gets overidden and a border style should be defined explicitly
+- only use divs when you want to apply styles to that div that you would not normally on other elements or when there is no better option **and when a div is used, it should always be identified so that other people can see what the intention was** i.e. what this div is used for.
+- Always look to use elements with the best semantic meaning in terms of how it is used in the markup
+- `adjacent siblings selector` i.e. `+` separates two selector and matches the **second only if it immediately follows the first element**
+- when a design solidifies, remove the whitespace eating comments unless they are needed for the design
+- Use `caniuse.com` to determine which css functionality is supported by which browser
+
+
+
 ### Continue at
 
 ---
 
-Input attributes for the `value` attribute and how it works with the `submit` etc input types:
-https://launchschool.com/lessons/d4fbe0e0/assignments/db092598
+- https://launchschool.com/lessons/d4fbe0e0/assignments/ed23fcf5 directly after the video
 
 
 
@@ -281,6 +385,14 @@ Play with the forms and run it against a local web-server so I can check the req
 
 
 
+### Questions and answers
+
+---
+
+- read up how browser extensions work but only at awareness level
+
+
+
 ### When finalizing the notes
 
 ---
@@ -288,4 +400,3 @@ Play with the forms and run it against a local web-server so I can check the req
 - clean up vocabulary and keep only the really relevant stuff - I think most can be thrown away
 - delete `focus on` section after I made sure that I got all of it in the notes
 - questions and answers
-
