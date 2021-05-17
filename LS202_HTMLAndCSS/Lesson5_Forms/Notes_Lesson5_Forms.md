@@ -332,11 +332,21 @@ To aid the user, the `select` element typically defines a default option that is
 
 
 
+**Note:** Use the select `appearance: none` property to avoid applying special browser/os based styling.
+
+
+
 ### Form layouts
 
 ---
 
-- use description lists to build horizontal forms instead of divs for semantic meaning and built in styles
+- use description lists to build horizontal forms instead of divs for semantic meaning and built in styles. The added semantic when using description lists for the purpose of formatting forms are:
+
+  - The **description list terms** are **the labels** which **identify the controls for the user**
+
+  The added benefit here is to add html elements for styling instead of targeting sequences of label/input pairs with all sorts of techniques.
+
+  **Note:** Use html elements semantically to select the elements for styling more naturally and make use of nesting these html elements!
 
 
 
@@ -359,6 +369,8 @@ To aid the user, the `select` element typically defines a default option that is
 ---
 
 - Do not use the input `type="button"`. Use the `<button>` element instead.
+- it is typicall a good idea to disale browser specific styling and auto-actions
+- keep working bits of html code around
 - When a caption for input fields is required, such as for instance a `select` element, use a label!
 - When setting a border radius, the default style gets overidden and a border style should be defined explicitly
 - only use divs when you want to apply styles to that div that you would not normally on other elements or when there is no better option **and when a div is used, it should always be identified so that other people can see what the intention was** i.e. what this div is used for.
@@ -366,6 +378,10 @@ To aid the user, the `select` element typically defines a default option that is
 - `adjacent siblings selector` i.e. `+` separates two selector and matches the **second only if it immediately follows the first element**
 - when a design solidifies, remove the whitespace eating comments unless they are needed for the design
 - Use `caniuse.com` to determine which css functionality is supported by which browser
+- trade-off of padding vs margin to consider:
+  - top and bottom margins can collapse and this can be weird where as with padding this does not happen when positioning two element over one another, results are probably more expected.
+  - the padding is in the clickable region and margin is not
+  - this margin collapse can be useful though because we know that if it occurs, we can design with it
 
 
 
@@ -373,7 +389,7 @@ To aid the user, the `select` element typically defines a default option that is
 
 ---
 
-- https://launchschool.com/lessons/d4fbe0e0/assignments/ed23fcf5 directly after the video
+- ???
 
 
 
@@ -389,7 +405,11 @@ Play with the forms and run it against a local web-server so I can check the req
 
 ---
 
-- read up how browser extensions work but only at awareness level
+- does the font-family property read precedence from left to right or vice-versa?
+  It should be from left to right i.e. the righmost font is the fallback font.
+- how is css computed exactly and how does the font-size set to zero and back to some size work to:
+  - get rid of whitespace
+  - size things based on this mechanism?
 
 
 
