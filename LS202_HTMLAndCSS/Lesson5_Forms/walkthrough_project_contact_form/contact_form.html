@@ -85,8 +85,31 @@
           </dd>
 
           <!-- Zipcode Field -->
-          <dt><label>Zipcode</label></dt>
-          <dd><input type="number" placeholder="?"/></dd>
+          <dt><label for="zipcode">Zipcode</label></dt>
+          <dd>
+            <input type="text" name="zipcode" id="zipcode"
+                   placeholder="12345" pattern="[0-9]{5}"
+                   minlength="5" maxlength="5" size="5"/>
+          </dd>
+          
+          <!-- Ask Favorite Color -->
+          <dt>Which of these colors do you like best?</dt>
+          <dd>
+             <label>
+               <input type="radio" name="favorite_color" value="cyan" checked/>
+               Cyan
+             </label>
+             
+             <label>
+               <input type="radio" name="favorite_color" value="magenta" checked/>
+               Magenta
+             </label>
+             
+             <label>
+               <input type="radio" name="favorite_color" value="onyx" checked/>
+               Onyx
+             </label>
+          </dd>
         </dl>
       </fieldset>
     </form>
