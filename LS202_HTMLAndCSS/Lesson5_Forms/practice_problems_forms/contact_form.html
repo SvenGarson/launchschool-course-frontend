@@ -2,24 +2,64 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Contact Form</title>
+    <title>Testing</title>
   </head>
   
   <body>
     <form action="#" method="post">
-      <label for="first_name">First Name</label>
-      <input type="text" name="first_name" id="first_name" required="required" />
-      
-      <label for="last_name">Last Name</label>
-      <input type="text" name="last_name" id="last_name" required="required" />
-      
-      <label for="email_address">Email Address</label>
-      <input type="email" name="email_address" id="email_address" required="required" autocomplete="off"/>
-      
-      <label for="phone_number">Phone Number</label>
-      <input type="tel" name="phone_number" id="phone_number" required="required" />
-      
-      <input type="submit" value="Meep"/>
+      <fieldset>
+        <!-- First Name Input -->
+        <dl>
+          <dt><label for="first_name">First Name</label></dt>
+          <dd><input type="text" name="first_name" id="first_name" required /></dd>
+        </dl>
+
+        <!-- Last Name Input -->
+        <dl>
+          <dt><label for="last_name">Last Name</label></dt>
+          <dd><input type="text" name="last_name" id="last_name" required /></dd>
+        </dl>
+
+        <!-- Email Address Input -->
+        <dl>
+          <dt><label for="email_address">Email Address</label></dt>
+          <dd>
+            <input type="email" name="email_address" id="email_address" required
+                                autocomplete="off" autocorrect="off" autocapitalize="off"/>
+          </dd>
+        </dl>
+
+        <!-- Phone Number Input -->
+        <dl>
+          <dt><label for="phone_number">Phone Number</label></dt>
+          <dd><input type="tel" name="phone_number" id="phone_number"
+              placeholder="###-###-####" required />
+          </dd>
+        </dl>
+
+        <!-- Phone Type Selector -->
+        <dl>
+          <dt><label for="phone_type_selection">Phone Type</label></dt>
+          <dd>
+            <select name="phone_type_selection" id="phone_type_selection">
+              <option value="home" selected>Home</option>
+              <option value="business">Business</option>
+              <option value="mobile">Mobile</option>
+            </select>
+          </dd>
+        </dl>
+        
+        <!-- Message Input -->
+        <dl>
+          <dt><label for="message">Message</label></dt>
+          <dd><textarea rows="6" cols="80" name="message" id="message"
+                        placeholder="Type your message here."></textarea>
+           </dd>
+        </dl>
+        
+        <!-- Submit Button -->
+        <input type="submit" value="Send"/>
+      </fieldset>
     </form>
   </body>
 </html>

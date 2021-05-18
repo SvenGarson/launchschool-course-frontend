@@ -369,6 +369,11 @@ To aid the user, the `select` element typically defines a default option that is
 ---
 
 - Do not use the input `type="button"`. Use the `<button>` element instead.
+- decide whether to enable/disable the following client side functionality:
+  - autocomplete
+  - autocorrect
+  - autocapitalize
+  - spellcheck
 - it is typicall a good idea to disale browser specific styling and auto-actions
 - keep working bits of html code around
 - When a caption for input fields is required, such as for instance a `select` element, use a label!
@@ -376,6 +381,7 @@ To aid the user, the `select` element typically defines a default option that is
 - only use divs when you want to apply styles to that div that you would not normally on other elements or when there is no better option **and when a div is used, it should always be identified so that other people can see what the intention was** i.e. what this div is used for.
 - Always look to use elements with the best semantic meaning in terms of how it is used in the markup
 - `adjacent siblings selector` i.e. `+` separates two selector and matches the **second only if it immediately follows the first element**
+- always choose the appropriate http method for forms based on what these form requests to
 - when a design solidifies, remove the whitespace eating comments unless they are needed for the design
 - Use `caniuse.com` to determine which css functionality is supported by which browser
 - trade-off of padding vs margin to consider:
@@ -410,6 +416,10 @@ Play with the forms and run it against a local web-server so I can check the req
 - how is css computed exactly and how does the font-size set to zero and back to some size work to:
   - get rid of whitespace
   - size things based on this mechanism?
+- how to handle browser specific stuff such as the `autocorrect` attributes for the Safari browser?
+  Because it does not validate through the w3c validator and is browser specific, it should probably be only be included in a response served to a Safari browser?
+- how to handle space in html attributes such as for instance `<option value="Tommy Boy"></option>` ?
+  Does it need to be encoded at this point or does that automatically happen when the form data is sent to the server through the action URL?
 
 
 
