@@ -201,6 +201,7 @@ The most commonly used are:
   - `name`  -  attribute defines the name of the `key` of the sent key-value pair
     **Note**: This is typically the same name for a set of options!
   - `required`  -  attribute that enforces the user to choose a button **if there is no default button**
+    **Note**: Every radio button must have the `required` defined it for this mechanism to work!?
 
   If no button is pre-selected and no button is required, then the user can submit a form **without making a choice**, but if any button is pre-selected the the user must choose one!
 
@@ -399,14 +400,6 @@ To aid the user, the `select` element typically defines a default option that is
 
 
 
-### Playing with the tech
-
----
-
-Play with the forms and run it against a local web-server so I can check the requests made.
-
-
-
 ### Questions and answers
 
 ---
@@ -420,6 +413,7 @@ Play with the forms and run it against a local web-server so I can check the req
   Because it does not validate through the w3c validator and is browser specific, it should probably be only be included in a response served to a Safari browser?
 - how to handle space in html attributes such as for instance `<option value="Tommy Boy"></option>` ?
   Does it need to be encoded at this point or does that automatically happen when the form data is sent to the server through the action URL?
+- what is the difference between boolea and other html attributes?
 
 
 
@@ -430,3 +424,10 @@ Play with the forms and run it against a local web-server so I can check the req
 - clean up vocabulary and keep only the really relevant stuff - I think most can be thrown away
 - delete `focus on` section after I made sure that I got all of it in the notes
 - questions and answers
+
+
+### Resources
+
+---
+
+- List of american states and abbreviations: https://launchschool.com/gists/2424a869
