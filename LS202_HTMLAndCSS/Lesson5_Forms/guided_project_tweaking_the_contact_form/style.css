@@ -1,0 +1,78 @@
+body {
+  font: normal 16px Helvetica, Arial, sans-serif;
+  margin: 15px;
+}
+
+fieldset {
+  width: 600px;
+  padding: 0;
+  margin: 0 auto;
+  border: none;
+}
+
+dl {
+  margin-bottom: 0;
+}
+
+dl + dl {
+  margin-top: 0;
+}
+
+dl dd {
+  margin: 0 0 15px 0;
+}
+
+dl dt {
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 100%;
+  height: 30px;
+  padding: 3px 10px;
+  font: normal 16px Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+  border: 1px solid #cecece;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+  font-size: 14px;
+}
+
+textarea {
+  height: auto;
+  resize: vertical;
+}
+
+.partial {
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.first-name {
+  padding-right: 5px;
+  width: 50%;
+}
+
+.last-name {
+  padding-left: 5px;
+  width: 50%;
+}
+
+.city {
+  width: 50%;
+  padding-right: 5px;
+}
+
+.state {
+  width: 10%;
+  padding: 0 5px;
+}
+
+.zipcode {
+  width: 40%;
+}

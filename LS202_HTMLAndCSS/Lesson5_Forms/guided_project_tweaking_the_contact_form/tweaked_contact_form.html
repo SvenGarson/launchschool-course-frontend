@@ -9,24 +9,32 @@
   <body>
     <form action="#" method="post">
       <fieldset>
-        <dl>
+        <dl class="partial first-name">
           <!-- First Name Field -->
           <dt><label for="first_name">First Name</label></dt>
-          <dd><input type="text" name="first_name" id="first_name"/></dd>
+          <dd><input type="text" name="firs_tname" id="first_name"/></dd>
+        </dl><!--
           
+     --><dl class="partial last-name">
           <!-- Last Name Field -->
           <dt><label for="last_name">Last Name</label></dt>
           <dd><input type="text" name="last_name" id="last_name"/></dd>
+        </dl>
           
+        <dl>
           <!-- Email Field -->
           <dt><label for="email">Email</label></dt>
           <dd><input type="email" name="email" id="email"
                      autocomplete="off" placeholder="john.doe@meepmail.com"/></dd>
+        </dl>
           
+        <dl class="partial city">
           <!-- City Field -->
           <dt><label for="city">City</label></dt>
           <dd><input type="text" name="city" id="city"/></dd>
+        </dl><!--
           
+     --><dl class="partial state">
           <!-- State Selector -->
           <dt><label for="state">State</label></dt>
           <dd>
@@ -84,7 +92,9 @@
               <option>WY</option>
             </select>
           </dd>
+        </dl><!--
 
+      --><dl class="partial zipcode">
           <!-- Zipcode Field -->
           <dt><label for="zipcode">Zipcode</label></dt>
           <dd>
@@ -92,7 +102,9 @@
                    placeholder="12345" pattern="[0-9]{5}"
                    minlength="5" maxlength="5" size="5"/>
           </dd>
+        </dl>
           
+        <dl>
           <!-- Ask Favorite Color -->
           <dt>Which of these colors do you like best?</dt>
           <dd>
@@ -118,7 +130,9 @@
               </li>
             </ul>
           </dd>
+        </dl>
           
+        <dl>
           <!-- Ask Technologies The User Wants To Learn -->
           <dt>Which web technologies do you want to learn?</dt>
           <dd>
@@ -156,22 +170,28 @@
               </li>
             </ul>
           </dd>
+        </dl>
          
-         <!-- Comment Box -->
-         <dt>Comments</dt>
-         <dd>
-           <textarea rows="6" cols="80"></textarea>
-         </dd>
+        <dl>
+          <!-- Comments Box -->
+          <dt><label for="comments">Comments</label></dt>
+          <dd>
+            <textarea rows="6" cols="80" id="comments"></textarea>
+          </dd>
         </dl>
         
         <!-- Submission Timestamp -->
         <input type="hidden" name="submission_timestamp" value="2021-05-19" />
         
-        <!-- Clear Button -->
-        <input type="reset" value="Clear Form" />
+        <!-- Clear and Submit Button -->
+        <dl>
+          <dt>
+            <input type="reset" value="Clear Form" />
+            <button>Send</button>
+          </dt>
+          <dd></dd>
+        </dl>
         
-        <!-- Submit Button -->
-        <button>Send</button>
       </fieldset>
     </form>
   </body>
