@@ -225,7 +225,7 @@ Each of these `4` offsets **measure offset inward from the border in question** 
 
 The `position` property defines **how** the browser should position the selected element. There are different types:
 
-- `position: static`
+- **`position: static`**
 
   - This is the default positioning
   - These elements **are part of the page flow**
@@ -234,7 +234,7 @@ The `position` property defines **how** the browser should position the selected
 
   **Note**: Elements that use `flow`, `grid`, `flex`, `absolute` and/or `fixed` positioning **are removed from the page flow**.
 
-- `position: relative`
+- **`position: relative`**
 
   Relative positioning **does not remove the elements from the document flow** but rather **only renders it at an offset**.
 
@@ -246,27 +246,68 @@ The `position` property defines **how** the browser should position the selected
   1. the element is still in the flow **exactly as if it were static** and affects the flow exactly as static elements
   2. the element is **merely rendered at an offset to it's static position** where **this offset element does not affect the flow**!
 
-  
+  In other words, the flow is the same as with `static` elements but the browser merely renders the elements at an offset.
 
   
 
-  - **intuitive notes here first to get a feel for this madness**
-    - relative positioning keeps the elements in the flow just as normal i.e as if `position: static` were used
-    - the browser renders the elements at their static position + offset
-    - the offsets are applied on a rendering level and the element exists in two parallel states we could say:
-      - the one we do not see, which is included in the document flow, equivalent to the `static` version?
-        This still affects the elements around just as usual.
-      - the one rendered by the browser, which does not affect the document flow?
-    - typically only a single side per axis should have offset i.e. left **or** right **not both**, this goes for the horizontal and vertical axis
-      as they have different precedence for cases where left+right is defined:
-      For top and bottom, **top always has precedence**.
-    - relative elements are not
+  **Note**: Only ever use a single offset direction per axis because they have precedence rules and may not work as expected.
+
+  
 
 
+  **These offset precedence rules are**:
 
+  - `left` overrides `right` for left-to-right languages.
 
+  -   `right` overrides `left` for right-to-left languages.
+  -   `top` overrides `bottom` at all times.
 
-### Notes for next lesson which is ???
+  
+
+  **Specifying relative position**
+
+  ```css
+  .selector {
+    position: relative;
+    left: 50px;
+    top: -25px;
+  }
+  ```
+
+- **`position: absolute`**
+
+   Absolute position moves the element to **a new position within a container element** which is the **nearest ancestor element that has either:**
+
+  - relative position
+  - absolute position
+  - sticky position (not handled in this course)
+
+  **If there is no ancestor that fits these criteria the body is used instead, which means that the browser positions the element on the initial page in an absolute position**.
+
+  
+
+  **Other important considerations about `absolute` position are:**
+
+  - Absolute position **does indeed take the elements from the document flow**.
+    So absolute elements **do not interact with the flow of other elements**!
+  - Absolute position initializes the element position at the origin of the chosen ancestor and the offsets work from there!
+
+  
+
+  **Specifying absolute position**
+
+  ```css
+  .selector {
+    position: absolute;
+      top: -50px;
+      right; 33%;
+  }
+  ```
+
+  
+  
+
+### Things to add to the previous matching portions about positioning
 
 ---
 
@@ -309,3 +350,6 @@ The `position` property defines **how** the browser should position the selected
 
 - Are floated; grid, flex, absolute and relative elements alway removed from the page flow?
   Are statically positioned elements always part of the page flow?
+
+- Write a list of where, how and with what requirements the types of position differs for quick comparison when I need it.
+  Probably not worth it if my notes are clean enough?
