@@ -1,0 +1,42 @@
+body {
+  background-color: lightgray;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+body, section, article, aside {
+  margin: 0;
+  padding: 0;
+}
+  
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+section {
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: lightgreen;
+  
+}
+
+article, aside, footer {
+  padding: 1rem;
+}
+
+article {
+  float: left;
+  background-color: lightyellow;
+  width: 70%;
+}
+
+aside {
+  background-color: lightblue;
+  float: none;
+  overflow: hidden;
+}
+
+footer {
+  background-color: lightpink;
+  clear: both;
+}

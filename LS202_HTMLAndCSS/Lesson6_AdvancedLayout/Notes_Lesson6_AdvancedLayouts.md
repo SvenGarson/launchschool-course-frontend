@@ -21,8 +21,9 @@ Floats are an easy way to place elements side-by-side and collapse any in-betwee
 
 Floats are used to push element to the far left or right **in their immediate container** which define the maximum left/right boundaries the element can be pushed to.
 
-The space beside floated elements left and right are usable to other elements just as normal.
+The space beside floated elements left and right are usable to other elements just as normal and **floated elements only take up as much space as their content takes up, which is why a block level element may be less than full width**!
 
+**Note**: Floated elements have special behavior in terms of vertical margin collapsing.
 **Note**: Floats can be used to swap the position of elements:
 
 ```html
@@ -71,6 +72,12 @@ In order to get expected styling when using floats:
 - Keep the height of the floated objects the same 
 - Keep the float direction of the grouped elements (the ones in the same row!?) to a single direction, **either** left **or** right.
 
+
+
+**Floated elements allow text and inline elements to wrap around it**!
+
+
+
 **Note**: In general floats seems like something to be avoided and there are typically better options such as Flex, Grid and Frameworks.
 
 
@@ -112,36 +119,150 @@ The problem is that the nested and floated elements are **removed from the norma
 - Use a `clearfix`:
   A `clearfix` is a **technique** that forces a container to contain it's floated children by appending an empty block-level element **after** the floated elements, in other words, we **trick the container into considering the floated elements** by adding an **empty marker element** **as last container child** on which the **container can base it's calculations to contain all the floated children**.
 
+
+  **This marking clearfix element has the following characteristics**: 
+
+  1. It is empty
+  2. Must be block-level so that it takes up a complete line/row
+  3. Must clear the desired floated elements, so that it is positioned exactly under the lowest (desired) floated element
+  4. Must be the last i.e. **after** the floated elements in the hierarchy of elements contained in the parent container.
+
   
+
   **Here a more intuitive, visual illustration:**
 
   1. The `containing floats problem` without applying any fix  -  Container cannot consider the floated children for the final container dimensions.
      ![](./res/containing_floats_problem.png)
 
+  2. Add a clearfix  -  This is an **empty, block-level element** added as the **last container child** that **marks the boundary of the content** 
+     vertically.
+
+     ```css
+     .container::after { /* add an element to the .container element as the last child i.e. behind any floats */
+       content: ""; /* define the clearfix element content to be empty */
+       display: block; /* clearfix element must take up the whole line/row */
+       clear: both; /* position clearfix element just under the lowest, preceding floating element */
+     }
+     ```
 
 
-Intuitive notes as we go:
+     ![](./res/containing_floats_problem_with_clearfix_marker.png)
 
-- the CSS `clear` property defines if the cleared element must be moved **below** **previous** floating elements.
+  3. Container can base it's dimension calculations based on the clearfix:
+     ![](./res/float_fix_overflow.png)
 
-- both floated and non-floated elements can be `clear`ed from previous floats
 
-- floating elements have special behavior in terms of vertical margin collapsing etc, so look up for details
 
-- In general, use `clear: both;` unless others are specifically needed
+### How `clear` works
 
-- when an element is cleared from preceding elements using:
+---
 
-  - `clear: both;`  -  the cleared element is moved down until it's top edge is under the **lowest** floated element edge.
-    ![](./res/clear_both.png)
+The `clear` property moves **the cleared elements, that follow any floated element**, **just under** the lowest vertical boundary of the defined type of float. **Both non-floated and floated elements** **can be cleared** based on preceding floated element.
+![](./res/clear_left_righ_both_overview.png)
 
-  - `clear: left;`  -  the cleared element is moved down the same way until it is under the **left** floated elements.
-    ![](./res/clear_left.png)
 
-  - `clear: right;` does the same as left but for right floated elements.
-    **Note**: In this case clearing right and both is the same.
+**Note**: Always use `clear: both;` unless there is a good reason to choose a specific one!
 
-    ![](./res/clear_right.png)
+
+**Intuitive example illustrations clearing elements from preceding floating elements:**
+
+- When an element is cleared from preceding floats using `clear: both;`
+  the cleared element is moved down until it's top edge is under the **lowest** floated element edge, be that `left` or `right`  floats.
+  ![](./res/clear_both.png)
+
+- When an element is cleared from preceding floats using `clear: left;`
+  the cleared element is moved down the same way until it is just under the `left` floated elements.
+  ![](./res/clear_left.png)
+
+- When an element is cleared from preceding floats using `clear: right;`
+  the cleared element is moved down the same way until it is just under the `right` floated elements.
+  ![](./res/clear_right.png)
+
+  **Note**: In this case clearing `right` and `both` is the same.
+
+
+
+### Problems that occur when floating and clearing
+
+---
+
+Always remember that:
+
+- floated elements take up as much space as they need to display the content which is the case of a long line of text can be a very large width!
+
+  If the floated element is too large for the rest of the row/line space, it wraps to the lext line/space.
+
+- when using percentage dimensions always think of the box-model and the present margins and padding of the elements
+
+
+
+### How `Offset` properties interact with the `position` property
+
+---
+
+The **offset** properties `left`, `right`, `bottom` and `top`  work together with `position` to determine:
+
+- **which direction** you want to push the element towards
+- **how far in that direction** you want to push the element
+
+Each of these `4` offsets **measure offset inward from the border in question** **when the offset is positive**. That is:
+
+- `bottom: 60px;` means 60 pixels **upwards** from the **bottom region border**
+- `left: 20px;` means 20 pixels **to the right** form the **left region border**
+- `left: -20px;` means 20 pixels **to the left** from the **left region border** because **negative values flip the direction**
+
+**Note**: Negative offset values cause the element to be pushed **outwards from the border in question**.
+
+![](./res/offset_direction.png)
+
+
+
+
+
+### The `position` property
+
+---
+
+The `position` property defines **how** the browser should position the selected element. There are different types:
+
+- `position: static`
+
+  - This is the default positioning
+  - These elements **are part of the page flow**
+  - Appear in the order they do in the markup
+  - These **static elements** are **not affected by offset properties**
+
+  **Note**: Elements that use `flow`, `grid`, `flex`, `absolute` and/or `fixed` positioning **are removed from the page flow**.
+
+- `position: relative`
+
+  Relative positioning **does not remove the elements from the document flow** but rather **only renders it at an offset**.
+
+  ![](./res/static_vs_relative_flow.png)
+
+  
+  Think about it this way, at every point in time a relative positioned element has **two things going on**:
+
+  1. the element is still in the flow **exactly as if it were static** and affects the flow exactly as static elements
+  2. the element is **merely rendered at an offset to it's static position** where **this offset element does not affect the flow**!
+
+  
+
+  
+
+  - **intuitive notes here first to get a feel for this madness**
+    - relative positioning keeps the elements in the flow just as normal i.e as if `position: static` were used
+    - the browser renders the elements at their static position + offset
+    - the offsets are applied on a rendering level and the element exists in two parallel states we could say:
+      - the one we do not see, which is included in the document flow, equivalent to the `static` version?
+        This still affects the elements around just as usual.
+      - the one rendered by the browser, which does not affect the document flow?
+    - typically only a single side per axis should have offset i.e. left **or** right **not both**, this goes for the horizontal and vertical axis
+      as they have different precedence for cases where left+right is defined:
+      For top and bottom, **top always has precedence**.
+    - relative elements are not
+
+
 
 
 
@@ -152,16 +273,6 @@ Intuitive notes as we go:
 **Is the following correct?**
 
 >  **Note**: Absolute and Fixed elements typically **do not affect the dimensions of their parents**.
-
-
-
-### Valuable CSS
-
----
-
-- float, it's ...
-- `overflow`  -  defines how an elements overflow i.e. the **content that does not fit into the elements content region**  is treated
-- clear, it's types and intuition
 
 
 
@@ -195,3 +306,6 @@ Intuitive notes as we go:
 
 - What is a `block formatting context` at awareness level?
   The important thing to understand is that the `block formatting context` contains **everything** inside the element to which it applies, **including floated elements**!
+
+- Are floated; grid, flex, absolute and relative elements alway removed from the page flow?
+  Are statically positioned elements always part of the page flow?
