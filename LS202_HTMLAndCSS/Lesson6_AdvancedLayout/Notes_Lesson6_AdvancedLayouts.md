@@ -288,7 +288,7 @@ The `position` property defines **how** the browser should position the selected
 
   **Other important considerations about `absolute` position are:**
 
-  - Absolute position **does indeed take the elements from the document flow**.
+  - Absolute position **does indeed take the elements from the document flow** which means that is does not take up flow space.
     So absolute elements **do not interact with the flow of other elements**!
   - Absolute position initializes the element position at the origin of the chosen ancestor and the offsets work from there!
 
@@ -299,13 +299,72 @@ The `position` property defines **how** the browser should position the selected
   ```css
   .selector {
     position: absolute;
-      top: -50px;
-      right; 33%;
+    top: -50px;
+    right; 33%;
+  }
+  ```
+
+- `position: fixed`
+
+   Fixed position positions the element at a fixed position within the browser window and **does not move** when the user scrolls the page.
+
+   **Note**: Absolute positioning **does take the element from the document flow** i.e. it does not take up any flow space.
+
+   ```css
+   .selector {
+     position: fixed;
+     top: 0;
+     right; 25px;
+   }
+   ```
+
+   **Note**: Launchschool does not cover this type of position and does not give further info.
+
+
+
+### General HTML document tricks
+
+---
+
+- When centering an element horizontally **using offsets**
+
+  1. Center the element using the `left` and `right` offset properties with a percentage value like `50%`.
+     This puts the **left edge** of the element in the **center**.
+  2. Pull the element back to the left using a negative margin of half the space left of the element.
+
+
+  ```css
+  .center-me {
+    width: 400px;
+    position: fixed; /* glues to the body viewport */
+    left: 50%;
+    margin-left: 200px; /* half of the objects width, manually yes ... */
+  }
+  ```
+
+- Dimming content to accentuate a specific element, like these adds
+
+  1. Add a covering element of the required position and dimensions and set it to a translucent color
+  2. Define it's and the other relevant elements' z-index to not rely on the HTML document structure
+
+  ```css
+  /* define a translucent plane to cover the content */
+  /* make sure to define z-index for all affected elements */
+  /* for best expected results */
+  .dimmer {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1;
   }
   ```
 
   
-  
+
+
 
 ### Things to add to the previous matching portions about positioning
 
@@ -353,3 +412,11 @@ The `position` property defines **how** the browser should position the selected
 
 - Write a list of where, how and with what requirements the types of position differs for quick comparison when I need it.
   Probably not worth it if my notes are clean enough?
+
+
+
+### Good reads
+
+---
+
+- https://www.smashingmagazine.com/2009/07/the-definitive-guide-to-using-negative-margins/
