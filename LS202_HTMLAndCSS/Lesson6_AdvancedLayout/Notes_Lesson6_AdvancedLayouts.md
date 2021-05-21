@@ -415,8 +415,9 @@ The `position` property defines **how** the browser should position the selected
 
 
 
-### Good reads
+### Good reads and resources
 
 ---
 
-- https://www.smashingmagazine.com/2009/07/the-definitive-guide-to-using-negative-margins/
+- using negative margins: https://www.smashingmagazine.com/2009/07/the-definitive-guide-to-using-negative-margins/
+- summary box models, floats and positioning rules: https://d3jtzah944tvom.cloudfront.net/202/projects/lesson_6/box_model_v2/main.html

@@ -15,7 +15,6 @@
 - The group that will define the HTML and DOM standards in the future: `WHATWG` https://whatwg.org/
   - HTML standard: https://html.spec.whatwg.org/multipage/
   - DOM standard: https://dom.spec.whatwg.org/
-    
 
 #### Introduction - What to focus on
 
@@ -448,25 +447,24 @@
       - Define the target using the `target` attribute
 
       - Interesting: https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_URL
-        
-
+  
   ### Getting to know CSS
-
+  
   - #### The cascade
-
+  
     - **General**
       All styles cascade from the top to the bottom of the stylesheet where the most recents property values overwrite previous ones.
-
+  
     - **Scope**  -  I call it scope because it reminds me of scope
       CSS attributes like `class` can be used in any elements because they are `global`, but **most html attributes are specific to certain type of tag/elements**.
-
+  
     - **Cascading properties**
       The latest/bottommost property definition is the one retained / overwrites previous ones / has precedence.
       **Note**: This is the case if no styling conflicts occur, i.e the selector type specificity does not need to be considered and does not affect this precedence.
-
+  
     - **Calculating specificity**
       Different selector types have different specificity weights:
-
+  
       1. `type selectors`
          - `specificity weight` - lowest of all at `point value 0-0-1`
       2. `class selectors`
@@ -511,98 +509,97 @@
       
     - **Combined selectors**
       Combined selectors should be **read from right to left** where:
-
+  
       - The rightmost selector is referred to as the `key selector` which defines which exact elements the style is applied to
       - All selectors left of the key selector are referred to as `prequalifier` which define the 'way to get to the key selected element(s)'
-        
-
+      
       Examples and how to read them using the 'read right to left ' trick:
-
+      
       - ```css
         .hotdog p {
           background: brown;
         }
         ```
-
+      
         The combined selector consists of **two selectors** where:
-
+      
         - a `class selector` named `hotdog` `->` `type selector` of type `p`.
         - Key selector: `p`
         - Prequalifiers: `hotdog`
-
+      
         **Result:** The elements `selected are paragraph elements residing withing an element of class hotdog`.
-
+      
       - ```css
         .hotdog p.mustard {
           background: yellow;
         }
         ```
-
+      
         The combined selector consists of **three selectors** where:
-
+      
         - a `class selector` named `hotdog` `->` a `type selector` of type `p `->`class selector` named `mustard`
         - Key selector: `mustard`
         - Prequalifiers: `hotdog` and `p`
-
+      
         **Result:** The elements `selected are paragraph elements of class mustard which reside in an element of class hotdog`
-
+      
       - Trying to define the behaviour of combined selectors for intuition:
-
+      
         - **Read** combined selectors from **right to left**
-
+      
         - Rightmost selector in the chain is the `key selector`
-
+      
         - `Key selector`  defines the type of elements that are selected where:
-
+      
           - `some_class`  -  selects elements with class attribute value `some_class`
           - `some_type.some_class`  -  selects elements of type `some_type` with class attribute value `some_class`
           - `gen_class spec_class`  -  selects elements with class attribute value `spec_class` that **reside inside an element with class attribute value `gen_class`**
-
+      
         - So both different notations to be aware of are:
-
+      
           1. `a b c`  -  combination of 3 selectors that selects elements defined by `c`
           2. `a b.c`  -  combination of 3 selectors that selects elements defined by `b.c`
-
+      
           **Note**: The differentiating factor here is the space separated selectors that act differently than when connecting them!
-
+      
       - Specificity in combined selectors
-
+      
         - The total specificity weight of a combined selector is done by:
-
+      
           1. Initialize specificity weight as `0-0-0`
           2. Add the number of times each type of selector occurs in the combined selector and add this sum to the corresponding specificity weight cell.
-
+      
         - Determining combined selector precedence
-
+      
           ```text
           1) inline (1-0-0-0)
           2) id     (0-1-0-0)
           3) class  (0-0-1-0)
           4) type   (0-0-0-1)
           ```
-
+      
           Leading with examples here:
-
+      
           - **Higher ranking selectors always have precedence over lower ranking selectors** **no matter** how high **the point value** is for the lower ranking selector:
-
+      
             ```text
                0.0.9.0 (class selector)
             VS 0.1.0.0 (id    selector)
             ----------
                0.1.0.0 has precedence
             ```
-
+      
           - The point value comes into play when no highest ranking selector exists and the precedence is decided on the highest point value:
-
+      
             ```text
                0.4.0.1 (4x id & 1x type)
             VS 0.7.0.1 (7x id & 1x type)
             ----------
                0.7.0.1 has precedence
             ```
-
+      
         Example:
-
+      
         ```css
         /* 2x class selectors         */
         /* 1x type  selector          */
@@ -618,16 +615,16 @@
           background: brown;
         }
         ```
-
+      
         
-
+      
       - Tips on combined selectors
-
+      
         - Make the selectors as specific as necessary but do not go over the top - a few visual example:
           - `good`  -  `ul#summer-drinks li.favorite`
           - `too complicated`  - `html body div#pagewrap ul#summer-drinks li.favorite`
         - The higher the specificity weights go the more likely things are to break in terms of the expected result
-
+    
   - #### Lengths
 
     There are different types of 'length' units/types in css of which some are absolute and some are relative.
@@ -642,7 +639,7 @@
 
       - `%`  -  Percentages
         In order to set an axis of an elements size using percentages, we need to know the dimensions of the parent element, this selected element is nested in.
-
+  
         So a style like:
 
         ```css
@@ -650,19 +647,19 @@
           width: 50%;
         }
         ```
-
+  
         Sets the element with the class attribute value `col` to 50% width of the element it is nested in, i.e. it's parent element.
 
       - `em`
         This one is calculated based on an element's font size.
         So if an element has a `font-size` of `11` and a `width` of `7`, then the total width of that object ends up being `em x font-size = 7 x 11 ==> 77`.
-
+  
         **Note**: If no font-size is explicitly stated for a particular object using the `em` unit for some css property, then the **font-size of the closest parent with a defined font-size is used as the basis for `em`** using the same formula as mentioned above.
 
   #### HTML and CSS style
 
   - HTML style guide:
-  
+
     - always write standards-compliant markup despite HTML's forgiving nature
   
     - use semantics elements as much as possible
@@ -703,7 +700,7 @@
   
     - use comments when appropriate for documentation
   
-    - newline for every new selector and property as well as properly indent everything
+    - new line for every new selector and property as well as properly indent everything
   
     - class names should be lowercase and use hyphens a delimiters like so `.lean-and-mean { ... }`
   
@@ -753,8 +750,8 @@
   
       ```css
       p {
-        really-bad:123
-        much-better: 123 /* : followed by a single space */
+        really-bad:123;
+        much-better: 123; /* : followed by a single space */
       }
       ```
   
@@ -762,7 +759,7 @@
   
       ```css
       li {
-        meep-deep: bad :
+        meep-deep: bad ;
         meep-eek: good;
       }
       ```
@@ -785,7 +782,6 @@
   
     - List the selectors in groups based on the elements they select
   
-    
     
   
   ### General stuff and random things
