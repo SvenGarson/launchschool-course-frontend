@@ -167,7 +167,7 @@ We must consider the **difference between** the following **different meanings o
 
 - `Physical Pixel`  -  Also referred to as `Device Pixel` or `Display Pixel`
   The physical pixel is defined as 96 pixels per inch and **accounts for the difference in resolution/surface are i.e. pixels per inch.**
-The **browser** then renders the image and **scales** it to the target display **so that the source and destination image** take up the **same amount of horizontal and vertical pixels on both devices**.
+  The **browser** then renders the image and **scales** it to the target display **so that the source and destination image** take up the **same amount of horizontal and vertical pixels on both devices**.
   
   ![](res/physical_pixel.png)
   
@@ -208,22 +208,21 @@ The principal relative units to use are
     ![](res/rem_is_consistend.png)
   - The `root font size` is the **height of the base font for the document** which is the font size designated to the`html` element
   - Example: If the `root font size = 16px` then `1.5rem = 24px` because `16px * 1.5 = 24px`
-    
-
+  
   **Note**: Just use the `px` unit to specify the `root font size`
-
+  
   **Note**: If I do want to use a  `rem` unit as the `root font size` you **must use a fallback of unit `px` to account for old/buggy browsers**
-
+  
   ```css
   p {
     font-size: 20px; font-size: 1.25rem;
   }
   ```
-
   
-
+  
+  
   **Note**: To account for bugs in older browsers set the `root font size` on **both the html and body element using the `px` unit**
-
+  
 - `%`  -  *Technically is not a length value*
   Can be used to define a size based on the containing elements (the container) available content region.
 
@@ -312,7 +311,6 @@ The logic behind this approach is the following:
 - `img` elements are **not `inline-block`** by **default** elements** but **they are `inline`** elements **by default**!
 - `block` and `inline-block` outer display model boxes **cannot be nested inside** `inline` type boxes
 - Because HTML collapses multiple whitespace characters into a single whitespace character, this can cause some whitespace to appear and take up room and screw up a design like in the example:
-  
  ```html
   <section>
     <article>content</article>
@@ -375,3 +373,5 @@ The logic behind this approach is the following:
   Is the rule maybe as easy as, along the lines of `if the rightmost property value is supported it takes precedence and if it is not  the the property value immediately to the left is used`?
 
 - What are the exact rules for compounding `em` font heights? Does it have to do with nesting? Maybe just learn the basics and then use `rem`s all the way.
+
+- Do block level elements always expand vertically to fit the content?

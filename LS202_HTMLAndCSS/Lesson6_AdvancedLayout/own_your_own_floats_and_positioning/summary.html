@@ -9,17 +9,15 @@
   <body>
     <article class="container">
       <!-- Inline Elements -->
-      <section>
-        <h2>Inline Elements</h2>
+      <h2>Inline Elements</h2>
+      <section class="inline-elements first-example">
           <p>
-            Inline elements occupy the space required by the content, and nothing
-            more. They do not take width and height values.
+            Inline elements occupy the space required by the content, and nothing more. They do not take width and height values.
           </p>
 
         <h3>Example</h3>
           <p>
-            Anchor tags are inline elements: they take up the width required by
-            their content and not the entire width of the page.
+            Anchor tags are inline elements: they take up the width required by their content and not the entire width of the page.
           </p>
 
           <div class="example-container">
@@ -28,12 +26,108 @@
             <a href="#">Contact</a>
           </div>
 
+        <h3>What happens when we set a margin on an inline-level element?</h3>
+          <p>
+            Inline elements ignore top and bottom margins but observe the leftand right margins.
+          </p>
+
+          <div class="example-container second-example">
+            <a href="#">Home</a>
+            <a href="#">Portfolio</a>
+            <a href="#">Contact</a>
+          </div>
+
+          <p>
+            In the above example, we requested a margin of 30px on all sides. However, the browser ignored the top and bottom margins.
+          </p>
+
+        <h3>What about padding?</h3>
+
+          <div class="example-container third-example">
+            <a href="#" class="padded_anchor">Home</a>
+            <a href="#" class="padded_anchor">Portfolio</a>
+            <a href="#" class="padded_anchor">Contact</a>
+          </div>
+
+          <p>Inline elements accept padding on all sides.</p>
+
+        <h3>Floating Inline Elements</h3>
+
+          <div class="example-container fourth-example">
+            <a href="#" class="padded_bordered_anchor">Home</a>
+            <a href="#" class="padded_bordered_anchor">Portfolio</a>
+            <a href="#" class="padded_bordered_anchor">Contact</a>
+          </div>
+
+          <p>
+            Floating an inline element changes its display value to block, which makes it subject to all block-level characteristics. Thus, floated inline elements can take margins, padding, heights, and widths.
+          </p>
+
       </section>
 
       <!-- Block Elements -->
+      <section class="block-elements">
+
+        <h2>Block Elements</h2>
+          <p>
+            Block-level elements require the entire width of the page and always start a new line. They can have margins and padding. When you omit the width, block elements expand to fill their parent container's natural width; when you omit the height, they expand to fit the content.
+          </p>
+
+        <h3>Example</h3>
+          <p><code>div</code> elements are block-level.</p>
+          <div class="highlighted-blue">This <code>div</code> has no explicit width or height.</div>
+
+          <p>Without an explicit width or height, the box fills the entire width and uses as much height as it needs to fit the content.</p>
+          <div>This <code>div</code> has no explicit width but a height of 60px; it also has both padding and margins of 20px on all sides.</div>
+
+          <p>With an explicit height of 60px plus margins and padding, the box still fills the entire width (including the padding and margins), but now requires the requested height.</p>
+
+          <!-- Currently working on the content below -->
+          <div>This div has a width of 90px and no explicit height.</div>
+
+          <p>With an explicit width of 90px, the box collapses down to 90px width but expands the height to ensure the text still fits.</p>
+
+          <div>This div has a width of 180px and a height of 120px; it also has both padding and margins of 20px on all sides.</div>
+          <p>With an explicit width of 180px and height of 120px, the box takes on the requested dimensions. However, the content can overflow the box as it does here.</p>
+
+        <!-- Floating Block Elements is a sub-section of Block Elements -->
+        <section class="floating-block-elements">
+        <h3>Floating Block Elements</h3>
+        <h4>Floating block elements with no width or height</h4>
+          <div>
+            <div class="floated-left highlighted-blue bordered-red">Box - 1 - Floated Left</div>
+            <div class="floated-right highlighted-red">Box - 2 - Floated Right</div>
+          </div>
+
+          <p class="after-float">Floated block-level elements that don't have a width collapse down to the width required by the content. Thus, multiple floated blocks can fit on the same line as shown above where we float one item left and the other right.</p>
+
+        <h4 hidden>Floating block elements with width and height set.</h4>
+          <p hidden>Box - 1 - Floated Left</p>
+          <p hidden>Box - 2 - Floated Right</p>
+
+          <p hidden>When you specify the widths on floated block-level elements, the browser will observe the widths. In the above example, our blocks have widths of 40% and 50%.</p>
+        <section>
+      </section>
+
       <!-- Inline-Block Elements -->
       <!-- Floats and Positioning Elements -->
       <!-- Positioning -->
+
+      <!-- Dummy space for testing -->
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <br>
     </article>
   </body>
 </html>

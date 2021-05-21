@@ -23,6 +23,12 @@ Floats are used to push element to the far left or right **in their immediate co
 
 The space beside floated elements left and right are usable to other elements just as normal and **floated elements only take up as much space as their content takes up, which is why a block level element may be less than full width**!
 
+
+
+**When floating an element, the  `display` property value is typically changed to `block`, but there are exceptions depending on the element type**.
+
+
+
 **Note**: Floated elements have special behavior in terms of vertical margin collapsing.
 **Note**: Floats can be used to swap the position of elements:
 
@@ -182,7 +188,7 @@ The `clear` property moves **the cleared elements, that follow any floated eleme
 
 
 
-### Problems that occur when floating and clearing
+### Problems that occur when floating and intuition
 
 ---
 
@@ -193,6 +199,8 @@ Always remember that:
   If the floated element is too large for the rest of the row/line space, it wraps to the lext line/space.
 
 - when using percentage dimensions always think of the box-model and the present margins and padding of the elements
+
+- always think of the type of display formatting model floated are converted to automatically, since this is typically `block`, floated elements then have all the capabilities and limitations of block-level elements
 
 
 
@@ -412,6 +420,8 @@ The `position` property defines **how** the browser should position the selected
 
 - Write a list of where, how and with what requirements the types of position differs for quick comparison when I need it.
   Probably not worth it if my notes are clean enough?
+  
+  
 
 
 

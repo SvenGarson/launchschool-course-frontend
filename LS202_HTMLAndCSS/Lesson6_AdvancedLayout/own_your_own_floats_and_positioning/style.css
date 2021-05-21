@@ -10,26 +10,127 @@ body {
   background-color: white;
   color: #545459;
   font: normal 16px Helvetica, Arial, sans-serif;
-  padding: 0;
   margin: 0;
+  padding: 8px 0 0 0;
 }
 
-
-h2, h3 {
+h2, h3, h4 {
   color: #ce4a4a;
+}
+
+p {
+  padding: 0;
+  margin: 25px 0;
+  line-height: 2;
 }
 
 .container {
   width: 1000px;
   border: 2px solid #999;
   padding: 20px;
-  margin-top: 5px;
+  margin: 0 auto;
+}
+
+.example-container a,
+.example-container a:visited {
+  text-decoration: none;
 }
 
 .example-container {
   width: 650px;
   border: 2px dashed #555;
-  padding: 40px;
-  margin-left: 40px;
-  margin-top: 40px;
+  padding: 30px;
+  margin: 40px 0 40px 40px;
+}
+
+a {
+  color: black;
+}
+
+a.padded_anchor {
+  background-color: green;
+  color: white;
+  padding: 30px;
+}
+
+a.padded_bordered_anchor {
+  background-color: green;
+  color: white;
+  padding: 30px;
+  border: 4px darkgreen solid;
+}
+
+.second-example a,
+.second-example a:visited {
+  color: black;
+  margin: 30px;
+}
+
+.fourth-example a,
+.fourth-example a:visited {
+  float: left;
+  margin: 15px;
+}
+
+.fourth-example {
+  overflow: auto;
+}
+
+.highlighted-blue {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.highlighted-green {
+  background-color: green;
+  color: white;
+}
+
+.highlighted-red {
+  background-color: red;
+  color: white;
+}
+
+.block-elements div {
+  color: white;
+}
+  
+.block-elements > div:nth-of-type(2) {
+  background-color: green;
+  height: 60px;
+  padding: 20px;
+  margin: 20px;
+}
+
+.block-elements > div:nth-of-type(3) {
+  background-color: tomato;
+  width: 90px;
+}
+
+.block-elements > div:nth-of-type(4) {
+  background-color: pink;
+  width: 180px;
+  height: 120px;
+  margin: 20px;
+  padding: 20px;
+}
+
+.floated-left {
+  float: left;
+}
+
+.floated-right {
+  float: right;
+}
+
+.bordered-red {
+  border: 1px solid red;
+}
+
+.after-float {
+  clear: both;
+}
+
+.floating-block-elements {
+  /* un-used */
 }
