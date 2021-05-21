@@ -370,6 +370,19 @@ The `position` property defines **how** the browser should position the selected
   }
   ```
 
+- `text-align:` can be used to center content that is nested inside a block-level element
+
+- empty elements added to an element using the `::before` and `::after` pseudo element can be used for defining horizontal dividers:
+
+  ```css
+  .container::after {
+    display: block;
+    width: 100%;
+    content: "";
+    border-top: 1px dashed black;
+  }
+  ```
+
   
 
 
@@ -420,6 +433,8 @@ The `position` property defines **how** the browser should position the selected
 
 - Write a list of where, how and with what requirements the types of position differs for quick comparison when I need it.
   Probably not worth it if my notes are clean enough?
+  
+- How are fonts inherited if at all? LS code keeps defining the same `font` property value for text wrapped in divs.
   
   
 
