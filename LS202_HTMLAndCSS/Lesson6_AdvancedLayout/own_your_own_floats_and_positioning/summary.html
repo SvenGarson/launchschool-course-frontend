@@ -147,6 +147,40 @@
       </section>
 
       <!-- Floats and Positioning Elements -->
+      <section class="floats-and-positioning-elements">
+        <h2 class="centered">Floats and Positioning Elements</h2>
+        <h3>Floats</h3>
+
+          <p>
+            The browser removes floated elements from the normal flow. Floated elements automatically become block-level elements with change: two or more floated elements can fit on the same line.
+          </p>
+
+        <h3>Example</h3>
+          <div class="floating">
+            <div class="centered">Box 1</div>
+            <div class="centered">Box-2</div>
+            <div class="centered">Box-3</div>
+          </div>
+
+          <p>
+            Elements that follow a flotaed element wrap around it. However, we don't want this behavior above, so we applied <code>clear:both</code> property to the third <code>div</code>. There are two other values for <code>clear</code>, <code>left</code> and <code>right</code>, but we typically want <code>both</code>.
+          </p>
+
+          <p>There are other ways to clear floats. One technique is the clearfix method:</p>
+
+          <pre>
+            <code>
+            elementName::after {
+              content: " ";
+              display:block;
+              clear: both;
+            }
+            </code>
+          </pre>
+
+Here we append the ::after pseudo-element to the parent element's selector.
+      </section>
+
       <!-- Positioning -->
 
       <!-- Dummy space for testing -->

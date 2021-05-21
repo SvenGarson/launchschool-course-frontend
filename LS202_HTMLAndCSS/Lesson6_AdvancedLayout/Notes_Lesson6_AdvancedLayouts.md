@@ -383,7 +383,7 @@ The `position` property defines **how** the browser should position the selected
   }
   ```
 
-  
+- `line-height` seems to be a great way to set the padding of elements that contain text content
 
 
 

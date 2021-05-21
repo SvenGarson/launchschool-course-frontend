@@ -178,4 +178,45 @@ a.padded_bordered_anchor {
   width: 100%;
   content: "";
   border-top: 1px dashed black;
+  margin-bottom: 30px;
+}
+
+.floats-and-positioning-elements {
+  /* un-used */
+}
+
+.centered {
+  text-align: center;
+}
+
+.floating {
+  /*overflow: auto;*/
+  color: white;
+  font-weight: bold;
+  background-color: lightgray;
+  margin-bottom: 40px;
+}
+
+.floating div:nth-of-type(1) {
+  float: left;
+  background-color: tomato;
+  width: 50%;
+  line-height: 100px;
+}
+
+.floating div:nth-of-type(2) {
+  float: left;
+  background-color: dodgerblue;
+  width: 50%;
+  line-height: 100px;
+}
+
+.floating div:nth-of-type(3) {
+  clear: both;
+  background-color: seagreen;
+  line-height: 50px;
+}
+
+pre {
+  margin: 0;
 }
