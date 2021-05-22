@@ -178,11 +178,7 @@ a.padded_bordered_anchor {
   width: 100%;
   content: "";
   border-top: 1px dashed black;
-  margin-bottom: 30px;
-}
-
-.floats-and-positioning-elements {
-  /* un-used */
+  margin: 10px 0 40px 0;
 }
 
 .centered {
@@ -219,4 +215,35 @@ a.padded_bordered_anchor {
 
 pre {
   margin: 0;
+}
+
+.positioning ul {
+  margin: 0 0 45px 40px;
+}
+
+.positioning ul p {
+  margin: 0;
+}
+
+.fixed {
+  position: fixed;
+  background-color: dodgerblue;
+  border-radius: 10px;
+  padding: 25px 35px;
+  color: white;
+  left: 35px;
+  bottom: 50px;
+  width: 225px;
+}
+
+.relative {
+  background-color: tomato;
+  color: white;
+  width: 325px;
+  border-radius: 10px;
+  padding: 25px 35px;
+  margin-left: 0;
+  position: relative;
+  right: 90px;
+  top: 40px;
 }

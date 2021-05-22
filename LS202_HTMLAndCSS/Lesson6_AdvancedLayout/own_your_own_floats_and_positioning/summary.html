@@ -178,10 +178,52 @@
             </code>
           </pre>
 
-Here we append the ::after pseudo-element to the parent element's selector.
+          <p>Here we append the ::after pseudo-element to the parent element's selector.</p>
       </section>
 
       <!-- Positioning -->
+      <section class="positioning">
+        <h2>Positioning</h2>
+          <p>
+            We sometimes want to position elements at specific locations on the page. The normal page flow and floats can't do this with the precision we often want. We can use CSS positioning in this case. There are four positioning types:
+          </p>
+
+          <ul>
+            <li><p><i>Static</i></p></li>
+            <li><p><i>Fixed</i></p></li>
+            <li><p><i>Relative</i></p></li>
+            <li><p><i>Absolute</i></p></li>
+          </ul>
+
+        <h3>Static Positioning</h3>
+          <p>
+            The element renders at its normal position on the page. That is, the browser uses the standard page flow. All elements default tom static positioning.
+          </p>
+
+        <h3>Fixed Positioning</h3>
+          <p>
+            Lets you place an element at a fixed position in the browser window; it will remain in place even when you scroll the page. You need the <code>top</code>, <code>bottom</code>, <code>right</code>, and <code>left</code> properties to position the element.
+          </p>
+
+          <p>
+            The browser removes elements with fixed positioning from the page flow. It does not leave a gap in the location where the browser would have positioned it otherwise.
+          </p>
+
+          <p>The blue box on the bottom-left corner of the page is a fixed position element.</p>
+
+          <div class="fixed centered">I use fixed<br>positioning.</div>
+        
+        <h3>Relative Positioning</h3>
+          <p>
+            Relative positioning positions an element at a location relative to its normal position. Unlike fixed positioning, relative positioning does not remove an element from the page flow; in fact, you can observe a gap in the flow indicating the original position.
+          </p>
+
+          <div class="relative centered">I use relative positioning.</div>
+
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non cumque repellat sapiente vitae nihil debitis accusamus, odit, tempore id reiciendis consequatur necessitatibus veritatis, distinctio vel, cum repellendus numquam blanditiis perferendis?
+          </p>
+      </section>
 
       <!-- Dummy space for testing -->
       <br>
