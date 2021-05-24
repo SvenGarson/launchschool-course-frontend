@@ -4,6 +4,7 @@ html {
 
 *, *::before, *::after {
   box-sizing: inherit;
+  z-index: 1;
 }
 
 body {
@@ -223,27 +224,58 @@ pre {
 
 .positioning ul p {
   margin: 0;
+  position: relative;
 }
 
 .fixed {
   position: fixed;
+}
+
+.fixed_positioning {
   background-color: dodgerblue;
   border-radius: 10px;
   padding: 25px 35px;
   color: white;
-  left: 35px;
+  left: 30px;
   bottom: 50px;
   width: 225px;
 }
 
 .relative {
+  position: relative;
+}
+
+.relative_positioning {
   background-color: tomato;
   color: white;
   width: 325px;
   border-radius: 10px;
   padding: 25px 35px;
   margin-left: 0;
-  position: relative;
   right: 90px;
   top: 40px;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.absolute_positioning {
+  background-color: green;
+  color: white;
+  width: 200px;
+  padding: 25px 30px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  top: -70px;
+  left: 225px;
+}
+
+#top-layer {
+  z-index: 10;
+}
+
+div#top-layer {
+  margin: 0;
+  padding: 0;
 }

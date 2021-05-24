@@ -242,6 +242,8 @@ The `position` property defines **how** the browser should position the selected
 
   **Note**: Elements that use `flow`, `grid`, `flex`, `absolute` and/or `fixed` positioning **are removed from the page flow**.
 
+  **Note**: This position value **ignores values from left; right; bottom; top; z-index**!
+
 - **`position: relative`**
 
   Relative positioning **does not remove the elements from the document flow** but rather **only renders it at an offset**.
@@ -284,11 +286,7 @@ The `position` property defines **how** the browser should position the selected
 
 - **`position: absolute`**
 
-   Absolute position moves the element to **a new position within a container element** which is the **nearest ancestor element that has either:**
-
-  - relative position
-  - absolute position
-  - sticky position (not handled in this course)
+  Absolute position moves the element to **a new position within a container element** which is the **nearest ancestor element that has either that has a non-static`position`**.
 
   **If there is no ancestor that fits these criteria the body is used instead, which means that the browser positions the element on the initial page in an absolute position**.
 
@@ -327,6 +325,72 @@ The `position` property defines **how** the browser should position the selected
    ```
 
    **Note**: Launchschool does not cover this type of position and does not give further info.
+
+
+
+### Flex and Grid
+
+---
+
+When working with floats and positioning we must deal with all the side effects in the design where two `display` property values support:
+
+
+
+- **Flex**  -  `display: flex`
+  - Is one-dimensional which means that can work with **one axis at the same**
+  - Think in terms of **styling** a **single rows or column**
+- **Grid**  - `display: grid`
+  - Is two-dimensional which means that can work with **two axes at the same**
+  - Think in terms of **styling** a **many rows and columns**
+
+
+
+### Random Video notes to extract proper notes from
+
+---
+
+**Flex video notes**
+
+- No more fiddling with typical problems like: `float`, `clear` and fixes like clearfix
+- Problems Flex wants to solve
+  - Floats are miss-used and the need to clear them
+  - Different design files for different screen sizes/devies
+  - More intuitive and robust horizontal/vertical spacing
+- Features
+  - Simple re-ordering of elements through `media-queries` through css without changing the markup
+  - The element contents are considered
+- `media queries` enable us to style markup through raw css by defining the style requirements.
+  Think markup styling shaders.
+- Do not use nested Flex containers but rather go grid right away. That's the purpose and avoids overhead because of non-semantic markup that is added solely for styling.
+
+**Grid video notes**
+
+- Problems Grid wants to solve
+  - Alternatives to build responsive layouts change the actual markup through external technologies which can mess with the semantics and all technologies that are based on semantics (like accessibility features)
+  - The jumbled mess JavaScript solutions can produce
+  - Same as for Flex, avoid all the hacky crappy solutions we use everywhere as part of normal development
+- Simple to apply and design responsive designs with as well as very flexible
+- What to aim for in the big picture
+  1. **Build accessible mobile-first layouts with grid**
+  2. Use mobile-first layout as fallback for all browsers.
+     Because they are the most robust designs and work and work on small **narrow and wide** displays and **not necessarily vice-versa**.
+  3. use `@supports`  to detect grid support
+  4. apply nested grids and grid areas to have more control over the content
+- Implementing a design with Grid is simple and intuitive:
+  1. Design how a particular website should look
+  2. Design a grid that fits the design
+  3. Populate the grid with content through Grid on ... basis:
+     - cell
+     - row
+     - column
+     - region
+     - ...
+- Intuition and philosophy
+  - Do not get caught up in making every website look alike per browser/device but rather make it look best for these specific browsers/devices.
+- Tools  - Use the browser Grid inspector
+- Great resources to learn Grid
+  - `gridbyexample`
+  - CSS Tricks
 
 
 
@@ -428,6 +492,10 @@ The `position` property defines **how** the browser should position the selected
 - What is a `block formatting context` at awareness level?
   The important thing to understand is that the `block formatting context` contains **everything** inside the element to which it applies, **including floated elements**!
 
+- How would you implement different styles based on browser window size if there are no variables through pure css i.e. no media queries?
+  
+- How to vertically center elements like text that have **no pre-defined height** through pure css.
+  
 - Are floated; grid, flex, absolute and relative elements alway removed from the page flow?
   Are statically positioned elements always part of the page flow?
 
@@ -435,6 +503,22 @@ The `position` property defines **how** the browser should position the selected
   Probably not worth it if my notes are clean enough?
   
 - How are fonts inherited if at all? LS code keeps defining the same `font` property value for text wrapped in divs.
+  
+- What is the `Stack`? This concept is used to describe the rules which govern how elements are ordered and used etc. Good to know for rendering with positioned and z-indexed elements!
+  
+- what does HTML parse as HTML and what characters have to be escaped and how?
+  
+- flex box can be used to flex everything but also for positioning only
+  
+- flex does not respect sizing if screen size gets small which we can define through wrapping
+  
+- flex considers the nesting of elements
+  
+- **using flex, think:**
+  
+  - of how the space is supposed to be distributes and how the grid rows/columns/cells are to be arranged
+  - that flexbox is used to style **horizontal space** i.e. **is one dimensional** and go from there
+  - we can decide to distribute **horizontal and vertical** space
   
   
 

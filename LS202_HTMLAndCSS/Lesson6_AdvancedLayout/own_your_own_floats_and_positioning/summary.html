@@ -211,35 +211,32 @@
 
           <p>The blue box on the bottom-left corner of the page is a fixed position element.</p>
 
-          <div class="fixed centered">I use fixed<br>positioning.</div>
+          <div class="fixed fixed_positioning centered">I use fixed<br>positioning.</div>
         
         <h3>Relative Positioning</h3>
           <p>
-            Relative positioning positions an element at a location relative to its normal position. Unlike fixed positioning, relative positioning does not remove an element from the page flow; in fact, you can observe a gap in the flow indicating the original position.
+              Relative positioning positions an element at a location relative to its normal position. Unlike fixed positioning, relative positioning does not remove an element from the page flow; in fact, you can observe a gap in the flow indicating the original position.
           </p>
 
-          <div class="relative centered">I use relative positioning.</div>
+          <div class="relative relative_positioning centered">I use relative positioning.</div>
 
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non cumque repellat sapiente vitae nihil debitis accusamus, odit, tempore id reiciendis consequatur necessitatibus veritatis, distinctio vel, cum repellendus numquam blanditiis perferendis?
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non cumque repellat sapiente vitae nihil debitis accusamus, odit, tempore id reiciendis consequatur necessitatibus veritatis, distinctio vel, cum repellendus numquam blanditiis perferendis?
           </p>
-      </section>
 
-      <!-- Dummy space for testing -->
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-      <br>
+        <div id="top-layer" class="relative">
+          <h3>Absolute Positioning</h3>
+            <div class="relative">
+              <div  class="absolute absolute_positioning centered">I use absolute positioning.</div>
+            </div>
+
+            <p>
+              Absolute positioning removes an element from the normal page flow and positions it at an absolute position relative to its parent element. If the parent element is the <code>&LT;body&GT;</code>, the position is absolute relative to the complete page.
+            </p>
+
+            <p>The green box shows uses absolute positioning.</p>
+        </div>
+      </section>
     </article>
   </body>
 </html>

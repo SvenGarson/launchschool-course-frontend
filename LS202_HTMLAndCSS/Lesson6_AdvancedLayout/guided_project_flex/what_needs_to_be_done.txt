@@ -1,0 +1,8 @@
+# Tasks that need to be accomplished to make the website use a Flex approach
+- define how the grid needs to be organized in terms of single rows
+  (because this is Flex and not Grid)
+- because the requirements state to not change the html, use the existing structure
+  to convert containers to Flex containers
+- get rid of any un-necessary styling and adjust to match the final look
+  such as widths and heights
+- validate css (again, cannot change HTML despite it not passing W3C validation)
