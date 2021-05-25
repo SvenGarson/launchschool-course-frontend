@@ -1,0 +1,26 @@
+# What needs to be done to convert the project to CSS Grid
+- zero margin and padding on all html element and remove
+  un-necessary css margin and padding styling
+- DRY up the stylesheet and have it correspond to the initial
+  design
+> initialize the grid on the parent element that contains:
+    - the heading
+    - horizontal navigation
+    - row that contains aside-1, article-1, aside-2
+    - row that contains aside-3, article-2
+    - row that contains the image and copyright
+      + get rid of the weird image margin
+
+    # Designing the grid
+    The design is 5 rows tall
+
+      1] header    - single column
+      2] nav       - 5      columns
+      3] content 1 - 3      columns
+      4] content 2 - 1      columns
+      5] 2         - columns
+
+    The plan is to create an initial grid and assign content to
+    the cells, rows, regions etc.
+
+- validate CSS

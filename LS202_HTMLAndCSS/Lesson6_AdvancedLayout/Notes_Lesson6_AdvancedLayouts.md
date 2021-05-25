@@ -522,6 +522,12 @@ When working with floats and positioning we must deal with all the side effects 
   
   
 
+### What to learn deeply for sure after the course
+
+---
+
+- CSS Flex and Grid
+
 
 
 ### Good reads and resources
