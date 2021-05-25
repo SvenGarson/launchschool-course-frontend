@@ -464,7 +464,6 @@ While Frameworks may **seem less useful than they were before Flex and Grid**, *
 
 - Generic, pre-defined grid systems to use 'out of the box' for devices with all sorts of screen dimensions and browser capabilities
 - Work well with browsers that **do not yet support Flex/Grid but do support JavaScript** which means that JavaScript can handle everything that would otherwise need to be done through CSS or CSS Flex/Grid
-  
 
 **Framework Disadvantages over straight CSS Flex/Grid**
 
@@ -473,7 +472,136 @@ While Frameworks may **seem less useful than they were before Flex and Grid**, *
 
 
 
-### General HTML document tricks
+### Responsive Design
+
+---
+
+CSS `media queries` enable us to write CSS for different display contexts.
+
+**Media queries**
+
+While media queries have all sorts of functionality, they are most typically used to apply different styles based on the current browser window size. This enables us to write different styles for any display size.
+
+Example:
+
+```css
+/* defining a style for when the browser window width is <= 480 */
+@media (max-width: 480px) {
+  a {
+    color: #06c;
+  }
+}
+```
+
+
+The style conditional can be a mixture of different **media types** and **logical operators can be chained**.
+
+The media types are:
+
+- all``
+- `screen`
+- `print`
+- `speech`
+
+
+**A media query evaluates to true only when:**
+
+1. The specified media type(s) match the device the document is being displayed on
+   **and**
+2. All `media features` expressions evaluate to `true`.
+   A `media feature` describes a specific feature of the user-agent environment which can be for example:
+   - screen dimensions
+   - supported features: scripting enabled?
+   - hardware information
+   - etc
+
+**Note**: Media types that are unknown to a particular device **always evaluate to false**.
+
+
+
+### Mobile-first VS Desktop-first
+
+---
+
+When starting a project we must decide to take a `mobile-first` or `desktop-first` approach.
+
+**Whichever we choose is going to be the initial style for which NO media query is active**.
+
+This means that is we choose a mobile-first approach, i.e. primary handle small display devices:
+
+1. we provide initial styles through normal CSS **without**  media queries
+2. progressively add media queries to handle larger and larger displays
+
+
+**Example**
+
+```css
+/* CSS for all cell phones and shared cross-browser CSS */
+
+@media screen and (min-width: 481px) {
+  /* CSS for tablets and larger - starting at 481 pixels wide*/
+}
+
+@media screen and (min-width: 961px) {
+  /* CSS for small desktop and laptop screens and larger - starting at 961 pixels wide */
+}
+
+@media screen and (min-width: 1501px) {
+  /* CSS for large laptop and desktop displays - starting at 1501 pixels wide*/
+}
+```
+
+
+
+Development starts **without** media queries and we start development with the smallest/largest device we want to support that contains the **common styling to all supported designs** like colors for example, which probably don't vary too much across designs for the same application.
+
+This initial, common styling typically goes towards the top and the more specific designs towards the bottom.
+
+
+
+**When designing**
+
+Do not try to account for specific devices but rather determine the requirements based on the needed media types and then design for best usability using these media types. Do not worry about the specific devices initially but rather focus on the things that we can control and know.
+
+Think about **what design works best for a given screen dimension or any other requirement**.
+
+
+
+**Breakpoint**  -  A breakpoint is the context in which the style is changed to another style.
+						   An example is when the screen size goes from `<= 400` to `>= 401` i.e. the breaking point or
+					       threshold where another style is to be used based on these requirements.
+
+
+
+### Making sure mobile devices use the responsive version
+
+---
+
+**If, and only if the document style uses responsive features through media queries and feature detection, define the following HTML to communicate to the browser to use the page as it is programmed rather than displaying a scaled down, non-responsive version of the document**.
+
+```html
+<!-- Include this html element only if responsive styling is to be used -->
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+```
+
+**Note**: If the document does **not** use responsive design **do not define this tag**!
+
+Long story short, this non-standard HTML definition tells mobile browser how to interpret the document in terms of the vistualized viewport and whether it should use the downloaded documents' design or scale the full sized, non-responsive rendered document down and let users zoom, pan as most small display devices do for non-responsive designs to enable the user to interact with the document whether it is optimized for the particular device or not.
+
+More information here: https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag
+
+
+
+### Continue @
+
+---
+
+- https://launchschool.com/lessons/e01b7c79/assignments/64451750 
+- Continue at the LS link content portion: `Fluid and Liquid Layouts`
+
+
+
+### General HTML document tricks and tools
 
 ---
 
@@ -527,6 +655,10 @@ While Frameworks may **seem less useful than they were before Flex and Grid**, *
   ```
 
 - `line-height` seems to be a great way to set the padding of elements that contain text content
+
+- use the Firefox Grid viewer
+
+- use the Chrome device emulator to test responsive designs
 
 
 
@@ -606,6 +738,7 @@ While Frameworks may **seem less useful than they were before Flex and Grid**, *
 ---
 
 - CSS Flex and Grid
+- Responsive design using media queries etc
 
 
 
