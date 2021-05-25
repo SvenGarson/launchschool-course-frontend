@@ -394,6 +394,85 @@ When working with floats and positioning we must deal with all the side effects 
 
 
 
+### CSS Frameworks
+
+---
+
+
+**How Frameworks typically work**
+
+Framework grid systems are typically implemented with a **combination of HTML, CSS and JavaScript**.
+While these Frameworks **do not currently use Flex and Grid, they probably soon will**.
+
+
+**The principal technique employed by the frameworks is to generate columns of a certain size based on the usual CSS tricks:**
+
+```html
+<ul class="row">
+  <li class="one-fourth">8 GB SD card</li>
+  <li class="one-fourth">16 GB SD card</li>
+  <li class="one-fourth">32 GB SD card</li>
+  <li class="one-fourth">64 GB SD card</li>
+</ul>
+```
+
+```css
+/* the clearfix */
+.row::after {
+  clear: both;
+  content: "";
+  display: block;
+  line-height: 0;
+}
+
+/* putting items in a row with that span the desired percentage of the available width */
+/* which is 100% / 25% = 4 columns for this particular example */
+.one-fourth {
+  display: inline-block;
+  float: left;
+  outline: 1px solid gray;
+  vertical-align: top;
+  width: 25%;
+}
+```
+
+
+**Result**:
+![](./res/frameworks-02.png)
+
+
+These are **proven techniques used by most frameworks** and even **work great with nested rows/columns**.
+
+
+**So the Framework Grid Systems like for instance `Twitter Bootstrap`:**
+
+1. The **Framework creates a 'grid' system** using the class approach like the examples above
+2. We make some **HTML use these classes** provided by the framework
+
+
+At this point the Frameworks, also provide 'responsive design' capabilities which makes the website design work well on all sorts of devices because the responsive design adjusts to the screen dimensions and browser capabilities.
+
+
+
+**Advantages and disadvantages**
+
+While Frameworks may **seem less useful than they were before Flex and Grid**, **Frameworks have the advantage** of **working with browsers that support JavaScript but do not support Flex and/or Grid**.
+
+
+
+**Framework advantages over straight CSS Flex/Grid**
+
+- Generic, pre-defined grid systems to use 'out of the box' for devices with all sorts of screen dimensions and browser capabilities
+- Work well with browsers that **do not yet support Flex/Grid but do support JavaScript** which means that JavaScript can handle everything that would otherwise need to be done through CSS or CSS Flex/Grid
+  
+
+**Framework Disadvantages over straight CSS Flex/Grid**
+
+- Extra baggage and functionality that may not be needed
+- It uses JavaScript **if** it is considered a disadvantage.
+
+
+
 ### General HTML document tricks
 
 ---
