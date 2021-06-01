@@ -592,12 +592,50 @@ More information here: https://developer.mozilla.org/en-US/docs/Web/HTML/Viewpor
 
 
 
+### Fluid and Liquid Layouts
+
+---
+
+The following types of layouts are **nearly identical and have minor differences**:
+
+- `Liquid`  -  Typically employ percentage values to **maintain some desired** **width ratio** of elements
+                     whatever the dimensions of the window and **typically take up the whole screen-estate**.
+  ![](./res/liquid_example.png)
+
+
+  **Note**: Both `Liquid` and `Fluid` designs are based on this type of 'synchronized behavior' where if one thing changes, for instance the window size or some box, some other dependent thing changes too.
+
+- `Fluid`  -  This takes a `Liquid` layout a step further by stopping the infinite expansion/collapsing at
+                   some pre-defined limit and stops increasing in width, in other words, **Fluid layouts behave **
+                   **like Liquid layouts up to a points where the Fluid layout becomes fixed**.
+
+  This is typically implemented using a container that with a max size and the content spans the whole container.
+
+  **Example where Fluid is still expanding based on the ratio:**
+  
+  ![](./res/fluid_layout_expanding.png)
+
+
+  **Example where Fluid maxes out at some pre-defined width and stops expanding:**
+
+  ![](./res/fluid_layout_fixed.png)
+
+
+- `Responsive`  -  As explained above achieved with media query breakpoints
+
+- `Elastic`
+
+- `Hybrid`
+
+
+
+
+
 ### Continue @
 
 ---
 
-- https://launchschool.com/lessons/e01b7c79/assignments/64451750 
-- Continue at the LS link content portion: `Fluid and Liquid Layouts`
+
 
 
 
@@ -662,16 +700,6 @@ More information here: https://developer.mozilla.org/en-US/docs/Web/HTML/Viewpor
 
 
 
-### Things to add to the previous matching portions about positioning
-
----
-
-**Is the following correct?**
-
->  **Note**: Absolute and Fixed elements typically **do not affect the dimensions of their parents**.
-
-
-
 ### Questions and answers
 
 ---
@@ -733,7 +761,7 @@ More information here: https://developer.mozilla.org/en-US/docs/Web/HTML/Viewpor
   
   
 
-### What to learn deeply for sure after the course
+### What to learn deeply for sure after this lesson
 
 ---
 
