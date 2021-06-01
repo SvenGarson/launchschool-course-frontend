@@ -651,7 +651,7 @@ The basic idea for negative margins on **static elements** is the following:
 
 ---
 
-
+- https://launchschool.com/lessons/e01b7c79/assignments/3a453998 **resume at exercise `4`** and write the first media query
 
 
 
