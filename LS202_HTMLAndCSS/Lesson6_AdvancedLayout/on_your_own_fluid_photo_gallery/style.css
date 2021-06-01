@@ -67,20 +67,11 @@ ul {
   width: 22.391304325%;
 }
 
-#thumbnail-container li:first-of-type {
-  margin-right: 1.73913045%;
-}
-
-#thumbnail-container li:nth-of-type(2),
-#thumbnail-container li:nth-of-type(3) {
-  margin: 0 1.73913045%;
-}
-
-#thumbnail-container li:last-of-type {
-  margin-left: 1.73913045%;
-}
-
 #thumbnail-container img {
   width: 100%;
   border: 3px solid white;
+}
+
+#thumbnail-container li + li {
+  margin-left: 3.4782609%;
 }
