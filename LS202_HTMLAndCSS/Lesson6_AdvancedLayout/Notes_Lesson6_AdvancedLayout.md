@@ -633,6 +633,16 @@ The following types of layouts are **nearly identical and have minor differences
 
 ---
 
+The basic idea for negative margins on **static elements** is the following:
+![](./res/margin-motion.gif)
+
+- When the negative margin is defined for `top` or `left`, the element **itself** is **pulled in that direction**
+- When the negative margin is defined for the `right` or `bottom`, the element **itself** is **not moved** but rather the **following elements are pulled toward the element**, possibly overlapping it.
+
+
+
+**Note**: Negative margins behave differently when used on `float`ed elements!
+
 
 
 
