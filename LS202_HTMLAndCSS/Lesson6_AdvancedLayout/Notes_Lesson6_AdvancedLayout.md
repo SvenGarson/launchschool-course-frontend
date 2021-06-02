@@ -503,7 +503,6 @@ The media types are:
 - `print`
 - `speech`
 
-
 **A media query evaluates to true only when:**
 
 1. The specified media type(s) match the device the document is being displayed on
@@ -643,16 +642,7 @@ The basic idea for negative margins on **static elements** is the following:
 
 **Note**: Negative margins behave differently when used on `float`ed elements!
 
-
-
-
-
-### Continue @
-
----
-
-- https://launchschool.com/lessons/e01b7c79/assignments/3a453998 **resume at exercise `4`** and write the first media query
-
+### 
 
 
 ### General HTML document tricks and tools
@@ -767,6 +757,10 @@ The basic idea for negative margins on **static elements** is the following:
   
 - flex does not respect sizing if screen size gets small which we can define through wrapping
   
+- How are media queries executed exactly so that I can properly reset
+  
+- what is mean when docs say `the computed value`? As in like for instance `modifies the computed value of display`?
+  
 - flex considers the nesting of elements
   
 - **using flex, think:**
@@ -783,6 +777,14 @@ The basic idea for negative margins on **static elements** is the following:
 
 - CSS Flex and Grid
 - Responsive design using media queries etc
+
+
+
+### How to continue the course before moving on to the Quiz
+
+---
+
+- Re-implement https://launchschool.com/lessons/e01b7c79/assignments/3a453998 the photo gallery and the version with the media queries because I could not get it done at the time of this writing
 
 
 
