@@ -4,58 +4,7 @@
 
 #### Getting started
 
-- ### **Getting to know HTML**
-
-  - ### Other elements
-
-    - Hyperlink
-
-      - `<a href="linkydinky.com"></a>`
-
-      - `inline level`
-
-      - In general, inline-elements do not wrap block elements but anchor elements are an exception since HTML 5, anchor elements have permission to wrap: block-, inline- or any other level element - this is so entire block of content of a page can link resources
-
-      - Types of hyperlinks:
-
-        - Absolute
-          There are many different combinations but the difference principally in what information is provided and how the url is interpreted:
-
-          - absolute, full url; can be the same or different site
-            `https://www.somesite.com/meep`
-
-          - absolute, implicit domain name; this is interpreted with the same scheme and domain that served the page, i.e. starts from the sites root directory:
-
-            **Note:** The url starts with a **`/`**
-            `/to/myfolder/page_source.html` is interpreted as `https://www.server.com/to/myfolder/page_source.html`
-
-        - Relative
-
-          - Does **not lead with `/`** - does not  - The browser requests `currently loaded page path + relative URL` 
-          - Can move back up a directory using `../`
-
-        - Page anchors - Also referred to as an `on page link` - These can be created the following way:
-
-          1. Add an `id` attribute to the element we want the on-page link to go
-          2. Use this element's `id` attribute value in a hyperlinks `href` attribute **prefixed with an `#`**
-
-          ```html
-          <body id="top">
-            ...
-            <a href="#top">Back to top</a>
-            ...
-          </body>
-          
-          ```
-
-          
-
-      - Define the target using the `target` attribute
-
-      - Interesting: https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_URL
-
-
-  ### Getting to know CSS
+- ### Getting to know CSS
 
   - #### The cascade
 

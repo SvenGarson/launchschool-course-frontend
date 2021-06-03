@@ -117,16 +117,69 @@ These elements give the page structure more semantic meaning and are typically `
   **Semantics:** Identifies side comments and small-print, generally rendered smaller than all the other content.
 
 
+
+#### Other HTML elements
+
 **The `head` element**
 
 The `head` elements contains all sorts of **machine-readable meta-information about the document** like for example scripts, title and stylesheets.
-
 
 
 **The anchor element  - `a`**
 The `a` element provides a hyperlink to a web resource such as web pages; mail addresses i.e. anything that a URL can represent.
 
 **Note**: The `a` element is an `inline` element that **can, as an exception, contain `block`** elements, or **any display formatting type for that matter**. This means that **any content can be a clickable hyperlink**!
+
+
+
+#### Types of hyperlinks
+
+- **Absolute anchors**  -  Different URLs are interpreted differently
+
+  - **Full URL**  -  Could also be referred to as `Explicit Domain`
+    The specified URL includes a sub-domain; domain and top-level domain but there are many variations. This hyperlink can point to the same or other origins because it is explicitly defined.
+
+    Example: `https://www.youtube.com`
+
+  - **Implicit Domain**  -  By **starting the URL with a single `/`** and **not specifying the URL domain**, the domain is implicit and is in this case interpreted the **same origin/domain that served the document** so that:
+
+    - if the domain that served the page is `www.meep.com`
+    - and the implicit domain URL is `/folder/boxes`
+    - the URL is interpreted as `implicit domain + URL = www.meep.com/folder/boxes` 
+
+- **Relative anchors**  -  **Have no leading `/`**
+  The specified URL is treated as relative to the currently loaded URL which means:
+
+  - if the served page is `www.meep.com/shirts`
+  - and the relative URL is `large`
+  - the URL is interpreted as `www.meep.com/shirts + relative URL = www.meep.com/shirts/large`
+
+
+  **Note**: The relative URL can also go back up the directory structure using the relative URL `../`
+
+- **Page anchors**  -  Also referred to as `on-page link`.
+  This type of hyperlink is associated to an HTML element on the served page through an element `id` attribute. To create one:
+
+  1. Define an `id` attribute on the element the browser should scroll to for a particular page anchor with a specific value
+  2. Create a hyperlink that points to the `id` `value` specified on the HTML element the browser should scroll to.
+
+  ```html
+  <!-- Index links to differents parts on the current page -->
+  <!-- Note: The hyperlinks are made up of '#' + HTML element id -->
+  <a href="#ch_1">Chapter 1</a>
+  <a href="#ch_2">Chapter 2</a>
+  <a href="#ch_3">Chapter 3</a>
+  
+  <!-- The content the page-links point to -->
+  <!-- Note: These content element id's are used in the page links -->
+  <p id="ch_1">I contain chapter 1</p>
+  <p id="ch_2">I contain chapter 2</p>
+  <p id="ch_3">I contain chapter 3</p>
+  ```
+
+  
+
+
 
 
 
