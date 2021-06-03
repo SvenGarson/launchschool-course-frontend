@@ -8,154 +8,46 @@
 
   - #### The cascade
 
-    - **General**
-      All styles cascade from the top to the bottom of the stylesheet where the most recents property values overwrite previous ones.
-
-    - **Scope**  -  I call it scope because it reminds me of scope
-      CSS attributes like `class` can be used in any elements because they are `global`, but **most html attributes are specific to certain type of tag/elements**.
-
-    - **Cascading properties**
-      The latest/bottommost property definition is the one retained / overwrites previous ones / has precedence.
-      **Note**: This is the case if no styling conflicts occur, i.e the selector type specificity does not need to be considered and does not affect this precedence.
-
-    - **Calculating specificity**
-      Different selector types have different specificity weights:
-
-      1. `type selectors`
-         - `specificity weight` - lowest of all at `point value 0-0-1`
-      2. `class selectors`
-         - `specificity weight` - medium at `point value 0-1-0`
-      3. `id selectors`
-         - `specificity weight` - highest of all at `point value 1-0-0`
-      
-      
-        Specificity points are computed using **three colums** where:
-      
-        1. the first / leftmost column **counts** `id` selectors
-        2. the second / middle column **counts** `class` selectors
-              3. the third / rightmost column **counts** `type` selectors
-      
-      
-        **Important selector specificity rules**:
-      
-        - **id selector** has **higher specificity weight** than **class selector**
-        - **class selector** has **higher specificity weight** than **type selector**
-      
-        When a specific element is selected using different types of CSS selectors at different points/cascades in the CSS stylesheet, the selector with the highest specificity weight has precedence over all the others, even if the lower ranking selectors (in terms of specificity weight) precedes the higher ranking selectors in the stylesheet.
-      
-        Example
-      
-        ```html
-        <!-- paragraph element can be selected using a type selector of type 'p' or an id selector of value 'food' -->
-        <p id="food">...</p>
-        ```
-      
-        ```css
-        /* two different types of selectors select the paragraph element */
-        /* and the ID selector #food has precedence over the type selector 'p' */
-        #food {
-          background: green;
-        }
-        p {
-          background: orange;
-        }
-        ```
-      
-        **Note**: These precedence issues are a common problem when a stylesheet is not interpreted as expected
-      
     - **Combined selectors**
-      Combined selectors should be **read from right to left** where:
 
-      - The rightmost selector is referred to as the `key selector` which defines which exact elements the style is applied to
-      - All selectors left of the key selector are referred to as `prequalifier` which define the 'way to get to the key selected element(s)'
-      
-      Examples and how to read them using the 'read right to left ' trick:
-      
-      - ```css
-        .hotdog p {
-          background: brown;
-        }
-        ```
-      
-        The combined selector consists of **two selectors** where:
-      
-        - a `class selector` named `hotdog` `->` `type selector` of type `p`.
-        - Key selector: `p`
-        - Prequalifiers: `hotdog`
-      
-        **Result:** The elements `selected are paragraph elements residing withing an element of class hotdog`.
-      
-      - ```css
-        .hotdog p.mustard {
-          background: yellow;
-        }
-        ```
-      
-        The combined selector consists of **three selectors** where:
-      
-        - a `class selector` named `hotdog` `->` a `type selector` of type `p `->`class selector` named `mustard`
-        - Key selector: `mustard`
-        - Prequalifiers: `hotdog` and `p`
-      
-        **Result:** The elements `selected are paragraph elements of class mustard which reside in an element of class hotdog`
-      
-      - Trying to define the behaviour of combined selectors for intuition:
-      
-        - **Read** combined selectors from **right to left**
-      
-        - Rightmost selector in the chain is the `key selector`
-      
-        - `Key selector`  defines the type of elements that are selected where:
-      
-          - `some_class`  -  selects elements with class attribute value `some_class`
-          - `some_type.some_class`  -  selects elements of type `some_type` with class attribute value `some_class`
-          - `gen_class spec_class`  -  selects elements with class attribute value `spec_class` that **reside inside an element with class attribute value `gen_class`**
-      
-        - So both different notations to be aware of are:
-      
-          1. `a b c`  -  combination of 3 selectors that selects elements defined by `c`
-          2. `a b.c`  -  combination of 3 selectors that selects elements defined by `b.c`
-      
-          **Note**: The differentiating factor here is the space separated selectors that act differently than when connecting them!
-      
       - Specificity in combined selectors
-      
+
         - The total specificity weight of a combined selector is done by:
-      
+
           1. Initialize specificity weight as `0-0-0`
           2. Add the number of times each type of selector occurs in the combined selector and add this sum to the corresponding specificity weight cell.
-      
+
         - Determining combined selector precedence
-      
+
           ```text
           1) inline (1-0-0-0)
           2) id     (0-1-0-0)
           3) class  (0-0-1-0)
           4) type   (0-0-0-1)
           ```
-      
+
           Leading with examples here:
-      
+
           - **Higher ranking selectors always have precedence over lower ranking selectors** **no matter** how high **the point value** is for the lower ranking selector:
-      
+
             ```text
                0.0.9.0 (class selector)
             VS 0.1.0.0 (id    selector)
             ----------
                0.1.0.0 has precedence
             ```
-      
+
           - The point value comes into play when no highest ranking selector exists and the precedence is decided on the highest point value:
-      
+
             ```text
                0.4.0.1 (4x id & 1x type)
             VS 0.7.0.1 (7x id & 1x type)
             ----------
                0.7.0.1 has precedence
             ```
-      
+
         Example:
-      
+
         ```css
         /* 2x class selectors         */
         /* 1x type  selector          */
@@ -171,16 +63,16 @@
           background: brown;
         }
         ```
-      
+
         
-      
+
       - Tips on combined selectors
-      
+
         - Make the selectors as specific as necessary but do not go over the top - a few visual example:
           - `good`  -  `ul#summer-drinks li.favorite`
           - `too complicated`  - `html body div#pagewrap ul#summer-drinks li.favorite`
         - The higher the specificity weights go the more likely things are to break in terms of the expected result
-    
+
   - #### Lengths
 
     There are different types of 'length' units/types in css of which some are absolute and some are relative.

@@ -179,14 +179,13 @@ The `a` element provides a hyperlink to a web resource such as web pages; mail a
 
   
 
-
-
-
-
 #### HTML fact list - Where to put this?
 
 - Every HTML element can only ever have a **single `id`** assigned to it, **or no `id` attribute at all**
 - `block-level` elements **can wrap** `inline-level` elements **but not vice-versa**
+- Some facts about HTML elements
+  - there are global HTML attributes that can be specified on any HTML element
+  - most HTML attributes only apply to specific types of elements
 
 
 
@@ -219,7 +218,7 @@ The `a` element provides a hyperlink to a web resource such as web pages; mail a
 
 
 
-##### The three ways to specify CSS style
+#### The three ways to specify CSS style
 
 - `inline CSS`  -  specify style using the `style` `attribute` `style=""` on the element to be styled
 
@@ -233,21 +232,8 @@ The `a` element provides a hyperlink to a web resource such as web pages; mail a
 
 
 
-##### CSS Selectors
 
-A CSS selector consists of **one or more** `qualifiers` :
-
-```css
-qualifier_1 qualifier_2 { style goes here }
-```
-
-where:
-
-1. All but the rightmost qualifiers are referred to as `pre-qualifiers`
-2. The rightmost qualifier is referred to as the `key qualifier`.
-
-
-**There are three types of CSS selectors**:
+#### There are three types of CSS selectors:
 
 - `type` selector (also referred to as `tag` selector)  -  based on the HTML tag type  
   This is the **most general selector type**.
@@ -282,10 +268,86 @@ where:
 
 
 
-##### CSS Reset
+#### A CSS selector consists of **one or more** `qualifiers` :
+
+```css
+qualifier_1 qualifier_2 { style goes here }
+```
+
+where:
+
+1. All but the rightmost qualifiers are referred to as `pre-qualifiers`
+2. The rightmost qualifier is referred to as the `key qualifier`.
+
+Selectors that use **two or more qualifiers** are referred to as `combined selectors`, which should be read from **left to right** and the `key selector` defines **which exact element the style is to be applied to**.
+
+
+
+#### CSS Combined Selector Rules through examples
+
+- ```css
+  .hotdog p { /* some style */ }
+  ```
+
+  **Key-selector i.e. selected element**: `paragraph`
+  **Pre-qualifiers:** Selected element must be nested inside an element of class `hotdog`
+
+- ```css
+  p.hotdog { /* some style */ }
+  ```
+
+  **Key-selector i.e. selected element**: `hotdog class`
+  **Pre-qualifiers:** Selected element must be of type `paragraph`
+
+- ```css
+  .hotdog p.mustard { /* some style */ }
+  ```
+
+  **Key-selector i.e. selected element**: `mustard class`
+  **Pre-qualifiers:** Selected element must be of class `mustard` type `paragraph` and be nested inside an element of class `hotdog`
+
+
+
+#### CSS Reset
 
 A technique that overrides all relevant default browser/user-agent style **before** any other style is applied.
 A popular one is https://meyerweb.com/eric/tools/css/reset/
+
+
+
+#### The CSS Cascade
+
+---
+
+- **When no styling conflicts occur** i.e. no element as more than a single style assigned to it, the stylesheet is interpreted and applied from **top to bottom** and **the latest/bottomost property value is retained**.
+- When styling conflicts **do** occur, then **the style with the highest specificity is retained** 
+
+
+
+#### CSS Specificity
+
+Specificity is used by browsers to determine which property to apply in case styling conflicts occur.
+
+**Different selector types have different specificity weights:**
+![](./res/specificity.png)
+
+**When an element is selected by different CSS selectors, single or combined, the selector with the highest specificity weight has precedence over all the others and thus that styling is used.**
+
+
+
+#### Calculating specificity from used selectors
+
+1. Initialize the specificity table for all selector types
+
+   ```text
+   | inline |   id   |  class |  type |
+   +--------+--------+--------+-------+
+   | 0      | 0      | 0      | 0     |
+   ```
+
+2. Add 1 to each column for every particular type of selector, for example:
+
+
 
 
 
@@ -341,3 +403,5 @@ The `<!DOCTYPE html>` tag is:
   *`w3schools`*
 
 - Understand the purpose of boilerplate HTML tags such as: `DOCTYPE`; `<html>`; `<head>`; `<body>` etc
+
+- give some html and some combined css selector and ask which elements are selected
