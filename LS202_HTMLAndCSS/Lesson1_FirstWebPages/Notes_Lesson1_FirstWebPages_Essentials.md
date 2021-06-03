@@ -1,31 +1,3 @@
- #### HTML Vocabulary and definitions
-
----
-
-![](res/html-syntax-outline.png)
-
-- `element`  -  designator that defines the structure and content of a page.
-- `element tag`  or `element name`  or `element type`  -  the type of HTML element such as `p` or `div`
-- `tag`  -  the `element name` surrounded by `<>`. Both opening and closing tags are referred to as tags.
-- `self-closing tag`  -  `tag` that does not consist of a closing tag such as `<img>` or `<img />`
-- `document type definition`
-- `attribute`  -  key-value pairs that provide additional information about an element.
-  These are specified in the element's **opening tag** like so `<a href="some_url.com">`
-- `element content`  -  the `content` that is situated **between the elements opening and closing tags** such as `<a>The Content</a>`
-
-
-
-#### CSS Vocabulary and definitions
-
----
-
-- `selector`
-- `property`
-- `id`
-- `class`
-
-
-
 #### HTML and CSS
 
 ---
@@ -43,13 +15,60 @@ HTML and CSS have different purposes:
 
 HTML documents are **plain text files** with the file extension `.html`.
 
-A conformant HTML document must contain the following boilerplate **definitions and elements** so that the browser can interpret the document correctly.
+A conformant HTML document must contain the following boilerplate **definitions and elements** so that the browser can interpret the document correctly:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Page title</title>
+  </head>
+  <body>
+    <!-- Body content here -->
+  </body>
+</html> 
+```
+
+
+**Referencing a style for a particular HTML Document**
+
+```html
+<head>
+  <link rel="stylesheet" href="url_to_css_file">
+</head>
+```
+
+- `href` specifies the URL to resolve the resource from
+- `stylesheet` specifies the type of relationship **between the document and the resource**
 
 
 
-**HTML fact list:**
+##### HTML Semantics
 
-- Every HTML element can only ever have a **single `id`** assigned to it, **or no `id` attribute at all** 
+---
+
+HTML is semantic when the proper HTML elements are used for their intended purpose/content.
+These semantics enable other parties such as browsers, search machines, screen-readers and developers to interpret the content and it's intention correctly.
+
+Only the HTML elements `div` and `span` **do not have semantics associated with them** but rather exist for **styling purposes**.
+
+As a help use: http://html5doctor.com/downloads/h5d-sectioning-flowchart.pdf
+
+
+
+**Non-semantic HTML elements and their use-cases**
+The following two HTML elements are **solely used for styling** as **generic containers**.
+
+- `div`  -  `block` element typically used to contain **large groupings of content** for layout and design
+- `span`  -  `inline` element typically used to contain **small groupings of content** for layout and design
+
+
+
+**HTML fact list - Where to put this?**
+
+- Every HTML element can only ever have a **single `id`** assigned to it, **or no `id` attribute at all**
+- `block-level` elements **can wrap** `inline-level` elements **but not vice-versa**
 
 
 
@@ -59,12 +78,30 @@ A conformant HTML document must contain the following boilerplate **definitions 
 
 
 
+ #### HTML Vocabulary and definitions
+
+---
+
+![](res/html-syntax-outline.png)
+
+- `element`  -  designator that defines the structure and content of a page.
+- `element tag`  or `element name`  or `element type`  -  the type of HTML element such as `p` or `div`
+- `tag`  -  the `element name` surrounded by `<>`. Both opening and closing tags are referred to as tags.
+- `self-closing tag`  -  `tag` that does not consist of a closing tag such as `<img>` or `<img />`
+- `document type definition`
+- `attribute`  -  key-value pairs that provide additional information about an element.
+  These are specified in the element's **opening tag** like so `<a href="some_url.com">`
+- `element content`  -  the `content` that is situated **between the elements opening and closing tags** such as `<a>The Content</a>`
+
+
+
 #### CSS Specifics
 
 ---
 
 
-**The three ways to specify CSS style**:
+
+##### The three ways to specify CSS style
 
 - `inline CSS`  -  specify style using the `style` `attribute` `style=""` on the element to be styled
 
@@ -78,11 +115,71 @@ A conformant HTML document must contain the following boilerplate **definitions 
 
 
 
-**The three types of CSS selectors**:
+##### CSS Selectors
+
+A CSS selector consists of **one or more** `qualifiers` :
+
+```css
+qualifier_1 qualifier_2 { style goes here }
+```
+
+where:
+
+1. All but the rightmost qualifiers are referred to as `pre-qualifiers`
+2. The rightmost qualifier is referred to as the `key qualifier`.
+
+
+**There are three types of CSS selectors**:
 
 - `type` selector (also referred to as `tag` selector)  -  based on the HTML tag type  
+  This is the **most general selector type**.
+
+  ```css
+  /* select all elements of type a */
+  a { color: yellow; }
+  ```
+
 - `class` selector  -  based on the classes listed in the HTML `class` attribute value
+  This one is **more specific than `type` selectors and less specific than `id` selectors**.
+
+  ```html
+  <p class="hot">I am a hot pepper!</p>
+  ```
+
+  ```css
+  /* select HTML elements with the class attribute value 'hot' */
+  .hot { color: red; }
+  ```
+
 - `id` selector  -  based on the id's listed in the HTML `id` attribute value
+  This one is the **most precise** selector, **more specific than any `type` and `class` selector**.
+
+  ```html
+  <p id="woofy"></p>
+  ```
+
+  ```css
+  #woffy { /* some style */ }
+  ```
+
+
+
+##### CSS Reset
+
+A technique that overrides all relevant default browser/user-agent style **before** any other style is applied.
+A popular one is https://meyerweb.com/eric/tools/css/reset/
+
+
+
+#### CSS Vocabulary and definitions
+
+---
+
+![](res/css-syntax-outline.png)
+
+- `selector`  -  designates which exact HTML elements to target for a particular style and associates a block of CSS code
+- `property`  -  specifies which properties of the selected elements are to be applied
+- `value`  -  specifies the value the `property` is to be set to for a particular
 
 
 
@@ -104,7 +201,7 @@ The `<!DOCTYPE html>` tag is:
 
 ---
 
-
+???
 
 #### Flashcard questions - These are just a few - Check these notes fully
 
