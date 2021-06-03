@@ -6,81 +6,7 @@
 
 - ### **Getting to know HTML**
 
-  - **Text based elements**
-
-    - `Heading` 
-      -  `block level` 
-      -  `<h1>Heading</h1>` 
-      - `semantics`  -  used to break up the page content into a hierarchy that makes sense and **not to make text bold or scale it**; help search engines to index and determine page content; should be used in an order that makes sense
-      - comes in 6 rankings
-        primary content should be rank 1 headers and subsequent content should go down to higher header ranking from there;
-    - `paragraphs`
-      - ``block level` 
-      - `<p></p>`
-      - `semantics`  -  used to add information to a page
-    - `bold text`  -  learn the difference between the semantics http://html5doctor.com/i-b-em-strong-element/
-      - ``<strong></strong>`
-        - `inline level`
-        - `semantics`  -  give strong importance to text - for instance putting emphasis on a word or to emphasize some other importance
-      - ``<b></b>`
-        - `inline level`
-        - `semantics`  -  stylistically offset text where
-          - `offset`  -  refers to make text stand out from the rest
-          - `stylistically`  -  to indicate highlighting as opposed to semantically - is purely highlighted for stylistic reason - not because it has any importance over any other text
-    - `emphasize`
-      - `<em></em>`
-        - `inline level`
-        - `semantics`  -  stressed emphasis - the most used version
-      - `<i></i>`
-        - `inline level`
-        - `semantics`  -  convey in other tone or voice
-
-  - ### **Structural elements**
-    HTML added [structurally based elements](https://dev.opera.com/articles/new-structural-elements-in-html5/).
-    These elements are supposed to give the website structure more semantic meaning.
-
-    ### **All of these are block level** - Structural elements
-
-    An example of how structural elements give meaning by using the elements semantically
-
-    ---
-
-    ![](res/building-structure.png)
-
-    
-
-  - ### **The structural elements** - All block level element!
-
-    - Header
-      - `<header> ... </header>`
-      - `semantics`  -  identify the top of a page structurally - may contain navigation; heading and introductory text
-    - Navigation
-      - `<nav> ... </nav>`
-      - `semantics`  -  identifies a major section of navigational links on a page - should only be used for primary navigation on the page itself - should not be used for one-off links and origins that have nothing to do with the page itself
-    - Article
-      - `<article> ... </article>`
-      - `semantics`  -  designate a section of independent and self-contained content - may be distributed and/or re-used such as blog posts and articles - the content should still make sense on it's own when cut out and shown without as stand-alone content without needing other context or content
-    - Section
-      - `<section> ... </section>`
-      - `semantics`  -  identify a thematically similar group of content that generally includes a heading (` <hx></hx>`) - in other words, show that the content in the section is related - used to break up a page by similar content and provide hierarchy - sections can be nested as desired
-    - Aside
-      - `<aside> ... </aside>`
-      - `semantics`  -  contains content that is **'tangentially' related** **to the content** **surrounding it** - example would be an article + aside where aside contains pointers, insert, brief explanations about the related article
-    - Footer
-      - `<footer></footer>`
-      - `semantics`  -  identifies the closing/bottom end of a page - footer content should be relative to the document or other 'section' it is included in - typically found at the bottom of it's parent
-    - Small
-      - `<small></small>`
-      - inline-/ or block level?
-      - `semantics`  -  represents side comments and small print - generally rendered smaller than other content
-
-  - ### Other elements - For reference - May fit in any previous category
-
-    - Head
-
-      - `<head></head>`
-      - **not displayed**
-      - `semantics`  -  used to outline meta-data about the page like: documents title; relationships to external files; etc.
+  - ### Other elements
 
     - Hyperlink
 
@@ -127,6 +53,7 @@
       - Define the target using the `target` attribute
 
       - Interesting: https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_URL
+
 
   ### Getting to know CSS
 

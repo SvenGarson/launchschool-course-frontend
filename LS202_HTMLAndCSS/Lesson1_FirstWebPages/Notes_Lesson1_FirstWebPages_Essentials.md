@@ -1,4 +1,4 @@
-#### HTML and CSS
+### HTML and CSS
 
 ---
 
@@ -8,8 +8,7 @@ HTML and CSS have different purposes:
 - `CSS`  -  defines the **presentation of the document** 
 
 
-
-#### HTML specifics
+### HTML specifics
 
 ---
 
@@ -31,7 +30,8 @@ A conformant HTML document must contain the following boilerplate **definitions 
 ```
 
 
-**Referencing a style for a particular HTML Document**
+
+#### Referencing a style for a particular HTML Document
 
 ```html
 <head>
@@ -44,9 +44,7 @@ A conformant HTML document must contain the following boilerplate **definitions 
 
 
 
-##### HTML Semantics
-
----
+#### HTML Semantics
 
 HTML is semantic when the proper HTML elements are used for their intended purpose/content.
 These semantics enable other parties such as browsers, search machines, screen-readers and developers to interpret the content and it's intention correctly.
@@ -57,7 +55,7 @@ As a help use: http://html5doctor.com/downloads/h5d-sectioning-flowchart.pdf
 
 
 
-**Non-semantic HTML elements and their use-cases**
+#### Non-semantic HTML elements and their use-cases
 The following two HTML elements are **solely used for styling** as **generic containers**.
 
 - `div`  -  `block` element typically used to contain **large groupings of content** for layout and design
@@ -65,20 +63,87 @@ The following two HTML elements are **solely used for styling** as **generic con
 
 
 
-**HTML fact list - Where to put this?**
+#### Text Based HTML Elements
+
+- **Heading**  -  `h1` to `h6`
+  **Semantics**: Used to break up page content into a hierarchy, **not to scale or bold text**.
+                        Heading sizes should always be used in the number order and not skipped.
+- **Paragraphs**
+  **Semantics**: Used to add information to a page.
+- **Bold Text**  - There are different semantical ways to bold text.
+  - `strong`
+    **Semantics**: Give strong importance to, i.e. emphasize a word.
+    **Do not use with the purpose of bolding content.**
+  - `b`
+    **Semantics**: `stylistically offset` text where
+    - `offset`  -  refers to make text stand out from the rest
+    - `stylistically`  -  purely for stylistic reason - not because it has any importance over any other text
+- **Italicize Text**  -  There are different semantical ways to emphasize text.
+  - `em`
+    **Semantics**: Give stressed emphasis to content
+  - `i`
+    **Semantics**: Convey in other tone/voice
+
+
+
+#### Structural HTML Elements  -  [Documentation](https://dev.opera.com/articles/new-structural-elements-in-html5/)
+
+These elements give the page structure more semantic meaning and are typically `block` level elements.
+
+![](res/building-structure.png)
+
+
+**Here the most important ones to know and apply semantically:**
+
+- **Header**  -  `header`
+  **Semantics:** Identifies the structural top of the page that may contain navigation, headings and introduction
+- **Navigation**  -  `nav`
+  **Semantics:**  Identifies a major section of **primary** navigational links.
+  **Do not use for one-off links and links that do not provide navigation**.
+- **Article**  -  `article`
+  **Semantics:**  Identifies a chunk of **independent and self-contained content**.
+  The content should make sense on it's own as stand-alone without any other context.
+- **Section**  -  `section`
+  **Semantics:** Identifies a **thematically similar group of content** that **generally includes a heading**,
+  In other words, show that the content in the section is related and provide hierachy.
+  Sections can be nested with the same semantics.
+- **Aside**  -  `aside`
+  **Semantics:** Identifies content that is **tangentially related**  to the content **surrounding it**.
+  An aside could contain pointers, additional information, brief explanations about a tangentially related article.
+- **Footer**  -  `footer`
+  **Semantics:** Identifies the **bottom and closing portion** of a document where the **content should be relative to the content of the container that contains the footer, i.e. it's surrounding content**.
+  Footers are typically the last elements inside a parent.
+- **Small**  -  `small`
+  **Semantics:** Identifies side comments and small-print, generally rendered smaller than all the other content.
+
+
+**The `head` element**
+
+The `head` elements contains all sorts of **machine-readable meta-information about the document** like for example scripts, title and stylesheets.
+
+
+
+**The anchor element  - `a`**
+The `a` element provides a hyperlink to a web resource such as web pages; mail addresses i.e. anything that a URL can represent.
+
+**Note**: The `a` element is an `inline` element that **can, as an exception, contain `block`** elements, or **any display formatting type for that matter**. This means that **any content can be a clickable hyperlink**!
+
+
+
+#### HTML fact list - Where to put this?
 
 - Every HTML element can only ever have a **single `id`** assigned to it, **or no `id` attribute at all**
 - `block-level` elements **can wrap** `inline-level` elements **but not vice-versa**
 
 
 
-**HTML best practices**:
+#### HTML best practices
 
 - Always specify the `name` attribute with an adequate value on `form` elements
 
 
 
- #### HTML Vocabulary and definitions
+### HTML Vocabulary and definitions
 
 ---
 
@@ -95,7 +160,7 @@ The following two HTML elements are **solely used for styling** as **generic con
 
 
 
-#### CSS Specifics
+### CSS Specifics
 
 ---
 
@@ -171,7 +236,7 @@ A popular one is https://meyerweb.com/eric/tools/css/reset/
 
 
 
-#### CSS Vocabulary and definitions
+### CSS Vocabulary and definitions
 
 ---
 
@@ -183,7 +248,7 @@ A popular one is https://meyerweb.com/eric/tools/css/reset/
 
 
 
-#### The Document Type Definition - `DOCTYPE`
+### The Document Type Definition - `DOCTYPE`
 
 ---
 
@@ -197,13 +262,14 @@ The `<!DOCTYPE html>` tag is:
 
 
 
-#### CSS Vocabulary
+### CSS Vocabulary
 
 ---
 
 ???
 
-#### Flashcard questions - These are just a few - Check these notes fully
+
+### Flashcard questions - These are just a few - Check these notes fully
 
 ---
 
