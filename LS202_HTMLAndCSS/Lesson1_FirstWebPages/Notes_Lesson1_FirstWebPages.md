@@ -6,73 +6,6 @@
 
 - ### Getting to know CSS
 
-  - #### The cascade
-
-    - **Combined selectors**
-
-      - Specificity in combined selectors
-
-        - The total specificity weight of a combined selector is done by:
-
-          1. Initialize specificity weight as `0-0-0`
-          2. Add the number of times each type of selector occurs in the combined selector and add this sum to the corresponding specificity weight cell.
-
-        - Determining combined selector precedence
-
-          ```text
-          1) inline (1-0-0-0)
-          2) id     (0-1-0-0)
-          3) class  (0-0-1-0)
-          4) type   (0-0-0-1)
-          ```
-
-          Leading with examples here:
-
-          - **Higher ranking selectors always have precedence over lower ranking selectors** **no matter** how high **the point value** is for the lower ranking selector:
-
-            ```text
-               0.0.9.0 (class selector)
-            VS 0.1.0.0 (id    selector)
-            ----------
-               0.1.0.0 has precedence
-            ```
-
-          - The point value comes into play when no highest ranking selector exists and the precedence is decided on the highest point value:
-
-            ```text
-               0.4.0.1 (4x id & 1x type)
-            VS 0.7.0.1 (7x id & 1x type)
-            ----------
-               0.7.0.1 has precedence
-            ```
-
-        Example:
-
-        ```css
-        /* 2x class selectors         */
-        /* 1x type  selector          */
-        /* specificity weight = 0-2-1 */
-        .hotdog p.mustard {
-          background: yellow;
-        }
-        
-        /* 1x class selector */
-        /* 1x type  selector */
-        /* specificity weight = 0-1-1 */
-        .hotdog p {
-          background: brown;
-        }
-        ```
-
-        
-
-      - Tips on combined selectors
-
-        - Make the selectors as specific as necessary but do not go over the top - a few visual example:
-          - `good`  -  `ul#summer-drinks li.favorite`
-          - `too complicated`  - `html body div#pagewrap ul#summer-drinks li.favorite`
-        - The higher the specificity weights go the more likely things are to break in terms of the expected result
-
   - #### Lengths
 
     There are different types of 'length' units/types in css of which some are absolute and some are relative.
@@ -104,45 +37,8 @@
 
         **Note**: If no font-size is explicitly stated for a particular object using the `em` unit for some css property, then the **font-size of the closest parent with a defined font-size is used as the basis for `em`** using the same formula as mentioned above.
 
+
   #### HTML and CSS style
-
-  - HTML style guide:
-
-    - always write standards-compliant markup despite HTML's forgiving nature
-
-    - use semantics elements as much as possible
-
-    - always use the proper, standards-compliant  document structure using `doctype`, `html`, `head`, `body`
-
-    - keep the syntax clean
-
-      - element names; attributes and values should all be **lowercase letters**
-      - properly indent nested elements
-      - strictly use double quotes
-      - **Remove the forwards slash** at the end of self-closing elements
-      - omit values on boolean attributes
-      - select practical `id` and `class` attribute values that are **not named after the style of the content** 
-      - always define alternative text `alt` for images that are as descriptive as possible and can be a bit lengthy for that purpose
-      - **never use inline styling**
-      - keep the elements and nesting as simple as possible while keeping the semantics straight
-      - do not overuse `div` rather user HTML5 `structural elements` whenever appropriate
-
-    - refactor when necessary
-
-    - max **two elements per line** like for instance `<li><p>Hello world!</p></li>`
-
-    - indent by either two spaces, four spaces or a single tab, does not matter, but **stay consistent**!
-
-    - do not indent the html tag
-
-    - can close auto closing tags with either:
-
-      - `<img .../>`
-      - <img ... >
-
-      Either way is fine but apparently the one with the `/` helps support older versions of HTML. **Just be consistent!**
-
-    - When using Flex or Grid place the most significant blocks near the top of the file and least important at the bottom
 
   - CSS style guide:
 
@@ -231,6 +127,7 @@
     - List the selectors in groups based on the elements they select
 
     
+
 
   ### General stuff and random things
 

@@ -195,6 +195,39 @@ The `a` element provides a hyperlink to a web resource such as web pages; mail a
 
 
 
+#### HTML style guide
+
+- Generalities
+
+  - Write standards-compliant HTML markup
+  - Strive for highly semantic markup
+  - Like all programming, get working, refactor and document if needed
+  - classes and id's should not be named after the style of an element
+  - always specify a very detailed `alt` description for images
+  - do not specify a value for boolean attributes
+
+- HTML Syntax
+
+  - element names, attributes and values should be lowercase
+
+  - indent properly and choose one of the following styles and stay consistent:
+
+    - two spaces
+    - four spaces or a single tab
+
+  - strictly use double quotes
+
+  - trailing slash on self-closing elements is great for visual cue that the element does not contain content but may be a problem in certain situations.
+    **Use them** for now.
+
+  - maximum of two HTML elements per line
+
+  - do not indent the html tag
+
+    
+
+
+
 ### HTML Vocabulary and definitions
 
 ---
@@ -345,9 +378,73 @@ Specificity is used by browsers to determine which property to apply in case sty
    | 0      | 0      | 0      | 0     |
    ```
 
-2. Add 1 to each column for every particular type of selector, for example:
+2. Add 1 to each column for every particular type of selector/qualifier, for example:
+
+   ```css
+   /* CSS */
+   
+   /* select paragraph elements of class bob that are nested in an element of id meep */
+   #meep p.bob { /* style */ }
+   ```
+
+   - `+1` for `meep` id selector
+   - `+1` for `bob` class selector
+   - `+1` for `p` type selector
+
+   ```text
+   | inline |   id   |  class |  type |
+   +--------+--------+--------+-------+
+   | 0      | 1      | 1      | 1     |
+   ```
+
+3. Sum the specificity scores using powers of ten for the actual specificity score to compare
+
+   ```text
+   | inline |   id   |  class |  type |
+   +--------+--------+--------+-------+
+   | 10^3   | 10^2   | 10^1   | 10^0  |
+   
+   Becomes:
+   
+   | 1000   | 100    | 10     | 1     |
+   
+   The specificity sum is:
+   
+   <=> (1000 * 0) + (100 * 1) + (10 * 1 + (1 * 1)
+   <=> 0 + 100 + 10 + 1
+   <=> 111
+   ```
 
 
+
+**The above example is accurate, but a few selectors are missing**
+
+Adding to the above rules, the selectors going from least to most specifics in a give point value category:
+
+1. inline + others?
+
+
+
+**To add here**:
+
+ - How other entities such as pseudo-elements etc are handled in specificity calculation
+   https://dev.to/emmabostian/css-specificity-1kca
+
+
+
+#### CSS best practices
+
+- Make selectors only as specific as needed. **The more specific** selectors get, **the more likely** they are going to **break at some point** in terms of expected results **because new styles do not apply due to lack of specificity**.
+
+  In other words, **start with the lowest specificity** and **increase specificity as need over time**.
+
+- As in 'normal' programming languages, get things to work, re-factor and document often.
+
+
+
+#### CSS style guide
+
+???
 
 
 
@@ -376,12 +473,6 @@ The `<!DOCTYPE html>` tag is:
 - must be at the **top of the file**
 
 
-
-### CSS Vocabulary
-
----
-
-???
 
 
 ### Flashcard questions - These are just a few - Check these notes fully
