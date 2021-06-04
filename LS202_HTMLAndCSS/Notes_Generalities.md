@@ -10,6 +10,10 @@
     - DOM standard: https://dom.spec.whatwg.org/
   - CSS Reset: https://meyerweb.com/eric/tools/css/reset/
   - HTML element selection cheat-sheet: http://html5doctor.com/downloads/h5d-sectioning-flowchart.pdf
+  - Discussion about most commonly supported fonts in terms of browser based web-applications:
+    http://web.mit.edu/jmorzins/www/fonts.html
+  - HTML entities: https://copypastecharacter.com/
+  - Chrome Dev tools: https://developer.chrome.com/docs/devtools/
 - Tools
   - HTML standard conformant HTML validator through W3C: https://validator.w3.org/
   - CSS standard conformant HTML validator through W3C: https://jigsaw.w3.org/css-validator/
@@ -18,3 +22,8 @@
     - nesting
     - standard compliance
     - formatting and best-practices
+  - Practice combined CSS selectors: https://flukeout.github.io/
+- Concepts to stay on top of
+  - How HTML and CSS handle whitespace exactly: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Whitespace
+  - How browser rendering engines work
+  - 

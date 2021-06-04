@@ -4,8 +4,8 @@
 
 HTML and CSS have different purposes:
 
-- `HTML`  -  defines the **structure of the document**
-- `CSS`  -  defines the **presentation of the document** 
+- `HTML`  -  **H**yper **T**ext **M**arkup **L**anguage  -  defines the **structure of the document**
+- `CSS`  -  **C**ascading **S**tyle **S**heets  -  defines the **presentation of the document** 
 
 
 ### HTML specifics
@@ -41,6 +41,28 @@ A conformant HTML document must contain the following boilerplate **definitions 
 
 - `href` specifies the URL to resolve the resource from
 - `stylesheet` specifies the type of relationship **between the document and the resource**
+
+
+
+#### HTML Whitespace collapsing
+
+In this context, whitespace is a string of characters that is composed of only:
+
+- `space`s
+- `line break`s
+- `tab`s
+
+
+HTML takes these whitespace-strings collapsed/replaces them with a **single space** in two ways:
+
+- whitespace between words is replaces with a single space
+  `<p>Hello    ,    Words</p>` becomes `Hello , Word`
+- whitespace between start and end tags and the content are completely ignored
+  `<p>     Meep     </p>` becomes `Meep`
+
+
+
+**Note**: There are many more rules to this along with the type of elements used.
 
 
 
@@ -177,34 +199,73 @@ The `a` element provides a hyperlink to a web resource such as web pages; mail a
   <p id="ch_3">I contain chapter 3</p>
   ```
 
-  
+
+
+
+#### HTML Entities
+
+An HTML entity is text inside an HTML document that starts with an `&` and ends with an `;`.
+
+These entities are used to display all sorts of characters based on their hexadecimal code in the format 
+`&copy;` which renders as `©` in the browser.
+
+**The typical use-cases are:**
+
+- when the character is hard to type using a keyboard, the HTML entity just makes this easier and more consistent
+
+- show reserved HTML character that would otherwise be interpreted as part of the HTML markup and
+  cause issues.
+
+  Some reserved HTML characters which have to be expressed as entities to be rendered are:
+
+  - `&`  -  interpreted as the start of an HTML entity
+    **Entity notation**: `&amp;`
+  - `<` and `>`  -  interpreted as the beginning/ending of an HTML tag respectively.
+    **Entity notation**: `&lt;` and `&gt;` respectively
+  - `"`  -  interpreted as the beginning/end of an HTML element attribute value
+    **Entity notation**: `&quot;`
+
+
+
+**Note**: A `&` followed by non-whitespace characters and `;` may be interpreted as an HTML entity!
+
+
+
+**The following points should be addressed**:
+
+- problems that can occur when HTML contains character sequence of `&` followed by any hexadecimal characters and a `;`
+
+  > if a lone `&` is followed by non-whitespace character and an `;` it may be interpreted as html entity.
+  > to avoid this when we want to display the char `&` itself, simply avoid this problem by serving it as `&amp;` html entity in the first place so that there are no misunderstandings.
+
+
 
 #### HTML fact list - Where to put this?
 
-- Every HTML element can only ever have a **single `id`** assigned to it, **or no `id` attribute at all**
-- `block-level` elements **can wrap** `inline-level` elements **but not vice-versa**
+- Every HTML element can only ever have a **single `id`** assigned to it, **or no `id` attribute at all**.
+  While HTML and browsers typically cope fine with multiple uses of a and `id`, the problem is that when we want to use JavaScript to select and element, we **cannot be sure what is returned because multiple elements of that id exist** .
+
+  So just don't use id's more than once per page.
+- `block-level` elements **can wrap** `inline-level` elements **but not vice-versa**.
+  The `a` element is a notable exception to this rules as the `a`  element can wrap any sort and group of elements to act as link.
 - Some facts about HTML elements
   - there are global HTML attributes that can be specified on any HTML element
   - most HTML attributes only apply to specific types of elements
 
 
 
-#### HTML best practices
-
-- Always specify the `name` attribute with an adequate value on `form` elements
-
-
-
-#### HTML style guide
+#### HTML style guide and best practices
 
 - Generalities
 
   - Write standards-compliant HTML markup
   - Strive for highly semantic markup
+  - Always specify the `name` attribute with an adequate value on `form` elements
   - Like all programming, get working, refactor and document if needed
-  - classes and id's should not be named after the style of an element
+  - classes and id's should not be named after the style of an element, rather choose semantic names that **provide meaning**. `staff` would be a more semantic class name than `blue-border` for instance.
   - always specify a very detailed `alt` description for images
   - do not specify a value for boolean attributes
+  - always use a safe fall-back font
 
 - HTML Syntax
 
@@ -421,30 +482,51 @@ Specificity is used by browsers to determine which property to apply in case sty
 
 Adding to the above rules, the selectors going from least to most specifics in a give point value category:
 
-1. inline + others?
+1. `type` + `pseudo-elements`
+2. `class` + `attribute selectors` + `pseudo-classes`
+3. `id` + nothing else
+4. `inline` + nothing else
+
+
+The following selectors have **no effect** on specificity:
+
+- universal  selector `*`
+- combinators such as `+`; `>`; `~`; `_` and `||`
 
 
 
-**To add here**:
+#### When things don't work as intended in CSS
 
- - How other entities such as pseudo-elements etc are handled in specificity calculation
-   https://dev.to/emmabostian/css-specificity-1kca
-
-
-
-#### CSS best practices
-
-- Make selectors only as specific as needed. **The more specific** selectors get, **the more likely** they are going to **break at some point** in terms of expected results **because new styles do not apply due to lack of specificity**.
-
-  In other words, **start with the lowest specificity** and **increase specificity as need over time**.
-
-- As in 'normal' programming languages, get things to work, re-factor and document often.
+1. Check the CSS Cascade for errors
+2. Check the CSS Specificity
+3. Check CSS inheritance rules
 
 
 
-#### CSS style guide
+#### CSS style guide and best practices
 
-???
+- Generalities
+
+  - DRY by making CSS classes/id's modular so they can be mixed and matched
+
+  - Make selectors only as specific as needed. **The more specific** selectors get, **the more likely** they are going to **break at some point** in terms of expected results **because new styles do not apply due to lack of specificity**.
+
+    In other words, **start with the lowest specificity** and **increase specificity as need over time**.
+
+    Keep the list of **total** qualifiers to a maximum of **three**
+
+- CSS Syntax
+
+  - one selector, single or combined, per line
+  - single line per property-value pair **but put fall-back declarations on the same line**
+  - class and id names should be lowercase with hyphens as word separators `.lean-and-mean`
+  - proper indentation
+  - use property shorthand syntax when appropriate
+  - use brief hexadecimal color values in lowercase `#ddd` when adequate over `#DDDDDD`
+  - zero constants should not be followed by a unit
+  - order properties alphabetically
+  - font-family values that contain whitespace should be quoted.
+    `font-family: Trebuchet MS;` becomes `font-family: "Trebuchet MS";`
 
 
 
