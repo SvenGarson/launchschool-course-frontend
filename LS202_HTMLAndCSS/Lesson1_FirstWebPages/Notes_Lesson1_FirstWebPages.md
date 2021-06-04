@@ -108,7 +108,7 @@ The following two HTML elements are **solely used for styling** as **generic con
   **Semantics**: Used to add information to a page.
 - **Bold Text**  - There are different semantical ways to bold text.
   - `strong`
-    **Semantics**: Give strong importance to, i.e. emphasize a word.
+    **Semantics**: Give strong importance to a word.
     **Do not use with the purpose of bolding content.**
   - `b`
     **Semantics**: `stylistically offset` text where
@@ -159,7 +159,6 @@ These elements give the page structure more semantic meaning and are typically `
 **The `head` element**
 
 The `head` elements contains all sorts of **machine-readable meta-information about the document** like for example scripts, title and stylesheets.
-
 
 **The anchor element  - `a`**
 The `a` element provides a hyperlink to a web resource such as web pages; mail addresses i.e. anything that a URL can represent.
@@ -302,7 +301,6 @@ These entities are used to display all sorts of characters based on their hexade
 - `element tag`  or `element name`  or `element type`  -  the type of HTML element such as `p` or `div`
 - `tag`  -  the `element name` surrounded by `<>`. Both opening and closing tags are referred to as tags.
 - `self-closing tag`  -  `tag` that does not consist of a closing tag such as `<img>` or `<img />`
-- `document type definition`
 - `attribute`  -  key-value pairs that provide additional information about an element.
   These are specified in the element's **opening tag** like so `<a href="some_url.com">`
 - `element content`  -  the `content` that is situated **between the elements opening and closing tags** such as `<a>The Content</a>`
