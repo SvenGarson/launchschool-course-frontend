@@ -78,16 +78,128 @@ There are many display types such as for example: `block`; `inline-block`; `inli
 
 **Inline-Block elements**  -  Can be specified using `display: inline-block;`
 
+- Acts as a middle-ground between `inline` and `inline-block`
+- Breaks onto a new line like `block`
+- Does **not** take up the space like `block`
+- Box-Model `width` and `height` properties are respected
+- Takes up only as much space as the content **unless** a `width` or `height` is specified
 
 
 
+### Difference between Padding and Margin
 
-**List of pieces to fit together without going down the rabbit holw**:
+---
 
-- margin collapsing is part of the block, inline etcs layout used in a type of flow
-  https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flow_Layout/Block_and_Inline_Layout_in_Normal_Flow
+**Padding**
+
+- Lies **inside the border** and is **part of the click-able region**
+- Padding cannot collapse
+- **Typical use-cases**:
+  - **Outside of a container:** Affect the visible and click-able area of an element
+  - **Inside of a container**: Horizontal separation between container and content
 
 
+**Margin**
+
+- Lies **outside the border** and is **not** a part of the click-able region
+- Vertical margins **between `block` elements collapse** to the largest margin of both
+  ![](res/margin_collapse.png)
+- **Typical use-cases**:
+  - General spacing between elements
+  - **Inside of a container**: Vertical separation between container and element
+
+
+
+### CSS Length Specification Units
+
+---
+
+A `length specification unit` is the combination of a numerical value and a unit such as `16px` where:
+
+- `16` is referred to as the `measurement`
+- `px` is referred to as the `unit`
+
+
+
+**The Problem**
+
+Modern devices have a vast range of combination of different display dimensions, resolution and physical pixel sizes. This means that an image rendered on one device if very probably different from most other devices in one or another way.
+
+This is the reason why CSS distinguishes between **two types of pixels**:
+
+
+**`The Physical Pixel`**  -  `Device Pixel`  - `Display Pixel`
+
+The physical pixel is defined for a display with 96 pixels per inch (ppi) and accounts for the difference in resolution and surface.
+
+The browser then renders the image and scales it to the target display so that the source and destination image take up the same amount of horizontal and vertical pixels on both devices.
+
+![](res/physical_pixel.png)
+
+
+
+**`The Reference Pixel`**  -  `CSS Pixel`  -  `CSS Reference Pixel`
+
+The `CSS Pixel` accounts for the **difference in display sizes and the Typical Viewing Distance `TVD`** for a specific display.
+
+The goal is to scale the images on different displays in a way that the images render at the same perceived dimensions **if viewed from the `TVD` typical viewing distance for that specific display**.
+
+![](res/css_reference_pixel.png)
+
+
+
+**Note**: Units such as `inch` are rarely used because they do not intuitively display as an inch but depend on
+           the `TVD`. The primary and single most important CSS sizing unit is the `px`.
+
+
+
+### Define style for all elements in a few lines of CSS
+
+---
+
+```css
+html {
+  box-sizing: border-box;
+}
+  
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+```
+
+
+**This CSS does the following:**
+
+1. Specify the Box-Model to be used on the `html` element
+2. Select all elements using the `universal` selector and all pseudo elements and make them inherit the Box-Model
+
+
+
+### Setting a fall-back font
+
+---
+
+The preferred unit to specify font-size is `rem` since it is always based on the same specified number and does **not** cascade like it's `em` counter-part.
+
+The problem is that it is not supported in all older browsers, so we have to set a fall-back font-size if the `rem` unit is unsupported. This can be done as follows:
+
+```css
+html {
+  font-size: 16px;
+}
+/* select and desired elements for safe the font */
+p {
+  font-size: 20px; font-size: 1.25rem;
+}
+```
+
+The idea here is to:
+
+1. use the `1.25rem` font **if** this unit is supported. This always ends up being `16px * 1.25 = 20px`.
+2. otherwise use the `20px` font which also always ends up the same exact dimension as the `rem` value
+
+
+**Note**: Apparently most browsers use a default font-size of `16px`.
 
 
 

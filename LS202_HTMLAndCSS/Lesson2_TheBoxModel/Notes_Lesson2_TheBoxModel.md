@@ -1,88 +1,3 @@
-#### Visual formatting model
-
----
-
-In CSS we broadly work with two types of boxes which affects how the elements behave in terms of the flow of the page and other elements both horizontally and vertically. These two types and their principal differences are:
-
-- Defined as outer display  type `block`
-  - Breaks onto a new line
-  - Takes up 100% of the available, horizontal parent space on the line it is located and leaves the space empty when the content is smaller than the 'line'.
-  - The `width` and `height` box model properties are respected
-  - Both horizontal and vertical padding; border and margin affect surrounding elements
-- Defined as outer display type `inline`
-  - Does not break onto a new line
-  - The `width` and `height` box model properties are **not** respected
-  - Horizontal padding; border and  margin work like in the `block` i.e. **do affect surrounding elements**
-  - Vertical padding; border and margin are sized and positioned accordingly but **do not affect surrounding elements** i.e. they render but do not push other elements away.
-
-
-
-**The special visual formatting model `inline-block` acts the following way:**
-
-- The middle ground between `block` and `inline`
-- Useful when an element should break onto a new line but should not take up all the line space
-  by defining a width and height.
-- `width` and `height` box properties are respected
-- only becomes larger than the content if the `width` and/or `height` are explicitly defined
-
-
-
-#### Easily defining the box model to be used for all elements
-
----
-
-I understand the following CSS code:
-
-- specifies the single `html` element to use a specific box model
-
-- makes the selected elements inherit the box model from the parent, in this case all elements because of the wildcards.
-
-  So all elements nested in the html inherit from the html element and so forth.
-
-  ```css
-  html {
-    box-sizing: border-box;
-  }
-    
-  *, *::before, *::after {
-      box-sizing: inherit;
-  }
-  ```
-
-
-
-
-#### Differences between Padding and Margin
-
----
-
-- Padding
-  - Lies **inside** the border
-  - **Is** part of the **visible** and **click-able** region of an element
-  - Is typically styles through CSS
-  - **Padding** does not collapse
-  - Use cases:
-    - **Outside** of a container: Affect the visible and click-able area of an element
-    - **Inside** of a container: Horizontal separation between container edges and content
-- Margin
-  - Lies **outside** the border
-  
-  - And is typically **invisible** and **not click-able**
-  
-  - **Top and bottom margins collapse between `block` elements**
-    When two top/bottom margins collapse, they **end up** taking up as much as the **biggest margin of both**.
-    
-    This **does not happen with horizontal margins!**
-    ![](res/margin_collapse.png)
-    
-  - Use cases:
-    - General: Spacing between elements
-    - Inside of a container: Affect vertical distance between the element and the container
-
-**Note**: This is hard at the beginning and I must not follow any hard rules right now.
-
-
-
 #### The following was part of the previous notes but it fits better here
 
 ---
@@ -117,42 +32,6 @@ There are different types of 'length' units/types in css of which some are absol
     So if an element has a `font-size` of `11` and a `width` of `7`, then the total width of that object ends up being `em x font-size = 7 x 11 ==> 77`.
 
     **Note**: If no font-size is explicitly stated for a particular object using the `em` unit for some css property, then the **font-size of the closest parent with a defined font-size is used as the basis for `em`** using the same formula as mentioned above.
-
-
-
-#### Dimensions/Measurements/Units
-
----
-
-A `length specification`  is a combination of a numerical `value` and a `unit` such as `12px` where:
-
-- `12`  and `12px`  - referred to as the `measurement` and/or `dimensions`
-- `px`  -  referred to as the `measurement unit` and/or `unit`
-
-> The single most important absolute unit in CSS is the `pixel`, abbreviated `px` when used as property unit. 
-
-We must consider the **difference between** the following **different meanings of the term `pixel`**:
-
-- **The Problem**
-  Different devices have both **vastly different sized pixels** **and vastly different pixel density**.
-  This means that the rendered image on some device X is not necessarily the same as on device Y because of all the mentioned variables.
-
-  This is why CSS distinguishes between the following **two types of pixels**:
-
-- `Physical Pixel`  -  Also referred to as `Device Pixel` or `Display Pixel`
-  The physical pixel is defined as 96 pixels per inch and **accounts for the difference in resolution/surface are i.e. pixels per inch.**
-  The **browser** then renders the image and **scales** it to the target display **so that the source and destination image** take up the **same amount of horizontal and vertical pixels on both devices**.
-  
-  ![](res/physical_pixel.png)
-  
-- `CSS Reference Pixel`  -  Also referred to as `CSS Pixel` or `Reference Pixel`
-  
-  The reference pixel **accounts for the difference in display sizes and the `TVD` - Typical Viewing Distance for a specific display**.
-  The goal is to scale the images on different displays in a way that the images render at the same **perceived dimensions IF viewed from the `TVD` typical viewing distance for that specific display**.
-  
-  ![](res/css_reference_pixel.png)
-
-**Note**: Again,  the principal absolute unit is the `px`. Other absolute units like `inch` are rarely used because their results are not always as expected.
 
 
 
@@ -243,39 +122,6 @@ The principal relative units to use are
 
 
 
-#### Setting a font-size fallback for old/buggy/non-rem unit supporting browsers
-
----
-
-Apparently most, but **not all** modern browsers use a default font-size of `16px`. This is important because we can base the CSS fallback on this common browser behaviour. Here an example of the logic behind approach:
-
-```css
-/* setting p elements to a font-size of 1.25rem */
-/* if the browser does not support rem units */
-/* it falls back to the 20px property value*/
-p {
-  font-size: 20px; font-size: 1.25rem;
-}
-```
-
-The logic behind this approach is the following:
-
-- we assume that most browser set a default font-height of `16px`
-- because we want, in this case, `p` elements to be `1.25rem` high, the fallback is `20px` just because the common browser default is `16px`.
-  This means that in case the `rem` is not used, we still end up with a font height of `20px` because `1.25rem` is `16px * 1.25 = 20px .`
-
-**So using a fallback font height of `16px` on an html document is the best bet.**
-
-
-
-#### List of focus topics I have to reflect in my HTML/CSS notes based on the LS focus post for this chapter ??? !!!
-
----
-
-- How do `auto margins` work to center blocks horizontally?
-
-
-
 #### Random HTML and CSS notes - Find a b
 
 ---
@@ -318,3 +164,5 @@ The logic behind this approach is the following:
 - What are the exact rules for compounding `em` font heights? Does it have to do with nesting? Maybe just learn the basics and then use `rem`s all the way.
 
 - Do block level elements always expand vertically to fit the content?
+
+- How do `auto margins` work to center blocks horizontally?
