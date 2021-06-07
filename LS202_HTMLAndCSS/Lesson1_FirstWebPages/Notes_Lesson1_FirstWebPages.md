@@ -372,7 +372,7 @@ where:
 1. All but the rightmost qualifiers are referred to as `pre-qualifiers`
 2. The rightmost qualifier is referred to as the `key qualifier`.
 
-Selectors that use **two or more qualifiers** are referred to as `combined selectors`, which should be read from **left to right** and the `key selector` defines **which exact element the style is to be applied to**.
+Selectors that use **two or more qualifiers** are referred to as `combined selectors`, which should be read from **right to left** and the `key selector` defines **which exact element the style is to be applied to**.
 
 
 
@@ -519,7 +519,7 @@ The following selectors have **no effect** on specificity:
 
     In other words, **start with the lowest specificity** and **increase specificity as need over time**.
 
-    Keep the list of **total** qualifiers to a maximum of **three**
+  - Keep the list of **total** qualifiers to a maximum of **three**
 
 - **CSS Syntax**
 
@@ -545,3 +545,6 @@ The following selectors have **no effect** on specificity:
 - `selector`  -  designates which exact HTML elements to target for a particular style and associates a block of CSS code
 - `property`  -  specifies which properties of the selected elements are to be applied
 - `value`  -  specifies the value the `property` is to be set to for a particular
+
+
+

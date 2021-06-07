@@ -26,4 +26,8 @@
 - Concepts to stay on top of
   - How HTML and CSS handle whitespace exactly: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Whitespace
   - How browser rendering engines work
-  - 
+  - How the CSS Cascade actually works: https://developer.mozilla.org/en-US/docs/Web/CSS/Cascade
+- Working throug the course
+  1. **Lesson 1**
+     - Notes re-written
+     - Flashcards made for the **notes only**
