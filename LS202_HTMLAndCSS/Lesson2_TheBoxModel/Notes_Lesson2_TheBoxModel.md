@@ -1,52 +1,6 @@
-#### Procedure when writing HTML and CSS code
-
----
-
-1. Change code
-2. Test result in development browser
-3. Validate HTML and CSS on official sites
-4. Test result in other supported browsers
-
-
-
-#### Box model
-
----
-
-Everything in CSS has a box around it.
-
-**The box model properties are:**
-
-![](res/chrome_box_model.png)
-
-- `width` and `height`  - Defines the amount of horizontal and vertical space the box takes up
-- `padding`  -  Defines the amount of spacing between the content-box and the border
-- `border`  -  Boundary that surrounds the padding
-- `margin`  -  Transparent are that surrounds the border and provides separation between elements.
-  The margin is not counted towards the box itself but rather affects other content/elements that interacts with the margin boundings.
-
-**There a few types of box models:**
-**Note**: The margin is never counted towards the actual box size but it does affect the box surroundings!
-
-Setting the box model is achieved using the CSS `box-sizing` property.
-
--  `content-box`  -  This is the **standard/default** box model.
-                                 The padding and border **outset** the box size.
-  Note: The dotted represents the desired dimensions and padding and border grow outwards.![](res/standard-box-model.png)
-- `border-box`  -  This is the **alternative** box model.
-                             More intuitive because the padding and border does not affect surrounding flow.
-                             The padding and border **inset** the box size.
-  Note: The dotted represents the desired dimensions and padding and border grow inwards.![](res/alternate-box-model.png)
-- `padding-box`  -  **Deprecated. Do not use.**
-
-
-
 #### Visual formatting model
 
 ---
-
-**Note**: The following discusses **outer box display types** and setting it is achieved using the CSS
-`display` property.
 
 In CSS we broadly work with two types of boxes which affects how the elements behave in terms of the flow of the page and other elements both horizontally and vertically. These two types and their principal differences are:
 
@@ -70,23 +24,6 @@ In CSS we broadly work with two types of boxes which affects how the elements be
   by defining a width and height.
 - `width` and `height` box properties are respected
 - only becomes larger than the content if the `width` and/or `height` are explicitly defined
-
-
-
-#### Inner and outer display type
-
----
-
-An element's outer display type defines whether the CSS box is of type block or inline. 
-An element's inner CSS box display type defined how elements that are nested inside that box are laid out.
-
-There are different types of inner display types (the following is just an excerpt, there are more):
-
-- **by default**, i.e. when no other inner display type is defined, the nested boxes are laid out in **normal flow** which is just using `block` and `inline-block` like normal
-- `flex` sets the outer display type to `block` and the inner display type to `flex` and any direct children of this element are then laid out according to the `flex` [spec](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox).
-- `grid` ...
-
-**Note:** Think of all boxes to be of type block or inline unless otherwise specified like `flex` for example.
 
 
 
@@ -344,28 +281,12 @@ The logic behind this approach is the following:
 ---
 
 - The CSS `vertical-align` property can vertically align adjacent `inline` and `inline-block` elements in different way.
+
 - CSS property values that are set to zero should **not have a unit because they are ignored**
+
 - `img` elements are **not `inline-block`** by **default** elements** but **they are `inline`** elements **by default**!
-- `block` and `inline-block` outer display model boxes **cannot be nested inside** `inline` type boxes
-- Because HTML collapses multiple whitespace characters into a single whitespace character, this can cause some whitespace to appear and take up room and screw up a design like in the example:
- ```html
-  <section>
-    <article>content</article>
-  <article>more content</article>
-  </section>
- ```
 
-  The combination of a newline and a few spaces are interpreted as single whitespace, which takes up space and can be enough to cause problems.
-
-  This is why HTML elements are butted up against each other, to avoid this problem:
-
-  ```html
-  <section>
-    <article>content</article><article>more content</article>
-  </section>
-  ```
-
-
+  
 
 #### Box model related vocabulary and questions from LS course
 
@@ -379,24 +300,9 @@ The logic behind this approach is the following:
 
 
 
-#### Continue at
-
----
-
-- finalize the notes
-- clean up notes titled: 'box model related voc' .... into the rest of the notes if they fit
-- do the same for the 'random html and css notes'
-- make flashcards
-
-
-
 #### Questions and answers
 
 ---
-
-- How does whitespace collapsing work exactly? See [MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Whitespace)
-
-- How does margin collapsing work? See [MDN docs](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model)
 
 - How does a CSS fallback work in conjunction with functionality the browser does not support?
   In the following CSS snippet we want the browser to prioritize the `rem` property but if that is not supported it should fallback to `px`:
