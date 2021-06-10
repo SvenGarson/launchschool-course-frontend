@@ -79,9 +79,10 @@ There are many display types such as for example: `block`; `inline-block`; `inli
 **Inline-Block elements**  -  Can be specified using `display: inline-block;`
 
 - Acts as a middle-ground between `inline` and `inline-block`
-- Breaks onto a new line like `block`
+- Does **not** break onto a new line
 - Does **not** take up the space like `block`
 - Box-Model `width` and `height` properties are respected
+- **Horizontal and Vertical** `padding`; `border` and `margin` **do affect surrounding content**
 - Takes up only as much space as the content **unless** a `width` or `height` is specified
 
 
@@ -174,14 +175,14 @@ The goal is to scale the images on different displays in a way that the images r
 
 
     This unit compounds as the nested elements are based on the calculated, current font-size.
-
+    
     **Think of it as**: `my parent element's calculated font-size in pixels`
-
+    
     ![](./res/em_compounding.png)
 
 
     **Example:**
-
+    
     ```txt
     If the parents fonz-size is 20px
     Then using the font-size '1.5em' in any child evaluates to (1.5 x 20px) = 30px
@@ -232,7 +233,6 @@ Problems arise when we specify `padding` and `border` for that **nested** elemen
 
   ![](./res/content_box_scaling.png)
   
-
 - Making a `border-box` element take up `100%` of the container `width`
 
   The Box-Model attributes **that are used** by the browser to scale to 100% of the parent box are:
@@ -264,7 +264,6 @@ Setting the element with to `auto` tells the browser to **try to fit** the eleme
 - padding
 - border
 - margin
-  
 
 **What does `height: auto; ` mean?**
 Apparently `height: auto;` is the default user-agent/browser style which means that the height of the element is based on **the height needed by the children of that element** .
