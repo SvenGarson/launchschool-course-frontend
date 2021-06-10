@@ -153,6 +153,147 @@ The goal is to scale the images on different displays in a way that the images r
 
 
 
+**The essential length units  -  Absolute and Relative**
+
+- **Absolute units  -  Physical measurement**
+
+  - `px`  -  Pixel
+    Based on the `reference pixel` so one pixel **is not necessarily** a single hardware pixel, but rather whatever CSS, the browsers, operating systems etc scale it and render it too.
+
+- **Relative units  -  Specified in terms of some other element or environment measurement**
+
+  - `%`  -  Percentage  -  Technically not a length value
+    Typically based on the **specified calculated property value of the parent**.
+
+  - `em`  -  Emphemeral Unit
+
+    This unit is a scaled version of the `current calculated font-size` where:
+
+    - `current`  -  refers to the current font-size, which is defined by the parent
+    - `calculated font-size`  -  refers to the height in pixels
+
+
+    This unit compounds as the nested elements are based on the calculated, current font-size.
+
+    **Think of it as**: `my parent element's calculated font-size in pixels`
+
+    ![](./res/em_compounding.png)
+
+
+    **Example:**
+
+    ```txt
+    If the parents fonz-size is 20px
+    Then using the font-size '1.5em' in any child evaluates to (1.5 x 20px) = 30px
+    And this 30px is then used as drop-in in the children of the children
+    ```
+
+  - `rem`  -  Root Emphemeral Unit
+
+    This unit is a scaled version of the `root font-size` which is the font-size specified for the `html` element. **This unit does not compound as it is always based on the same value**.
+
+    **Think of it as**: `the root element's calculated font-size in pixels`
+
+    So when the root element has a font-size of `20px` then the style `font-size: 1.5rem` evaluates to `1.5 * 20px = 30px` for **every element using this style no matter it's nesting or parent**.
+
+
+
+### Parent-overshooting boxes when using `width: 100%`
+
+---
+
+When we want an element to take up `100%` of the parent container we can specific `width: 100%`.
+
+Problems arise when we specify `padding` and `border` for that **nested** element because as I understand, what the browser does to make an element fit is:
+
+1. Consider the bounding box based on the Box-Model for the box we want to take up the whole line
+2. Scales the box according to that Box-Model bounding box to take up the whole line
+
+
+![](res/percent_and_auto_quirks.png)
+
+
+
+**If the bounding box defined by the Box-Model is as on the following image:**
+
+![](./res/box_model_bounding_boxes.png)
+
+
+
+**In other words through a visual example:**
+
+- Making a `content-box` element take up `100%` of the container `width`
+
+  The Box-Model attributes **that are used** by the browser to scale to 100% of the parent box are:
+
+  - content size
+
+  **The rest is ignored** and the result is that **the scaled version overshoots the parent container**!
+
+  ![](./res/content_box_scaling.png)
+  
+
+- Making a `border-box` element take up `100%` of the container `width`
+
+  The Box-Model attributes **that are used** by the browser to scale to 100% of the parent box are:
+
+  - content size
+  - padding
+  - border
+
+  **The Margin is ignored** and the result is that **the scaled version does NOT overshoot the parent container unless the margin is defined, which merely pushes the box out after the fact**.
+
+  ![](./res/border_box_scaling.png)
+
+
+**Note**: That while the margin is ignore in the element scaling, the margin still affects the positioning of the 
+            nested element!
+
+
+
+### Using the `auto` property
+
+---
+
+The `auto` property value behavior depends on where it is used exactly. Following are some use-cases.
+
+**Fitting an element into the surrounding container horizontally**
+Setting the element with to `auto` tells the browser to **try to fit** the element inside **including**:
+
+- content-size
+- padding
+- border
+- margin
+  
+
+**What does `height: auto; ` mean?**
+Apparently `height: auto;` is the default user-agent/browser style which means that the height of the element is based on **the height needed by the children of that element** .
+
+
+**Left; Right and center aligning `block-level` elements**
+![](res/auto_centering_and_pushing_to_side.png)
+
+- `margin-left: auto;` **right** aligns the element in the container
+- `margin-right: auto;` **left** aligns the element in the container
+- **both horizontal** margins set to `auto` centers the element in the container
+
+
+
+**Note**: Specifying `auto` for `top` and `bottom` margins is equivalent to setting them to `0`
+**Note**: The padding property value **cannot be set to `auto`**
+
+
+
+### Vertical positioning using `vertical-align`
+
+---
+
+- intuitive example using a p with a nested span and make the line-height bigger so text can be vertically positioned using vertical-align
+- it is based on the box that contains the inline elements
+- works only on inline and inline-block elements?
+
+
+
 ### Define style for all elements in a few lines of CSS
 
 ---
@@ -166,7 +307,6 @@ html {
     box-sizing: inherit;
 }
 ```
-
 
 **This CSS does the following:**
 
@@ -278,6 +418,9 @@ The idea here is to:
 
 - How margin collapsing works and what are the situations to be aware of?
 
+- Why should the root element font-height be specified in px and not rem? Because not every browsers supports rem.
+  How should it be done when we want to use `rem`? Fallback for non-rem supporting browsers.
+  
   
 
 ###### Questions and answers - The combo may fit into the course better than in Q&A format
@@ -301,3 +444,14 @@ The idea here is to:
   Learn these and everything gets easier?
 
 - What are the types of flow and why are they important
+
+- what may be the problem when a CSS `width` and `height` have no effect on an element?
+  The element is probably of visual formatting model type `inline`.
+
+- Does element centering with auto margins work with inline; block and/or inline-block elements?
+  It only works with block elements!
+
+- Are image elements `inlilne` or `inline-block` elements by default?
+  `img` elements are `inline` elements by default!
+
+- 
