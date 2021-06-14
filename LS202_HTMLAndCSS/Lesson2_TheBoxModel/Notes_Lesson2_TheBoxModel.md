@@ -245,7 +245,6 @@ Problems arise when we specify `padding` and `border` for that **nested** elemen
 
   ![](./res/border_box_scaling.png)
 
-
 **Note**: That while the margin is ignore in the element scaling, the margin still affects the positioning of the 
             nested element!
 
@@ -258,12 +257,20 @@ Problems arise when we specify `padding` and `border` for that **nested** elemen
 The `auto` property value behavior depends on where it is used exactly. Following are some use-cases.
 
 **Fitting an element into the surrounding container horizontally**
-Setting the element with to `auto` tells the browser to **try to fit** the element inside **including**:
+
+
+
+**The default value of a `block` level element `width` property **
+The `auto` value for the CSS `width` property works only on `block` level elements and happens to be the default value for `block` level elements.
+
+A `block` element with a `width: auto;` tells the browser to **try to fit** the element inside **including**:
 
 - content-size
 - padding
 - border
 - margin
+
+
 
 **What does `height: auto; ` mean?**
 Apparently `height: auto;` is the default user-agent/browser style which means that the height of the element is based on **the height needed by the children of that element** .
@@ -280,6 +287,7 @@ Apparently `height: auto;` is the default user-agent/browser style which means t
 
 **Note**: Specifying `auto` for `top` and `bottom` margins is equivalent to setting them to `0`
 **Note**: The padding property value **cannot be set to `auto`**
+
 
 
 
