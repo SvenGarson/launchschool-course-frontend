@@ -1,23 +1,3 @@
-#### What to focus on
-
----
-
-- usage
-  - construct simple lists and nested lists
-  - create horizontal lists
-  - using pseudo classes `:hover` and `:focus`
-  - construct simple tables with headers, body and footers
-- list types
-  - understand difference between ordered; unordered and description lists
-  - explain when to use each type of list
-- table structures
-  - understand the difference between columns, rows and cells
-  - use table-headers; body and footers
-  - know the difference between table headers; row headings and column headings
-- study from the summary
-
-
-
 #### Lists - Overview
 
 ---
@@ -85,7 +65,6 @@ There are merely `6` tags to implement the following `3` types of lists HTML sup
     <dd>A simple list with sequence numbers or letters.</dd>
   </dl>
   ```
-  
 
 
 **Note**: Basically every type of list can be nested in every other type of list.
@@ -187,14 +166,6 @@ In order to nest a table, the nested table element definition must occur in a ne
 
 
 
-#### Continue at
-
----
-
-- https://launchschool.com/lessons/8c6e03e3/assignments/10c38757 at exercise `7`
-
-
-
 #### Horizontal navigation bar mechanics
 
 ---
@@ -252,14 +223,3 @@ In order to do this the following is apparently necessary:
   - butt-up the `li` elements
   - set the font-size of the `ul`  element to zero and re-set the font-size for the `li` to what is desired
     This seems to be the preferred solution for the horizontal navbars.
-
-
-
-#### Questions and answers
-
----
-
-- What are pseudo classes exactly?
-  Examples are: :hover; :focus; :last_child; :full-screen etc
-- Do my rectified notes answer all the focus on points?
-  If yes notes are ok and delete the focus on portion!

@@ -29,6 +29,7 @@
   - How the CSS Cascade actually works: https://developer.mozilla.org/en-US/docs/Web/CSS/Cascade
   - How to determine what the containing block of a given element actually is: https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block
   - Types of layout and flows: https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Introduction
+  - Correct use of structural HTML elements: http://web.simmons.edu/~grovesd/comm244/notes/week3/structural-elements
 - Working throug the course
   1. **Lesson 1**
      - Notes re-written
