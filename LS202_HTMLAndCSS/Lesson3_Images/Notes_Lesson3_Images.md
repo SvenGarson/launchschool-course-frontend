@@ -4,7 +4,7 @@
 
 The most common image types on website are:
 
-- `JPG`
+- **`JPG`**
   - Use cases
     - Used for photographic images
     - Avoid for high-resolution background as artifacts will sho
@@ -18,7 +18,7 @@ The most common image types on website are:
     - visible artifacts because of compression are referred to as `artifacts`
   - Tips
     - reduce the image size as much as possible as long as the image quality does not suffer
-- `PNG`
+- **`PNG`**
   - Use cases
     - Used for non-photographic, high quality images such as large backgrounds
     - When transparency is needed
@@ -28,7 +28,7 @@ The most common image types on website are:
   - Specifics
     - up to 65.536 transparency levels through an alpha channe
     - more than 16.7 million colors supported
-- `GIF`
+- **`GIF`**
   - Use cases
     - Small images where the lack in quality does not affect the purpose
     - For instance user interfaces and icons
