@@ -230,9 +230,13 @@ Each of these `4` offsets **measure offset inward from the border in question** 
 
 ---
 
+![](./res/position_schemes.png)
+
+
 The `position` property defines **how** the browser should position the selected element. There are different types:
 
 - **`position: static`**
+  ![](./res/position_static.png)
 
   - This is the default positioning
   - These elements **are part of the page flow**
@@ -244,23 +248,24 @@ The `position` property defines **how** the browser should position the selected
   **Note**: This position value **ignores values from left; right; bottom; top; z-index**!
 
 - **`position: relative`**
-
+  ![](./res/position_relative.png)
+  
   Relative positioning **does not remove the elements from the document flow** but rather **only renders it at an offset**.
-
+  
   ![](./res/static_vs_relative_flow.png)
-
+  
   
   Think about it this way, at every point in time a relative positioned element has **two things going on**:
-
+  
   1. the element is still in the flow **exactly as if it were static** and affects the flow exactly as static elements
   2. the element is **merely rendered at an offset to it's static position** where **this offset element does not affect the flow**!
-
-  In other words, the flow is the same as with `static` elements but the browser merely renders the elements at an offset.
-
   
-
+  In other words, the flow is the same as with `static` elements but the browser merely renders the elements at an offset.
+  
+  
+  
   **Note**: Only ever use a single offset direction per axis because they have precedence rules and may not work as expected.
-
+  
   
 
 
@@ -284,6 +289,7 @@ The `position` property defines **how** the browser should position the selected
   ```
 
 - **`position: absolute`**
+  ![](./res/position_absolute.png)
 
   Absolute position moves the element to **a new position within a container element** which is the **nearest ancestor element that has either that has a non-static`position`**.
 
@@ -310,11 +316,12 @@ The `position` property defines **how** the browser should position the selected
   ```
 
 - `position: fixed`
-
+   ![](./res/position_fixed.png)
+   
    Fixed position positions the element at a fixed position within the browser window and **does not move** when the user scrolls the page.
-
+   
    **Note**: Absolute positioning **does take the element from the document flow** i.e. it does not take up any flow space.
-
+   
    ```css
    .selector {
      position: fixed;
@@ -322,7 +329,7 @@ The `position` property defines **how** the browser should position the selected
      right; 25px;
    }
    ```
-
+   
    **Note**: Launchschool does not cover this type of position and does not give further info.
 
 

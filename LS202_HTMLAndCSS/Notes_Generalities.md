@@ -15,6 +15,7 @@
   - HTML entities: https://copypastecharacter.com/
   - Chrome Dev tools: https://developer.chrome.com/docs/devtools/
   - List of american [states](https://launchschool.com/gists/2424a869)
+  - Design and good web design illustrations [internetingishard](https://www.internetingishard.com/html-and-css/advanced-positioning/)
 - Tools
   - HTML standard conformant HTML validator through W3C: https://validator.w3.org/
   - CSS standard conformant HTML validator through W3C: https://jigsaw.w3.org/css-validator/
