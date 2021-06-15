@@ -14,6 +14,7 @@
     http://web.mit.edu/jmorzins/www/fonts.html
   - HTML entities: https://copypastecharacter.com/
   - Chrome Dev tools: https://developer.chrome.com/docs/devtools/
+  - List of american [states](https://launchschool.com/gists/2424a869)
 - Tools
   - HTML standard conformant HTML validator through W3C: https://validator.w3.org/
   - CSS standard conformant HTML validator through W3C: https://jigsaw.w3.org/css-validator/
@@ -23,13 +24,15 @@
     - standard compliance
     - formatting and best-practices
   - Practice combined CSS selectors: https://flukeout.github.io/
-- Concepts to stay on top of
+  - [Caniuse](http://www.caniuse.com) provides a way to check the support of HTML and CSS code for many browsers
+- Concepts to stay on top of i.e. learn deeper or at all
   - How HTML and CSS handle whitespace exactly: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Whitespace
   - How browser rendering engines work
   - How the CSS Cascade actually works: https://developer.mozilla.org/en-US/docs/Web/CSS/Cascade
   - How to determine what the containing block of a given element actually is: https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block
   - Types of layout and flows: https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Introduction
   - Correct use of structural HTML elements: http://web.simmons.edu/~grovesd/comm244/notes/week3/structural-elements
+  - Use the CSS BEM naming convention
 - Working throug the course
   1. **Lesson 1**
      - Notes re-written
