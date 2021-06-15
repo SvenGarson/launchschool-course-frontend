@@ -340,8 +340,6 @@ The `position` property defines **how** the browser should position the selected
 
 When working with floats and positioning we must deal with all the side effects in the design where two `display` property values support:
 
-
-
 - **Flex**  -  `display: flex`
   - Is one-dimensional which means that can work with **one axis at the same**
   - Think in terms of **styling** a **single rows or column**
