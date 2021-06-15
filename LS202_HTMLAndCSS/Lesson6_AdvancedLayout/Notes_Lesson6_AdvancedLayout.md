@@ -2,7 +2,7 @@
 
 ---
 
-**Note**: This topics are complex and harder to learn. Know the basics and use them. Don't go deeper for now
+**Note**: These topics are complex and harder to learn. Know the basics and use them. Don't go deeper for now
 
 I should know how to use the following:
 
@@ -57,7 +57,7 @@ The space beside floated elements left and right are usable to other elements ju
 **Result**:
 ![](./res/float_left_and_right.png)
 
-**Changin the side using the floats**:
+**Changing the side using the floats**:
 
 ```css
 /* Primary is positioned left */
@@ -150,8 +150,7 @@ The problem is that the nested and floated elements are **removed from the norma
        clear: both; /* position clearfix element just under the lowest, preceding floating element */
      }
      ```
-
-
+     
      ![](./res/containing_floats_problem_with_clearfix_marker.png)
 
   3. Container can base it's dimension calculations based on the clearfix:
@@ -188,7 +187,7 @@ The `clear` property moves **the cleared elements, that follow any floated eleme
 
 
 
-### Problems that occur when floating and intuition
+### Problems that occur when floating and intuition facts
 
 ---
 
@@ -709,6 +708,8 @@ The basic idea for negative margins on **static elements** is the following:
 ### Questions and answers
 
 ---
+
+- 
 
 - what are the following and do they all exist or are some terms the 'same'?
 
