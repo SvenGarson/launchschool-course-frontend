@@ -1,19 +1,14 @@
-/*
-  remember to:
-    - set the font family along with a fall-back
-*/
-
 html {
   background-color: #141414ff;
   box-sizing: border-box;
-  color: white;
+  color: #f0f0f0;
   font: normal 16px Helvetica, Arial, sans-serif;
   font-size: 16px;
 }
 
 *, *::before, *::after {
   /* inherit the Box-Model so we can still override */
-  /* on a per-element basis */
+  /* on a per-element basis if need be*/
   box-sizing: inherit;
 
   /* reset margin and padding for all elements */
@@ -22,8 +17,7 @@ html {
 }
 
 .photo-gallery-container {
-  background-color: #333333;
-
+  background-color: #333;
   min-width: 500px;
   max-width: 1000px;
 
@@ -32,7 +26,9 @@ html {
   margin: 0 auto;
 
   /* vertical distance to the heading */
-  padding-top: 52px;
+  /* horizontal distance to the content */
+  /* vertical distance to the bottom of the page */
+  padding: 50px 20px 20px;
 }
 
 h1 {
@@ -41,24 +37,23 @@ h1 {
 }
 
 .central-photo-container {
-  /* vertical distance to the heading */
-  margin-top: 22px;
+  margin-top: 20px;
 
-  /* ??? !!! push down the central image from the heading*/
-
-  outline: red solid 2px;
+  /* vertical distance to the thumbnails container */
+  margin-bottom: 30px;
 }
 
-figure img {
+.central-photo-container img {
+  border: 15px solid white;
   display: block;
   width: 100%;
+
+  /* vertical distance to the image caption */
+  margin-bottom: 12px;
 }
 
 /* styling the thumbnails */
 .thumbnails {
-  display: block;
-  outline: red solid 1px;
-
   /* get rid of the inter colum space */
   font-size: 0;
 
@@ -69,7 +64,14 @@ figure img {
   margin-right: -16px;
 }
 
-.quarter-column {
+.thumbnails img {
+  border: 3px solid white;
+  display: block;
+  width: 100%;
+}
+
+.thumbnails li {
+  /* horizontal fit list items onto the same row */
   display: inline-block;
   width: 25%;
 
@@ -83,13 +85,3 @@ figure img {
   padding: 0 16px;
 }
 
-.quarter-column p {
-  background-color: orange;
-  color: black;
-  outline: 1px solid black;
-}
-
-.thumbnails img {
-  display: block;
-  width: 100%;
-}
