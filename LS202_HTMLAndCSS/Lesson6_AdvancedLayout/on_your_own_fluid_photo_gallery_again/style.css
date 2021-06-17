@@ -1,0 +1,95 @@
+/*
+  remember to:
+    - set the font family along with a fall-back
+*/
+
+html {
+  background-color: #141414ff;
+  box-sizing: border-box;
+  color: white;
+  font: normal 16px Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+*, *::before, *::after {
+  /* inherit the Box-Model so we can still override */
+  /* on a per-element basis */
+  box-sizing: inherit;
+
+  /* reset margin and padding for all elements */
+  margin: 0;
+  padding: 0;
+}
+
+.photo-gallery-container {
+  background-color: #333333;
+
+  min-width: 500px;
+  max-width: 1000px;
+
+  /* center the photo gallery container in */
+  /* the browser viewport */
+  margin: 0 auto;
+
+  /* vertical distance to the heading */
+  padding-top: 52px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+}
+
+.central-photo-container {
+  /* vertical distance to the heading */
+  margin-top: 22px;
+
+  /* ??? !!! push down the central image from the heading*/
+
+  outline: red solid 2px;
+}
+
+figure img {
+  display: block;
+  width: 100%;
+}
+
+/* styling the thumbnails */
+.thumbnails {
+  display: block;
+  outline: red solid 1px;
+
+  /* get rid of the inter colum space */
+  font-size: 0;
+
+  /* growing the container horizontally to */
+  /* account for the left and right gutter */
+  /* we do not need */
+  margin-left: -16px;
+  margin-right: -16px;
+}
+
+.quarter-column {
+  display: inline-block;
+  width: 25%;
+
+  /* debuggin the intercolumn spacing */
+  /* making sure they are gone */
+  font-size: 1rem;
+
+  /* creating the gutters between thumbnails */
+  /* unfortunately also on the left and right */
+  /* but this is needed for identically sized images */
+  padding: 0 16px;
+}
+
+.quarter-column p {
+  background-color: orange;
+  color: black;
+  outline: 1px solid black;
+}
+
+.thumbnails img {
+  display: block;
+  width: 100%;
+}

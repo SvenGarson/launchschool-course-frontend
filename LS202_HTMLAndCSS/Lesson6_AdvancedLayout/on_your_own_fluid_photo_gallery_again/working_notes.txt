@@ -1,0 +1,27 @@
+# container
+- min width of 500px
+- max width of 1000px
+
+# central photo
+- full column width
+- should be wrapped and captioned using a figure + figcaption
+  here the default styling needs to be removed to take up the
+  full width
+
+# four thumbnails
+- single row
+- all take up the same percentage width whatever the size of the
+  container
+- use any technique you want like for example:
+    - inline-block elements
+    - float them + clearfix
+    - I wont use flex or grid for now
+
+
+# resources
+- http://placehold.it/1200x900 as placeholder image
+- all images are (width, height) = (1200px, 900px)
+
+# tips
+- use an image editor to determine the dimensions of font, distances
+  and colors

@@ -735,6 +735,51 @@ The basic idea for negative margins on **static elements** is the following:
     p::first-letter {
       color: red;
     }
+    ```
+  
+- What does the universal selector `*` actually select?
+
+- What is the precedence of the `*` selector?
+
+- Understand the reasoning behind the technique used to CSS reset the Box-Model so that I have the option to override the box-model when needed:
+
+  - https://css-tricks.com/box-sizing/
+
+  I think the reasoning here is that I should set the box-model on the html, **and then inherit the property value** because:
+
+  1. the `html` selector is a type selector and thus less specific i.e. we can intuitively override it if needed
+
+  2. the universal `*` selector seems to have higher precedence (is that true?) at all times and so cannot simply be overriden later (is this correct? do some research)
+
+  3. Doing the following:
+
+     ```css
+     html {
+       box-sizing: border-box;
+     }
+     *, *:before, *:after {
+       box-sizing: inherit;
+     }
+     ```
+
+     Gives us the ability to override the property later and still default/reset the Box-Model for every element! 
+
+- How come the fallback font is defined:
+
+  ```css
+  normal 16px Helvetica, Arial, sans-serif
+  ```
+
+  and the fallback font size, **unless I just got the following part wrong?** is
+
+  ```css
+  font-size: 16px; font-size: 1rem;
+  ```
+
+  
+  The fallback value is on the left and on the right, are both correct for some reason or is one wrong?
+
+
 
 
 
