@@ -341,10 +341,10 @@ The `position` property defines **how** the browser should position the selected
 When working with floats and positioning we must deal with all the side effects in the design where two `display` property values support:
 
 - **Flex**  -  `display: flex`
-  - Is one-dimensional which means that can work with **one axis at the same**
+  - Is one-dimensional which means that can work with **one axis at a time**
   - Think in terms of **styling** a **single rows or column**
 - **Grid**  - `display: grid`
-  - Is two-dimensional which means that can work with **two axes at the same**
+  - Is two-dimensional which means that can work with **two axis at a time**
   - Think in terms of **styling** a **many rows and columns**
 
 
@@ -589,7 +589,7 @@ Think about **what design works best for a given screen dimension or any other r
 
 **Note**: If the document does **not** use responsive design **do not define this tag**!
 
-Long story short, this non-standard HTML definition tells mobile browser how to interpret the document in terms of the vistualized viewport and whether it should use the downloaded documents' design or scale the full sized, non-responsive rendered document down and let users zoom, pan as most small display devices do for non-responsive designs to enable the user to interact with the document whether it is optimized for the particular device or not.
+Long story short, this non-standard HTML definition tells mobile browser how to interpret the document in terms of the visualized viewport and whether it should use the downloaded documents' design or scale the full sized, non-responsive rendered document down and let users zoom, pan as most small display devices do for non-responsive designs to enable the user to interact with the document whether it is optimized for the particular device or not.
 
 More information here: https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag
 
@@ -646,7 +646,7 @@ The basic idea for negative margins on **static elements** is the following:
 
 **Note**: Negative margins behave differently when used on `float`ed elements!
 
-### 
+
 
 
 ### General HTML document tricks and tools
@@ -714,75 +714,27 @@ The basic idea for negative margins on **static elements** is the following:
 
 ---
 
-- 
+- What are the following concepts?
 
-- what are the following and do they all exist or are some terms the 'same'?
-
-  - pseudo class
-  - pseudo element
-  - pseudo selector
-
-  **Two of these exist:**
-
-  - `pseudo classes`  -  keyword **added to a selector** that reads special state of the selected elements
+  - `pseudo class`  -  A CSS keyword added to a selector to read special element state
 
     ```css
     selector:hover { /* style */ }
     ```
 
-    **Note**: Use **single colon** for pseudo classes!
-
-  - `pseudo elements`  -  keyword **added to a selector** to style a specific part of the selected element
+  - `pseudo element`  -  A CSS keyword added to a selector to style a specific part of an element or to 
+                                        add new elements to an HTML document
 
     ```css
-    selector::before { /* style */ }
-    ```
-
-    **Note**: Use **two colons** for pseudo elements!
-
-- What is a `block formatting context` at awareness level?
-  The important thing to understand is that the `block formatting context` contains **everything** inside the element to which it applies, **including floated elements**!
-
-- How would you implement different styles based on browser window size if there are no variables through pure css i.e. no media queries?
-  
-- How to vertically center elements like text that have **no pre-defined height** through pure css.
-  
-- Are floated; grid, flex, absolute and relative elements alway removed from the page flow?
-  Are statically positioned elements always part of the page flow?
-
-- Write a list of where, how and with what requirements the types of position differs for quick comparison when I need it.
-  Probably not worth it if my notes are clean enough?
-  
-- How are fonts inherited if at all? LS code keeps defining the same `font` property value for text wrapped in divs.
-  
-- What is the `Stack`? This concept is used to describe the rules which govern how elements are ordered and used etc. Good to know for rendering with positioned and z-indexed elements!
-  
-- what does HTML parse as HTML and what characters have to be escaped and how?
-  
-- flex box can be used to flex everything but also for positioning only
-  
-- flex does not respect sizing if screen size gets small which we can define through wrapping
-  
-- How are media queries executed exactly so that I can properly reset
-  
-- what is mean when docs say `the computed value`? As in like for instance `modifies the computed value of display`?
-  
-- flex considers the nesting of elements
-  
-- **using flex, think:**
-  
-  - of how the space is supposed to be distributes and how the grid rows/columns/cells are to be arranged
-  - that flexbox is used to style **horizontal space** i.e. **is one dimensional** and go from there
-  - we can decide to distribute **horizontal and vertical** space
-  
-  
-
-### What to learn deeply for sure after this lesson
-
----
-
-- CSS Flex and Grid
-- Responsive design using media queries etc
+    /* adding an element to the document as last child of the following selector */
+    selector::after {
+      content: "Content by CSS!";
+    }
+    
+    /* select and style the first letter of text content */
+    p::first-letter {
+      color: red;
+    }
 
 
 
@@ -791,12 +743,3 @@ The basic idea for negative margins on **static elements** is the following:
 ---
 
 - Re-implement https://launchschool.com/lessons/e01b7c79/assignments/3a453998 the photo gallery and the version with the media queries because I could not get it done at the time of this writing
-
-
-
-### Good reads and resources
-
----
-
-- using negative margins: https://www.smashingmagazine.com/2009/07/the-definitive-guide-to-using-negative-margins/
-- summary box models, floats and positioning rules: https://d3jtzah944tvom.cloudfront.net/202/projects/lesson_6/box_model_v2/main.html
