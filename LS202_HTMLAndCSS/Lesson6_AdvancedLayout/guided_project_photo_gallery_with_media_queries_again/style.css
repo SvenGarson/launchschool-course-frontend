@@ -1,0 +1,102 @@
+html {
+  background-color: #141414ff;
+  box-sizing: border-box;
+  color: #f0f0f0;
+  font: normal 16px Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+*, *::before, *::after {
+  /* inherit the Box-Model so we can still override */
+  /* on a per-element basis if need be*/
+  box-sizing: inherit;
+
+  /* reset margin and padding for all elements */
+  margin: 0;
+  padding: 0;
+}
+
+.photo-gallery-container {
+  background-color: #333;
+  max-width: 1000px;
+
+  /* center the photo gallery container in */
+  /* the browser viewport */
+  margin: 0 auto;
+
+  /* vertical distance to the heading */
+  /* horizontal distance to the content */
+  /* vertical distance to the bottom of the page */
+  padding: 50px 20px 20px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+}
+
+.central-photo-container {
+  margin-top: 20px;
+
+  /* vertical distance to the thumbnails container */
+  margin-bottom: 30px;
+}
+
+.central-photo-container img {
+  border: 15px solid white;
+  display: block;
+  width: 100%;
+
+  /* vertical distance to the image caption */
+  margin-bottom: 12px;
+}
+
+/* styling the thumbnails */
+.thumbnails {
+  /* get rid of the inter colum space */
+  font-size: 0;
+
+  /* growing the container horizontally to */
+  /* account for the left and right gutter */
+  /* we do not need */
+  margin-left: -16px;
+  margin-right: -16px;
+}
+
+.thumbnails img {
+  border: 3px solid white;
+  display: block;
+  width: 100%;
+}
+
+.thumbnails li {
+  /* horizontal fit list items onto the same row */
+  display: inline-block;
+  width: 25%;
+
+  /* debuggin the intercolumn spacing */
+  /* making sure they are gone */
+  font-size: 1rem;
+
+  /* creating the gutters between thumbnails */
+  /* unfortunately also on the left and right */
+  /* but this is needed for identically sized images */
+  padding: 0 16px;
+
+  /* add margin between thumbnail rows */
+  margin-bottom: 15px;
+}
+
+/* media query to support display of width < 900px */
+@media screen and (max-width: 899px) {
+  .thumbnails li {
+    width: 33.333%;
+  }
+}
+
+/* media query to support display of width < 600px */
+@media screen and (max-width: 599px) {
+  .thumbnails li {
+    width: 50%;
+  }
+}
