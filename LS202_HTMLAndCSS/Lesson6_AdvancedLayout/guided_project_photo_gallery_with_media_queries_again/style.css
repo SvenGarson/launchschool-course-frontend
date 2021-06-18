@@ -100,3 +100,45 @@ h1 {
     width: 50%;
   }
 }
+
+/* mdia query to support display of width >= 1280px */
+@media screen and (min-width: 1280px) {
+  body {
+    /* show the breakpoint */
+    background-color: yellow;
+  }
+
+  .photo-gallery-container:after {
+    /* clearfix */
+    display: block;
+    content: "";
+    clear: both;
+  }
+
+  /* create the two columns to nest the content in */
+  .central-photo-container img {
+    /* testing with smaller value */
+    width: 500px;
+
+    /* debugging */
+    outline: red solid 1px;
+
+    /* left column */
+    float: left;
+  }
+
+  .thumbnails {
+    /* debugging */
+    outline: red solid 1px;
+
+    /* take up the rest of the width */
+    /* as the right column */
+    float: left;
+  }
+
+  /* thumbnails should take up full thumbnail */
+  /* container width */
+  .thumbnails li {
+    width: 100%;
+  }
+}
