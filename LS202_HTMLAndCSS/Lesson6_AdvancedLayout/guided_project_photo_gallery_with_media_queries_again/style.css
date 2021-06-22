@@ -101,44 +101,42 @@ h1 {
   }
 }
 
-/* mdia query to support display of width >= 1280px */
+/* media query to support display of width >= 1280px */
 @media screen and (min-width: 1280px) {
-  body {
-    /* show the breakpoint */
-    background-color: yellow;
+  .photo-gallery-container {
+    /* the gallery takes up the available viewport width */
+    max-width: 100%;
   }
 
-  .photo-gallery-container:after {
-    /* clearfix */
-    display: block;
+  /* clearfix for the photo gallery container */
+  .photo-gallery-container::after {
     content: "";
+    display: block;
     clear: both;
   }
 
-  /* create the two columns to nest the content in */
-  .central-photo-container img {
-    /* testing with smaller value */
-    width: 500px;
-
-    /* debugging */
-    outline: red solid 1px;
-
-    /* left column */
+  .central-photo-container {
+    width: 950px;
     float: left;
+
+    /* increase horizontal distance betweeen central-image */
+    /* and the thumbnail column */
+    margin-right: 50px;
   }
 
   .thumbnails {
-    /* debugging */
-    outline: red solid 1px;
-
-    /* take up the rest of the width */
-    /* as the right column */
-    float: left;
+    /* trigger a block formatting context to fit the right column */
+    /* and take up the rest of the space */
+    overflow: hidden;
+    margin-top: 20px;
   }
 
-  /* thumbnails should take up full thumbnail */
-  /* container width */
   .thumbnails li {
+    /* one thumbnail now takes a full row */
     width: 100%;
+
+    /* increase vertical spacing between thumbnails */
+    margin-bottom: 30px;
   }
+
 }

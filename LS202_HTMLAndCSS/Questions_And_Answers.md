@@ -107,6 +107,6 @@
     }
     ```
 
-    
+- When the visual formatting model is set to `block` implicitly **by floating an  element** , can the display type be reset manually or does the fact that the element is floated lock the element is as a block-level element?
 
   
