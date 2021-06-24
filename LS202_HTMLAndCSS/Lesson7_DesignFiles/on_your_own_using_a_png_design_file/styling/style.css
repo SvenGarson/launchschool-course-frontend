@@ -1,0 +1,137 @@
+html {
+  background: linear-gradient(to bottom, #d1dbba, #fcfef4) no-repeat;
+  box-sizing: border-box;
+  color: #193441;
+  font: normal 16px "Roboto Condensed", sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+#shutter-bug-container {
+  width: 960px;
+  margin: 0 auto;
+}
+
+header {
+  padding: 20px 20px 0;
+}
+
+/* clearfix for floated header elements */
+header:after {
+  display: block;
+  content: "";
+  clear: both;
+}
+
+h1 {
+  /* rest of the row space used by navigational links  */
+  display: inline-block;
+  font-size: 2.25rem;
+  font-weight: normal;
+
+  /* specify and position logo as background image */
+  background: url("../resources/images/logo.png") no-repeat;
+  height: 100px;
+  padding-left: 115px;
+  padding-top: 45px;
+}
+
+nav {
+  float: right;
+
+  /*
+    since floating elements of different height have un-intuitive
+    flow rules we can just padd the nav vertically to be of similar
+    height so that the heading and nav can share the same row
+  */
+  padding-top: 75px;
+}
+
+ul {
+  display: inline-block;
+
+  /* destroy whitespace between list items  */
+  font-size: 0;  
+}
+
+ul li {
+  /* reset the font-size and layout list items on the same line */
+  display: inline; 
+  font-size:  1.125rem;
+}
+
+li + li {
+  /* separate horizontal navigational links horizontally */
+  margin-left: 4px;
+}
+
+a {
+  background-color: #fcfff5;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  color: #91aa9d;
+  text-decoration: none;
+
+  /* larger clickable anchor region  */
+  padding: 10px 40px 14px;
+
+  /*
+    set anchor to inline-block so that vertical padding
+    affects surrounding content
+  */
+  display: inline-block;
+}
+
+.active a {
+  /* the active navigational anchor */
+  color: #fcfff5;
+  background-color: #91aa9b;
+}
+
+main {
+  background-color: #fffffd;
+  box-shadow: 1px 6px 6px -2px #bbb, -1px 6px 6px -2px #bbb;
+  color: #3e5d6f;
+  padding: 30px 30px 0;
+}
+
+/* clearfix for floated content elements*/
+main:after {
+  display: block;
+  content: "";
+  clear: both;
+}
+
+main img {
+  /* get rid of default img descender space */
+  display: block;
+  margin-bottom: 40px;
+}
+
+main figure {
+  float: right;
+  margin: 0 0 15px 30px;
+}
+
+main p {
+  font-size: 1.125rem;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: inherit;
+  margin-bottom: 25px;
+}
+
+header, footer {
+  background-color: transparent;
+}
+
+footer {
+  color: #4a6977;
+  font-size: 0.875rem;
+  margin:  15px 0 35px;
+}

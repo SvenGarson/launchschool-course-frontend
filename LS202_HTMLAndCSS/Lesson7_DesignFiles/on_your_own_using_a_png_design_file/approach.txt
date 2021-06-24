@@ -1,0 +1,15 @@
+  Questions to base the code review on, maybe:
+    ? Usage of rem ok here despite the precision of the decimals
+    ? am I right about trying to use mostly rem units and not inject
+      any absolute px values? both seems to have advantages and disa
+      dvantages off course but at the time I don't see
+      the effects everything has on each other so I recon there must
+      be some obvious tips the TA can give me?
+    ? am I right that good semantic class names are a better way
+      to layout HTML rather than just using all sorts of selectors?
+
+      It seems more intuitive to me to use classes and id's if the
+      names mean something intuitive like for example central-photo
+      instead of class="bordered edged".
+    ! no need to focus oon import thing since I will do some research later
+    ! small vertical positioning and box shadow descrepencancy

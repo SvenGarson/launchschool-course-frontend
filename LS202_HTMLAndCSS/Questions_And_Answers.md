@@ -109,4 +109,8 @@
 
 - When the visual formatting model is set to `block` implicitly **by floating an  element** , can the display type be reset manually or does the fact that the element is floated lock the element is as a block-level element?
 
+- How does font resolving work through an HTML  `link` element? What else can be used?
+
+- Read up on the basic mechanism of importing CSS style
+
   
