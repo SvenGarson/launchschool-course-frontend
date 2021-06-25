@@ -1,0 +1,81 @@
+/*
+  - set and inherit the Box-Model as usual
+  - install and specify the font according to requirements
+  - test that the background image is properly working zoomed
+    in and out
+*/
+
+html {
+  box-sizing: border-box;
+  font-family: Avenir, Nunito, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+
+  /* specify background image and repeat it  */
+  background-image: url("../resources/images/bg_body.gif");
+  background-repeat: repeat;
+
+  /* specify a background-color in case there is a problem with */
+  /* the background-image */
+  background-color: #2f2840;
+}
+
+*, *::before; *::after {
+  box-sizing: inherit;
+}
+
+header img {
+  display: block;
+  margin: 0 auto;
+}
+
+header {
+  background-color: transparent;
+  padding: 50px 0;
+}
+
+main {
+  background-color: white;
+  text-align: center;
+  padding: 50px 50px;
+}
+
+footer {
+  background-color: lightgray;
+}
+
+h1, h2 {
+  /* same size because we can't just skip the h1 */
+  /* and we do not need the h1 anywhere else */
+  font-size: 1.5rem; font-size: 24px;
+}
+
+ul {
+  /* current workhorse to style the social media portion */
+  display: block;
+  width:  50%;
+  margin: 0 auto;
+  outline:  1px solid red;
+  text-align: center;
+}
+
+ul li {
+  display: inline-block;
+}
+
+ul li:nth-of-type(2) {
+  margin: 0 75px;
+}
+
+#space-design-container {
+  width: 750px;
+  margin: 0 auto;
+}
+
+p {
+  margin: 30px 0;
+}
+
+footer img {
+  vertical-align: top;
+}

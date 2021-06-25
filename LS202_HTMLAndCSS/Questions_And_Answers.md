@@ -113,4 +113,7 @@
 
 - Read up on the basic mechanism of importing CSS style
 
+- Forum says that the HTML standard allows to wrap an `img` inside a heading but the `alt` must be specified.
+  Is there any advantage/disadvantage to using a heading with a background image or wrapping an image? Especially in terms of third party accessibility programs like screenreaders?
+  
   

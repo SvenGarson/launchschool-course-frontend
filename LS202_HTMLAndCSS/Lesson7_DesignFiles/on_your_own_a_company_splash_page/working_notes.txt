@@ -1,0 +1,24 @@
+# semantic markup and structure
+  - white box is the main that contains subheading and text paras
+  - gray box is the footer that contains the anchors to other origins
+
+# the font
+  - default font weight: medium/500
+  - both main headings : heavy/900
+  - blue subheadings   : black/900
+
+- blue heading uses Avenir Black
+- text content uses Avenir Medium
+
+# other
+  - user empty on page links for the social media links
+  - use &bull; for the bullet point content
+
+# when done
+- validate everything
+- compare to the reference site: https://d3jtzah944tvom.cloudfront.net/202/projects/lesson_7/company_splash_page_final/site.html
+- check syntax and spacing as well as /> closing auto-closing tags
+
+# notes about me approach and thinking
+- using one h1 and one h2 but setting them the same size
+  to semantically use the h1 and h2 and NOT for styling
