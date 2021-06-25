@@ -1,0 +1,98 @@
+/*
+  Todo:
+    > specify:
+        - the correct fonts for every element and install the 
+          free font version
+        - the correct foreground and background color
+        - the correct font-weight
+    - reset the elements margin/padding that are used
+
+  Next task to finish:
+    - Finish the first part of:  https://launchschool.com/lessons/99a0d7ae/assignments/505d2057
+      i.e. the header and navigation
+    - do the following:
+        1. Check the header markup for semantics and syntax
+        2. Define the Box-Model as usual
+        3. DRY up the styling so far
+        4. Position everything according to the hosted example
+           (ignore this PSD/PNG bs as that approach does not work)
+           (without the necessary software for the PSD design file)
+        5. Validate markup and style
+        6. Proceed to the next portion ...
+*/
+
+html {
+  /* debugging */
+  background-color: orange;
+
+  font: 16px normal Avenir, Nunito, Helvetica, Arial, sans-serif
+}
+
+/* reset the used HTML elements */
+html, body, header, img, nav, ul, li, main, footer,
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+/* site container */
+#space-design-container {
+  /* center the container itself */
+  margin: 0 auto;
+
+  /* container takes up full width */
+  width: 100%;
+}
+
+/* header background */
+header {
+  /* the company logo as background image */
+  background-image: url("../resources/images/bg_body.gif");
+
+  /* centering the header content */
+  text-align: center;
+
+  /* vertical padding to get an idea for the initial design */
+  padding: 145px 0;
+
+  /* temporary font-size that better than black */
+  color: white;
+}
+
+/* need a horizontal navigation bar without gutters*/
+header ul {
+  /* remove inter-list-item gaps */
+  font-size: 0;
+}
+
+nav li {
+  /*
+    re-set font-size because inter-list-item gap removed
+    using font-size: 0;
+  */
+  font-size: 1.5rem;
+  display: inline-block;
+}
+
+/* re-establishing the navigation element gutters */
+li + li {
+  margin-left: 60px;
+}
+
+/*
+  Do not want the links to be styled.
+
+  Do we need to style :link and :visited explictly?
+*/
+a {
+  text-decoration: none;
+  color: white;
+}
+
+/*
+  Style the active navigational link as in the 'current page'.
+  The specificity here sucks, integrate properly with anchor styling!
+*/
+.active_nav_link a {
+  color: dodgerblue;
+}

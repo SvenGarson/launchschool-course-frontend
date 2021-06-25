@@ -1,0 +1,4 @@
+# Requirements
+- each page has same markup for header and footer
+  but with the nav bar class changes between pages
+- link the three pages and make the links look different
