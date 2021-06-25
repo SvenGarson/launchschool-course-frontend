@@ -43,6 +43,7 @@
   - **Good stuff about margins:** https://www.joshwcomeau.com/css/rules-of-margin-collapse/
   - **Good stuff about centering**: https://css-tricks.com/centering-in-the-unknown/
   - More details about the box Model: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model#border-area
+  - `role` attribute and CSS attribute selector
 - Working throug the course
   1. **Lesson 1**
      - Notes re-written

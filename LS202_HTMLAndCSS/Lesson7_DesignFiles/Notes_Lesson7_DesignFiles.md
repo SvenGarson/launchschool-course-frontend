@@ -18,4 +18,3 @@ There are many CSS resets. Here are some simple ones:
 -  http://meyerweb.com/eric/tools/css/reset/
 - http://necolas.github.io/normalize.css/
 - http://cssreset.com/scripts/undohtml-css-tantek-celik/
-
