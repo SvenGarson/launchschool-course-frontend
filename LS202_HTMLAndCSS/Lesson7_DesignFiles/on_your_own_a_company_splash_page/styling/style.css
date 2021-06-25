@@ -1,27 +1,22 @@
-/*
-  - set and inherit the Box-Model as usual
-  - install and specify the font according to requirements
-  - test that the background image is properly working zoomed
-    in and out
-*/
-
 html {
   box-sizing: border-box;
-  font-family: Avenir, Nunito, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  font-weight: normal;
+  font: normal 16px Avenir, Nunito, Helvetica, Arial, sans-serif;
 
-  /* specify background image and repeat it  */
+  /* specify background image and repeat it with a fall-back bg color */
+  background-color: #2f2840;
   background-image: url("../resources/images/bg_body.gif");
   background-repeat: repeat;
 
-  /* specify a background-color in case there is a problem with */
-  /* the background-image */
-  background-color: #2f2840;
+  padding-bottom: 140px;
 }
 
-*, *::before; *::after {
+*, *::before, *::after {
   box-sizing: inherit;
+}
+
+#space-design-container {
+  width: 1000px;
+  margin: 0 auto;
 }
 
 header img {
@@ -31,49 +26,54 @@ header img {
 
 header {
   background-color: transparent;
-  padding: 50px 0;
+  padding: 160px 0 94px;
+}
+
+h2 {
+  font-size: 2.25rem;
+  margin-top: 28px;
+}
+
+p {
+  font-size: 1.25rem;
+  margin-top: 20px;
+  line-height: 1.40;
+}
+
+strong {
+  color: #3e98b2;
+  font-size: 1.55rem;
 }
 
 main {
   background-color: white;
   text-align: center;
-  padding: 50px 50px;
+  padding: 70px 90px;
+}
+
+span {
+  /* the sub-heading bullets */
+  font-size: 1.7rem;
+  vertical-align: 5px;
+  margin: 0 16px;
+}
+
+p + h2 {
+  margin-top: 160px;
 }
 
 footer {
-  background-color: lightgray;
-}
-
-h1, h2 {
-  /* same size because we can't just skip the h1 */
-  /* and we do not need the h1 anywhere else */
-  font-size: 1.5rem; font-size: 24px;
+  background-color: #e7e7e7;
+  padding: 33px 0;
 }
 
 ul {
-  /* current workhorse to style the social media portion */
-  display: block;
-  width:  50%;
-  margin: 0 auto;
-  outline:  1px solid red;
   text-align: center;
 }
 
 ul li {
   display: inline-block;
-}
-
-ul li:nth-of-type(2) {
-  margin: 0 75px;
-}
-
-#space-design-container {
-  width: 750px;
-  margin: 0 auto;
-}
-
-p {
-  margin: 30px 0;
+  margin: 0 60px;
 }
 
 footer img {
