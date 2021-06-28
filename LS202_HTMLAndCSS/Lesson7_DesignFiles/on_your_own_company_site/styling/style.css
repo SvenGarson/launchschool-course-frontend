@@ -1,98 +1,91 @@
-/*
-  Todo:
-    > specify:
-        - the correct fonts for every element and install the 
-          free font version
-        - the correct foreground and background color
-        - the correct font-weight
-    - reset the elements margin/padding that are used
-
-  Next task to finish:
-    - Finish the first part of:  https://launchschool.com/lessons/99a0d7ae/assignments/505d2057
-      i.e. the header and navigation
-    - do the following:
-        1. Check the header markup for semantics and syntax
-        2. Define the Box-Model as usual
-        3. DRY up the styling so far
-        4. Position everything according to the hosted example
-           (ignore this PSD/PNG bs as that approach does not work)
-           (without the necessary software for the PSD design file)
-        5. Validate markup and style
-        6. Proceed to the next portion ...
-*/
-
-html {
-  /* debugging */
-  background-color: orange;
-
-  font: 16px normal Avenir, Nunito, Helvetica, Arial, sans-serif
-}
-
-/* reset the used HTML elements */
+/* initialization */
 html, body, header, img, nav, ul, li, main, footer,
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding: 0;
 }
 
-/* site container */
-#space-design-container {
-  /* center the container itself */
-  margin: 0 auto;
+html {
+  font-family: Avenir, Nunito, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  box-sizing: border-box;
+  color: #cacaca;
+}
 
-  /* container takes up full width */
+body {
+  background: url("../resources/images/bg_body.gif") 50% 0 repeat;
+  background-color: #2f2840;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+#space-design-container {
+  margin: 0 auto;
   width: 100%;
 }
 
-/* header background */
+/* the header and it's contents */
 header {
-  /* the company logo as background image */
-  background-image: url("../resources/images/bg_body.gif");
-
-  /* centering the header content */
   text-align: center;
+  font-weight: 500;
 
-  /* vertical padding to get an idea for the initial design */
-  padding: 145px 0;
+  /* vertical distance to logo top */
+  padding-top: 133px;
 
-  /* temporary font-size that better than black */
-  color: white;
+  /* vertical disance to nav bottom */
+  padding-bottom: 38px;
 }
 
-/* need a horizontal navigation bar without gutters*/
 header ul {
-  /* remove inter-list-item gaps */
+  /* remove inter-navigational whitespace */
   font-size: 0;
+
+  /* vertical distance to company logo */
+  margin-top: 106px;
 }
 
 nav li {
-  /*
-    re-set font-size because inter-list-item gap removed
-    using font-size: 0;
-  */
-  font-size: 1.5rem;
+  /* re-instantiate the horizontal navigation font-size */
+  font-size: 1.625rem;
+
   display: inline-block;
 }
 
-/* re-establishing the navigation element gutters */
 li + li {
-  margin-left: 60px;
+  margin-left: 70px;
 }
 
-/*
-  Do not want the links to be styled.
-
-  Do we need to style :link and :visited explictly?
-*/
-a {
+a,
+a:link,
+a:visited {
+  color: inherit;
   text-decoration: none;
-  color: white;
 }
 
-/*
-  Style the active navigational link as in the 'current page'.
-  The specificity here sucks, integrate properly with anchor styling!
-*/
-.active_nav_link a {
+.active {
   color: dodgerblue;
+  font-weight: 900;
+}
+
+/* the main area and it's contents */
+main {
+  /* debugging colors */
+  color: black;
+  background-color: white;
+}
+
+/* the footer and it's contents */
+footer {
+  /* debugging colors */
+  color: gray;
+  background-color: lightgray;
+}
+
+/* debuggin */
+main {
+  color: magenta;
+  height: 500px;
 }

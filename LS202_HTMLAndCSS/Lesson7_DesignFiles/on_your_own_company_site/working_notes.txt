@@ -1,4 +1,18 @@
-# Requirements
-- each page has same markup for header and footer
-  but with the nav bar class changes between pages
-- link the three pages and make the links look different
+/*
+  Todo:
+    > specify:
+        - the correct fonts for every element and install the 
+          free font version
+        - the correct foreground and background color
+        - the correct font-weight
+    - reset the elements margin/padding that are used
+    - check that the background image works same as the reference
+    - do we need to styke a:link; a: visited etc manually?;
+      - :link is every unvisited a element
+      - :visited is a link the user already visited
+    - make sure the html document title are correct
+    - test that the pages are corectly linked together
+      and state changes in nav work
+    - test that shared style works between pages
+    - use css import instead of links redundantly
+*/
