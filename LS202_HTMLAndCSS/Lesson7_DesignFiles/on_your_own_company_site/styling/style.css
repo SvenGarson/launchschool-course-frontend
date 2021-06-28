@@ -1,17 +1,15 @@
-/* initialization */
 html, body, header, img, nav, ul, li, main, footer, section,
-h1, h2, h3, h4, h5, h6,
-p {
+h1, h2, h3, h4, h5, h6, p {
   margin: 0;
   padding: 0;
 }
 
 html {
+  box-sizing: border-box;
+  color: #cacaca;
   font-family: Avenir, Nunito, Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-weight: normal;
-  box-sizing: border-box;
-  color: #cacaca;
 }
 
 body {
@@ -29,37 +27,35 @@ body {
 }
 
 p {
+  font-size: 1.25rem;
+  font-weight: 500;
   line-height: 1.4;
+  letter-spacing: -0.1px;
+  margin-bottom: 3.55rem;
 }
 
-/* the header and it's contents */
 header {
   text-align: center;
-  font-weight: 500;
-
-  /* vertical distance to logo top */
   padding-top: 133px;
-
-  /* vertical disance to nav bottom */
   padding-bottom: 38px;
 }
 
 header ul {
-  /* remove inter-navigational whitespace */
   font-size: 0;
-
-  /* vertical distance to company logo */
   margin-top: 106px;
 }
 
-nav li {
-  /* re-instantiate the horizontal navigation font-size */
+header nav li {
+  /*
+    re-instantiate the nav li font-size because it has been set
+    to zero to get rid of the inter-list-item whitespace
+  */
   font-size: 1.625rem;
 
   display: inline-block;
 }
 
-li + li {
+header li + li {
   margin-left: 70px;
 }
 
@@ -75,29 +71,23 @@ a:visited {
   font-weight: 900;
 }
 
-/* the main area and it's contents */
 main {
-  /* choose the right colors !!! ??? */
   color: black;
   background-color: white;
   text-align: center;
 }
 
 .main-content-column {
-  /* main content area has fixed width */
   width: 1000px;
   margin: 0 auto;
-  padding-top: 112px;
-  padding-left: 90px;
-  padding-right: 90px;
-  padding-bottom: 21px;
+  padding: 112px 90px 21px 90px;
 }
 
-/* specifying the bullets before and after every h2 */
+/* specify the bullets as content leading and following every h2 */
 h2::before, h2::after {
   content: "\2022";
   font-size: 1.35rem;
-  display: inline;
+  display: inline-block;
   vertical-align: 6px;
   margin: 0 24px;
 }
@@ -110,43 +100,28 @@ h2 {
 h3 {
   font-size: 1.5rem;
   color: #3e59b2;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin: 20px 0 10px;
   font-weight: 800;
 }
 
-p {
-  font-size: 1.25rem;
-  font-weight: 500;
-  letter-spacing: -0.1px;
-  margin-bottom: 3.55rem;
-}
-
-/* the second content paragraph */
-section:nth-of-type(2) p {
+.our-founder p {
   margin-top: 34px;
 }
 
-/* the footer and it's contents */
 footer {
-  /* debugging colors */
   background-color: #e7e7e7;
   color: #b2b2b2;
-
   text-align: center;
   padding-bottom:  70px;
 }
 
- /* breaking the line without introducing vertical distance */
 .one-liner {
   display: block;
 }
 
 footer p {
-  /* using margin would make more sense here ??? !!! */
   margin: 0;
   padding: 80px 0 40px 0;
-  margin-botton: 120px;
 }
 
 footer ul {
@@ -161,8 +136,8 @@ footer li + li {
   margin-left: 120px;
 }
 
-.twitter, .facebook, .email, .instagram {
-  /* CSS sprites as back using single spritesheet */
+.sprite {
+  /* CSS sprites as background using a single spritesheet */
   display: inline-block;
   width: 46px;
   height: 46px;

@@ -16,6 +16,8 @@
     - the example site company logo is a link to home!
     - the example font characters seems to be narrower
       about 2 pixels or so
+    - used h3 for the subheading under about us because it could be
+      anything like a slogan
 
   Decisions for HTML semantics
     - div of class main-content to create column that
@@ -27,4 +29,25 @@
 
 
   Next up:
-    - keep going with the footer
+    > for the home page
+        - check color
+        - check bg-color
+        - check font size
+
+  Feedback related:
+    - chose to split the font family, size and weight to be
+      less verbose
+    - chose section for the main content
+      since the content is not necessarily
+      self-contained in my opinion but rather
+      depends on the surrounding context 
+      and even pages
+    - numbers are odd I just took the closest and left them as is
+    - if selectors were 2-3 qualifiers long I just took them
+      as I defined them in the hierarchyy?
+    - used a few classes to decouple the HTML from the CSS so that
+      changing the order of container HTML elements does not change
+      the styling based on selectors like nth-of-type for instance
+    - no reset this time to see how annoying it is + my experience
+      that I have to actually reset everything by hand and think of
+      it
