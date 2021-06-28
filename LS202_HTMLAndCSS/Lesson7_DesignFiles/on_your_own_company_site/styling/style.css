@@ -28,6 +28,10 @@ body {
   width: 100%;
 }
 
+p {
+  line-height: 1.4;
+}
+
 /* the header and it's contents */
 header {
   text-align: center;
@@ -115,7 +119,6 @@ p {
   font-size: 1.25rem;
   font-weight: 500;
   letter-spacing: -0.1px;
-  line-height: 1.4;
   margin-bottom: 3.55rem;
 }
 
@@ -127,13 +130,49 @@ section:nth-of-type(2) p {
 /* the footer and it's contents */
 footer {
   /* debugging colors */
-  color: gray;
-  background-color: lightgray;
+  background-color: #e7e7e7;
+  color: #b2b2b2;
 
   text-align: center;
+  padding-bottom:  70px;
 }
 
-/* breaking the line without distance */
+ /* breaking the line without introducing vertical distance */
 .one-liner {
   display: block;
 }
+
+footer p {
+  /* using margin would make more sense here ??? !!! */
+  margin: 0;
+  padding: 80px 0 40px 0;
+  margin-botton: 120px;
+}
+
+footer ul {
+  list-style-type: none;
+}
+
+footer ul li {
+  display: inline-block;
+}
+
+footer li + li {
+  margin-left: 120px;
+}
+
+.twitter, .facebook, .email, .instagram {
+  /* CSS sprites as back using single spritesheet */
+  display: inline-block;
+  width: 46px;
+  height: 46px;
+  background-image: url("../resources/images/icons_social_media.png");
+}
+
+.twitter { background-position: 0 0; }
+
+.facebook { background-position: 0 -46px; }
+
+.email { background-position: 0 -92px; }
+
+.instagram { background-position: 0 -138px; }
