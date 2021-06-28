@@ -80,7 +80,7 @@ main {
 .main-content-column {
   width: 1000px;
   margin: 0 auto;
-  padding: 112px 90px 21px 90px;
+  padding: 108px 90px 21px 90px;
 }
 
 /* specify the bullets as content leading and following every h2 */
@@ -88,7 +88,7 @@ h2::before, h2::after {
   content: "\2022";
   font-size: 1.35rem;
   display: inline-block;
-  vertical-align: 6px;
+  vertical-align: 5px;
   margin: 0 24px;
 }
 
@@ -151,3 +151,30 @@ footer li + li {
 .email { background-position: 0 -92px; }
 
 .instagram { background-position: 0 -138px; }
+
+/* styling for the projects directory */
+/* override previous style or using element margin/padding rather */
+/* than container padding */
+/*
+  so make the container have NO HORIZONTAL PADDING
+  add horizontal padding to the wrapped elements
+*/
+.main-content-column {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.projects h2 {
+  margin-bottom: 30px;
+}
+
+.projects img {
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.projects p {
+  padding-left: 95px;
+  padding-right: 95px;
+  margin-bottom: 30px;
+}

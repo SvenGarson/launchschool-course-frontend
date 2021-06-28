@@ -1,7 +1,5 @@
   Todo:
-    > specify:
-        - the correct foreground and background color
-        - the correct font-weight
+    - sort CSS properties by 
     - reset the elements margin/padding that are used
     - check that the background image works same as the reference
     - do we need to styke a:link; a: visited etc manually?;
@@ -18,6 +16,7 @@
       about 2 pixels or so
     - used h3 for the subheading under about us because it could be
       anything like a slogan
+    - could add a section/article for the projects maybe!
 
   Decisions for HTML semantics
     - div of class main-content to create column that
