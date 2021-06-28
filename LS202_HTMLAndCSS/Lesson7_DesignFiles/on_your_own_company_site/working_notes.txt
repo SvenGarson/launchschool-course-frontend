@@ -1,8 +1,5 @@
-/*
   Todo:
     > specify:
-        - the correct fonts for every element and install the 
-          free font version
         - the correct foreground and background color
         - the correct font-weight
     - reset the elements margin/padding that are used
@@ -15,4 +12,19 @@
       and state changes in nav work
     - test that shared style works between pages
     - use css import instead of links redundantly
-*/
+    - section for the main contents?
+    - the example site company logo is a link to home!
+    - the example font characters seems to be narrower
+      about 2 pixels or so
+
+  Decisions for HTML semantics
+    - div of class main-content to create column that
+      takes up 1000px to avoid specifying a different
+      width for different main content areas.
+    - the line-spacing -0.1px trick is dirty
+    - either use px or rem for margin and padding,
+      not both!
+
+
+  Next up:
+    - keep going with the footer

@@ -1,6 +1,7 @@
 /* initialization */
-html, body, header, img, nav, ul, li, main, footer,
-h1, h2, h3, h4, h5, h6 {
+html, body, header, img, nav, ul, li, main, footer, section,
+h1, h2, h3, h4, h5, h6,
+p {
   margin: 0;
   padding: 0;
 }
@@ -66,15 +67,61 @@ a:visited {
 }
 
 .active {
-  color: dodgerblue;
+  color: #6db9ff;
   font-weight: 900;
 }
 
 /* the main area and it's contents */
 main {
-  /* debugging colors */
+  /* choose the right colors !!! ??? */
   color: black;
   background-color: white;
+  text-align: center;
+}
+
+.main-content-column {
+  /* main content area has fixed width */
+  width: 1000px;
+  margin: 0 auto;
+  padding-top: 112px;
+  padding-left: 90px;
+  padding-right: 90px;
+  padding-bottom: 21px;
+}
+
+/* specifying the bullets before and after every h2 */
+h2::before, h2::after {
+  content: "\2022";
+  font-size: 1.35rem;
+  display: inline;
+  vertical-align: 6px;
+  margin: 0 24px;
+}
+
+h2 {
+  display: inline-block;
+  font-size: 2.25rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  color: #3e59b2;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: 800;
+}
+
+p {
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.1px;
+  line-height: 1.4;
+  margin-bottom: 3.55rem;
+}
+
+/* the second content paragraph */
+section:nth-of-type(2) p {
+  margin-top: 34px;
 }
 
 /* the footer and it's contents */
@@ -82,10 +129,11 @@ footer {
   /* debugging colors */
   color: gray;
   background-color: lightgray;
+
+  text-align: center;
 }
 
-/* debuggin */
-main {
-  color: magenta;
-  height: 500px;
+/* breaking the line without distance */
+.one-liner {
+  display: block;
 }
