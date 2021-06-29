@@ -18,6 +18,7 @@
       anything like a slogan
     - could add a section/article for the projects maybe!
 
+
   Decisions for HTML semantics
     - div of class main-content to create column that
       takes up 1000px to avoid specifying a different
@@ -25,6 +26,8 @@
     - the line-spacing -0.1px trick is dirty
     - either use px or rem for margin and padding,
       not both!
+    - use of article for each projects since that is more
+      self-contained in my opinion without further context
 
 
   Next up:

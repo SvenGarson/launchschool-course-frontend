@@ -1,4 +1,5 @@
-html, body, header, img, nav, ul, li, main, footer, section,
+html, body, header, img, nav, ul, li,
+main, footer, section, figure, figcaption,
 h1, h2, h3, h4, h5, h6, p {
   margin: 0;
   padding: 0;
@@ -80,8 +81,39 @@ main {
 .main-content-column {
   width: 1000px;
   margin: 0 auto;
-  padding: 108px 90px 21px 90px;
+
+  /*
+      only specify vertical padding for the column content on the
+      container and let the elements specify horizontal distance
+      to the container themselves so that element can take up the
+      full column container width or less.
+
+      This is needed for the images in the projects document.
+  */
+  padding-top: 108px;
+  padding-bottom: 20px;
 }
+
+/*
+    All three document have different amount of horizontal
+    padding for different types of elements:
+      - home    : 90px horizontal padding for every element in a section
+      - projects: ???
+      - team    : ???
+
+*/
+.main-content-column h2,
+.main-content-column h3,
+.main-content-column p {
+  /*outline: 2px dashed blue;*/
+  padding: 0 90px;
+}
+
+/* horizontal padding for projects paragraphs is different */
+.projects p {
+  padding: 0 100px;
+}
+
 
 /* specify the bullets as content leading and following every h2 */
 h2::before, h2::after {
@@ -151,30 +183,3 @@ footer li + li {
 .email { background-position: 0 -92px; }
 
 .instagram { background-position: 0 -138px; }
-
-/* styling for the projects directory */
-/* override previous style or using element margin/padding rather */
-/* than container padding */
-/*
-  so make the container have NO HORIZONTAL PADDING
-  add horizontal padding to the wrapped elements
-*/
-.main-content-column {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.projects h2 {
-  margin-bottom: 30px;
-}
-
-.projects img {
-  width: 100%;
-  margin-bottom: 14px;
-}
-
-.projects p {
-  padding-left: 95px;
-  padding-right: 95px;
-  margin-bottom: 30px;
-}
