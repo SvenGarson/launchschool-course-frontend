@@ -1,8 +1,14 @@
 html, body, header, img, nav, ul, li,
 main, footer, section, figure, figcaption,
+dl, dt, dd,
 h1, h2, h3, h4, h5, h6, p {
   margin: 0;
   padding: 0;
+}
+
+img {
+  display: block;
+  margin: 0 auto;
 }
 
 html {
@@ -60,9 +66,9 @@ header li + li {
   margin-left: 70px;
 }
 
-a,
-a:link,
-a:visited {
+nav a,
+nav a:link,
+nav a:visited {
   color: inherit;
   text-decoration: none;
 }
@@ -183,3 +189,23 @@ footer li + li {
 .email { background-position: 0 -92px; }
 
 .instagram { background-position: 0 -138px; }
+
+/* adding the team page */
+dl {
+  /* get rid of inter team member whitespace */
+  font-size: 0;
+}
+
+dl .member {
+  /* re-instantiate the font-size for team member names */
+  font-size: 1.5rem;
+
+  display: inline-block;
+  padding: 127px 27px 127px 28px;
+}
+
+.member a,
+.member a:link,
+.member a:visited {
+  text-decoration: none;
+}
