@@ -117,3 +117,6 @@
   Is there any advantage/disadvantage to using a heading with a background image or wrapping an image? Especially in terms of third party accessibility programs like screenreaders?
   
 - Use cases for HTML `img` and CSS `background `?
+
+- How to achieve the clicking an image and showing it enlarged in a standards compliant way that is not nesting a checkbox inside a label?
+  Here is one standard compliant way apparently : https://www.outofscope.com/css-only-menu-toggle-no-javascript-required/ which has the disadvantage that the user cannot just click anywhere but rather must click somewhere in the content/image onto some element like a link or button.

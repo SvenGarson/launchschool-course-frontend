@@ -7,7 +7,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 img {
-  display: block;
+  display: inline-block;
   margin: 0 auto;
 }
 
@@ -100,26 +100,12 @@ main {
   padding-bottom: 20px;
 }
 
-/*
-    All three document have different amount of horizontal
-    padding for different types of elements:
-      - home    : 90px horizontal padding for every element in a section
-      - projects: ???
-      - team    : ???
-
-*/
 .main-content-column h2,
 .main-content-column h3,
 .main-content-column p {
   /*outline: 2px dashed blue;*/
   padding: 0 90px;
 }
-
-/* horizontal padding for projects paragraphs is different */
-.projects p {
-  padding: 0 100px;
-}
-
 
 /* specify the bullets as content leading and following every h2 */
 h2::before, h2::after {
@@ -142,6 +128,19 @@ h3 {
   font-weight: 800;
 }
 
+.projects main p {
+  padding: 0 100px;
+  margin-bottom: 40px;
+}
+
+.projects h2 {
+  padding-bottom: 30px;
+}
+
+.projects h3 {
+  padding-top: 15px;
+}
+
 .our-founder p {
   margin-top: 34px;
 }
@@ -150,7 +149,7 @@ footer {
   background-color: #e7e7e7;
   color: #b2b2b2;
   text-align: center;
-  padding-bottom:  70px;
+  padding-bottom: 70px;
 }
 
 .one-liner {
@@ -190,7 +189,6 @@ footer li + li {
 
 .instagram { background-position: 0 -138px; }
 
-/* adding the team page */
 dl {
   /* get rid of inter team member whitespace */
   font-size: 0;
@@ -201,11 +199,15 @@ dl .member {
   font-size: 1.5rem;
 
   display: inline-block;
-  padding: 127px 27px 127px 28px;
+  padding: 127px 27px 235px 28px;
 }
 
 .member a,
 .member a:link,
 .member a:visited {
   text-decoration: none;
+}
+
+.team main p {
+  margin-bottom: 0;
 }
