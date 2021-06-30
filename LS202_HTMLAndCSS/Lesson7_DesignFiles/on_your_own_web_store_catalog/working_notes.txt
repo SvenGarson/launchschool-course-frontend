@@ -1,0 +1,49 @@
+# The markup
+
+> Header
+    - H1: Paramiicio + that contains a link to index.html
+
+> Main
+    - H2: All products
+    > Items grid as unordered list:
+        # every item ...
+        # but this incorporates the label/checkbox trick !!!
+        # so add that as soon as I understand it
+        Figure: the figurine image
+          Figcaption: The figurine name
+        P: Figurine price
+
+
+    > Unordered List:
+        - contains cells where each cell is 23.5% wide
+          and the computed height is about 235.477px
+        - the image and the figurine name are associated through
+          a figure and figcaption
+        - contains a price for every entry, this can be a plain paragraph
+
+> Footer
+    - Seemingly empty
+    - Or do not specify at all
+
+> Containers and other info
+    - header and main contained in container that is 900px wide
+    - products grid as 25px padding all around so it ends up
+      being 850px wide
+
+> Functionality and trick
+    - Clicking on the image maximizes the images and occludes the background
+      and clicking anywhere on the page resets to normal
+    - when an image is maximized, the image is not shown in the grid anymore
+
+> To think of:
+    - reset all that is needed
+    - specify fonts and Box-Model
+    - specify colors, root and other font-sizes
+
+
+# Other requirements
+  - page file called index.html
+
+# Fiddles
+  - the grid + design: https://jsfiddle.net/Lawq2fuo/158/
+  - checkbox trick   : https://jsfiddle.net/cmh8pezL/121/
