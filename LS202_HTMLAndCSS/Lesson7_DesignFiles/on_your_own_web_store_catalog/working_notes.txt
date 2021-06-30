@@ -47,3 +47,23 @@
 # Fiddles
   - the grid + design: https://jsfiddle.net/Lawq2fuo/158/
   - checkbox trick   : https://jsfiddle.net/cmh8pezL/121/
+
+# The solution to the checkbox/label hack
+
+  # We are in the ul that makes up the grid
+  # and do this for every li
+  li
+    input + id
+    label + id
+      # Treat the label as the container for the revealed content
+      occluder
+        image
+
+  # set some default label click region
+  # when toggling maximize the click region and reset on toggle
+
+
+ # Important for the approach
+ > init label to
+    - inline-block or block
+    - position static

@@ -1,0 +1,87 @@
+/* manual reset */
+html, body, header, main, footer,
+h1, h2, h3,
+ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font: normal 16px Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+  background-color: #ffd505;
+  color: #222;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+header {
+  background-color: #057ec1;
+  color: white;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  padding: 30px 25px;
+}
+
+header h1 {
+  font-size: 2.4rem;
+}
+
+.web-store-container {
+  width: 900px;
+  margin:  0 auto;
+}
+
+/* vertical distance between consecutive web-store-container */
+.web-store-container + .web-store-container {
+  margin-top: 30px;
+}
+
+main {
+  background-color: green;
+  padding: 25px;
+}
+
+main h2 {
+  font-size: 2rem;
+}
+
+main ul {
+  list-style-type: none;
+
+  /* remove inter-list-item whitespace */
+  font-size: 0;
+}
+
+main ul li {
+  display: inline-block;
+  
+  /*
+      Each takes up the same percentage of the container,
+      in this case 23.5% which is a total of 4 x 23.5 = 94%
+
+      This gives us a rest of 100% - 94% = 6% to distribute
+      between the grid gutters, which is (6% / 3 gutters) = 2%
+  */
+  width: 23.5%;
+
+  /* re-establish inter-list-item font size */
+  font-size: 1.2rem;
+
+  /* push the next grid row down */
+  margin-bottom: 2%;
+}
+
+/* specify grid gutter size */
+main li + li {
+  margin-left: 2%;
+}
+
+/* cancel left margin of leftmost grid column */
+main li:nth-child(4n-3) {
+  margin-left: 0;
+}
+
+
