@@ -166,17 +166,3 @@
   content: "";
   ```
 
-  
-
-
-
-
-
-
-
-#### Finishing up the course
-
----
-
-- Work through this Q&A and make flashcards for it
-
