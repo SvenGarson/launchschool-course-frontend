@@ -120,3 +120,49 @@
 
 - How to achieve the clicking an image and showing it enlarged in a standards compliant way that is not nesting a checkbox inside a label?
   Here is one standard compliant way apparently : https://www.outofscope.com/css-only-menu-toggle-no-javascript-required/ which has the disadvantage that the user cannot just click anywhere but rather must click somewhere in the content/image onto some element like a link or button.
+  
+- Do we need to define initialization style in CSS in the following situation?
+
+  1. some element has a default `position` of `static` and that is **not** changed
+  2. the element is set to `position` `absolute` when some checkbox (checkbox hack!) is checked and positioned through the left; right etc properties
+  3. when the checkbox/label is toggled to **not** be selected anymore, do we have to add styling to change it back or does CSS automatically re-apply the previous styling?
+
+  In other words, when changing style based on some event/change, do we have to add default styling for an element to change back or not?
+  
+- When using the label/checkbox trick, I found that the label/checkbox is toggled when:
+
+  - the label box is clicked which can include other nested elements (though not allowed by the standards)
+  - any element contained in the label is clicked, which can be position static or any other position type
+    the catch here is that a click on the label regions works as before but the click on the element has to be on the element itself wherever it is shown on screen
+  
+- Why is the following pseudo-element, which has the purpose of occluding part of the background not actually added to the markup?
+
+  ```css
+  input:checked + div::before {
+    position: fixed;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+  }
+  ```
+
+  Because the `content` property is missing! If no actual content is desired then **set the `content` property to an empty string value**.
+
+  ```css
+  input:checked + div::before {
+    /* now the occluder is added */
+    content: "":
+  
+    position: fixed;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+  }
+  ```
+
+  
+

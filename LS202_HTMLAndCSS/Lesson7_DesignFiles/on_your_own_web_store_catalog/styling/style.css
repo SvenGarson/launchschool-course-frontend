@@ -1,9 +1,15 @@
 /* manual reset */
 html, body, header, main, footer,
 h1, h2, h3,
-ul, li {
+ul, li,
+figure, p {
   margin: 0;
   padding: 0;
+}
+
+img {
+  /* take up the whole row by default and ridance the descender */
+  display: block;
 }
 
 html {
@@ -40,12 +46,15 @@ header h1 {
 }
 
 main {
-  background-color: green;
+  background-color: #ececec;
   padding: 25px;
 }
 
 main h2 {
   font-size: 2rem;
+
+  /* horizontally separate from the item grid downwards */
+  padding-bottom: 25px;
 }
 
 main ul {
@@ -56,7 +65,9 @@ main ul {
 }
 
 main ul li {
+  background-color: white;
   display: inline-block;
+  padding: 15px;
   
   /*
       Each takes up the same percentage of the container,
@@ -84,4 +95,109 @@ main li:nth-child(4n-3) {
   margin-left: 0;
 }
 
+main label {
+  display: block;
+}
 
+main input[type="checkbox"] {
+  /* hide by default */
+  display: none;
+}
+
+main img {
+  height: 140px;
+  width: auto;
+  margin: 0 auto;
+}
+
+/*
+    The occluder added before the image to hide everything behind the image.
+    This pseudo-element is a child of the label, so toggles the checkbox when
+    the area is clicked, i.e. the occluding box.
+*/
+input:checked + figure::after {
+  content: "";
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/*
+    The image is merely placed somewhere on the screen for styling when
+    the checkbox is toggled.
+
+    The user can either click on the image or the fullscreen background
+    occluder to get back to the non-occluded grid view.
+*/
+input:checked + figure > img {
+  width: 400px;
+  height: auto;
+
+  /*
+      could use absolute but since there is no non-static parent,
+      the absolute positioning anchors to the viewport anyways.
+
+      Using fixed is just a cleared way to express this behaviour.
+  */
+  position: fixed;
+  left: 50%;
+  top: 100px;
+  transform: translateX(-50%);
+}
+
+main figure {
+  display: block;
+  width: 100%;
+  padding-bottom: 5px;
+}
+
+main figcaption {
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding-top: 20px;
+}
+
+main p {
+  font-size: 1rem;
+}
+
+
+/*
+    Some context on the approach: ;
+        - changed occluder from ::before to ::after because I need
+          to add an element that keeps the figure from collapsing
+          because we take the img out of the flow.
+
+          I could not find another solution other than adding a
+          pseudo-element because I cannot, at least not that I know,
+          the label based on the checkbox :checked pseudo-class
+          without introducing crazy CSS selectors.
+
+          So the strategy will be, for now, to add an element in place
+          of the fixed image that takes up the same horizontal and
+          vertical space so the cell does not collapse.
+
+          This is different from the reference implementation in that I
+          chose the name of the figurines to be expressed through a
+          figcaption rather than an h3 for semantic reasons.
+
+          But this introduces the problem of another element that is
+          nested in the figure, i.e. the figcaption which now has to be
+          taken care of.
+
+          If the figure element would wrap only the img, like in the
+          reference implementation, we could just set the figure height
+          to what the image takes up and it would never collapse, but
+          since the figure contains a caption of font-size 1.2rem with
+          a root font-size of 16px, this ends up being:
+            - calculated figcaption font-size =  1.2rem * 16px = 19.2px
+
+          REFORMULATE THE PREVIOUS PARA unless it is true and determine
+          IF there is a simple solution that involves setting the height
+          of the figure element ??? !!!
+*/
