@@ -1,3 +1,43 @@
+/*
+    Some context on the approach: ;
+        - changed occluder from ::before to ::after because I need
+          to add an element that keeps the figure from collapsing
+          because we take the img out of the flow.
+
+          I could not find another solution other than adding a
+          pseudo-element because I cannot, at least not that I know,
+          the label based on the checkbox :checked pseudo-class
+          without introducing crazy CSS selectors.
+
+          So the strategy will be, for now, to add an element in place
+          of the fixed image that takes up the same horizontal and
+          vertical space so the cell does not collapse.
+
+          This is different from the reference implementation in that I
+          chose the name of the figurines to be expressed through a
+          figcaption rather than an h3 for semantic reasons.
+
+          But this introduces the problem of another element that is
+          nested in the figure, i.e. the figcaption which now has to be
+          taken care of.
+
+          If the figure element would wrap only the img, like in the
+          reference implementation, we could just set the figure height
+          to what the image takes up and it would never collapse, but
+          since the figure contains a caption of font-size 1.2rem with
+          a root font-size of 16px, this ends up being:
+            - calculated figcaption font-size =  1.2rem * 16px = 19.2px
+
+        - Since the img is taken out of the normal document flow, the
+          figcaption element slides up the figure container since
+          no actual content preceedes it.
+
+        - I will just go for the obvious solution to me to use a block
+          level element that takes the place of the image in terms of
+          the noral document flow so every thing flows as if the img
+          element were still static
+*/
+
 /* manual reset */
 html, body, header, main, footer,
 h1, h2, h3,
@@ -148,6 +188,23 @@ input:checked + figure > img {
   left: 50%;
   top: 100px;
   transform: translateX(-50%);
+
+  /* position the image over the occluder */
+  z-index: 1;
+}
+
+/*
+    add pseudo-element in place of the image so the rest of the
+    figure content flows as if the image were still in the flow
+*/
+input:checked + figure::before {
+  content: "";
+
+  /* must be the same box as the image would generate */
+  display: block;
+  height: 140px;
+  width: auto;
+  margin: 0 auto;
 }
 
 main figure {
@@ -165,39 +222,3 @@ main figcaption {
 main p {
   font-size: 1rem;
 }
-
-
-/*
-    Some context on the approach: ;
-        - changed occluder from ::before to ::after because I need
-          to add an element that keeps the figure from collapsing
-          because we take the img out of the flow.
-
-          I could not find another solution other than adding a
-          pseudo-element because I cannot, at least not that I know,
-          the label based on the checkbox :checked pseudo-class
-          without introducing crazy CSS selectors.
-
-          So the strategy will be, for now, to add an element in place
-          of the fixed image that takes up the same horizontal and
-          vertical space so the cell does not collapse.
-
-          This is different from the reference implementation in that I
-          chose the name of the figurines to be expressed through a
-          figcaption rather than an h3 for semantic reasons.
-
-          But this introduces the problem of another element that is
-          nested in the figure, i.e. the figcaption which now has to be
-          taken care of.
-
-          If the figure element would wrap only the img, like in the
-          reference implementation, we could just set the figure height
-          to what the image takes up and it would never collapse, but
-          since the figure contains a caption of font-size 1.2rem with
-          a root font-size of 16px, this ends up being:
-            - calculated figcaption font-size =  1.2rem * 16px = 19.2px
-
-          REFORMULATE THE PREVIOUS PARA unless it is true and determine
-          IF there is a simple solution that involves setting the height
-          of the figure element ??? !!!
-*/
