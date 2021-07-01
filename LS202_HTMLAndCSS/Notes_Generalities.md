@@ -45,6 +45,11 @@
   - More details about the box Model: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model#border-area
   - `role` attribute and CSS attribute selector
   - pixels vs relative units: https://www.24a11y.com/2019/pixels-vs-relative-units-in-css-why-its-still-a-big-deal/
+  - How HTML; CSS and browsers really work in the lower level:
+    - rendering
+    - from markup + style to render
+    - Browsers, rather get a good book? https://dzone.com/articles/how-browsers-work-a-peek-under-the-hood
+  - CSS importing and style scope
 - Working throug the course
   1. **Lesson 1**
      - Notes re-written
