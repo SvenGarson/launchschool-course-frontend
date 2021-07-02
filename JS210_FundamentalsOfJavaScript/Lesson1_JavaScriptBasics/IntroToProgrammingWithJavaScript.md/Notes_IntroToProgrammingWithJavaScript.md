@@ -100,10 +100,51 @@ Oficial ECMAScript documentation: https://www.ecma-international.org/publication
 Traditional JavaScript (upto and exluding ES6) has **5 primitive data types** as follows.
 
 - **`String`**
+
+  - Double and single quotes can be escaped using `\` or the other type used for the
+    respective other type of quote
+
+  - Starting and ending the string with backticks (`) enables interpolation in the string using
+
+    ```javascript
+    ${someExpression}
+    ```
+
+    **Note**: feature is part of `template literals` and works only in a string between backticks!
+
 - **`Number`**
-- **`Undefined`**
-- **`Null`**
+  JavaScript uses a single data type for real numbers which includes integers and floating point numbers.
+
 - **`Boolean`**
+  Can only have one of two values, either `true` or `false` 
+
+- **`Undefined`**
+  Represents the absence of a value. This value can be used explicitly as literal.
+
+- **`Null`**
+  Represents the absence of a value similar to `undefined`.
+
+
+
+#### The typeof operator and some type oddities
+
+The `typeof` operator returns a string that represents the data type of the operand.
+
+Some oddities to be aware of:
+
+- `typeof(null)` returns a string with the value `object` which is an actual 'mistake' in JavaScript.
+  The ECMAScript  standards specifies that `null` is and thus **is to be treated as a primitive value and not an object** .
+- `typeof([1, 2, 3])` returns returns a string with the value`object`.
+  Se one of the questions for reasons.
+
+
+
+#### Undefined VS null
+
+The difference between `undefined` and `null` is that:
+
+- `undefined` can arise implicitly
+- `null` must be used explicitly to be used through a literal
 
 
 
@@ -137,7 +178,35 @@ undefined           // Undefined literal
 
 
 
+### Operations
 
+---
+
+#### Addition; Subtraction; Multiplication; Division an others
+
+- If the result of one operand divided into another operand:
+
+  - **is a decimal number** then the **result is also a decimal number**.
+    In other words, the results has a decimal/fractional value.
+  - **is an integer** then the **result is also an integer**.
+    In other words, the result **does not have** a decimal/fractional value.
+
+- The JS `%` operator is referred to as the `remainder operator` **and not the `modulo operator`**.
+  **It does not compute the modulo value of the operands**.
+
+- `NAN` stands for **N**ot **A** **N**umber
+  This `Number` value **signals illegal or undefined operations of numbers** as principally happens in two cases:
+
+  - Undefined operations in the mathematical sense such as `division by zero`
+  - Attempting to convert a non-number value to a number
+
+  **Note**: `NaN` is **the only value in JavaScript that is not equal to itself**!
+
+
+  When comparing against `NaN` use one of the following two methods/functions:
+
+  - `Number.isNaN(value)`
+  - `Object.is(value, NaN)`
 
 
 
@@ -155,3 +224,17 @@ undefined           // Undefined literal
 
   - `primitive data types`
   - `compound data type` / `special objects`
+  
+  **Note**: The answer here should be container by the h3 content: `The typeof operator and some type oddities`
+  
+- Unless that is taught in the course before I get back to this question, check the following.
+  Order of operations of JS and how operations are performed on different primitive data types, are there promotions/demotions?
+
+  I heard that JS is not that great with numbers?
+
+- Learn about numerical data types and how they are represented in memory that cause mathematical operations like `26.4 - 25` to result in `1.3999999999999986` instead of `1.4`.
+
+- Learn about the difference between a `remainder operation and modulo operation`. This will prove useful since the `%` in JavaScript **does not perform a modulo operation**.
+  The the link and the portion from LS that waters it down: https://launchschool.com/books/javascript/read/basics
+
+  ![](res/remainder_vs_modulo.png)
