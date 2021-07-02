@@ -1,0 +1,3 @@
+The following identifiers satisfy the guidelines for constants used to represent magic numbers.
+
+- BIG_NUMBER

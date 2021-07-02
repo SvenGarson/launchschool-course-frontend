@@ -1,0 +1,6 @@
+The following identifiers satisfy the guidelines for function names.
+
+- index
+- CatName but only for constructor methods
+- lazyDog but only for non-constructor methods
+- operand2

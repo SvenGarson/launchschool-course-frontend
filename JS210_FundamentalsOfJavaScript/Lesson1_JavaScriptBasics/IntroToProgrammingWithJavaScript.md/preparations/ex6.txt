@@ -1,0 +1,7 @@
+The following identifiers satisfy the guidelines for variables.
+
+Note: For this exercise, constants are not variables.
+
+index
+lazyDog
+operand2

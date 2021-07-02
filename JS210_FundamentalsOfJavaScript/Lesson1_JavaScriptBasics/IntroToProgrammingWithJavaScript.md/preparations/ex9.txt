@@ -1,0 +1,9 @@
+The following identifiers do not satisfy the style guide for:
+
+  - variables
+  - functions
+  - constants
+
+- snake_case     // this is snake_case
+- quick_Fox      // also snake_case
+- 1stCharacter   // first character must not be numerical

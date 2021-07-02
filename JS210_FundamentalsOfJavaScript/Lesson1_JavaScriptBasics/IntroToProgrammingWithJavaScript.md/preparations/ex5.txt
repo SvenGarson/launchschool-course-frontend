@@ -1,0 +1,19 @@
+# substring
+    constructor: String
+    instance
+
+# create
+    constructor: Object
+    static
+
+# fromCharCode
+    constructor: String
+    static
+
+# slice
+    constructor: Array | String
+    prototype
+
+# toString
+    constructor: Object; Number; String; Array
+    prototype
