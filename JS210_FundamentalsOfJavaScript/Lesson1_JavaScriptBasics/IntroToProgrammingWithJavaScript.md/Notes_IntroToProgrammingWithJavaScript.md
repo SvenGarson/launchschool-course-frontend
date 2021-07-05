@@ -201,18 +201,118 @@ undefined           // Undefined literal
   - Attempting to convert a non-number value to a number
 
   **Note**: `NaN` is **the only value in JavaScript that is not equal to itself**!
-
-
+  
   When comparing against `NaN` use one of the following two methods/functions:
+  
+    - `Number.isNaN(value)`
+    - `Object.is(value, NaN)`
+  
+- `Infinity`
+  Describes a number of infinite magnitude and has a negative counterpart. The mathematical operations on infinity are sometimes puzzling.
+  Both `Infinity` and `-Infinity` are considered `Number`s
 
-  - `Number.isNaN(value)`
-  - `Object.is(value, NaN)`
+- **NaN vs Infinity**
+  Most of the time the semantic difference does not matter but think of it this way:
+
+  - `Infinity`  describes a number of infinite magnitude i.e. it cannot be expressed by writing it down because there is always another, larger number
+  - `NaN` describes the result of a mathematical operation that is neither a valid number (a consequence of an undefined operation) nor an infinite number
+
+
+
+### Coercion  -  Converting between data types (underlying objects)
+
+---
+
+#### Explicit Coercion  -  Using functions to convert between data types
+
+- string to number using `Number('123')`
+- string to integer using `parseInt('123x45')`
+- string to float using `parseFloat('125.777')`
+- number to string using `String(20)`
+
+#### Implicit Coercion  -  The engine chooses how data types convert contextually
+
+This happens for instance for the following situation: `'5' + 2` where the integer is **implicitly/silently coerced** into a string before the string are concatenated
+
+
+
+### Data Structures
+
+---
+
+The most common complex data types (data structures) are:
+
+- **`Arrays`**
+  - can contain 'any' data type
+  - literal  -  `arr = [1, 2, 3]`
+- **`Objects`**  -  JS equivalent of a Hash data structure containing a set of key/value pairs
+  - an object key is a string
+  - a value is a value of any type
+  - literal  -  `{ me: 'Jacob'}`
+
+
+
+### Expressions and return values
+
+---
+
+An expression is any code that JS evaluates to a value, which includes `undefined` and `null`.
+An expression can or cannot include operators.
+
+
+
+### MDN Statements
+
+---
+
+A JavaScript statement is a group of keywords that cam span one or multiples lines.
+Documentation: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements
+
+This seems to be a bunch of single (despite the definition) and groups of keywords that make up the language such as looping, scope etc.
+
+
+The key differences between an expression and statement is:
+
+- Statements often include expressions as part of their syntax
+- but a statement itself **is not an expression/not part of an expression** and the value of a statement cannot be capture in a variable
+
+
+
+### Variables - Variables and variable names
+
+---
+
+
+
+
+
+### Other facts
+
+---
+
+- JS uses overloaded syntax
+- `template literal syntax` is a string that allows embedding expressions i.e. strings that allow interpolation. **These strings are enclosed by backticks rather than double/single quotes!**
+
+
+
+### Intuitional facts
+
+---
+
+- think in terms of primitive  and complex data types
+- if an `Object` refers to a complex data type that is a Hash, the term object should be used in the right context?
+- use node or the browser console to execute JavaScript code
+- running JS in the browser has a different environment and capabilities than running JS through node.js
 
 
 
 ### Questions; Answers and other random things
 
 ---
+
+- learn how JS types are converted for different operators
+
+- Get a better feeling for what statements really are.
 
 - What is the `typeof` operator and how does it work?
 
