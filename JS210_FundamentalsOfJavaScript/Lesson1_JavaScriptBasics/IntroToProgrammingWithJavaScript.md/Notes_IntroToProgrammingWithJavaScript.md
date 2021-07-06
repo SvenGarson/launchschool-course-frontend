@@ -376,7 +376,15 @@ console.log(some); // variable 'some' NOT in block scope
 JavaScript supports **two** **types of variables in terms of the scope**:
 
 1. **Global Variables**  -  Available everywhere in the program
-2. **Local Variables**  -  Available only in the confines of a function or block (as well as the nested scope(s))
+   Any variable **not** declared **inside a function or a block** is a global variable!
+   **Note**: This includes variables prefixed with `let` and `const`!
+
+   > Global variables are generally to be avoided
+
+1. **Local Variables**  -  Available only in the confines of a function or block (as well as the nested scope(s))
+   Any variable declared **inside a function or a block** is a local variable and their use is limited to only that scope they are declared in or nested scopes it contains.
+
+   Local variables in terms functions (local variables and parameters) come into scope when the function starts execution and are discarded when the function finished execution.
 
 
 
@@ -498,7 +506,183 @@ funcIn(); // NOT in scope since the nested function is defined in another scope
 
 #### Terminology
 
-- functions that always return a boolean value, true or false, are referred to as `predicates`.
+- functions that always return a boolean value, true or false, are referred to as `predicates`
+- functions that are called on some receiving object/value are referred to as `methods`
+
+
+
+#### Mutating the caller
+
+We can mutate values by invoking mutative method on a particular value/object such as a string.
+
+Some quirks of JavaScript:
+
+- Primitive values are immutable - Their values never change -  Always return new values on operation
+  Immutable primitives are: `Number`s; `String`s and `Boolean`s
+- Non-Primitive values **may be** mutable through their methods - Not every method mutates the value
+  Mutable values are: `Array`s and `Object`s
+
+**Note**: Like in Ruby, to know which method mutates the value of a value use the documentation!
+
+
+
+#### Pass-By-Reference or Pass-By-Value
+
+JavaScript uses:
+
+- pass-by-value for primitive values
+- pass-by-reference for non-primitive values such as arrays and objects
+
+
+
+### Function Composition
+
+---
+
+This is merely the technique of invoking a function/method as argument to another function/method without intermediate variable creation.
+
+```javascript
+function sum(a, b) { return a + b; }
+function sub(a, b) { return a - b; }
+function mult(a, b) { return a * b; }
+
+// using function composition rather than intermediate variables
+mult(sum(1, 5), sub(10, 8));
+```
+
+
+
+### Three Ways to Declare Functions in JavaScript
+
+---
+
+The following are different ways to declare functions:
+
+1. **`Function Declaration`**
+   The most common way to declare a method using a function definition block:
+
+   ```javascript
+   greetPeepz(); // invoking a function before it is even declared
+   
+   function greetPeepz() {
+     console.log('Heeeeey peeps! :)');
+   }
+   ```
+
+
+   **Quirks**:
+
+   - Can be invoked in the code before it is declared. Before as in lines before the declaration.
+     
+
+2. **`Function Expression`**
+   A function declared and bound to a variable/constant:
+
+   ```javascript
+   let functionExpression = function(name, age) {
+     console.log(`${name} is exactly ${age} years old!`);
+   }
+   
+   functionExpression('Jane', 28);
+   ```
+
+
+   **First-class functions**  - The thing about them is that first-class functions can treated as any other value
+
+   In fact, all JavaScript functions are:
+
+   - first-class functions
+   - are just objects, and thus can be, for instance:
+     - passed to a function as arguments
+     - returned from a function
+       
+
+   **Quirks:**
+
+   - **Cannot** be invoked before it is declared since it is bound to a particular variable/constant
+
+   - Any function definition that **does not start with the keyword `function`** is a **function expression** and **not a function declaration**!
+
+
+     **Examples of function expressions in different situations:**
+
+     - Function expression bound to a variable:
+
+       ```javascript
+       let meep = function sumsum(a, b) { return a + b; }
+       ```
+
+     - Function expression in parenthesis that almost looks like a function declaration
+
+       ```javascript
+       (function woof(food) { // function wrapped in parenthesis
+         console.log(`Woofy likes ${food}!`);
+       })
+       ```
+
+     - Function expression in higher order function
+
+       ```javascript
+       function better() {
+         return function evenBetter() { // does not start with keyword 'function'
+           console.log('This is so much better!');
+         }
+       }
+       ```
+
+3. **`Arrow Functions`**
+   This type of function declaration is similar to `Function Expression` with the differences:
+
+   1. Uses a different syntax
+   2. Returns a return value implicitly
+
+
+   An examples of an `add` function expressed as `Arrow Function` that return the expression implicitly:
+
+   ```javascript
+   let add = (a, b) => a + b;
+   ```
+
+
+   Behaviour and requirements of `Arrow Functions`:
+
+   - we can omit the `return` keyword **only if the function body expression evaluates to a single value**. This can be a single expression, or expressions with sub-expressions.
+
+   - if the body does not evaluate to a single value we must:
+     **Note**: Here we can still use the `Arrow Function` syntax for the functions name and arguments!
+
+     - explicitly specify a return value just as in normal functions
+     - use curly braces around the multi-line function body
+
+
+     **Example**:
+
+     ```javascript
+     // just use a function expression instead?
+     let getNumber = (text) => {
+       let input = prompt(text);
+       return Number(input);
+     };
+     ```
+
+     
+
+### The Call Stack
+
+---
+
+This is the same as for other programming languages but the idea, again is the following:
+
+- When a JavaScript program starts the `main` call frame is pushed onto the call stack.
+
+- The flow of the program then dictates, through the functions executes, what other stack frames are pushed onto the stack
+- When a function is executed, a stack frame is pushed onto the call stack containing contextual information about that particular function and it's argument data:
+  - function name/address
+  - arguments
+  - space for local variables
+- Only the topmost stack frame is executed and the stack frames below are paused
+- When a function finished execution, the stack frame from that particular function is popped of the call stack and the stack frame below, if any exists, resumes execution where it left of
+- This happens until the `main` stack frame finished execution and the program exits because it has nothing more to execute
 
 
 
@@ -508,6 +692,8 @@ funcIn(); // NOT in scope since the nested function is defined in another scope
 
 - JS uses overloaded syntax
 - `template literal syntax` is a string that allows embedding expressions i.e. strings that allow interpolation. **These strings are enclosed by backticks rather than double/single quotes!**
+- function parameters are actually local variables with a scope limited to the function being executed.
+  These function local variables, i.e. parameters are initialized through the function argument passed to the function when invoked.
 
 
 
@@ -520,6 +706,7 @@ funcIn(); // NOT in scope since the nested function is defined in another scope
 - use node or the browser console to execute JavaScript code
 - running JS in the browser has a different environment and capabilities than running JS through node.js
 - In JS functions and class names are variables
+- preceeding an identifier with `let` or `const` triggers local scope for that particular identifier
 
 
 
@@ -529,6 +716,12 @@ funcIn(); // NOT in scope since the nested function is defined in another scope
 
 **Note**: Many of these questions will be answered by the course, so just carry them over and go from there.
 
+- do some research on the error raising model of JS:
+
+  - what are the ones to be aware of?
+  - how to implement custom errors?
+  - what is the most language semantic way to implement errors etc
+  
 - are there global constants? Also get an absolutely detailed understanding of the types of objects and their scope such as (these just come to mind, check what JavaScript actually supports):
 
   - local variables 
@@ -538,6 +731,11 @@ funcIn(); // NOT in scope since the nested function is defined in another scope
   - what about functions?
 
 - does a nested function have the same scope rules like variables/constants? What else should I know?
+
+- so variables are global when:
+
+  - declared **outside** any function definition or block
+  - not prefixed with `let` or `const`
 
 - LS calls a nested function a `private function`, is this a way to explain it or the actual mechanic to make a function private?
 
