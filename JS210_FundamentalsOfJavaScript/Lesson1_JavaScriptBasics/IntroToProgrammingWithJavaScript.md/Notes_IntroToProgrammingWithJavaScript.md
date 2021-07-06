@@ -278,9 +278,130 @@ The key differences between an expression and statement is:
 
 
 
-### Variables - Variables and variable names
+### Declaring and Assigning Variables
 
 ---
+
+- the modern preferred way to declare variables is `let identifier = value;` using the `let` keyword
+
+- if a variable is not explicitly initialized with a value then it is implicitly initialized with value `undefined`
+
+  ```javascript
+  let some; // the value of some is implicitly initialized to 'undefined'
+  ```
+
+- we can override the default value of a variable using an `initializer` `let some = 15; `
+
+- variable assignment evaluates to the expression/value of the right side of the assignment i.e. the value/expression of the right side of the assignment operator
+
+  ```javascript
+  let first = 25;
+  ```
+
+  while ...
+
+- declarations using an initializer, evaluate to `undefined` whether we provide a value explicitly or not
+
+  ```javascript
+  let a = 15; // declaration with an initializer always evalues to 'undefined'
+  let b;      // declaration without an initializer always evaluates to 'undefined'
+  ```
+
+- for variable initialization the `=` operator is referred to `assignment operator` rather than just the `equal (sign) operator`
+
+- given the results of following example:
+
+  ```javascript
+  let a = 15;
+  let b = a;
+  a = 99;
+  console.log(b); // still points to 15
+  ```
+
+  shows that (at least at this level) re-assignment merely changes what a particular identifier points to and does not mutate the variable value itself (because no mutating method/function is called?)
+
+
+
+### Declaring Constants
+
+---
+
+The `const` keyword lets us defined a **constant identifier**. Constants are **immutable and can not be mutated or re-assigned once the are initialized** until the constant can be discarded (programs exits?).
+
+Convention dictates that constant identifiers are uppercase and words divided by underscores such as `const SOME_FIXED_RATE = 0.057;`.
+
+**Note**: Constants must always be initialized with a value on declaration/initialization.
+
+
+
+### Variable Scope
+
+---
+
+Variables and constants declared with the keywords `let` and `const` have **block scope**.
+A block is a portion in the program that is contained between a pair or opening and closing curly braces such as:
+
+```javascript
+if (expression) { // block starts here
+  doEpicShazzam();
+} // block ends here
+```
+
+These block scope variables and constants are accessible in the scope they are declared in and any scope contained in that initial scope.
+
+```javascript
+if (true) {
+  let some = 15;
+  console.log(some); // variable 'some' in block scope
+}
+
+console.log(some); // variable 'some' NOT in block scope
+```
+
+
+
+#### Exceptions  - Not everything between curly braces is a block, technically!
+
+**While it is convenient** to think of the following two cases of `block`s **they are technically not blocks**:
+
+- braces that surround an objects literal such as `{ a: 65, b: 66 }`
+- braces that surround a function body such as `function meep() { // do stuff }` are not blocks but **can be treated as blocks most of the time** which is why other blocks are usually referred to as `non-function blocks` i.e. blocks that exclude function definitions.
+
+**Note**: Variables declared with `let` and constants declared with `const` have the **same exact scope** !
+
+
+
+#### Common Variable Gotcha
+
+**The lesson**: Always declare constants and variables using the `let` and `const` keywords
+**The Problem**: When a variable is **declared without `let` or `const`**, that variabel/constant has global scope:
+
+```javascript
+if (true) {
+  some = 'I am a global now';
+}
+
+console.log(some); // 'some' is in scope since it is a global
+```
+
+
+
+### Input / Output
+
+---
+
+#### Output
+
+While `node.js` has more output methods through it's environment, the method that works both in node.js and the browser is `console.log();`.
+
+#### Input
+
+The JS input API is not straightforwards but depends on:
+
+- asynchronous programming concepts
+- higher order functions
+
+Which are not explore in this book but certainly in the course. The work-around used here is the `readline-sync library` through node's `npm`.
 
 
 
@@ -295,7 +416,7 @@ The key differences between an expression and statement is:
 
 
 
-### Intuitional facts
+### Intuitive facts
 
 ---
 
@@ -303,6 +424,7 @@ The key differences between an expression and statement is:
 - if an `Object` refers to a complex data type that is a Hash, the term object should be used in the right context?
 - use node or the browser console to execute JavaScript code
 - running JS in the browser has a different environment and capabilities than running JS through node.js
+- In JS functions and class names are variables
 
 
 
@@ -310,7 +432,35 @@ The key differences between an expression and statement is:
 
 ---
 
+**Note**: Many of these questions will be answered by the course, so just carry them over and go from there.
+
+- get an idea what node's `npm` is and how it works
+
 - learn how JS types are converted for different operators
+
+- For the following code snippet using constants:
+
+  ```javascript
+  const FOO = 'bar';
+  {
+    const FOO = 'qux';
+  }
+  
+  console.log(FOO);
+  ```
+
+  **This code does not throw an error!**
+  While I though it would raise an error, without doing research, I think that when constants are in different scopes, the constants identifiers can be 're-used' because it is not accessible in another scope.
+
+  Two important rules to remember here (**confirm this through research!**):
+
+  1. Constants **cannot be re-assigned** **nor can they be re-declared** in the same scope
+  2. **Identical constant identifiers can be re-used** as long as they are re-used in **different scopes**
+
+- What are the rules concerning the declaration of variables not prefixed with `let` or `const`?
+  (And probably also `var` for that matter) apart from the global thing?
+
+- In case the differentiation between variables, identifiers and constants is somehow not clear check up on the following LS book portion again: https://launchschool.com/books/javascript/read/variables
 
 - Get a better feeling for what statements really are.
 
