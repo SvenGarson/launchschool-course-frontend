@@ -371,6 +371,15 @@ console.log(some); // variable 'some' NOT in block scope
 
 
 
+#### Types of Scopes
+
+JavaScript supports **two** **types of variables in terms of the scope**:
+
+1. **Global Variables**  -  Available everywhere in the program
+2. **Local Variables**  -  Available only in the confines of a function or block (as well as the nested scope(s))
+
+
+
 #### Common Variable Gotcha
 
 **The lesson**: Always declare constants and variables using the `let` and `const` keywords
@@ -394,16 +403,102 @@ console.log(some); // 'some' is in scope since it is a global
 
 While `node.js` has more output methods through it's environment, the method that works both in node.js and the browser is `console.log();`.
 
+Depending on what environment the program runs in, the `console.log();` method pipes the output to the browser console or the command line interface through node.js.
+
 #### Input
 
-The JS input API is not straightforwards but depends on:
+- **Input through `node.js`**
 
-- asynchronous programming concepts
-- higher order functions
+  The JS input API is not straightforwards but depends on:
 
-Which are not explore in this book but certainly in the course. The work-around used here is the `readline-sync library` through node's `npm`.
+  - asynchronous programming concepts
+  - higher order functions
+
+  Which are not explore in this book but certainly in the course. The work-around used here is the `readline-sync library` through node's `npm`.
+
+  Using it in Javascript in a node.js environment goes as follows:
+
+  ```javascript
+  let rlSync = require('readline-sync');
+  let number1 = rlSync.question('Prompt message here ...');
+  ```
+
+  
+
+- **Input in a browser**
+  The browser environment is vastly different from the one node.js operates in and communicates with a JavaScript program in a different manner, which means we need to understand concepts such as:
+
+  - DOM - The Document Object Model
+  - Asynchronous programming
 
 
+  Browsers also typically support the `prompt` input method that uses a pop-up in the browser to get text, user input and pipes it to the executing JavaScript program similar to the terminal application through node.js.
+
+  The `prompt` method can be used as follows:
+
+  ```javascript
+  // This JavaScript program should be executed in a browser through HTML
+  let name = prompt('Your name: '); // browser uses a pop-up to get user input
+  console.log(`Hi, ${name}!`);
+  ```
+
+  
+
+### Functions
+
+---
+
+#### Declaration / Definition
+
+JS functions are declared/defined as follows:
+
+```javascript
+function say() {
+  // do something
+}
+```
+
+
+#### Return Values
+
+All JS functions evaluate to a value:
+
+- In case a function does not specify an explicit return value through the `return` keyword,
+  JS returns an implicit value of `undefined`.
+- In case a function does however specify an explicit return value through `return`, that is the value returned
+
+
+
+#### Nested functions
+
+Nested functions can be specified by specifying a function in the scope of one another function:
+
+```javascript
+function funcOut() {
+  function funcIn() {
+    // the nested function
+  }
+  
+  funcIn(); // in scope
+}
+
+funcOut();
+funcIn(); // NOT in scope since the nested function is defined in another scope
+```
+
+
+**A nested function such as `funcIn`:**
+
+- is created and destroyed every time the containing function is executed (`funcOut`)
+- is `private` in the sense that it cannot be accesses/invoked from the scope outside the 'outside' function (`funcOut`)
+- seems to have scope rules similar to variables/constants
+
+
+
+
+#### Terminology
+
+- functions that always return a boolean value, true or false, are referred to as `predicates`.
 
 
 
@@ -434,7 +529,21 @@ Which are not explore in this book but certainly in the course. The work-around 
 
 **Note**: Many of these questions will be answered by the course, so just carry them over and go from there.
 
+- are there global constants? Also get an absolutely detailed understanding of the types of objects and their scope such as (these just come to mind, check what JavaScript actually supports):
+
+  - local variables 
+  - local constants
+  - global constants
+  - public/private
+  - what about functions?
+
+- does a nested function have the same scope rules like variables/constants? What else should I know?
+
+- LS calls a nested function a `private function`, is this a way to explain it or the actual mechanic to make a function private?
+
 - get an idea what node's `npm` is and how it works
+
+- syntax style or necessity: specifiy JS functions with or without trailing semicolon?
 
 - learn how JS types are converted for different operators
 
