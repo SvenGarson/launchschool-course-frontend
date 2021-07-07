@@ -573,7 +573,6 @@ The following are different ways to declare functions:
    **Quirks**:
 
    - Can be invoked in the code before it is declared. Before as in lines before the declaration.
-     
 
 2. **`Function Expression`**
    A function declared and bound to a variable/constant:
@@ -595,7 +594,6 @@ The following are different ways to declare functions:
    - are just objects, and thus can be, for instance:
      - passed to a function as arguments
      - returned from a function
-       
 
    **Quirks:**
 
@@ -605,23 +603,23 @@ The following are different ways to declare functions:
 
 
      **Examples of function expressions in different situations:**
-
+    
      - Function expression bound to a variable:
-
+    
        ```javascript
        let meep = function sumsum(a, b) { return a + b; }
        ```
-
+    
      - Function expression in parenthesis that almost looks like a function declaration
-
+    
        ```javascript
        (function woof(food) { // function wrapped in parenthesis
          console.log(`Woofy likes ${food}!`);
        })
        ```
-
+    
      - Function expression in higher order function
-
+    
        ```javascript
        function better() {
          return function evenBetter() { // does not start with keyword 'function'
@@ -656,7 +654,7 @@ The following are different ways to declare functions:
 
 
      **Example**:
-
+    
      ```javascript
      // just use a function expression instead?
      let getNumber = (text) => {
@@ -665,7 +663,8 @@ The following are different ways to declare functions:
      };
      ```
 
-     
+
+​     
 
 ### The Call Stack
 
@@ -674,7 +673,6 @@ The following are different ways to declare functions:
 This is the same as for other programming languages but the idea, again is the following:
 
 - When a JavaScript program starts the `main` call frame is pushed onto the call stack.
-
 - The flow of the program then dictates, through the functions executes, what other stack frames are pushed onto the stack
 - When a function is executed, a stack frame is pushed onto the call stack containing contextual information about that particular function and it's argument data:
   - function name/address
@@ -683,6 +681,163 @@ This is the same as for other programming languages but the idea, again is the f
 - Only the topmost stack frame is executed and the stack frames below are paused
 - When a function finished execution, the stack frame from that particular function is popped of the call stack and the stack frame below, if any exists, resumes execution where it left of
 - This happens until the `main` stack frame finished execution and the program exits because it has nothing more to execute
+
+
+
+### Flow Control
+
+---
+
+#### Conditionals
+
+JS allows a single line statement without curly braces after a conditional like so:
+
+```javascript
+if (something)
+ console.log('something is true!');
+```
+
+**But this form should be avoided in general to avoid flow bugs because of missing curly braces**:
+
+```javascript
+// the following conditional is incorrect
+if (something)
+  console.log('Executed if something evaluates to true');
+  console.log('This looks like part of it, but is not part of the conditional');
+
+// prefer the following syntax
+if (something) {
+  console.log('Executed if something evaluates to true');
+  console.log('This looks like part of it, but is not part of the conditional');
+}
+```
+
+
+
+#### Comparisons
+
+Comparison operators **always returns one of two boolean values** which is either `true` or `false`.
+
+Here some important ones:
+
+- **`===`  -  `Strict Equality Operator`  -  `Identity Operator`**
+
+  **Evaluation**:
+
+  - `true` when operands have the same **type and value**
+  - `false` otherwise
+
+- **`!==`  -  `Strict Inequality Operator`**
+
+  **Evaluation**:
+  **Note**: The **opposite** of `===` for the same operands!
+
+  - `true` when operands have **different type and/or value**
+  - `false` when operands have the same **type and value**
+
+- **`==`  -  `Non-Strict Equality Operator`  -  `Loose Equality Operator`**
+
+  **May attempt to coerce one or both operands to another operands type before comparison**.
+
+  **Evaluation**:
+
+  - **After the optional coercion of one or both operands **, returns `true`  when the **values are the same**
+  - `false` otherwise
+
+  - Weird examples to be aware of:
+    - `'' == 0 ` evaluates to `true` because the String is coerced into a number using `Number('')` which evaluates to the number `0`
+
+- **`!=`  -  `Non-Strict Inequality Operator`  -  `Loose Inequality Operator`** 
+
+  **May attempt to coerce one or both operands to another operands type before comparison**.
+
+  **Evaluation**:
+
+  - **After the optional coercion of one or both operands **, returns `false`  when the **values are the same**
+  - `true` otherwise
+
+- **`<`  -  `Less Than Operator`**
+
+  **May attempt to coerce one or both operands to another operands type before comparison**.
+
+  **Evaluation**:
+
+  - `true` when the left operator **value** is **less than** the right operator value
+  - `false` otherwise
+
+- **`> ` and `<=` and `>=`**
+
+  **Same behaviour as the `<` but checking values in a specific way**!
+
+
+
+#### Which comparison operator(s) to use?
+
+LS's advice is to not use the loose types of equality operators such as `==`  and `!=` because the rules are complex and hard to remember, but they are totally fine to use if the programmer takes adequate precautions.
+
+Here a few things to keep in mind:
+
+- Good code should, in general, not compare different types of values/things to each other.
+  If the case of operands not being of the same type is avoided, the loose equality operators do not trigger the coercion and hence we just need to reason about the values we want to compare.
+
+  If a program compares different types, the design is probably flawed.
+
+- **Launchschool dictates a style that uses the strict variant only**.
+
+
+
+### Logical Operators
+
+Logical operators enable us to **combine operators and conditions**:
+
+- **`!`  -  `Not Operator`**
+
+  **Inverts** the boolean value of it's operand that is situated to **the right of the operator**!
+
+  **Evaluation**:
+
+  - `true` when operand is `false`
+  - `false` when operand is `true`
+
+- **`&&`  - `And Operator`**
+
+  **Evaluation**:
+
+  - `true` when **both** operands are `true`
+  - `false` when **either** operand is  `false`
+
+- **`||`  -  `Or Operator`**
+
+  **Evaluation**:
+
+  - `true` when **either** operand is `true`
+  - `false` when **both** operands are `false`
+
+**Note**: Later in the course we will learn what happens when the operands **are not boolean** values!
+
+
+
+#### Short Circuit Evaluation
+
+Given a logical expression, JavaScript stops evaluating that logical expression as soon as the result is known and does not evaluate subsequent logical/conditional expressions unless the answer is unknown.
+
+The following examples illustrate this mechanism:
+
+- ```javascript
+  if isRed(item) && isSmall(item) { // if item red and small }
+  ```
+
+  The logical operator evaluates to `true`  only if both operands evaluate to `true`, this means that when any operand evaluates to `false`, the whole expression cannot be `true`.
+
+  In other words, if `isRed(item) === false` then JS stops evaluating because `&&` can never be `true` and never evaluates `isSmall(item)`!
+
+- ```javascript
+  if isGreen(item) || hasWheels(item) { // if item green or has wheels }
+  ```
+
+  The logical operator evaluates to `true` if either operand is `true`, this means that when any operand evaluates to `true`, the whole expression cannot be `false`.
+
+  In other words, if `isGreen(item) === true` then JS stops evaluating because `||` must be `true` and never evaluates `hasWheels(item)`!
 
 
 
@@ -715,6 +870,13 @@ This is the same as for other programming languages but the idea, again is the f
 ---
 
 **Note**: Many of these questions will be answered by the course, so just carry them over and go from there.
+
+- read up and understand the most common comparisons between operands and different operators.
+  Here some interesting ones to look up:
+
+  - `"42" < "402"` evaluates to `false`
+  - `"42" < "420"` evaluates to `true`
+  - `"42" < 420` evaluates to `true`
 
 - do some research on the error raising model of JS:
 
