@@ -610,7 +610,7 @@ The following are different ways to declare functions:
        let meep = function sumsum(a, b) { return a + b; }
        ```
     
-     - Function expression in parenthesis that almost looks like a function declaration
+     - Function expression in parentheses that almost looks like a function declaration
     
        ```javascript
        (function woof(food) { // function wrapped in parenthesis
@@ -813,7 +813,8 @@ Logical operators enable us to **combine operators and conditions**:
   - `true` when **either** operand is `true`
   - `false` when **both** operands are `false`
 
-**Note**: Later in the course we will learn what happens when the operands **are not boolean** values!
+**Note**: The return value of one or multiple chained logical operators is always the last value evaluated
+            Whether the logical operators short-circuit or not!
 
 
 
@@ -838,6 +839,59 @@ The following examples illustrate this mechanism:
   The logical operator evaluates to `true` if either operand is `true`, this means that when any operand evaluates to `true`, the whole expression cannot be `false`.
 
   In other words, if `isGreen(item) === true` then JS stops evaluating because `||` must be `true` and never evaluates `hasWheels(item)`!
+
+
+
+#### Truthiness
+
+An expression in a conditional does not have to evaluate to a boolean value of `true` or `false` because JS does coerce any non-boolean value into a boolean value in a conditional context.
+
+**Again**: JS can use any value in a condition because it can coerce any value to a boolean value when needed.
+
+Whenever a non-boolean value is used in a conditional and JS coerces that non-boolean value into a boolean, we refer to this process as `evaluate that non-boolean value into a boolean value`.
+
+- **Values that evaluate to `false` in a conditional context**
+  **Note**: We refer to these values as `truthy` because, while they are not booleans, they evaluate to `true`!
+  - `false`
+  - Empty String `''`
+  - `undefined`
+  - `null`
+  - `NaN`
+  - Zero in the following variations of zero in JavaScript:
+    - `Number` zero value `0`
+    - `Number` negative zero value `-0`
+    - `BigInt` zero value `0n`
+- **All other Expressions evaluate to `false` in a conditional context**
+  **Note**: We refer to these values as `falsy` because, while they are not booleans, they evaluate to 
+
+
+
+#### Operator Precedence and Associativity
+
+For expressions that use multiple operators and sub-expressions, here are some precedences from
+**high (top of the list) to low (downwards)** that are good to know by heart:
+
+- `<=`, `<`, `>`, `>=`  - Comparison operators
+- `===`, `!==`, `==`, `!=` - Equality operators
+- `&&` Logical AND
+- `||` Logical OR
+
+Another mechanic to know about is associativity, which specifies in what order operators along with their operands are evaluated when the precedence between operators and their operands is the same.
+
+**Note**: To make the intention of a program clear, always parenthesize the operators we want evaluated first
+           instead of working with rules implicitly!
+
+
+**The rules for complex expressions that use many parentheses to show intended precedence**:
+
+- JS evaluates expressions in the parentheses in the algebraic order.
+  This means that innermost parentheses are evaluates first towards to outer parentheses.
+- When there are multiple parentheses at the same 'depth', the parentheses are evaluated from left to right.
+- Once all parentheses are evaluates, the whole expression is evaluated.
+
+
+
+**Note**: Short-circuiting does not change precedence but may be confusing if the expression is complex!
 
 
 
@@ -870,6 +924,27 @@ The following examples illustrate this mechanism:
 ---
 
 **Note**: Many of these questions will be answered by the course, so just carry them over and go from there.
+
+- what does a JavaScript switch statement use to determine the equality of the argument and the cases?
+  Is there any coercion involved? If it is it is certainly based on one of the equality operators!
+
+- Is it necessary to return form a thrown error is that error is thrown in a function such as for example:
+
+  ```javascript
+  function evenOrOdd(number) {
+    if (!Number.isInteger(number)) {
+      console.log('Sorry, the value you passed is not an integer');
+      return;
+    }
+      
+    // more code ...
+  }
+  ```
+
+  
+
+- read up the JS terminology about properties in terms of instance variables  and OO etc.
+  Before making any research, I think that `property` is the terminology used for an instance variables accessible through the object that 'owns' that particular variables, or method even?
 
 - read up and understand the most common comparisons between operands and different operators.
   Here some interesting ones to look up:
