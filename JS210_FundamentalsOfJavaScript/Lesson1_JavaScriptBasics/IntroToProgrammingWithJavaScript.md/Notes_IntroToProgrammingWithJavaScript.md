@@ -925,6 +925,19 @@ Another mechanic to know about is associativity, which specifies in what order o
 
 **Note**: Many of these questions will be answered by the course, so just carry them over and go from there.
 
+- what do control flow structures such as `if` statements evaluate to if they are bound to a variables such as for instance:
+  
+  ```javascript
+  result = if true
+    5
+  else
+    15
+  ```
+  
+  Is this a thing in JS?
+  
+- Research and understand the actual difference between an expression and a statement.
+  
 - what does a JavaScript switch statement use to determine the equality of the argument and the cases?
   Is there any coercion involved? If it is it is certainly based on one of the equality operators!
 
