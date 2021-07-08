@@ -1063,8 +1063,53 @@ JavaScript arrays are `heterogenous`, which means that they can contain any valu
   - `element`  -  The currently iterated elements of the calling array
 
   This callback method return the value of the accumulator for the next callback invocation.
+  
+- `Array.prototype.includes(searchedItem)` scans the caller and returns `true` or `false` wether the item has been found and makes **a strict comparison `===`** , which means that it comes with the same problems as when comparing using the `===` operator.
+
+  ```javascript
+  let inner = ['meep', 198];
+  let array = [15, false, inner, {}];
+  array.includes(['meep', 198]); // false because the arrays are not the same pointers
+  array.includes(inner);         // true because the arrays are the same pointers
+  ```
+
+- `Array.prototype.slice` can be used to extract a region of the array or duplicate the array altogether
+
+  ```javascript
+  let array = ['a', 'b', 'c'];
+  let arrayCopy = array.slice();
+  console.log(array === arrayCopy); // false
+  ```
+
+- `reverse` reversed the array **in place destructively** and returns the same array pointer.
+  **Tip**: Duplicate the array using the `slice();` method to not affect the original array
 
 
+
+#### Array (and Object?) Equality
+
+The rule is simply:
+
+> JS considers two arrays to be the same if the array operands are the exact same pointer/data in memory
+
+```javascript
+/*
+	Two different literals may have the same content and length but are
+	not the two exact same 'objects' in memory and are therefore not the
+	'same'.
+*/
+[1, 2, 3] === [1, 2, 3] // false
+
+// the arrays are the same though if the variables point to she same array in memory
+someArray = [];
+thatSameArray = someArray;
+someArray === thatSameArray; // true
+```
+
+
+**Note**: When creating custome functions to compare arrays remember that nested arrays, that are 
+		   compared using the strict or loose evaluation operator probably do not return the expected result
+		   as nested arrays are seldom bound to the same data in memory!
 
 
 
@@ -1098,6 +1143,9 @@ JavaScript arrays are `heterogenous`, which means that they can contain any valu
 
 **Note**: Many of these questions will be answered by the course, so just carry them over and go from there.
 
+- Is there any intuitive JS built-in way to compare arrays?
+  Since the `===` is not very helpful for arrays that are not the exact same pointer.
+  
 - How and what does the `console.log` method output and for which values does it not output anything.
   
 - What is the syntax to specify multiple program lines in an arrow function expressed on a single line?
