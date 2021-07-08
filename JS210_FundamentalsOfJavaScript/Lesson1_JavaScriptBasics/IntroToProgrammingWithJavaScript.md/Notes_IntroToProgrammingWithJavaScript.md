@@ -940,14 +940,6 @@ JavaScript provides **two** keywords to provide more control over how loops exec
 
 
 
-#### Iterating Arrays using built-in methods and `anonymous functions`
-
-
-
-
-
-
-
 **Operators**
 
 - **`someVariable++`  -  `Post-Increment Operator`**
@@ -964,6 +956,115 @@ JavaScript provides **two** keywords to provide more control over how loops exec
 **Note**: Apparently the modern opinion is to **not** use incr/decrement operators for incr/decrementing   
            numbers, apart from a for loop `for(var index = 0; index <= 5; index++) ...` because they can 
            lead to strange bugs/results, especially if programmers are not aware/mindful of the return value.
+
+
+
+#### Iterating Arrays using built-in instance methods
+
+One of many ways to iterate through an array is to use the `Array` `forEach` method.
+This method is called on an `Array` value and passed a `function` as argument, which the `forEach` method then invokes for every item in the array in order:
+
+```javascript
+let names = ['Chris', 'Kevin', 'Naveed', 'Pete', 'Victor']
+
+names.forEach(function(name) {
+  console.log(name);
+});
+```
+
+
+The following is what happens in the previous code snippet:
+
+1. Line `1` declares an array of names using an initializer
+2. Line `3` invokes the `forEach` method on the `names` array and passes it an `anonymous function`, which does not have a name
+3. The `forEach` method then iterates the array implicitly and invokes the anonymous function we passed with each element as argument from first to last
+
+**Note**: This `anonymous function` is another type of `first-class function`
+
+
+The same can be achieved using `arrow functions`:
+
+```javascript
+let names = ['Chris', 'Kevin', 'Naveed', 'Pete', 'Victor'];
+
+names.forEach(name => console.log(name));
+```
+
+
+
+#### Arrays
+
+JavaScript arrays are `heterogenous`, which means that they can contain any value, including other arrays and objects.
+
+**Quirks to understand at some point**
+
+- Assigning a value to a positive, out-of-bounds array index grows the array and pads the array with empty in-between elements if needed.
+
+- for constant array values:
+
+  ```javascript
+  const array = [1, 2, 3];
+  array[1] = 'X';    // does work, even on a constant array value
+  array = [4, 5, 6]; // does not work because the array is a constant
+  ```
+
+  - while the constant array variable itself cannot be made to point to another value
+  - the array elements/content can be made to point to another valu
+  
+  
+    **This happens because of pointer rules, in this case most importantly:**
+  
+    - we cannot change what a `const` declaration points to **but**
+    - we **can** change the content, i.e. the actual values in memory the constant pointer points to
+  
+  **Note**: In order to make the array elements follow the same rules, use the `freeze` method.
+  
+- **JS arrays are `object` i.e.e hashes?** 
+
+  **This has some implications**:
+
+  - the `typeof(someArray)` operator returns a string of value `object` and **not** `array`
+  - changing an array's `length` property can truncate and expand the array, where **new elements are not initialized** but left `undefined`.
+  - Array can have non-integer and other objects as indexes. These are not true elements but are **properties** on the array `object` and **do not count toward the `length`** of the array!
+  - can use the `Object.keys` method to get the object keys of an array `Object.keys(array);`
+    This method ignores un-initialized elements that have not been explicitly initialized or re-assigned.
+
+- When array contents are changed, un-initialized elements are treated differently to elements that have merely been set to `undefined` as JS interprets the slots as `empty items.` but the following expression evaluates to true for a given un-initialized array item:
+
+  ```javascript
+  let array = new Array(3); // declares a new array with 3 un-initialized elements
+  let result = (array[0] === undefined); // true
+  ```
+
+  **In other words**, array elements that have not been initialized **can** be treated differently from elements that were set to `undefined` after the fact even though un-initialized elements compare to the primitive `undefined` as true.
+
+
+**Primer to some common `Array` operations**:
+
+- Accessing elements with `[]`
+
+- Adding elements with `Array.prototype.push` actually **mutates** the array and returns the new length of the array
+
+- Adding elements with `Array.prototype.concat(items, ...)`, which adds one or more values to the array and **returns a new array**.
+  `concat` seems to automatically unpack arguments that are elements for that first layer, but deeper nested arrays stay as is.
+
+- `Array.prototype.pop` removes and returns the last element in the array. Is **mutative**.
+
+- `Array.prototype.splice(startingIndex, takeN)` removes the elements starting at the index and for takeN elements. This method **mutates** the array and returns an array with the deleted elements.
+
+- Transforming Array with `Array.prototype.map`  returns a **new array** with the transformed values based on the caller
+
+- `Array.prototype.filter` returns a **new array** that contains all the elements of the original array for which the callback function returns a truthy value.
+
+- `Array.prototype.reduce` effectively reduces all the elements in the array to a **single value**.
+  This methods takes a callback method that has two arguments:
+
+  - `accumulator`  -  The current value of the accumulator **before** the accumulator is changes
+  - `element`  -  The currently iterated elements of the calling array
+
+  This callback method return the value of the accumulator for the next callback invocation.
+
+
 
 
 
@@ -997,6 +1098,49 @@ JavaScript provides **two** keywords to provide more control over how loops exec
 
 **Note**: Many of these questions will be answered by the course, so just carry them over and go from there.
 
+- How and what does the `console.log` method output and for which values does it not output anything.
+  
+- What is the syntax to specify multiple program lines in an arrow function expressed on a single line?
+  
+- How do return statements work in callback functions when passed and invoked by some other  function?
+  
+- What happens when two identifiers are specified the following way:
+  
+  ```javascript
+  vario = 15; // a global variable
+  let vario = 22; // a local variable
+  ```
+  
+  - is there a problem if we change the order of operations?
+  - to these live in different 'namespaces'?
+  
+- We should, in general, avoid passing first-level functions to another function that has implicit side effects based some, for instance, variable as in the following example:
+  
+  ```javascript
+  let squares = [];
+  [1, 2, 3, 4].forEach(num => squares.push(num * num)); // is the squares array in scope?
+  ```
+  
+- What is the scope of  variables when passing a function to an array. Are the variables in scope when the  array method is invoked also in scope for first-level functions when the function is executed somewhere else?
+  
+  ```javascript
+  let numbers = [1, 2, 3, 4]
+  let squares = [];
+  numbers.forEach(num => squares.push(num * num)); // is the squares array in scope?
+  ```
+  
+  Apparently it is but learn the specifics!
+  
+- What are the typical return values for functions like `Array.prototype.forEeach` or is there no common thread like in ruby?
+  
+- What is a callback function in JavaScript?
+  Simply a function that is passed to another function which is invoked at a later point in time.
+  
+- understand how `Object.freeze(someObject)` works. It has something to do with constants pointers.
+  Weirdly, JS does not throw an error when we attempt to change what a frozen array elements points to but just 'disregards' the operation silently. Wtf?
+  
+  Freezing an array also just affects part of the array, i.e. the first level, which is the items values stored in the frozen array as values, everything that is 'deeper' is not 'frozen', so must be frozen manually.
+  
 - are the following operators `a += 2`; `a *= 5` etc really operators in JavaScript?
   
 - what do control flow structures such as `if` statements evaluate to if they are bound to a variables such as for instance:
