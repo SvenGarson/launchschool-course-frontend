@@ -1261,7 +1261,7 @@ There are several ways to iterate over they keys; values or key-value pairs of o
          	 child properties first, then prototype properties.
   
 - **`Object.keys`**
-  Static method that returns the object's keys as array.
+  Static method that returns the object's keys as array and apparently **does not return the keys of an object's prototype**.
 
 **Note**: While modern JS, starting at ES6+ iterates an Object in a predictable pattern based on some rules,
            we should usually **not rely on these rules and should not depends on it** !
@@ -1297,6 +1297,81 @@ There are several ways to iterate over they keys; values or key-value pairs of o
   let b = { other: 25 }; 
   let result = Object.assign({}, a, b); // the Object literal is used to merge sources
   ```
+
+
+
+### More Stuff
+
+---
+
+### Variables as Pointers
+
+**Note**: The following explanations are models to understand the basic operation but do not reflect how the language actually works under the hood!
+
+
+- **Working with Primitives  -  Primitive Values**
+
+  Primitives are stored at some memory location which is allocated when values are declared. The identifier is a pointer that points to that particular piece in memory.
+
+
+  When we have the following:
+
+  ```javascript
+  let a = 5;
+  let b = a;
+  b = 99;
+  console.log(a); // 5
+  console.log(b); // 99
+  ```
+
+  1. `a` points to the primitive value `5` in memory
+
+  2. `b` points to the same primitive value `5` in memory, same as pointer `a`
+  3. `b` is then re-assigned to point to the primitive value `99` in memory **without** changing the memory content of variable `a` not where `a` points to
+
+  **The key idea:** The variable itself is a pointer directly to that particular value/data in memory.
+
+  ![](./res/vars-with-primitive-values.png)
+
+  **Note**: Since primitive values are stored **directly** in the piece of memory allocated for a primitive value, one primitive value identifier **can never **
+             **be** an alias for another primitive value!
+
+- **Working with Objects and non-mutating operations**
+
+  Objects are stored in some memory location similar to primitives, with the difference that:
+
+  ``` javascript
+  > let e = [1, 2]  // allocate storage for array [1, 2] and make 'e' point to another pointer that points to the actual array
+  > let f = e       // allocate storage for pointer and make it point to the 'middle-pointer', equivalent to the identifier 'e'
+  > e.push(3, 4)    // since 'e' and 'f' point to the same piece of memory indirectly, any mutative action on the data is
+  > e               // is reflected by both identifiers/pointers because the point to the same exact memory location indirectly
+  = [ 1, 2, 3, 4 ]
+  
+  > f
+  = [ 1, 2, 3, 4 ]
+  ```
+
+  **Note**: This is referred to as `aliasing` because in the above code snippet, the identifier/pointer `f` is an `alias` for the `e` identifier/pointer!
+
+  - The identifier of an Object points to **another pointer** `Code => obj`
+  - That other pointer points to the actual object in memory `obj => The Object`
+
+  ![](./res/vars-with-objects.png)
+
+  **Intuitively**: When memory is allocated for an object JS keeps a pointer to that piece of memory and when we assign an object to a new identifier,
+                        that identifier only needs to point to that 'middle-pointer' to the original data in memory and nothing is copied.
+
+  **Question**: Why is it modeled with another pointer between the identifier an the object in memory?
+                      Does the middle'-pointer' keep track of some meta-information about the data stored in memory?
+
+
+
+
+### More Stuff - Terminology
+
+- JS does not differentiate between pointers and references, so these terms are interchangeable in this context
+
+
 
 
 
@@ -1355,9 +1430,35 @@ There are several ways to iterate over they keys; values or key-value pairs of o
 
 **Note**: Many of these questions will be answered by the course, so just carry them over and go from there.
 
+- How are strings stored in JS and how come they act like other primitives? Does it have something to do with how C stores string in a different portion of memory and scans for strings that already exist? A `static memory` is the spot in program memory C stores strings, if I remember correctly?
+  
+- What is the 'arity' of arguments/parameters?
+  In the following code snippet we want to flow based on wether some argument was passed or not:
+  
+  ```javascript
+  function copyObj(sourceObject, keys) {
+    let destinationObject = {};
+  
+    if (keys) { // so an array was passed, could also default to empty array
+      keys.forEach(function(key) {
+        destinationObject[key] = sourceObject[key];
+      });
+  
+      return destinationObject;
+    } else {
+      return Object.assign(destinationObject, sourceObject);
+    }
+  }
+  ```
+  
+  
+  **Is this typical/semantics JS to not pass an argument and then determine if it was passed ** based on whether or not the identifier is `undefined` or not?
+  
 - JS is garbage collected (right?) which may have implications such as for instance the way the `delete` operator is described in the MDN docs:
   
   > The JavaScript **`delete` operator** removes a property from an object; if no more references to the same property are held, it is eventually released automatically.
+  
+- What exactly does the terms `declare` refer to when creating variables?
   
 - Hard know and understand JS's primitive and complex data types.
   
