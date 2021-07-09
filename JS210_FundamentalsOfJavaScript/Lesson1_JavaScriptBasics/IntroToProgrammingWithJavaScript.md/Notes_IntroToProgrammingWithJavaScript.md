@@ -1113,14 +1113,211 @@ someArray === thatSameArray; // true
 
 
 
+### Objects
+
+---
+
+A JS `Object` is the equivalent of a `Hash` that associates a set of keys with a set of values respectively, which are referred to as the `key/value pairs` of the `Object`.
+
+- An object `key`  **must** be a `String` but note that JS implicitly coerces non-string values into strings before storing the key-value pair!
+
+  **Does JS do the same when accessing a value? Does JS coerce a non-string key to a string?**
+
+  The following will bite you at some point:
+
+  ```javascript
+  > let myObj = {}
+  > myObj[true] = 'hello'   // implicitly coerces the boolean true to the string 'true'
+  > myObj['true'] = 'world' // overrride the value store previously using the boolean
+  > myObj[true] // world
+  ```
+
+- An object `value` can be any type, including other `object`s
+
+
+**Ways to declare an object**:
+
+- Using an `Object` `literal`: `let people = {};`
+- Using a constructor: `let people = new Object();`
+
+
+**Here an example of an object initialized with a few key-value pairs:**
+
+```javascript
+let person = {
+  name:    'Jane',
+  age:     37,
+  hobbies: ['photography', 'genealogy'],
+};
+```
+
+
+**Things about the syntax**:
+
+- While the `key` is a `String` we typically omit the quotes `'` when the key consists of alphanumeric characters and underscores
+
+- The value can be **set and accessed** two ways:
+
+  1. Using the `dot notation`
+
+     ```javascript
+     let person = {};
+     person.name = 'Willis'; // add key-value pair using dot notation
+     person.name;            // access key's value using dot notation
+     ```
+
+  2. Using the `bracket notation`. This notation has to be used if the key is a variable and not a literal.
+
+     ```javascript
+     let person = {};
+     person['name'] = 'Karen'; // add key-value pair using bracket notation
+     person['name'];           // access key's value using bracket notation
+     ```
+
+- Deleting a key-value pair through the `delete` **operator**:
+
+  ```javascript
+  let person = { name: 'Jane', age: 25 };
+  delete person.name; // true
+  delete person['age']; // ture
+  ```
+
+
+
+**Objects and Constants**
+
+An `Object` behaves the same as an `Array` in terms of it being a constant.
+
+A constant `Object` pointer can not be pointed to something else but any values in the object are not constant by default and hence can be changed. To make the key and values, i.e. `properties` adhere to the same rules, the `Object.freeze();` method must be used one the object to 'freeze' the properties.
+
+```javascript
+const MyObj = Object.freeze({ foo: "bar", qux: "xyz" });
+```
+
+**Note**: The behaviour works 1-level deep again and not for nested properties.
+
+
+
+#### Object VS Primitives
+
+**JS has two categories of data types along with the respective types they cover**
+
+1. **`Primitives`**
+
+   **Primitives are always immutable and can only every be re-assigned, never mutated!**
+
+   - `String`
+   - `Number`
+   - `Boolean`
+   - `null`
+   - `undefined`
+   - `BigInt`
+   - `Symbol`
+
+2. **`Objects`  -  Include, but aren't limited to the following types**
+
+   **Objects are complex values composed of primitive values and other objects and can be mutable, but do not have to be!s**
+
+   1. `Simple Object`  -  Use keys and values
+   2. `Array`  -  Also an `Object` but use indexes instead of keys
+   3. `Date`
+   4. `Function`
+
+Any 'thing' that makes up a program that is **not** either a `primitive` or `Object` is one of (non-exhaustive list):
+
+- variables/identifiers
+- statements like `if`; `return`; `try` etc
+- keywords like `new`; `function`; `let` etc
+- comments
+- any other 'thing' that is **not** a primitive or object
+
+
+
+#### Prototypes
+
+In terms of objects where a `child` inherits from a `parent`, the `parent` is referred to as the `prototype`.
+When we specify some prototype for some object, we refer to this as follows:
+
+> the child X uses parent Y as prototype
+
+
+
+#### Iterating Objects
+
+There are several ways to iterate over they keys; values or key-value pairs of objects:
+
+- **`For/In Loop`**
+
+  Iterates the object **keys** through a simplified syntax that enables us to access the value:
+
+  ```javascript
+  let person = { name: 'John', age: 28, height: '6 ft' };
+  for(name in person) {
+    console.log(name); // a key of the person object
+  }
+  ```
+
+  **Note**: The `For/In Loop` implicitly iterates over the properties of the object's prototype,
+         	 child properties first, then prototype properties.
+  
+- **`Object.keys`**
+  Static method that returns the object's keys as array.
+
+**Note**: While modern JS, starting at ES6+ iterates an Object in a predictable pattern based on some rules,
+           we should usually **not rely on these rules and should not depends on it** !
+
+#### Terminology
+
+- In JS, a key-value pair is referred to as `property` but typically we only refer to a pair's `key` to the `property`  **without** implying the value.
+
+- In JS, an object `b` inherits from an object `a` is referred to as `object a is a prototype of object b` which means that the parent in this relationship is the `prototype`.
+
+  
+
+#### Common `Object` operations
+
+- **`Object.values`**
+  Returns an array of the object's values **in some order  - DO NOT rely on the order of the values!**
+
+- **`Object.entries`**
+  Returns an array of the object's key-value pairs as nested array **in some order**.
+
+  The nested arrays contain:
+
+  1. The key as the first element of the array
+  2. The corresponding value as the second element of the array
+
+- **`Object.assign(target, sources ...)`**
+  Merges all the `sources` properties into the `target` object by **mutating the target object** and returns the `target` pointer.
+
+  When a new Object is desired use something as the following code:
+
+  ```javascript
+  let a = { some: 12 };
+  let b = { other: 25 }; 
+  let result = Object.assign({}, a, b); // the Object literal is used to merge sources
+  ```
+
+
+
 ### Other facts
 
 ---
 
 - JS uses overloaded syntax
+
 - `template literal syntax` is a string that allows embedding expressions i.e. strings that allow interpolation. **These strings are enclosed by backticks rather than double/single quotes!**
+
 - function parameters are actually local variables with a scope limited to the function being executed.
   These function local variables, i.e. parameters are initialized through the function argument passed to the function when invoked.
+  
+- Use the `Object.create(someOtherObject)` to create an object that inherits from the argument object
+
+  ```javascript
+  let bob = { name: 'Bob', age: 22 };
+  let studentBob = Object.create(bob);
+  ```
+
 
 
 
@@ -1128,12 +1325,27 @@ someArray === thatSameArray; // true
 
 ---
 
+- understand and use correct terminology for the types of functions: static functions/methods; prototype functions/methods
+
 - think in terms of primitive  and complex data types
+
 - if an `Object` refers to a complex data type that is a Hash, the term object should be used in the right context?
+
 - use node or the browser console to execute JavaScript code
+
 - running JS in the browser has a different environment and capabilities than running JS through node.js
+
 - In JS functions and class names are variables
+
 - preceeding an identifier with `let` or `const` triggers local scope for that particular identifier
+
+- Primitive values are immutable and we can never change the value they point to but rather we can only every re-assign them to point to some other thing in memory, which means that an expression like the following evaluates to value to a separate, new value/object/pointer, and nothing else.
+
+  ```javascript
+  1 + 5 // evaluates to a new primitive value of 6
+  ```
+
+- The data and functions used in a program are the either one or the other category of data type, primitive or object. Any other 'thing' that is **not** one of these two is a variables; statements; keywords, comments and more that is **not** data or a function.
 
 
 
@@ -1143,6 +1355,12 @@ someArray === thatSameArray; // true
 
 **Note**: Many of these questions will be answered by the course, so just carry them over and go from there.
 
+- JS is garbage collected (right?) which may have implications such as for instance the way the `delete` operator is described in the MDN docs:
+  
+  > The JavaScript **`delete` operator** removes a property from an object; if no more references to the same property are held, it is eventually released automatically.
+  
+- Hard know and understand JS's primitive and complex data types.
+  
 - Is there any intuitive JS built-in way to compare arrays?
   Since the `===` is not very helpful for arrays that are not the exact same pointer.
   

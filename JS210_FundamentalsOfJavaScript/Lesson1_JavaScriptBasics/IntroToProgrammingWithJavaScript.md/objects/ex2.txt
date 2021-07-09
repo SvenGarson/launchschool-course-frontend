@@ -1,0 +1,13 @@
+The following are valid keys for a JS object:
+
+ - '1'
+ - 'hello world'
+ - 'true'
+
+In other words, only strings are valid keys.
+
+# After reading the solution
+  
+  Turns out I am both right and wrong. While JS Object keys must
+  be strings, JS also implicitly coerces non-string values into
+  strings before setting the key-value pair.
