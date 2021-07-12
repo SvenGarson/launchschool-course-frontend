@@ -5,7 +5,7 @@
 Oficial ECMAScript documentation: https://www.ecma-international.org/publications-and-standards/standards/ecma-262/
 
 
-### Initial Stylistic conventions for JavaScript
+### Initial Stylistic conventions for JavaScript and Formatting
 
 ---
 
@@ -30,18 +30,34 @@ Oficial ECMAScript documentation: https://www.ecma-international.org/publication
   ```js
   let meep = 5 + 8
   ```
+  
+- Focus on clear expressions
+
+- `if` `for` and `while` statements always use spaces around around the keywords between parentheses
+
+  ```javascript
+  if(true) { // bad - spaces missing }
+  if (dingDong) { // good - spaces missing }
+  ```
+
+  
 
 
 
-### Naming Conventions
+### Naming Conventions  -  Idiomatic Names
 
 ---
 
 - Identifiers for variables; constants and functions should use only **alphanumerical** characters and:
 
-  - the first character must be alphabetic
+  - the first character must be one of:
+    - alphabetic (alphabetical of numerical)
+    - underscore `_`
+    - dollar sign `$`
   - do not use consecutive underscores
   - do not use underscore as the last character
+  - cannot be a reserved word
+  - ES is case-sensitiv i.e. `someVariable` is different from `somevariable`
 
 - Use camelCase for **all** variables and **non-constructor functions**
 
@@ -72,7 +88,16 @@ Oficial ECMAScript documentation: https://www.ecma-international.org/publication
   - For constants that **store a function**
     - use `camelCase` when the constant points to a **non-constructor** function
     - use `PascalCase` when the constant points to a **constructor** function
+    
   - All other constants can use any, i.e.: `camelCase`; `PascalCase` or `SCREAMING_SNAKE_CASE`
+  
+- Acronyms should be uppercase
+
+  ```javascript
+  function tinyURL() {}; // URL is an acronyma
+  ```
+
+- Always use spaces and not tabs for spacing and indentation
 
 
 
@@ -794,24 +819,36 @@ Logical operators enable us to **combine operators and conditions**:
 
   **Inverts** the boolean value of it's operand that is situated to **the right of the operator**!
 
-  **Evaluation**:
+  **Evaluation** for boolean operands:
 
   - `true` when operand is `false`
   - `false` when operand is `true`
 
 - **`&&`  - `And Operator`**
 
-  **Evaluation**:
+  **Evaluation** for boolean operands:
 
   - `true` when **both** operands are `true`
   - `false` when **either** operand is  `false`
 
+
+  **Evaluation** for **non-boolean** operands:
+
+  - first operand if the first operand is `falsy`
+  - the second operand otherwise
+
 - **`||`  -  `Or Operator`**
 
-  **Evaluation**:
+  **Evaluation** for boolean operands:
 
   - `true` when **either** operand is `true`
   - `false` when **both** operands are `false`
+  
+  
+  **Evaluation** for **non-boolean** operands:
+  
+  - first operand if the first operand is `truthy`
+  - second operand otherwise
 
 **Note**: The return value of one or multiple chained logical operators is always the last value evaluated
             Whether the logical operators short-circuit or not!
@@ -1211,8 +1248,8 @@ const MyObj = Object.freeze({ foo: "bar", qux: "xyz" });
    - `Boolean`
    - `null`
    - `undefined`
-   - `BigInt`
-   - `Symbol`
+   - `BigInt` (ES9)
+   - `Symbol` (ES6)
 
 2. **`Objects`  -  Include, but aren't limited to the following types**
 
@@ -1711,6 +1748,8 @@ Here some things to keep in mind about how `SyntaxError` is **typically** genera
   - not prefixed with `let` or `const`
 
 - LS calls a nested function a `private function`, is this a way to explain it or the actual mechanic to make a function private?
+
+- In which type of String i.e. single quoted; double quoted or the special syntax does JS interpret escape sequences?
 
 - get an idea what node's `npm` is and how it works
 
