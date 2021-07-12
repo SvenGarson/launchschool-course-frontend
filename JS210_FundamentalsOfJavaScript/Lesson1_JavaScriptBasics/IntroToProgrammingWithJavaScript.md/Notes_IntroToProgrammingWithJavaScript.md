@@ -1366,8 +1366,105 @@ There are several ways to iterate over they keys; values or key-value pairs of o
 
 
 
+#### `For/In` and `For/Of`
 
-### More Stuff - Terminology
+**Notes to order**:
+
+- uses `variant syntax` for simpler looping over object properties
+- `for/in` iterates over **all enumerable properties of an object** including the ones inherited form another object.
+  - Using `for/in` on an object iterates the **keys**
+  - Using `for/in` on an array **also iterates the keys** which for an array is the indices as strings!
+    **Remember: Arrays are objects!**
+  - **Supported in traditional and moderns JS**
+- `for/of` iterates over **all the values of an iterable collection**. Examples are arrays and strings.
+  - For a string, these iterable values seem to be the characters
+  - For an array, these iterable values seem to be the array items
+  - **Supported only in modern JS ES6 and over**
+
+
+
+#### Regex
+
+- Skipped this portion because getting into this is more than just reading this tutorial
+
+
+
+#### The Math Object
+
+- Provides mathematical functions through static methods
+
+
+
+#### Dates
+
+- Provides date related functionality that are sometimes hard to use
+
+
+
+#### Exceptions
+
+**Notes to order**:
+
+- JS is a more forgiving language and usually fails silently by returning signals like `undefined`, `null` or even `-1`
+
+- These silent errors are dangerous because they can be ignored, but we typically need to handle these problems
+
+- JS exceptions are **not silent** and holds/exits the program when that exception is not 'caught' and dealt with.
+
+- How to catch an exception:
+
+  ```javascript
+  try {
+    // code that may throw an exception
+  } catch(exception) {
+    // do something when an exception occured with access to that specific exception
+  } finally {
+    // executes whether an exception has been raised or not i.e. every time
+  }
+  ```
+
+- We can raise errors using the `throw` keyword along with an instance of the following [error types](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)
+
+  ```javascript
+  throw new TypeError('Some error message');
+  ```
+
+- Use exceptions only for **exceptional circumstances** and avoid throwing exceptions when a return value does the trick and document it well!
+
+
+
+#### `SyntaxError`
+
+The `SyntaxError` is a special type of error that executes **before the program is executes** in case there is problem with the syntax. This error **does not depend on runtime conditions** but the JS engine detects it solely based on the source code.
+
+
+Here some things to keep in mind about how `SyntaxError` is **typically** generated:
+
+- `SyntaxError`  has nothing to to with runtime conditions such as variables and control-flow
+- `SyntaxError`  can be reported for a particular line that is far away from where the issue originates from, typically much later
+- `SyntaxError`  are caught before the `execution phase`, so the program is not actually executed in this `preliminary phase`
+
+
+**Note**: There are situations for which the `execution phase` can throw a `SyntaxError` just as other errors, which means that for 
+           some cases, a `SyntaxError` can be caught using `try/catch/finally` such as for example:
+
+          ```javascript
+          JSON.parse('not really JSON');  // SyntaxError: Unexpected token i in JSON at position 0
+          ```
+
+
+
+#### ES& and Beyond
+
+- The recent JS/ECMAScript version is `ECMAScript `  -  `ES6`  - `ES2015`
+- The keywords `let` and `const` are part of `ES6` and did not exist in traditional ES and before `ES6` ES did not have block scope.
+  In traditional ES variables were scope either locally to a function or global for the whole program.
+- The introduction of `arrow functions` solves a problem referred to as `lost execution context` i.e. `context-loss`
+
+
+
+
+#### More Stuff - Terminology
 
 - JS does not differentiate between pointers and references, so these terms are interchangeable in this context
 
@@ -1430,6 +1527,47 @@ There are several ways to iterate over they keys; values or key-value pairs of o
 
 **Note**: Many of these questions will be answered by the course, so just carry them over and go from there.
 
+- One example why knowing when what is coerced in to what is essential to know.
+  
+  - When `x` is a `String`, the expressions `x = x + 1;` and `x++` are **not equivalent**.
+  
+  What happens is the following:
+  
+  - ```javascript
+    > let x = "5" // declare a local variable with identifier 'x' to hold the string "5"
+    > x = x + 1   // number 1 is coerced into a string and concatenated to the string "5" ==> "51"
+    = "51"        // which changes the value of 'x' from "5" to "51"
+    ```
+  
+  - ```javascript
+    > let y = "5" // declare a local variables with identifier 'y' to hold the string "5"
+    > y++         // string is coerced into a Number and that number is incremented from 5 to 6.
+                  // 5 is returned since the post-increment operator returns the number BEFORE incr.
+                  // and NOT the number after incrementation
+    ```
+  
+- At a later point in time, understand the differences between traditional and modern JS/ECMASCript?
+  
+- Learn the basics of how to read the Stack Trace
+  
+- What does JS check before the code is run despite the language to the interpreted by and interpreter or just-in-time compiler?
+  
+  - variables/identifiers that are misnames, re-assigned but are already declared, constants?
+  - it is important to know, for testing, when the program can fail and how much needs to be accounted for such as for instance triggering a piece of conditional code so that syntax errors, like undefined references can be caught and don't just screw up something implicitly!
+  - .Understand what js interpreters/JITC do **before and during execution** which can be categorized as `preliminary phase` and `execution phase`
+  
+- Which type of operations does JS:
+  
+  - fail silently for by returning a value like `null` or `-1 `?
+  - fail by raising an exception?
+  
+  Dividing zero into another number fails silently for instance! This stuff is very important to know!
+  
+- In terms of the `for/in` and `for/of` iterations:
+  
+  - what are all `enumerable properties of an object` for the `for/of` variant?
+  - what are all the `values of an iterable collection` for the `for/of` variant?
+  
 - How are strings stored in JS and how come they act like other primitives? Does it have something to do with how C stores string in a different portion of memory and scans for strings that already exist? A `static memory` is the spot in program memory C stores strings, if I remember correctly?
   
 - What is the 'arity' of arguments/parameters?
@@ -1599,6 +1737,17 @@ There are several ways to iterate over they keys; values or key-value pairs of o
   1. Constants **cannot be re-assigned** **nor can they be re-declared** in the same scope
   2. **Identical constant identifiers can be re-used** as long as they are re-used in **different scopes**
 
+- The following describes a method that returns true only when the argument is `NaN`:
+  
+  ```javascript
+  // This works because NaN is the only value that is not '===' to itself
+  function isNotANumber(value) {
+    return value !== value;
+  }
+  ```
+  
+  **This is important, know the mechanism that NaN is the only value for which `NaN === NaN` is false**
+  
 - What are the rules concerning the declaration of variables not prefixed with `let` or `const`?
   (And probably also `var` for that matter) apart from the global thing?
 

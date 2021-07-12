@@ -1,0 +1,9 @@
+Exception handling is a mechanism ins JS that enables us to attempt
+to handle an error gracefully, occurs before the program
+crashes or stops execution by executing another piece of code that
+we designate to run in case an exception occurs for the portion of
+code we mark as such.
+
+Exceptions solve the problem of the program just crashing and not
+giving us a chance to do something about it and keep the program
+running.
