@@ -767,6 +767,7 @@ Here some important ones:
 - **`==`  -  `Non-Strict Equality Operator`  -  `Loose Equality Operator`**
 
   **May attempt to coerce one or both operands to another operands type before comparison**.
+  **Note**: Works the same as the strict version when operands type and value the same
 
   **Evaluation**:
 
@@ -779,6 +780,8 @@ Here some important ones:
 - **`!=`  -  `Non-Strict Inequality Operator`  -  `Loose Inequality Operator`** 
 
   **May attempt to coerce one or both operands to another operands type before comparison**.
+
+  **Note**: Works the same as the strict version when operands type and value the same
 
   **Evaluation**:
 

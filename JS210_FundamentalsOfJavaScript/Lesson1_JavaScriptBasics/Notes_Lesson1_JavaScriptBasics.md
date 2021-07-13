@@ -246,11 +246,165 @@ The `plus` operator `+` converts **any** value into a Number using a crazy set o
     (function foo() {}) + 42    // "function foo() {}42"
     ```
 
-    
+- **The other arithmetic operators: `-` `*` `/` and `%`**
+  These operators are defined exclusively for numbers, so non-number operands are converted to numbers.
+
+  **Note**: When a String cannot be converted to a number, the operation evaluates to `NaN`
+
+  ```javascript
+  1 - true                // 0
+  '123' * 3               // 369 -- the string is coerced to a number
+  '8' - '1'               // 7
+  -'42'                   // -42
+  null - 42               // -42
+  false / true            // 0
+  true / false            // Infinity
+  '5' % 2                 // 1
+  'Meep' * 255            // 'Meep' cannot be converted to a Number so becomes NaN
+  ```
+
+- **Equality operators**
+
+  **Note**: Some expressions may trigger multiple cycles of coercion and evaluation!
+
+  - `Strict Equality and Inequality Operators`
+
+    **Never perform type coercion** and return `true` only when **both** the **type** and the **value** match.
+
+    ```javascript
+    1 === 1               // true
+    1 === '1'             // false
+    0 === false           // false
+    '' === undefined      // false
+    '' === 0              // false
+    true === 1            // false
+    'true' === true       // false
+    ```
+
+  - `Non-Strict Equality and Inequality Operators`
+
+    **Note**: Non-strict operators work exactly like the strict variant when operands are the same type!
+
+    When operand types are different, the operands are coerced to the same type implicitly.
+
+    - **When one operand is a String and the other a Number  - String is converted to Number**
+
+      ```javascript
+      '42' == 42            // true
+      42 == '42'            // true
+      42 == 'a'             // false -- becomes 42 == NaN
+      0 == ''               // true -- becomes 0 == 0
+      0 == '\n'             // true -- becomes 0 == 0
+      ```
+
+    - **When one operand is a Boolean  -  That Boolean operand is converted to a Number**
+
+      ```javascript
+      42 == true            // false -- becomes 42 == 1
+      0 == false            // true -- becomes 0 == 0
+      '0' == false          // true -- becomes '0' == 0, then 0 == 0
+                            // (two conversions)
+      '' == false           // true -- becomes '' == 0, then 0 == 0
+                            // (two conversions)
+      true == '1'           // true
+      true == 'true'        // false -- becomes 1 == 'true', then 1 == NaN
+                            // (two conversions)
+      ```
+
+    - **When both operands are either `null` or `undefined`  -  Always returns true**
+
+      ```javascript
+      null == undefined      // true
+      undefined == null      // true
+      null == null           // true
+      undefined == undefined // true
+      ```
+
+    - **When one operand is `null` or `undefined` or `NaN`  -  Always returns false**
+
+      ```javascript
+      undefined == false     // false
+      null == false          // false
+      undefined == ''        // false
+      undefined === null     // false -- strict comparison
+      ```
+
+      ```javascript
+      NaN == 0              // false
+      NaN == NaN            // false
+      NaN === NaN           // false -- even with the strict operator
+      NaN != NaN            // true -- NaN is the only JavaScript value not equal to                       // itself
+      ```
+
+  - **Relational Operators `<` `>` `<=` `>=`**
+
+    These operators are defined only for Numbers and Strings.
+
+    - **When both operands are Strings  -  Both operands are compared `Lexicographically`**
+
+    - **Otherwise both operands are converted to Numbers and compared accordingly**
+
+      ```javascript
+      11 > '9'              // true -- '9' is coerced to 9
+      '11' > 9              // true -- '11' is coerced to 11
+      123 > 'a'             // false -- 'a' is coerced to NaN; any comparison with NaN is false
+      123 <= 'a'            // also false
+      true > null           // true -- becomes 1 > 0
+      true > false          // true -- also becomes 1 > 0
+      null <= false         // true -- becomes 0 <= 0
+      undefined >= 1        // false -- becomes NaN >= 1
+      ```
 
 
 
-#### Various bits of information
+#### Best practices
+
+- **For the Launchschool curriculum  -  Always use strict comparison**
+- Use explicity type conversion to make intentions clear and not be surprised by implicit conversions
+- On the other hand side, code should in general not compare values of different types unless there is a good reason for it. So when we use operators on operands with the same type, the non-strict operators are perfectly fine to use
+
+
+
+### Conditionals
+
+---
+
+JavaScript supports the following **two** types of conditional statements.
+
+**Note**: Since these are statements, they do **not** evaluate to a useful value!
+
+
+
+#### Truthy and Falsy
+
+When an expression in a conditional does not evaluate to a boolean value, the following rules apply:
+
+- **Only the following six values are falsy in a conditional context**
+
+  ```javascript
+  if (false)        // falsy
+  if (null)         // falsy
+  if (undefined)    // falsy
+  if (0)            // falsy
+  if (NaN)          // falsy
+  if ('')           // falsy
+  ```
+
+- **Every other value is truthy in a conditional context**
+
+  ```javascript
+  if (true)         // truthy
+  if (1)            // truthy
+  if ('abc')        // truthy
+  if ([])           // truthy
+  if ({})           // truthy
+  ```
+
+  
+
+
+
+### Various bits of information
 
 ---
 
@@ -289,3 +443,5 @@ The `plus` operator `+` converts **any** value into a Number using a crazy set o
   **I think the real question here is to ask what the difference between invoking a constructor with the `new` keyword and without it is because apparently they return different things!**
 
 - Make note of the fact that JS consider `NaN` to be a Number
+
+- Understand how lexicographical string comparison works
