@@ -464,16 +464,20 @@ Depending on what environment the program runs in, the `console.log();` method p
   - DOM - The Document Object Model
   - Asynchronous programming
 
-
   Browsers also typically support the `prompt` input method that uses a pop-up in the browser to get text, user input and pipes it to the executing JavaScript program similar to the terminal application through node.js.
 
-  The `prompt` method can be used as follows:
+The `prompt` method can be used as follows:
 
   ```javascript
   // This JavaScript program should be executed in a browser through HTML
   let name = prompt('Your name: '); // browser uses a pop-up to get user input
   console.log(`Hi, ${name}!`);
   ```
+
+**Return values**:
+
+- if the user pushes the `OK` button, `prompt` returns the entered value as a String, which can be empty
+- if the user pushed the `Cancel` button, `prompt` returns `null` whatever the input was
 
   
 
