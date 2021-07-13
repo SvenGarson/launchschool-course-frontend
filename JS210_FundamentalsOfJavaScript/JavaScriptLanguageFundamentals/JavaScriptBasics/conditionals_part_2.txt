@@ -1,0 +1,28 @@
+The following pseudo-code contains the following
+unique execution paths, starting at the initial
+conditional:
+
+  1) condition1
+  2) condition1 -> condition2
+  3) condition1 -> not condition2
+  4) not condition1
+  5) not condition1 -> condition4
+  6) not condition1 -> condition4 -> condition5
+
+
+if (condition1) {
+  // ...
+  if (condition2) {
+    // ...
+  } else {
+    // ...
+  }
+} else {
+  // ...
+  if (condition4) {
+    // ...
+    if (condition5) {
+    // ...
+    }
+  }
+}

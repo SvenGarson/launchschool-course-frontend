@@ -400,7 +400,8 @@ When an expression in a conditional does not evaluate to a boolean value, the fo
   if ({})           // truthy
   ```
 
-  
+
+
 
 
 
@@ -428,7 +429,9 @@ When an expression in a conditional does not evaluate to a boolean value, the fo
     dwawd wf ffesfes skf sef';
     ```
 
-    
+- When making a line wrap using a backward slash, the backward slash must be the last character on that line. Even one space after the slash results in a SyntaxError.
+
+
 
 #### More questions and answers
 
@@ -445,3 +448,13 @@ When an expression in a conditional does not evaluate to a boolean value, the fo
 - Make note of the fact that JS consider `NaN` to be a Number
 
 - Understand how lexicographical string comparison works
+
+- For the following code snippet:
+
+  ```javascript
+  const name = 'Bob';
+  const saveName = name;
+  ```
+
+  Is it correct that, given the fact that strings are primitive values, declaring initializing the `saveName` variable using another variable identifier allocates **new storage** in memory and actually copies the `name` string rather than pointing to the same string?
+

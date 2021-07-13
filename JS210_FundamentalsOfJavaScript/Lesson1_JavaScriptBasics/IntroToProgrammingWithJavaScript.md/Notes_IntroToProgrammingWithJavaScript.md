@@ -496,12 +496,23 @@ function say() {
 ```
 
 
+
+**And consist of the following**:
+
+- `function` keyword
+- name of the function
+- list of comma separated parameters
+- block of statements as the functions^body
+
+
+
 #### Return Values
 
 All JS functions evaluate to a value:
 
-- In case a function does not specify an explicit return value through the `return` keyword,
-  JS returns an implicit value of `undefined`.
+- In case a function does not specify an explicit return value through the `return` keyword JS **always** returns an implicit value of `undefined`.
+
+  In this context a context the `return value` of a function and the fact that `a function returns` are not the same things because a function can return or rather finish execution without explicitly returning a value, but still return a value implicitly by default just by getting to the end of the function body which happens when the last function statement is done executing.
 - In case a function does however specify an explicit return value through `return`, that is the value returned
 
 
