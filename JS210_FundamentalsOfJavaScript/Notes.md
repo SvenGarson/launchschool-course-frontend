@@ -24,7 +24,6 @@ Most modern browsers support ES6+ features well but older browsers do not, so wh
 
 ---
 
-
 **The list of files I intend to use as notes in different contexts:**
 
 - questions and answers per lesson and per notes: Once for the notes and once explicitly as another file for later?
@@ -574,6 +573,8 @@ Every function or block creates a new variables scope.
 
 **Note**: Both the function and block scope can also be referred to as `local scope`!
 
+**Note**: Not every region between curly braces is a `block` technically such as the curly braces around an object as well as a function, but usually we refer to a  block when we mean an executable group of statements between curly braces!
+
 
 
 #### Lexical Scoping
@@ -633,6 +634,252 @@ This implies that variable shadowing can occur over this scope hierarchy.
 
 
 
+### Hoisting
+
+---
+
+#### Differences between declaring variables with `let` and `var`
+
+- **At top-level**, `var` adds a property to the `global` or `window` object (depending on the execution context) where:
+
+  - inside the `node.js` context, a property is added to the `global` object
+  - inside the browser context, a property is added to the `window` object
+
+  whereas `let` does not add that property.
+
+  **The takeaway is that, at the top-level of the program, `let` is 'safer' because it does not add properties to the `global` or `window` objects, in other words, no global variable is created!**
+
+- **Inside a function i.e. inside function scope**, `var` does **not** add a property to the `global`/`window`  object or any other object for that matter!
+
+- `let` is `block scoped` which means that the variable is accessible only in the scope where it is originally declared (including nested/inner scopes) which is defined by curly braces **whereas** `var` is `function scoped` which means that the variable is accessible **within the function it is declared in**.
+
+  ```javascript
+  function foo() {
+    if (true) {
+      var a = 1;  // block scope  -  i.e. not accessible outsie the conditional
+      let b = 2;  // function scope  - i.e. accessible in the whole 'foo' function
+    }
+  
+    console.log(a); // 1
+    console.log(b); // ReferenceError: a is not defined
+  }
+  
+  foo();
+  ```
+
+- `block scope` variables that are declared with the `var` keyword are defined without the code ever being executed as in the following example:
+
+  ```javascript
+  function foo() {
+    if (false) {
+      var a = 1;  // this code is never executed, yet the variable is initialized to
+    }             // the value undefined
+  
+    console.log(a); // undefined
+  }
+  
+  foo();
+  ```
+
+
+
+#### Declared Scope VS Visibility Scope  -  A Mental Model by Launchschool
+
+##### The Term `Global Scope`
+
+This scope is typically referred to by people as `global scope` but the terms `file scope` and `module scope` would technically be more appropriate. 
+
+In JavaScript, a variable cannot be explicitly declared in global scope as in other languages, but all variable declarations are **either one** of the following:
+
+- `function scope`  -  Through the  `var` and `function` keywords
+
+  At the top level of a program, which means outside any function, function scope refers to the entire file,
+  in other words, global scope.
+
+- `block scope`  -  Through the `let`; `const` and `class` keywords
+
+
+**The following code snippet demonstrated the issue this mental model wants to clarify:**
+
+```javascript
+let foo = 1;      // variable declaration at top-level i.e. global
+console.log(foo);
+```
+
+The model is based on the question `what scope does the variable 'foo' have'`?
+
+- Since `foo` was declared with `let` it should have `block` scope
+- But `foo` ends up being `global` scope
+- Overall `foo` does have `block` scope but this just happens to coincide with the top-level `global` scope
+  **in this case**
+
+So what we could say about the `foo` variable scope
+
+- `foo` has `global` scope but was declared in `block` scope
+- `foo` has `block` scope but it happens to coincide with the `global` scope
+
+
+**This is confusing but a common problem of the language in terms using only terminology for scope**
+
+The model expresses the scope of a variable using **two attributes**:
+
+1. **`Declared Scope`  -  Refers to how the variable was declared**
+
+   Specifies if a variables was declared using `let`; `const`; `class`; `var` or `function` of which:
+
+   - `let`;  `const` and `class` declare a variable with `block` scope
+   - `var` and `function` declare a variable with `function` scope
+
+   For this model, even if the variable in question is declared **outside** of any block or function, we
+   say that is has either `block` or `function` scope. **Nothing else**.
+
+
+   **Here a few examples:**
+
+   ```javascript
+   let foo = 1;        // declared scope is block scope
+   var bar = 2;        // declared scope is function scope
+   
+   if (true) {
+     let foo = 3;      // declared scope is block scope
+     var qux = 4;      // declared scope is function scope
+   }
+   
+   function bar() {    // declared scope is function scope
+     let foo = 5;      // declared scope is block scope
+     var bar = 6;      // declared scope is function scope
+   
+     if (true) {
+       let foo = 7;    // declared scope is block scope
+       var qux = 8;    // declared scope is function scope
+     }
+   }
+   ```
+
+2. **`Visibility Scope`  -  Refers to the actual visibility of the variable in the program scope**
+
+   Specifies where a variable is visible in terms of it's accessibility in the executing program.
+
+   This can be one of the following:
+
+   - `global` scope  -  outside any function or block
+
+   - `local` scope  -  inside a function or block (or any other combination not outside functions/blocks)
+
+     **Additionally** for this `local` scope, we can specify whether a particular variable either of:
+
+     - `local - function` scope
+     - `local - block` scope
+
+     These additional scopes represent where the variables are visible rather than how they were declared, which is why a variable declared with `let` can end up being `local  -  function` because it is declared at the start of the function.
+
+   **Here a few examples**:
+
+   ```javascript
+   let foo = 1;        // visibility scope is global
+   var bar = 2;        // visibility scope is global
+   
+   if (true) {
+     let foo = 3;      // visibility scope is local (block)
+     var qux = 4;      // visibility scope is global
+   }
+   
+   function bar() {    // visibility scope is global
+     let foo = 5;      // visibility scope is local (function)
+     var bar = 6;      // visibility scope is local (function)
+   
+     if (true) {
+       let foo = 7;    // visibility scope is local (block)
+       var qux = 8;    // visibility scope is local (function)
+     }
+   }
+   ```
+
+   **Note**: By default we typically talk about the `visibility` scope of a particular variable because that is
+              what we typically need to know for programming.
+
+
+
+#### Node.js wraps code in a function whereas the Node REPL does not
+
+When node.js executes code from a file, that code is wrapped into the following function:
+
+```javascript
+(function (exports, require, module, __filename, __dirname) {
+  // the executed code is wrapped in this anonymous function expression
+});
+```
+
+whereas the node REPL does **not** do that. This means that execution of certain code can have unexpected results. One notable example of such an unexpected situation is when using top-level `var` declarations.
+
+Running the following code:
+
+```javascript
+var bar = 42;
+console.log(global.bar);
+bar += 1;
+console.log(global.bar);
+
+let foo = 86;
+console.log(global.foo);
+```
+
+- in the node REPL, **line-by-line**, executes as follows: 
+
+  ```javascript
+  var bar = 42;
+  console.log(global.bar); // 42
+  bar += 1;
+  console.log(global.bar); // 43
+  
+  let foo = 86;
+  console.log(global.foo); // undefined
+  ```
+
+  This is because the `var` keyword adds properties to the `global` object when used at top-level
+
+- and when executed through node directly, executes as follows:
+
+  ```javascript
+  var bar = 42;
+  console.log(global.bar); // undefined
+  bar += 1;
+  console.log(global.bar); // undefined
+  
+  let foo = 86;
+  console.log(global.foo); // undefined
+  ```
+
+  Which is actually **wrapped into a function in the node environment** and looks as follows:
+
+  ```javascript
+  (function (exports, require, module, __filename, __dirname) {
+    var bar = 42;
+    console.log(global.bar); // undefined
+    bar += 1;
+    console.log(global.bar); // undefined
+  
+    let foo = 86;
+    console.log(global.foo); // undefined
+  });
+  ```
+
+  This has the effect that `var` now **does not add properties to the `global` object** but rather add the `bar` variable in `function scope`!
+
+
+
+#### Questions I should be able to answer
+
+- What is hoisting
+- How do `var`, `let`, and `const` interact with hoisting? How do they differ?
+- How do functions and classes interact with hoisting? How do they differ?
+- What part does hoisting play in the way a specific program works?
+- How does hoisting really work?
+
+
+
+
+
 
 ### Various bits of information
 
@@ -672,6 +919,10 @@ This implies that variable shadowing can occur over this scope hierarchy.
 #### More questions and answers
 
 ---
+
+- What exactly is the `global` object?
+
+- What is the purpose of the `global` and `window` objects and how are they similar and/or different in the node/browser context? Are they the exact same thing but depend on the environment?
 
 - What bits of the language make something a statement? Like the `let ` keyword for example?
 
