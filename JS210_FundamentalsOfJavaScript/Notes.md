@@ -456,11 +456,47 @@ When an expression in a conditional does not evaluate to a boolean value, the fo
 
   Arrow functions are sort of a shorthand way to write function expressions.
 
-  **stuff:**
+  **Here a list of quirks in terms of arrow functions. Arrow functions ... :**
 
-  - eliminate `return` because arrows functions return implicitly
-    only works for single-liners?
-  - can parentheses really only be omitted when the function has only a single paramter
+  - return implicitly i.e. no need to use the `return` keyword for one-line arrow functions
+
+  - parameter list does not have to be encased when there is only a single parameter
+
+  - inherit the `execution context` from the context the arrow function is declared in
+
+  - are most often used as callback functions when function fits on a single line
+
+  - steps of the notation
+
+    1. The normal function declaration
+
+       ```javascript
+       const multiply = function(a, b) {
+         return a * b;
+       };
+       ```
+
+    2. Remove the `function` keyword and add the arrow after the parameter list
+
+       ```javascript
+       const multiply = (a, b) => {
+         return a * b;
+       };
+       ```
+
+    3. Put everything on a single line and get and get rid of the braces
+
+       ```javascript
+       const multiply = (a, b) => return a * b;
+       ```
+
+    4. Get rid of the `return` keywords as an arrow function returns implicitly
+
+       ```javascript
+       const multiply = (a, b) => a * b;
+       ```
+
+       
 
 
 
