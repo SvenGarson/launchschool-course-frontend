@@ -402,6 +402,199 @@ When an expression in a conditional does not evaluate to a boolean value, the fo
 
 
 
+### Functions
+
+---
+
+- invoke function by appending `()` to the name
+  but there are more ways to invoke functions
+- function names are just local variables that have a function as value
+- functions can be bound to variables just like any other value and invoked just as for the original function name!
+- how the language works when the argument passed mismatch the parameter list
+  - invoking a function with the wrong number of arguments, more or less, does not raise an error
+  - a parameter that is note passed as argument is bound to `undefined`
+- functions can be nested and there is not real limit here
+
+
+
+#### Types of functions and ways to declare them
+
+- **`Function Declarations`  -  `Function Statements`**
+
+  A function declaration **must start with the `function` keyword** and defines a variable of type `function` with the same name as a function that has the function as it's value.
+
+  This 'function variable' obeys the same exact scoping rules like other local variables and can be re-assigned to have another value.
+
+  Re-assigning this function variable to some value other than the function, irreversibly shadows the function! (Right?)
+
+- **`Anonymous Function Expressions`**
+
+  An anonymous function expression defines a function **without a function name** as part of a larger expression, typically to a local variable:
+
+  ```javascript
+  const someFunction = function () { ... } // could also use let for the local variable
+  someFunction(); // invoke the function just as normal
+  ```
+
+- **`Named Function Expressions`**
+
+  Are declared and behave the same as an `anonymous function expression` with the difference that **we associate a function name to the function**. Following are some quirks:
+
+  - The function name is **not** actually in the scope the function is declared, but it is accessible in the function definition itself through `methodName.name`:
+
+    ```javascript
+    let someFunction = function someName() {
+     console.log(`I am a named function expression. My name is: ${someName.name}`);
+    }
+    
+    someFunction(); // outputs: I am a named function expression. My name is: someName
+    ```
+
+  - A good reason to use named function expressions rather than anonymous ones is that the debugger can use the function name in the stack trace so that an error is, possibly, easier to track down.
+
+- **`Arrow Functions`**
+
+  Arrow functions are sort of a shorthand way to write function expressions.
+
+  **stuff:**
+
+  - eliminate `return` because arrows functions return implicitly
+    only works for single-liners?
+  - can parentheses really only be omitted when the function has only a single paramter
+
+
+
+#### Function Declaration and Function Expression subtleties
+
+If a declaration starts with the keyword `function`, as the very first words **without any leading characters** it is a function declaration, otherwise it is a function expression (anonymous or names).
+
+Wrapping a function declaration inside parentheses is enough to go from declaration to expression:
+
+```javascript
+function () { ... }; // proper function declaration
+(function () {} );   // not a declaration but an expression since 'function' not first
+```
+
+
+
+
+
+### Function/Functional Scope and Lexical Scoping
+
+---
+
+Every function or block creates a new variables scope.
+
+#### Different types of scopes
+
+- **Global Scope**
+
+  Variables declared outside any functions or blocks exist in the global scope?
+
+  What about declaring variables in some function/block scope and not prepend `let` or `const`, does that have the same effect is that a different mechanism?
+
+- **Function Scope**  - Also referred to as `Local Variable Scope`  -  Yes the same as `Block Scope` Below!
+
+  Function scope is the scope inside a function block. This scope behaves the same as local variable scope in that it can access the scope that surrounds it i.e. the `outer scope` where as the `outer scope` cannot access that `inner scope`.
+
+  ![](./res/scoping_diagram1-20200720.png)
+
+
+  **Note**: Apparently functions and variables behave the exact same up to the scope outside all blocks.
+
+  ```javascript
+  let name = 'Julian'; // global scope  -  Accessible to everyone?
+  
+  function greet() { // declared in global scope -  nothing special
+    function say() { // function scope  -  behaves as local vaiables would
+      console.log(name); // nested function scope  -  again, nothing special
+    }
+  
+    say();  // function scope of 'greet' function
+  }
+  ```
+
+- **Block Scope**  -  Also referred to as `Local Variable Scope`  -  Yes the same as `Function Scope` above!
+
+  The scope introduced when constructs such as `while` loops are used confined to the opening and closing curly braces.
+
+  ```javascript
+  let name = 'Julian'; // global scope  -  Accessible to everyone?
+  
+  function greet() { // declared in global scope -  nothing special
+    function say() { // function scope  -  behaves as local vaiables would
+      console.log(name); // nested function scope  -  again, nothing special
+    }
+      
+    while(true) {
+     console.log("Hello!"); // block scope
+    }
+  
+    say();  // function scope of 'greet' function
+  }
+  ```
+
+
+
+**Note**: Both the function and block scope can also be referred to as `local scope`!
+
+
+
+#### Lexical Scoping
+
+Lexical scope means that the structure of the source code defines a variable's scope.
+Every time we write a function or a construct that have block scope, a new scope is introduced to that scope structure.
+
+A scope is added for every block/scope, executed or not, which is why this type of scoping is referred to as `static scoping`. Every time we refer to some variable in a 'local scope', JavaScript walks up that hierarchy of scope structures from the local up to the global scope (possibly) and resolves a variable with the **first** occurence of that particular identifier/name.
+
+This implies that variable shadowing can occur over this scope hierarchy.
+
+
+
+#### Lexical scoping works identically for referencing as it does for assignment
+
+**What happens is that:**
+
+- When we reference a variable, JS walks up the hierarchy/structure of the code until a variable is found up to the global scope
+- When we assign a variable to a new value, JS walk up the code structure the same exact way up to the global scope. But when no variable with the same identifier is found, a new, global variable is created!
+
+
+
+#### Various Ways to add Variables to a (local) scope
+
+- By using the `let`,  `const` or `var` keyword
+
+  ```javascript
+  let a = 15;
+  const MEEPS = 5;
+  ```
+
+- By defining parameters for a function
+
+  ```javascript
+  function woof(a, b) {
+    // a and b are local variables in the 'woof' function scope
+  }
+  ```
+
+- Declaring a function creates a variable with the same name as the function
+
+  ```javascript
+  function eek() { /* do stuff */ }
+  // eek is accessible as local variable
+  ```
+
+- Declaring a class also creates a variable with the class name
+
+
+
+#### Some of the scoping rules overview
+
+- Every function declaration introduces a new `local variable scope`, specifically a new `function scope`
+- Every block also introduces a new `local variable scope`, specifically a new `block scope`
+- Lexical Scopre uses the structure of the source code to determines a variables' scope which has nothing to do with executing the code. Only the static, written structure of the code matters.
+- All variables, outside a function and/or block (code structure relatively speaking) are accessible inside these functions and blocks.
+
 
 
 
@@ -431,6 +624,13 @@ When an expression in a conditional does not evaluate to a boolean value, the fo
 
 - When making a line wrap using a backward slash, the backward slash must be the last character on that line. Even one space after the slash results in a SyntaxError.
 
+- Because a function declaration:
+
+  - 'creates'  the function
+  - creates a variable with the function name with the function as the value
+
+  re-assigning the function name i.e. that local variable really, shadows the actual function!
+
 
 
 #### More questions and answers
@@ -438,6 +638,8 @@ When an expression in a conditional does not evaluate to a boolean value, the fo
 ---
 
 - What bits of the language make something a statement? Like the `let ` keyword for example?
+
+- So the global scope is just most outer scope of all? And not some special thing?
 
 - Does type coercion from number to String `let someNumberAsString = String(12.99);` use some function, or operator, or is it just the constructor of the `String` type?
 
@@ -449,6 +651,8 @@ When an expression in a conditional does not evaluate to a boolean value, the fo
 
 - Understand how lexicographical string comparison works
 
+- Can functions, because their names are local variables, made to point elsewhere so that the function is in-accessible? This would suck!
+
 - For the following code snippet:
 
   ```javascript
@@ -457,4 +661,18 @@ When an expression in a conditional does not evaluate to a boolean value, the fo
   ```
 
   Is it correct that, given the fact that strings are primitive values, declaring initializing the `saveName` variable using another variable identifier allocates **new storage** in memory and actually copies the `name` string rather than pointing to the same string?
+  
+- The following code raises an error because the `average` identifier has been declared previously for the functions. Since a function name is just a variable, this makes sense. But is there more to this?
+
+  ```javascript
+  function average(someNumbers) { // code here ... }
+  let average = average([1, 2, 3]); // average identifier already declared
+  ```
+
+- Can functions only be declared using the `function` keyword as first word, or are there options such as with constant?
+
+- Does the 'accessing constant data through an non-constant pointer' problem exist in JS?
+  In that we declare something as constant but can then assign that constant thing to a non-constant things and change it through that hack?
+
+  I guess not, but what exactly are the mechanics?
 
