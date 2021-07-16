@@ -868,6 +868,339 @@ console.log(global.foo);
 
 
 
+### What is Hoisting?
+
+---
+
+JavaScript engines do not just execute the code but rather execute operate under two phases.
+
+#### Creation Phase  -  Before the program is executed
+
+Does preliminary work to prepare for the execution phase. One task of this phase is to find all declarations such as variable, function and class declarations and move them 'up' to the top of their respective scope where:
+
+- Function scoped declarations are moved to the top of the function (or global!?)
+- Block scoped declarations are moved to the top of the block (or global?!)
+
+
+
+This is the reason why functions can be invoked 'before' they are declared, in terms of the code structure.
+
+**Illustration of this process**
+
+1. The creation phase scans for, amongst other things, function declarations, such as for example:
+
+   ```javascript
+   console.log(getName());// invoking the function before it is defined in code structure
+   
+   function getName() {   // the creation phase scans the program to find this function
+     return "Pete";
+   }
+   ```
+
+2. The creation phase then moves the function to the top of it's scope, **which can be thought of** re-arranging the original code  into the following:
+
+   ```javascript
+   function getName() {  // function declaration is now a the top of it's scope
+     return "Pete";
+   }
+   
+   console.log(getName());  // the function can be invoked since it is declared before
+   ```
+
+
+
+#### Execution Phase  -  The execution of the prepared program
+
+It the process where the program executes line-by-line.
+
+
+
+### The Temporal Dead Zone
+
+---
+
+Variables declared with `let`, `const` and `var`  are also hoisted but behave differently in terms of how they are hoisted and how they can be accessed:
+
+- Hoisted `var` variables are initialized with the value `undefined`. Since hoisting happens during the creations phase, `var` variables that are declared on program lines that never execute are also hoisted and initialized with the value `undefined` regardless.
+
+  This is why the variable `meep` in the following code is declared, while never executed!
+
+  ```javascript
+  console.log(meep === undefined);  // hoisted and initialized to the value 'undefined'
+  
+  if (false) {
+    // this block will never run
+    var meep = 'piep pieep'; // hoisted even if never executed
+  }
+  
+  console.log(meep === undefined);  // the same as the first case
+  ```
+
+
+  **In other words  -  Accessing `var` variables before their declaration resolves to `undefined` ** !
+
+- Hoisted `let` variables and `const` constants are **not** initialized to any value and stay **not-defined** as if they did not exist i.e. as if they are not declared and we get a `ReferenceError` for both `let` and `const`.
+
+  ```javascript
+  console.log(foo); // ReferenceError: Cannot access 'foo' before initialization
+  let foo;
+  ```
+
+  ```javascript
+  console.log(qux); // ReferenceError: Cannot access 'qux' before initialization
+  const qux = 42;
+  ```
+
+  **Note**: Do not use the term `undefined` here since it has nothing to do with the `undefined` primitive!
+
+  
+
+  **In other words  -  Accessing `let` and `const` variables/constants before their declaration results in a `ReferenceError`** !
+
+
+
+The `Temporal Dead Zone` is the lines of a program or the places in the scope between the entering/top scope and declaration of these variables/constants where they cannot be accessed.
+
+This Temporal Dead Zone ends when the variable/constants in question are declared.
+
+
+
+#### Error messages reflect this
+
+JavaScript engines make the difference between variables that are declared and variables that are not declared:
+
+- If the variable `qux` is declared, hoisted and accessed before definition/initialization:
+
+  > // ReferenceError: Cannot access 'qux' before initialization
+
+- If the variable `baz` is never declared:
+
+  > console.log(baz); // ReferenceError: baz is not defined
+
+
+
+
+#### Hoisting for Function Declarations
+
+The lesson is here is to **never nest function declarations in non-function blocks** and **if you do want to** declare a function in a block such as is an if statement, **always use a function expression**!
+
+Hoisting works as expected for the following example, where a function is declared directly in the function scope of another function:
+
+```javascript
+function foo() {
+  return bar();  // accessible because the function is hoisted to the top of the scope
+
+  function bar() {// hoisting raises this function definition to the top of function scope
+    return 42;
+  }
+}
+```
+
+
+**Other than the above example, never declare a function in a non-function block as follows:**
+
+```javascript
+function meep() {
+  if (true) {  // conditionals have block scope
+    function mayWorkMayNot() {  // function declaration in block scope - big no no
+      // what am I doing
+    }
+  }
+    
+  mayWorkMayNot();
+}
+```
+
+The problem is that implementations are inconsistent in this case and results are unexpected, so never do this, use function expressions instead! (Next up)
+
+
+
+#### Hoisting for Function Expressions
+
+When function expressions are used to assign functions as value to a variables or constant, these obey the exact same rules as the `var` and `let/const` hoisting rules above, just that the value of these variables/constants is now a function.
+
+
+```javascript
+console.log(func === undefined);
+
+var func = function namedHoistedFunction() {
+  console.log('I am a names, hoisted function!');
+}
+
+console.log(typeof(func) === 'function');
+```
+
+
+
+#### Hoisting when both variables and functions are declared
+
+When a scope contains both functions and variables (including constants) then we can assume that:
+
+1. Function declarations are hoisted **first** i.e. **above variable declarations**
+2. Variables and constants are hoisted **second** i.e. **below function declarations**
+
+
+
+**Some intuitive illustrations**
+
+- For `var` variables, rather than thinking that it exists at two point with different states, think that the `var` variable in question has the value `undefined` until it's value is defined on a particular line.
+
+- With these shifty rules, always consider if the global scope screws with the expected outcome.
+
+- When nor variables at at play i.e. ther is no conflict between things, nothing is hoisted?
+
+  ```javascript
+  boo();
+  
+  function boo() {
+    console.log("Boo!");
+  }
+  ```
+
+  
+
+
+
+#### Best Practices to follow to reduce confusion with hoisting based problems
+
+- don't use `var` for declarations
+
+- if you do have to use `var` for declarations, declare them at the top of the scope in the program structure like so:
+
+  ```javascript
+  function foo() {
+    var a = 1;
+    var b = 'hello';
+    var c = false;
+    // now we know that all the variables are initialized/defined
+  }
+  ```
+
+- declare variables and constants using `let ` and `var` as close to their use as possible
+
+- just declare functions **before** invoking them, don't rely on these rules
+
+
+
+#### Hoisting Questions and Answers
+
+- **How does the following snipper look after hoisting including functions and variables**?
+
+  **Demonstration:** *The variable is not in scope in the function definition*!
+
+  **Before**:
+
+  ```javascript
+  bar();              // logs undefined
+  var foo = 'hello';
+  
+  function bar() {
+    console.log(foo);
+  }
+  ```
+
+  **After**:
+
+  ```javascript
+  function bar() {
+    console.log(foo);
+  }
+  
+  var foo;
+  
+  bar();          // logs undefined
+  foo = 'hello';
+  ```
+
+- **Same thing here**
+  **Demonstration** : *Variable is a function and then re-assigned to a string primitive (Not used in this example)*
+
+  **Before**:
+
+  ```javascript
+  bar();             // logs "world"
+  var bar = 'hello';
+  
+  function bar() {
+    console.log('world');
+  }
+  ```
+
+  **After**: 
+
+  ```javascript
+  function bar() {
+    console.log('world');
+  }
+  
+  bar();
+  bar = 'hello';
+  ```
+
+- **And another one**
+
+  **Demonstration**: *Functions are hoisted first, the variables follow. In this case the `bar` variable follows the function definition and thereby shadows the function 'variable' through which the function was available* 
+
+  **Before**:
+
+  ```javascript
+  var bar = 'hello';
+  bar();             // raises "TypeError: bar is not a function"
+  
+  function bar() {
+    console.log('world');
+  }
+  ```
+
+  **After**:
+
+  ```javascript
+  function bar() {
+    console.log('world');
+  }
+  
+  bar = 'hello';
+  bar();
+  ```
+
+  
+
+#### Hoisting is not real  -  It is one way to explain how JS works
+
+The behavior we try to explain using the `hoisting` model is merely a consequence of the `creation` and `execution` phase.
+
+The `creation` phase prepares code for execution. Each time the `creation` phase encounters a declaration, this identifier is added to the current scope, which depending on the context, is either the local or global scope (either function or block).
+
+At this point JS know which identifiers exist and what exact scope each one belongs to.
+
+During the `execution` phase JS does not care about the declarations, but it does care about the initialization and function/class definitions. At this point JS merely needs to lookup identifiers as they arrive.
+
+
+
+#### Before hosting even occurs
+
+An example:
+
+```javascript
+let foo = "hello";
+
+function foo() {
+  console.log("hello");
+}
+```
+
+What happens here is that JS raises a `SyntaxError`:
+
+- **during** the `creation` phase
+  **but**
+- **before** the hoisting affects how the program is interpreted
+
+At this point the JS engine processes the program from top to bottom and considers identifiers and well as it check for duplicates. This means that if and identifiers is declared more than once, it is reported at this point.
+
+**Note**: For the purpose of Launchschool, pretend that hoisting is something that actually happens!
+
+
+
 #### Questions I should be able to answer
 
 - What is hoisting
@@ -919,6 +1252,45 @@ console.log(global.foo);
 #### More questions and answers
 
 ---
+
+- What is the namespace of different types of values/things?
+  The course says that `let`/`const`  declarations cannot have a name identical to a function:
+
+  ```javascript
+  let foo = 3;
+  function foo() {}; // SyntaxError: Identifier 'foo' has already been declared
+  ```
+
+  ```javascript
+  function foo() {};
+  let foo = 3;  // SyntaxError: Identifier 'foo' has already been declared
+  ```
+
+  What else should I know?
+
+- Understand when an identifier is 'taken'.
+  Is the rule that:
+
+  > ... can't have two declarations with the same name if one of those names is declared by `let`
+
+  What about functions and classes with the same names?
+  I think it does as explaines in the course since both of the following examples raise an error for the same reason, that the identifier is already in use but for different reasons:
+
+  - ```javascript
+    let foo = "hello";
+    
+    function foo() {
+      console.log("hello");
+    }
+    ```
+
+  - ```javascript
+    function foo() {
+      console.log("hello");
+    }
+    
+    let foo = "hello";
+    ```
 
 - What exactly is the `global` object?
 
