@@ -1201,6 +1201,14 @@ At this point the JS engine processes the program from top to bottom and conside
 
 
 
+#### Interesting scoping exercises:
+
+- all from [this](https://launchschool.com/lessons/7cd4abf4/assignments/1d43f233) and the previous page especially problem 3 is dirty
+
+
+
+
+
 #### Questions I should be able to answer
 
 - What is hoisting
@@ -1293,6 +1301,11 @@ At this point the JS engine processes the program from top to bottom and conside
     ```
 
 - What exactly is the `global` object?
+
+- Make a distinction between when local variables are created and when not.
+
+  - When variables are declared without `let ` or `const`
+  - When non-existing variables are re-assigned and JS cannot find it up to and including global scope
 
 - What is the purpose of the `global` and `window` objects and how are they similar and/or different in the node/browser context? Are they the exact same thing but depend on the environment?
 
