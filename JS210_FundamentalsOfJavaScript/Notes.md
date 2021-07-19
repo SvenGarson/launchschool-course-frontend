@@ -1245,13 +1245,123 @@ JavaScript Closures are technically a mix of lexical and runtime features, but f
 
 #### Answer I should be able to answer about Closures
 
-- What is a closure?
-- What is in a closure?
-- When is a closure created?
+- What is a closure? *The corrected definition*
+- What is in a closure? *All the function declares internally and all it accesses through the scope, if it exists*
+- When is a closure created? When a functions/methods are **defined** (Don't say declared here)
 - What is the relationship between closures and scope?
 - What do we mean when we say that closures are defined lexically?
 - What is partial function application?
 
+
+
+#### Closures
+
+**What is a closure?**
+
+Closures and scope a intimately connected concepts because closures effectively use the scope at a particular point in the program lexically to determine what surrounding variables some closure can access.
+
+The variables that are in scope when a function is executes depends on the closure that is created when a function is defined.
+
+> A closure is the combination of a function and the lexical environment within which that function was defined.
+
+In the above definition, the term `defined` is accurate since a function can be declared and bound to a local variable using function declarations and function expressions of different types. This terms includes both because saying `declared` would exclude function expressions.
+
+
+**What does a closure contain?**
+
+In other words, when a function is defined and accesses variables not declared or initialized in that function, these variables, if they exist, are then part of the functions closure.
+
+In my words, a closure is a function has access to all function variables as well as all variables the function accesses and has access through scope, if these outer variables exist.
+
+
+Closures have access to:
+
+- Only variables that exist off course. If a non-existent variable is referenced, the typical errors are thrown.
+- Only the variables the closure itself references, if it is not used in the closure, it is not kept track of
+
+
+**When is a closure created?**
+
+A closure is created when a function or method is defined (again, do not use the term declared here).
+That closure then has access to the surrounding context that is defined by scope i.e. to what the function definition has access to lexically.
+
+
+
+**Intuitive stuff**
+
+- Even when the variables referenced by the function are not in scope when the function is invoked, as can happen when a closure is passed around, remember that the function/closure can access variables that were lexically accessible through scope and these variables do not need to be accessible at the point where the closure/function is invoked.
+
+  In other words, it is not important where a closure is executed, but the context the function is defined in is!
+
+- Think of closures as lexical i.e. is based on the source program structure.
+
+- A closure can access everything that is accessible at the point of function/closure definition
+
+- Closures are **not snapshots** of a portion of the program state but rather, the closure has access to variables through pointers to variables, which means that a closure has the ability to:
+
+  1. re-assign the variable to another value, primitive or object
+  2. access the memory contents of that variable by dereferencing that pointer twice
+
+- A program uses closures in many ways, but we think of it in other terms while closures are at work:
+
+  - **Invoking a method and pass it a callback function as argument**
+
+    ```javascript
+    let oddNumbers = [];
+    array.forEach(number => {  // function definition creates a closure
+      if (number % 2 === 1) {
+        oddNumbers.push(number);
+      }
+    });
+    ```
+
+    The argument is a function as a result of a function expression through arrow syntax.
+    When this, or any other function, is defined for that matter, a closure is created, which keeps track of the variables in the function 'body' and the variables that are accessible to the function at the point of it's definition, in this case the variables `oddNumbers` and `array`.
+
+
+
+**How exactly does a closure keep track of variables to be able to change them?**
+
+- A pointer to the pointer, because we want to be able to make the pointer point to another piece of data in memory and **not** just change the memory contents
+- Make sure to understand how JS handles pointers etc generally
+
+
+
+**How does scope really work in JS under the hood when code is executing?**
+
+When a function executes and needs to resolve some variable JS:
+
+1. first checks if that identifier is accessible through the local scope
+
+   **and if it is not**
+
+2. secondly checks the closure, the function 'context' to check whether the function has access to it
+
+
+Determining the closures/contexts of what is available where in the program is done during the creation phase, of which the closures are the result of. (**Is this an accurate model?**)
+
+
+
+#### Some use-cases for closures
+
+- **Private containers of state and functionality**
+
+  The `counter` variable is private to the `makeCounter` function and cannot be accessed elsewhere.
+
+  ```javascript
+  function makeCounter() {
+    let counter = 0;
+  
+    return function() {
+      counter += 1;
+      return counter;
+    }
+  }
+  
+  let incrementCounter = makeCounter();
+  console.log(incrementCounter()); // 1
+  console.log(incrementCounter()); // 2
+  ```
 
 
 
@@ -1287,6 +1397,12 @@ JavaScript Closures are technically a mix of lexical and runtime features, but f
   - creates a variable with the function name with the function as the value
 
   re-assigning the function name i.e. that local variable really, shadows the actual function!
+  
+- What is a `first-class object`? It has all of the following **three** attributes:
+
+  1. can be assigned to variables and as elements of data structures (array, objects)
+  2. can be passed to a function as argument
+  3. can be returned as return value from a function/method
 
 
 
