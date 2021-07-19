@@ -656,8 +656,8 @@ This implies that variable shadowing can occur over this scope hierarchy.
   ```javascript
   function foo() {
     if (true) {
-      var a = 1;  // block scope  -  i.e. not accessible outsie the conditional
-      let b = 2;  // function scope  - i.e. accessible in the whole 'foo' function
+      var a = 1;  // function scope  - i.e. accessible in the whole 'foo' function
+      let b = 2;  // block scope  -  i.e. not accessible outsie the conditional
     }
   
     console.log(a); // 1
@@ -1201,15 +1201,31 @@ At this point the JS engine processes the program from top to bottom and conside
 
 
 
-#### Interesting scoping exercises:
+#### Interesting scoping and hoisting exercises and facts
 
-- all from [this](https://launchschool.com/lessons/7cd4abf4/assignments/1d43f233) and the previous page especially problem 3 is dirty
+- all from [this](https://launchschool.com/lessons/7cd4abf4/assignments/1d43f233) and the previous page
+
+- so `var` variables are hoisted and assigned `undefined` when hoisted, but when the **same** `var` variable is hoisted successively, then that initialization does not happen apparently which is why the following code works:
+
+  ```javascript
+  var a = 'hello';
+  
+  for (var index = 0; index < 5; index += 1) {
+    var a = index;
+  }
+  
+  console.log(a);
+  ```
+
+  In short, duplicate hoisted 'var' variables are ignored but the re-assignmend is executed!
+
+  > This is from exercise 5 at https://launchschool.com/lessons/7cd4abf4/assignments/1d43f233
 
 
 
 
 
-#### Questions I should be able to answer
+#### Questions I should be able to answer  -  Answer when re-working the notes
 
 - What is hoisting
 - How do `var`, `let`, and `const` interact with hoisting? How do they differ?
@@ -1218,6 +1234,23 @@ At this point the JS engine processes the program from top to bottom and conside
 - How does hoisting really work?
 
 
+
+### Closures
+
+---
+
+JavaScript Closures are technically a mix of lexical and runtime features, but for now it is easier to think of them as just lexical features, which means that they obey the structure of the code based on the source code, in other words (as said, for now until further learning) closures are  the result of how the code is structured and not how it is executed at runtime.
+
+
+
+#### Answer I should be able to answer about Closures
+
+- What is a closure?
+- What is in a closure?
+- When is a closure created?
+- What is the relationship between closures and scope?
+- What do we mean when we say that closures are defined lexically?
+- What is partial function application?
 
 
 
