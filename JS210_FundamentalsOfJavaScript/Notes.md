@@ -1243,14 +1243,26 @@ JavaScript Closures are technically a mix of lexical and runtime features, but f
 
 
 
-#### Answer I should be able to answer about Closures
+#### Answer I should be able to answer about Closures  -  Needs massive re-work!
 
 - What is a closure? *The corrected definition*
+
 - What is in a closure? *All the function declares internally and all it accesses through the scope, if it exists*
+
 - When is a closure created? When a functions/methods are **defined** (Don't say declared here)
-- What is the relationship between closures and scope?
+
+- What is the relationship between closures and scope? Their relationship is somewhat circular but we can think of this relationship as:
+
+  - a closure is a function that has access to it's lexical surroundings/context which is based on the scope of available identifiers
+  - scope uses closures under the hood which are created during the creation phase because closures provide the creations/definition context of a function i.e. which exact variables are accessible for a given function based on lexical program structure
+
+  **Note**: This needs some work, is this what this question was going for?
+
 - What do we mean when we say that closures are defined lexically?
+  *This means that a closure determines the variables accessible to it based on the lexical structure of the program i.e. the source code itself i.e. the execution phase has nothing to do with it.*
+
 - What is partial function application?
+  See definition below.
 
 
 
@@ -1289,7 +1301,7 @@ That closure then has access to the surrounding context that is defined by scope
 
 **Intuitive stuff**
 
-- Even when the variables referenced by the function are not in scope when the function is invoked, as can happen when a closure is passed around, remember that the function/closure can access variables that were lexically accessible through scope and these variables do not need to be accessible at the point where the closure/function is invoked.
+- Even when the variables referenced by the function are not in scope when the function is invoked, as can happen when a clos ure is passed around, remember that the function/closure can access variables that were lexically accessible through scope and these variables do not need to be accessible at the point where the closure/function is invoked.
 
   In other words, it is not important where a closure is executed, but the context the function is defined in is!
 
@@ -1363,6 +1375,80 @@ Determining the closures/contexts of what is available where in the program is d
   console.log(incrementCounter()); // 2
   ```
 
+- **Partial Function Application**
+
+  A function is said to use `partial function application` when a function is invoked with one argument and returns a function, which when invoked takes the rest of the arguments including the initial function through the context.
+
+  This technique is useful when we need to call a function many times with the same, or partially same arguments.
+
+  ```javascript
+  function add(first, second) {
+    return first + second;
+  }
+  
+  function makeAdder(firstNumber) {           // takes one argument  -  others later
+    return function(secondNumber) {           // returns a function
+      return add(firstNumber, secondNumber);  // gets parameters from two invocations
+    };
+  }
+  
+  let addFive = makeAdder(5);
+  let addTen = makeAdder(10);
+  
+  console.log(addFive(3));  // 8
+  console.log(addFive(55)); // 60
+  console.log(addTen(3));   // 13
+  console.log(addTen(55));  // 65
+  ```
+
+  In other words, `partial function application`:
+
+  > refers to the creation of a function that can call a second function with fewer arguments than the second function expects. The created function supplies the remaining arguments.
+
+  A practical example here is [here](https://launchschool.com/lessons/7cd4abf4/assignments/0ea7c745), check when I need this.
+
+
+  **In order for a function to use partial function application by definition**:
+
+  - A reduction in the numbers of arguments must take place place from the outer functions, to the function used in the returned function.
+
+    - The following example **does not** use partial function application because the `console.log` function takes a single argument and so does the anonymous function returned by the `makeLogger` function.
+
+      In other words, there is not reduction in arguments.
+
+      ```javascript
+      function makeLogger(identifier) {
+        return function(msg) {                  // single argument
+          console.log(identifier + ' ' + msg);  // also single argument
+        };
+      }
+      ```
+
+    - The following example **does indeed** use partial function application because the `console.log` invokation now takes two arguments and the anonymous function returned by `makeLogger` requires only one.
+
+
+      In other words, there is a reduction in arguments.
+
+      ```javascript
+      function makeLogger(identifier) {
+        return function(msg) {           // only one argument needed  -  reduced!
+          console.log(identifier, msg);  // two arguments needed
+        };
+      }
+      ```
+
+- **Other use cases for closures**
+
+  - Currying  -  A special form of partial function application
+  - Emulating private methods
+  - Creating functions that can be executed only once
+  - Memoization
+  - Iterators and Generators
+  - The module pattern i.e. putting code and data into modules
+  - Asynchronous operations
+
+
+
 
 
 ### Various bits of information
@@ -1425,6 +1511,27 @@ Determining the closures/contexts of what is available where in the program is d
 
   What else should I know?
 
+- Why is the following code **not exactly the same** as just defining the variable in the global scope?
+  
+  ```javascript
+  function someFunction() {
+    myVar = 'This is global';  // global.myVar is added but it is not exactly the same
+  }                            // as declaring the variable directly in global scope!
+  ```
+
+  This should be answered somewhere in the JS210 course lesson 3 or later!?
+  
+- Apparently JS does add properties on the `global` or `window` object when a variable is declared like so:
+  
+  ```javascript
+  function someFunction() {
+    myVar = 'This is global';  // global.myVar is added
+  }
+  ```
+
+  I though this only happens when the variable is declared at top level using `var`?
+  Research and understand when these properties are actually added and when not.
+  
 - Understand when an identifier is 'taken'.
   Is the rule that:
 
@@ -1496,4 +1603,10 @@ Determining the closures/contexts of what is available where in the program is d
   In that we declare something as constant but can then assign that constant thing to a non-constant things and change it through that hack?
 
   I guess not, but what exactly are the mechanics?
+
+
+
+### Running list of things to do
+
+- make sure all [exercises](https://launchschool.com/exercises#js210_javascript_language_fundamentals) are finished as they are supposed to
 
