@@ -1651,7 +1651,96 @@ LS recommends the [AirBNB JavaScript style guide](https://github.com/airbnb/java
 
   - Imported functionality can use `camelCase` even if it is bound to a constant variable
 
+    ```javascript
+    const readlineSync = require('readline-sync'); // acceptable
+    ```
 
+- **Strings**
+
+  - Use single quotes for strings
+  - Use explicit coercion
+
+- **Numbers**
+
+  - Always use the  `Number` constructor for type casting values into numbers (if `parseInt` is not used)
+
+    ```javascript
+    let toNumber = Number('3.1415');
+    ```
+
+  - Always specify the `parseInt` `radix` argument to make intentions clear (if `Number()` is not used)
+
+    ```javascript
+    let toInt = parseInt('154.58');
+    ```
+
+- **Booleans**
+
+  - When converting any value to the boolean equivalent based on the value's truthiness, use one of the following two methods
+
+    ```javascript
+    let toBoolean = Boolean(25);  // good
+    let alsoToBoolean = !!99;     // best    
+    ```
+
+- **Variable Declarations**
+
+  - Always prefer `let` and `const` to `var`
+
+  - Declare variables as close to their use as possible **when not using `var`**
+
+  - When declaring variables using `var`, **do declare at the top of the scope**
+
+  - Use `const` if the 'variable' will never be re-assigned (but it might still be mutated unless the contents are frozen).
+
+    Use `let` or `const` as you see fit, but keep the naming and intentions clear and constants.
+
+- **Functions**
+
+  - Never declare functions in a non-function block. Part of the reason is that the function will be accessible in the 'outer ' scope regardless, and putting a function declaration inside a conditional does not change that.
+
+    If you must declare a function in a non-function block such as a conditional, use a function expression instead and bind the function to a local variable with the expected scope.
+
+    ```javascript
+    // bad - Do not declare functions in non-function blocks
+    if (someThing) {
+      function meep() {  // this function is accessible outside conditional anyway
+        // do stuff
+      }
+    }
+    
+    // good - clear intention of defining the function if conditional executes
+    let maybe;
+    if (true) {
+      maybe = () => console.log('Yep. This works!'); // can also be multi-line
+    }
+    ```
+
+  - Never use the identifier `arguments` for a parameter or variable, constant or not inside function scope. If you do, the built-in `arguments` object, that is passed to every function invocation implicitly is 'shadowed'. Instead use an identifier such as `args`.
+
+    ```javascript
+    function meep(name, arguments) {
+      // 'arguments' parameter now shadows 'arguments' that is passed to every function
+    }
+    
+    function meep(name, args) {
+      // this is fine
+    }
+    ```
+
+  - Passing a callback function to a function invocation can be done a few ways, where if it the complexity oft the function allows, arrow functions are the preferred way to do this.
+
+    ```javascript
+    // pass as function expression to a function invocation as callback
+    [1, 2, 3].map(function (value) {
+      return value * 2;
+    });
+    
+    // do the same thing using an arrow function - better here because the function is // simple to contain everything in a single line
+    [1, 2, 3].map(value => value * 2);
+    ```
+
+    
 
 
 
@@ -1711,6 +1800,8 @@ LS recommends the [AirBNB JavaScript style guide](https://github.com/airbnb/java
 
 ---
 
+- Understand how the local variable (or constant? or global?) `argument` works, what it contains and how it can be used when given to every function invocation.
+  
 - LS seems to make a difference between variable shadowing and dynamic typing in the following way:
   
   - If some variable is declared and initialized to some value and then re-assigned in the same scope,
