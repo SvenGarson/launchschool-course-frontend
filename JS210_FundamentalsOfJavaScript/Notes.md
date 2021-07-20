@@ -882,6 +882,10 @@ Does preliminary work to prepare for the execution phase. One task of this phase
 - Block scoped declarations are moved to the top of the block (or global?!)
 
 
+**Note**: When functions are hoisted, the function name/identifier is hoisted **along with the function definition**, which means that a hoisted function is
+           accessible after the point is has been hoisted to and **not** in some sort of temporal dead zone.
+
+
 
 This is the reason why functions can be invoked 'before' they are declared, in terms of the code structure.
 
@@ -1428,7 +1432,7 @@ Determining the closures/contexts of what is available where in the program is d
 
 
       In other words, there is a reduction in arguments.
-
+    
       ```javascript
       function makeLogger(identifier) {
         return function(msg) {           // only one argument needed  -  reduced!
@@ -1449,6 +1453,208 @@ Determining the closures/contexts of what is available where in the program is d
 
 
 
+### More on coding style  -  Merge this with the rest
+
+---
+
+When working in a professional setting, the relevant bits that are affected by that setting are:
+
+- **Formatting and Aesthetics**: Indentation; spacing; single vs double quotes etc.
+- **Best practices**: how to perform coercions, how to define variables with hoisting rules.
+  These are generally designed to avoid common pitfalls but are usually very opinion heavy.
+
+LS recommends the [AirBNB JavaScript style guide](https://github.com/airbnb/javascript) for students.
+
+**Note**: Whatever style is chosen, the most important thing is to **be consistent**
+
+
+
+**Some styles to be aware of right now**:
+
+- **Spacing**
+
+  - Use only spaces for indentation. If using tabs convert tabs to spaces. Use two spaces per level.
+
+    ``` javascript
+    // a · represents a single space
+    function foo() {
+    ··let bob = 'omp';
+    }
+    ```
+
+  - Use single space before the opening curly brace
+
+    ```javascript
+    function test()·{
+      // do stuff
+    }
+    ```
+
+  - Place single space before opening parenthesis in control statements:
+
+    ```javascript
+    if·(someThing)·{
+      // do stuff
+    }
+    ```
+
+  - Do not precede a function parameter list with a space
+
+    ```javascript
+    function·meep·(a, b)·{  // not good, no space before argument list!
+      // do stuff
+    }
+    
+    function·meep(a, b)·{  // good, no space before argument list
+      // do stuff
+    }
+    ```
+
+  - Distance operators and operands with single space
+
+    ```javascript
+    let x=5*u; // bad
+    let x = 5 * u;
+    ```
+
+  - Do not padd parenthesis with spaces
+
+    ```javascript
+    if ( someThing ) { /**/ } // bad
+    if (someThing) { /**/ }   // good
+    ```
+
+  - No spaces preceeding `,` and `;`
+
+    ```javascript
+    someFunc(a ,b) ; // bad
+    someFunc(a, b);  // good
+    ```
+
+  - No whitespace at the end of lines and no white space in 'empty' lines
+
+    ```javascript
+    let x = 5 * 9;·· // bad
+    let x = 5 * 9;   // good
+    ···              // bad  -  this is supposed to be an empty line
+    ```
+
+  - Never nest ternary operators
+
+- **Blocks**
+
+  - Leave a blank line after blocks and before the statements after that block
+
+    ```javascript
+    if (goNoGo) {
+      // do stuff
+    }
+    
+    moreStuff();
+    ```
+
+  - Do not padd blocks with empty lines
+
+    ```javascript
+    if (someThing) {
+                     // bad - unnecessary padding  
+      return 5;
+    } else {
+      return -1;
+                     // bad - unnecessary padding
+    }
+    
+    
+    ```
+
+  - single line control flow can go without braces **on the same line**
+
+    ```javascript
+    if (someThing) doThis(); // good
+    ```
+
+  - always use braces for multi line statements
+
+    ```javascript
+    if (someThing) {  // good
+      doThis();
+    }
+    ```
+
+  - function declarations should always use multiple lines and braces (this excludes arrow functions!?
+
+    ```javascript
+    function woof() { return false; }  //  bad
+    
+    function woof() {  // good
+      return false;
+    }
+    ```
+
+  - For if-else if statements put the else (and else if) on the same line as previous closing brace
+
+    ```javascript
+    if (truthy) {
+      // event 1
+    } else {        // on the same line as previous block closing brace
+      // event 2
+    }
+    ```
+
+- **Semicolons**
+
+  - Use semicolon after every statement apart from behind a block **unless that block is a function expression (both function expressions in normal and arrow syntax)**
+
+    ```javascript
+    let woof = 'doggy';  // good  -  finalize statements with semicolon
+    
+    while (true) {
+      // do epic stuff
+    };                   // bad  -  no semicolon after block
+    
+    while (true) {
+      // do more good stuff
+    }                    // good  -  no semicolon ...
+    ```
+
+
+    ```javascript
+    // do not finalize function declaration with semicolon
+    function meep() {
+      // do stuff
+    }                   // good  -  this is not a function expression
+    
+    // DO finalize a function expression with semicolon
+    const foo = function () {
+     return -1;
+    };                  // good  -  this IS a function expression
+    
+    // DO finalize function expression for arrow style syntax, TOO!
+    const melon = () => true;  //  good  -  this is also a function expression
+    ```
+
+- **Naming conventions**
+
+  - Use `camelCase` for both variables and function names
+
+    ```javascript
+    let fooBar = () => true;
+    let heightMap = [1, 2, 3];
+    ```
+
+  - Constants **can** be `SCREAMING_SNAKE_CASE` but it is acceptable to use `camelCase`
+
+    ```javascript
+    const PI_SQUARED = (3.1415 ** 2);
+    const piSquared = (3.1415 ** 2); // acceptable
+    ```
+
+  - Imported functionality can use `camelCase` even if it is bound to a constant variable
+
+
+
+
+
 
 
 ### Various bits of information
@@ -1456,6 +1662,15 @@ Determining the closures/contexts of what is available where in the program is d
 ---
 
 - JS uses Floating Point to represents all numbers
+
+- can add breakpoints programmatically using the `debugger` keyword as statement, and apparently this statement is ignored unless the browser dev tools are open.
+
+  **Do note leave `debugger` statements in production code, but why exactly:**
+
+  - can it slow the program down?
+  - does it influence the program any other way in production code?
+  - Because it enables users to step through the logic differently? They can open their dev tools and do it anyway!?
+  - Maybe it just does not work the same between browsers and environments?
 
 - `\` at the end of a line forces JS to ignore the new line, this is great to chain long strings together.
   But beware the spaces because JS treats each space/tab etc as an actual space/tab in the string
@@ -1496,6 +1711,80 @@ Determining the closures/contexts of what is available where in the program is d
 
 ---
 
+- LS seems to make a difference between variable shadowing and dynamic typing in the following way:
+  
+  - If some variable is declared and initialized to some value and then re-assigned in the same scope,
+    LS does not consider this to be variable shadowing but dynamic typing, since any variable can be
+    re-assigned to a value of any type at any point in time.
+  
+    ```javascript
+    var foo = 1;
+    
+    function foo() {}
+    
+    // after hoisting
+    
+    function foo() {}
+    var foo = 1;      // 'foo' is simply re-assigned to Number 1
+    ```
+  
+  - If some variable declared at an outer scope, and then an insider/deeper scope declares a new variable in that nested scope with the same identifier, LS considers this variable shadowing.
+  
+    ```javascript
+    function bar() {
+      let foo = 2;       // this is a new scope, so this 'foo' shadows the global 'foo'
+      console.log(foo);  // logs 2
+    }
+    
+    let foo = 1; // this global is not accessible until this line
+    bar();
+    ```
+  
+    
+  
+- The following piece of code runs forever invoking functions and ends in a stackoverflow error because the invocation of the `foo` function as part of the expression passed to the `console.log` on line `8` does not call the previous definition of the previously hoisted `foo` function but rather the function invokes itself recursively with no way to stop recursion.
+  
+  ```javascript
+  console.log(foo());
+  
+  function foo() {
+    console.log('Waiting for bar!');
+  }
+  
+  function foo() {
+    console.log(foo);
+    function bar() {
+      console.log('bar again');
+    }
+  
+    bar();
+  
+    function bar() {
+      console.log('bar again and again');
+    }
+  }
+  ```
+  
+  
+  
+- A rule about hoisting. When a scope contains declaration for multiple functions with the **same name**, these functions are apparently hoisted in the order from top to bottom, and in the end, the last i.e. the declaration at the bottom is the one invoked **where ever** that function is invoked.
+  
+  ```javascript
+  function some() { console.log('first'); };
+  some(); // third
+  function some() { console.log('second'); };
+  some(); // third
+  function some() { console.log('third'); };
+  some(); // third
+  
+  // because after hoisting
+  function some() { console.log('first'); };
+  function some() { console.log('second'); };
+  function some() { console.log('third'); }; // this is the last declaration
+  ```
+  
+  
+  
 - What is the namespace of different types of values/things?
   The course says that `let`/`const`  declarations cannot have a name identical to a function:
 
