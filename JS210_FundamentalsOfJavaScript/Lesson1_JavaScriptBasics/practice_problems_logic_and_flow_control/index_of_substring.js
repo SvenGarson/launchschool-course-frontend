@@ -1,87 +1,3 @@
-/*
-    # The 'indexOf' function
-      # Input
-
-        > firstString (string to search through)
-        > secondString (string to find index of)
-        ! assume both strings are non-empty
-
-      # Output
-
-        - index integer of the starting index of secondString
-          in firstString
-        - -1 is the 2ndString does not exist if 1stString
-
-      # Which index and what matches
-
-        - the index of the first matching string is returned,
-          scanning the firstString from left to right
-        - character matching is case-sensitive
-
-      # Other Requirements
-
-        > only functions and operators I can use are:
-            - [] operator to access string characters
-            - the String.prototype.length property
-            - NO OTHER BUILT IN STRING CLASS PROTOTYPE FUNCTION
-
-      # Approach
-          
-          for every fIndex in f
-            if f[fIndex] === s[0]
-              # this may be a substring
-              continue is first chars missmatch
-              
-              # optimistic: if nothing is signaled, subs match
-              subMatch = true
-              from seconds fIndex to last fIndex
-                fCurrent = ...
-                sCurrent = ...
-
-                # we want to signalize a missmatch
-                if fCurrent !== sCurrent
-                  subMatch = false
-                  break
-
-              # subMatch tells us if the first sub matches
-              # we can stop here or keep lookin
-              - return fIndex or something else
-
-
-      # Pseudo Approach
-
-          # given f and s, find first occurence of s[0] in f
-
-            - sfirst = s[0]
-            
-            # pessimistic: return when we find an occurence,
-                           and nothing if no occurence found
-
-            - for (index from 0 upto exluding f.length)
-                - fcurrent = f[index]
-                - if (fcurrent === sfirst)
-                    - return index
-
-          # fiven f, s and the index of the first occurence of s[0]
-          # in f. First occurence index can be -1 which means no
-          # match found
-          # !!! ??? implement the 2nd part marked up top
-
-            # The limiting factor when scanning the full s string
-              is the f string, so we should have the following cases:
-
-                  1) f does not contain all of s
-                     when f[index] === undefined for some index
-                     means that f cannot contain s as a whole
-                  
-                  2) 
-
-      # Comments
-          
-          - out of bounds index on string returns 'undefined'
-
-*/
-
 function indexOf(firstString, secondString) {
   for (let fIndex = 0; fIndex < firstString.length; fIndex += 1) {
     // detect start of matching sub-string
@@ -150,9 +66,34 @@ console.log(lastIndexOf('Some strings', 's') === 11);
 console.log(lastIndexOf('Blue Whale, Killer Whale', 'Whale') === 19);
 console.log(lastIndexOf('Blue Whale, Killer Whale', 'all') === -1);
 
+function lastIndexOfFurtherExploration(firstString, secondString) {
+  let skippedCharacters = 0;
+  let solutionFound = false;
 
-/*
-    # Further exploration
-    - https://launchschool.com/lessons/c26a6fcc/assignments/4e531b61
+  while (true) {
+    let firstIndex = indexOf(firstString, secondString);
 
-*/
+    // done if no matching index could be found
+    if (firstIndex === -1) break;
+
+    // note: firstIndex is a valid index
+    solutionFound = true;
+
+    // get ready for index scan starting after the found index
+    let charactersToSkip = firstIndex + 1;
+    skippedCharacters += charactersToSkip;
+    firstString = firstString.substring(charactersToSkip, firstString.length);
+  }
+
+  // when solution found, skippedCharacters it at least 1
+  return solutionFound ? (skippedCharacters - 1) : -1;
+}
+
+
+console.log('\nSolutions to further exploration');
+
+console.log(lastIndexOfFurtherExploration('Some strings', 's') === 11);
+console.log(lastIndexOfFurtherExploration('Drunter Und Drueber', 'Drunter') === 0);
+console.log(lastIndexOfFurtherExploration('Drunter Und Drueber und Drunter', 'Drunter') === 24);
+console.log(lastIndexOfFurtherExploration('Blue Whale, Killer Whale', 'Whale') === 19);
+console.log(lastIndexOfFurtherExploration('Blue Whale, Killer Whale', 'all') === -1);
