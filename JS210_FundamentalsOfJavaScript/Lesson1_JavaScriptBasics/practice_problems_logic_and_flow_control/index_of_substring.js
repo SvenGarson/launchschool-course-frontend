@@ -55,7 +55,7 @@ function lastIndexOf(firstString, secondString) {
   return -1;
 }
 
-console.log('\nSolutions to original problems');
+console.log('\nSolutions to original problem');
 
 console.log(indexOf('Some strings', 's') === 5);
 console.log(indexOf('Blue Whale', 'Whale') === 5);
