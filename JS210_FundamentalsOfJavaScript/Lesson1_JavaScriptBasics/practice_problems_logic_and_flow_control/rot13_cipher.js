@@ -1,3 +1,6 @@
+const CHARACTERS_IN_ENGLISH_ALPHABET = 26;
+const ROT13 = 13;
+
 function isModernEnglishCharacter(character) {
   const lowercaseCharacter = character.toLowerCase();
   return (lowercaseCharacter >= 'a' && lowercaseCharacter <= 'z');
@@ -12,7 +15,7 @@ function lowercaseAlphabetIndex(character) {
 }
 
 function rot13AlphabetIndex(character) {
-  return 'a'.charCodeAt(0) + ((character + 13) % 26);
+  return 'a'.charCodeAt(0) + ((character + ROT13) % CHARACTERS_IN_ENGLISH_ALPHABET);
 }
 
 function rot13(string) {
@@ -33,8 +36,7 @@ function rot13(string) {
         convertedCharacter = rot13CharacterInOriginalCase;
       }
 
-      // add
-      rot13String += convertedCharacter;
+    rot13String += convertedCharacter;
   } 
 
   return rot13String;
