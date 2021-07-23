@@ -30,13 +30,33 @@
 
     # Approach
   
-      given (string, start, length)
-      // wrap the length if negative
+      // return empty string when length <= 0
+      if length <= 0
+        return 0
 
+      // wrap the starting the index if negative
+      if start < 0
+        start = string.length + start
+
+      substring
+         get chars in that range      
 */
 
 function substr(string, start, length) {
-  // solution here
+  if (start < 0) {
+    start = string.length + start;
+  }
+
+  let end = (start + length);
+  if (end > string.length)
+    end = string.length;
+
+  let substring = '';
+  for (let characterIndex = start; characterIndex < end; characterIndex += 1) {
+    substring += string[characterIndex];
+  }
+
+  return substring;
 }
 
 let string = 'hello world';
