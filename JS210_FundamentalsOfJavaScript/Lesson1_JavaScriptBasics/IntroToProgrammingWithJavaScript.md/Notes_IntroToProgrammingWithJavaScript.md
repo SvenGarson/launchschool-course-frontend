@@ -57,7 +57,7 @@ Oficial ECMAScript documentation: https://www.ecma-international.org/publication
   - do not use consecutive underscores
   - do not use underscore as the last character
   - cannot be a reserved word
-  - ES is case-sensitiv i.e. `someVariable` is different from `somevariable`
+  - ES is case-sensitive i.e. `someVariable` is different from `somevariable`
 
 - Use camelCase for **all** variables and **non-constructor functions**
 
