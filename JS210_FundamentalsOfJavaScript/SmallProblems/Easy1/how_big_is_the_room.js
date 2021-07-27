@@ -1,19 +1,7 @@
-/*
-    # Further exploration
-
-      sqm  = sqft * (sqm / 1sqft)
-      sqft?
-
-
-*/
-
+const UNIT_METERS = 'meters';
+const UNIT_FEET = 'feet';
 const SQUARE_FEET_PER_SQUARE_METER = 10.7639;
 const SQUARE_METERS_PER_SQUARE_FOOT = 0.092903;
-const UNIT_METERS = '1';
-const UNIT_FEET = '2';
-const UNID_ID_NAME_MAP = {};
-      UNID_ID_NAME_MAP[UNIT_METERS] = 'meters';
-      UNID_ID_NAME_MAP[UNIT_FEET] = 'feet';
 const RLSYNC = require('readline-sync');
 
 function squareMetersToSquareFeet(squareMeters) {
@@ -24,20 +12,40 @@ function squareFeetToSquareMeter(squareFeet) {
   return squareFeet * SQUARE_METERS_PER_SQUARE_FOOT;
 }
 
+function toAreaInAlternateUnit(currentArea, currentUnitType) {
+  let areaInAlternateUnit;
+
+  if (currentUnitType === UNIT_METERS) {
+    areaInAlternateUnit = currentArea * SQUARE_FEET_PER_SQUARE_METER;
+  }
+  else if (currentUnitType === UNIT_FEET) {
+    areaInAlternateUnit = currentArea * SQUARE_METERS_PER_SQUARE_FOOT;
+  }
+
+  return areaInAlternateUnit;
+}
+
+function toAlternateUnitType(alternateUnitType) {
+  return (alternateUnitType === UNIT_METERS) ? UNIT_FEET : UNIT_METERS;
+}
+
 console.log('Choose unit to input room dimensions:');
 console.log("  '1' for meters");
 console.log("  '2' for feet");
-const chosenUnit = RLSYNC.prompt();
-const chosenUnitName = UNID_ID_NAME_MAP[chosenUnit];
+const chosenUnitType = (RLSYNC.prompt() === '1') ? UNIT_METERS : UNIT_FEET; 
 
-console.log(`Enter the length of the room in ${chosenUnitName}:`);
+
+console.log(`Enter the length of the room in ${chosenUnitType}:`);
 const roomLengthInChosenUnit = Number(RLSYNC.prompt());
 
-console.log(`Enter the width of the room in ${chosenUnitName}:`);
+console.log(`Enter the width of the room in ${chosenUnitType}:`);
 const roomWidthInChosenUnit = Number(RLSYNC.prompt());
 
-const roomAreaInSquareMeters = (roomLengthInMeters * roomWidthInMeters).toFixed(2);
-const roomAreeInSquareFeet = squareMetersToSquareFeet(roomAreaInSquareMeters).toFixed(2);
+const roomAreaInChosenUnit = (roomLengthInChosenUnit * roomWidthInChosenUnit);
+const roomAreaInAlternateUnit = toAreaInAlternateUnit(roomAreaInChosenUnit, chosenUnitType);
+const alternateUnitType = toAlternateUnitType(chosenUnitType);
 
-console.log(`The area of the room is ${roomAreaInSquareMeters} square\
-meters (${roomAreeInSquareFeet} square feet).`)
+const resultMessage = 'The area of the room is ' + 
+                      `${roomAreaInChosenUnit} square ${chosenUnitType}` + 
+                      `(${roomAreaInAlternateUnit} square ${alternateUnitType}).`
+console.log(resultMessage);
