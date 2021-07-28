@@ -1800,6 +1800,9 @@ LS recommends the [AirBNB JavaScript style guide](https://github.com/airbnb/java
 
 ---
 
+- So there is a difference between objects and primitives in that primitives are coerced to objects when needed?
+  So there is a difference in the value of a variable based on how it has been initialized, i.e. through a literal or a constructor? and when object level functionality is needed , the value is converted/coerced to the object implicitly!?
+  
 - Understand how the local variable (or constant? or global?) `argument` works, what it contains and how it can be used when given to every function invocation.
   
 - LS seems to make a difference between variable shadowing and dynamic typing in the following way:
