@@ -97,9 +97,17 @@ function numberListProduct(numberList) {
 }
 
 function sentencifyNumberList(numberList) {
-  const numberListAsCommaSeparatedString = numberList.join(', ');
-  // ??? !!!
-  if numberList >= 2
+  let numberListSentence;
+
+  if (numberList.length >= 2) {
+    let leadingNumberList = numberList.slice(0, numberList.length - 1);
+    let lastNumber = numberList[numberList.length - 1];
+    numberListSentence = leadingNumberList.join(', ') + ' and ' + String(lastNumber);
+  } else {
+    numberListSentence = numberList.join(', ')
+  }
+
+  return numberListSentence;
 }
 
 function furtherExploration() {
@@ -113,7 +121,8 @@ function furtherExploration() {
     operationResult = numberListProduct(chosenIntegerList);
   }
   
-  console.log(`\nThe ${chosenOperation} of the integers ${chosenIntegerList} is ${operationResult}.`)
+  const numberListAsSentence = sentencifyNumberList(chosenIntegerList);
+  console.log(`\nThe ${chosenOperation} of the integer(s) ${numberListAsSentence} is ${operationResult}.`)
 }
 
 // run the original implementation first, then the further exploration
