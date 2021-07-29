@@ -1800,6 +1800,15 @@ LS recommends the [AirBNB JavaScript style guide](https://github.com/airbnb/java
 
 ---
 
+- What is the difference between JS `strict mode` and whatever the alternative is?
+  Does `strict mode` handle scoping of constants and other things differently than in another mode?
+  
+- How to properly use `BigInt` so that computations take place as expected and no weird conversion errors happen?
+  
+- JS's numerical accuracy is a things to learn about.
+  The integer value JS can precisely represents is `9007199254740991` or rather specified by the constant `Number.MAX_SAFE_INTEGER`.
+  If numbers in that range and over are expected, just use the new data type `BigInt` for this purpose, but remember that `BigInt` takes up more memory.
+  
 - So there is a difference between objects and primitives in that primitives are coerced to objects when needed?
   So there is a difference in the value of a variable based on how it has been initialized, i.e. through a literal or a constructor? and when object level functionality is needed , the value is converted/coerced to the object implicitly!?
   
