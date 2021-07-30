@@ -1740,7 +1740,26 @@ LS recommends the [AirBNB JavaScript style guide](https://github.com/airbnb/java
     [1, 2, 3].map(value => value * 2);
     ```
 
-    
+
+
+
+
+
+### Arrays
+
+---
+
+#### Array quirks
+
+- Array cells that exist but are not explicitly assigned a value are marked as 'empty', which is **different** from merely being `undefined`.
+
+  **Note**: When a cell is marked empty, accessing it still return `undefined `!
+
+- Arrays can shrink/expand by providing a value for a larger index than is currently held in the array and by changing the array `length` property. Both behave similarly.
+
+- An array is an `Object` which is why the `typeof([1, 2, 3])` is not useful to detect an array, for this purpose use `Array.isArray(1, 2, 3)` instead.
+
+
 
 
 
