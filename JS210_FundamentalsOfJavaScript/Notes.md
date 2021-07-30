@@ -1761,6 +1761,13 @@ LS recommends the [AirBNB JavaScript style guide](https://github.com/airbnb/java
 
 
 
+#### Array methods that are good to know and some things that they are typically used for
+
+- push; pop; shift and unshift
+- indexOf; lastIndexOf
+- slice; splice; concat; join
+- 
+
 
 
 
