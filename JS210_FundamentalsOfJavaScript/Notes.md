@@ -1759,6 +1759,8 @@ LS recommends the [AirBNB JavaScript style guide](https://github.com/airbnb/java
 
 - An array is an `Object` which is why the `typeof([1, 2, 3])` is not useful to detect an array, for this purpose use `Array.isArray(1, 2, 3)` instead.
 
+- Using ar
+
 
 
 #### Array methods that are good to know and some things that they are typically used for
@@ -1766,7 +1768,55 @@ LS recommends the [AirBNB JavaScript style guide](https://github.com/airbnb/java
 - push; pop; shift and unshift
 - indexOf; lastIndexOf
 - slice; splice; concat; join
-- 
+
+
+
+#### Arrays and operators
+
+- Using arithmetic operators when an operand is an array is in general not useful and relies on implicit coercion
+
+- Using comparison operators acts on the basis that only the same exact pointer to an array in memory is the same i.e. both operands are arrays and the same exact pointer.
+
+  Mixing arrays and other values/objects when using comparison operators has the same problems as using arithmetic operators, i.e. implicity coercion.
+
+  **Some things to keep in mind here:**
+
+  - `someArray === otherArray` evaluates to true only if both pointers point to the same data
+  - `someArray == otherArray` also compares based on the pointer value without coercion
+  - `someArray === notAnArray`  when array is strictly compared with a non-array value/object, the array is **coerced into a string before** before anything else happens.
+
+- Interesting operator examples:
+
+  ```javascript
+  [5] - 2;              // 3
+  [5] - [2];            // 3
+  5 - [2];              // 3
+  5 - [2, 3];           // NaN -- becomes 5 - '2,3', then 5 - NaN
+  [] + [];              // '' -- becomes '' + ''
+  [] - [];              // 0 -- becomes '' - '', then 0 - 0
+  +[];                  // 0
+  -[];                  // -0
+  ```
+
+  ```javascript
+  [] == '0';               // false -- becomes '' == '0'
+  [] == 0;                 // true -- becomes '' == 0, then 0 == 0
+  [] == false;             // true -- becomes '' == false, then 0 == 0
+  [] == ![];               // true -- same as above
+  [null] == '';            // true -- becomes '' == ''
+  [undefined] == false;    // true -- becomes '' == ''
+  [false] == false;        // false -- becomes 'false' == 0, then NaN == 0
+  ```
+
+- Do not use the operators `>`; `>=`; `<` and `<=` with arrays as they return boolean values in completely unexpected ways i.e. **do not use these with array operands**.
+
+
+
+#### Arrays as Objects
+
+- If an array cell is assigned a value using a negative index, two things are interesting:
+  1. The value is not added to that index but added to the array object as key value pair but is **not** added as a typical array element
+  2. The array.length property is not affected by elements added as key-value pairs based on negative indices
 
 
 
