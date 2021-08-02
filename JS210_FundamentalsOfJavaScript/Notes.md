@@ -1876,6 +1876,38 @@ LS recommends the [AirBNB JavaScript style guide](https://github.com/airbnb/java
 
 ---
 
+- Cards about common operations in JS:
+  
+  - insert at array index and leave rest of array intact:
+  
+    ```javascript
+    let array = [1, 2, 3];
+    // insert number 9 at index 1 and delete nothing
+    array.splice(1, 0, 9);
+    console.log(array); // 1 9 2 3
+    ```
+  
+  - insert at array index and remove insertion index:
+  
+    ```javascript
+    let array = [1, 2, 3];
+    // insert number 9 at index 1 and delete that insertion index
+    array.splice(1, 1, 9);
+    console.log(array); // 1 9 3
+    ```
+  
+    **Note**: So the `Array.prototoype.splice` method can be used to add and delete elements!
+  
+- What is the `rest parameter syntax`?
+  The rest paremeter syntax is a way to express an infinite number of arguments as an array and has the following syntax:
+  
+  ```javascript
+  function someFunc(...args) ...
+  ```
+  
+  What are the requirements of this technique? Must this parameter be the last one?
+  Prefer this one to the `arguments` object or is it the same thing?
+  
 - What is the difference between JS `strict mode` and whatever the alternative is?
   Does `strict mode` handle scoping of constants and other things differently than in another mode?
   
