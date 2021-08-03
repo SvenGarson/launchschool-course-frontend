@@ -1820,6 +1820,51 @@ LS recommends the [AirBNB JavaScript style guide](https://github.com/airbnb/java
 
 
 
+### Objects
+
+---
+
+While JS is an Object-Oriented language, it uses `Object`s to organize code and data into single packages.
+
+JS does provide built-in objects such as for instance: `String`; `Array`; `Object`; `Math`; `Date`  and many more,  but these built-in objects are not to be confused with the primitive data types such as for instance `String` and `Number` even though their names are the same. 
+
+We can technically not call methods on primitive values, such as for example:
+
+```javascript
+// we can call the String.prototype.length method/property on a String literal
+// which is just a primitive String or String primitive
+'hello'.length // 5
+```
+
+The reason this works is that JS **automatically** and **temporarily** coerces the primitive into it's built-in 
+object counterpart for the sake of invoking a method, which means:
+
+- **we do not need to instanciate built-in objects just use the methods on values**
+- **we do not to make a difference between primitives and Objects for the purpose of invoking methods**
+
+
+
+This mechanism is reflected by the `typeof` operator based on how the value has been created:
+
+```javascript
+let stringPrimitive = 'doctor';                    // using a string literal
+let uppercase = stringPrimitive.toUpperCase();     // DOCTOR
+console.log(uppercase === 'DOCTOR');               // temporarily coerced to String object
+console.log(typeof(stringPrimitive) === 'string'); // true
+
+let stringObject = new String('who?');             // using a constructor
+console.log(typeof(stringObject) === 'object');    // true because String is a built-in 
+                                                   // Object
+```
+
+
+
+
+
+#### Objects facts
+
+- the value `undefined` has **no** built-in object counterpart, what about `null`? As it seems both `undefined` **and** `null` have no built-in Object counterpart.
+
 
 
 ### Various bits of information
