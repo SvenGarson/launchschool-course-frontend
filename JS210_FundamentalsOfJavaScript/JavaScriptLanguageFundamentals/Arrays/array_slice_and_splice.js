@@ -66,10 +66,88 @@ console.log(capToCeiling(15, 10) === 10);
 
     # Approach
 
+      # Capping arguments
+      cap START to ARRAY.length inclusive
+      cap DELETE_COUNT to (ARRAY.length - START) if larger than number of items
+    
+      # optional deletion
+      deleted = []
+      if DELETE_COUNT != 0
+        delete elements from ARRAY in range [START; START + DELETE_COUNT - 1]
+        deleted << the elements ...
+
+      # optional insertion
+      if ELEMENTS >= 0
+        add from START
+
+      # return
+      return deleted
+
+    # Comments
+
+      - if deletion count >= elements to add, the array can be formatted after
+        deletion + insertion once instead of doing it twice, but that is way
+        more complicated
+
+    # Pseudo - use our slice method implementation
+    
+      # new approach using only slice
+
+        0. cap start and count
+        1. extract deleted items using slice
+        2. change length of the array to = array.length + insertions - deletions
+           which means that array now has the right size to hold the final data
+           but the data needs to be re-populated accordingly
+
+           Currently, array indices in range [0; start - 1] is the correct result
+        3. copy the items to add starting at start
+        4. return delted
+
+      # Example run through given args: ([1, 2, 3], 1, 2, 'two', 'three')
+      
+
+        array  = [1, 2, 3]
+        start  = 1
+        ndele  = 2
+        insert = two, three
+
+        0. Ok as is
+        1. deleted = slice(array, start, start + dc - 1)
+                   = slice(array, 1, 2)
+                   = [2, 3]
+
+        2. newLength = array.length + insert + deletions
+                     = 3 + 2 + (-2)
+                     = 3
+
+        3. insert items starting at start through indices [1, 2]
+           array = [1, two, three]
+
+        4. return deleted
+  
 */
 
-function splice(array, start, deleteCount, element1, elementN) {
-  // ...
+function splice(array, start, deleteCount, ...elementsToAdd) {
+  start = (start > array.length) ? array.length : start;
+  const maxNumberOfItemsToDelete = array.length - start;
+  deleteCount = (deleteCount > maxNumberOfItemsToDelete) ? maxNumberOfItemsToDelete : deleteCount;
+
+  const deletedElements = slice(array, start, start + deleteCount);
+
+  const oldLength = array.length;
+  array.length = array.length - deleteCount + elementsToAdd.length;
+
+  if (array.length !== oldLength) {
+    for (let moveIndex = (array.length - 1); moveIndex > start; moveIndex -= 1) {
+      array[moveIndex] = array[moveIndex - 1];
+    }
+  }
+
+  for (let insertionIndex = 0; insertionIndex < elementsToAdd.length; insertionIndex += 1) {
+    array[start + insertionIndex] = elementsToAdd[insertionIndex];
+  }
+
+  return deletedElements;
 }
 
 console.log(`\n\nTesting 'splice' function`);

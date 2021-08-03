@@ -1876,6 +1876,8 @@ LS recommends the [AirBNB JavaScript style guide](https://github.com/airbnb/java
 
 ---
 
+- Be aware of how default sorting is executed in JS. Apparently `Array.prototype.sort` converts values to strings and then sorts the array based on that string.
+  
 - Cards about common operations in JS:
   
   - insert at array index and leave rest of array intact:
