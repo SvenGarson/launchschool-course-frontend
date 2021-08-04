@@ -2105,7 +2105,47 @@ Strictly comparing two objects only evaluates to true if both objects are the sa
 
 
 
-#
+#### Sparse Arrays
+
+In the context of an array, `sparse` refers to the situation when an array contains less elements than `array.length` returns in terms of non-initialized elements. Built-in methods typically ignore un-initialized elements and `Object.keys` does too:
+
+```javascript
+let array = [1, 2];
+array.length += 2;
+console.log(array);              // 1, 2, <2 empty items>
+console.log(Object.keys(array)); // '0', '1'      Object.keys ignores non-initialized elements
+
+// initializing an empty item to undefined is interpreted and any other value
+array[3] = undefined;
+console.log(array);             // 1, 2, <1 empty item>, undefined
+console.log(Object.keys(array)) // '0', '1', '3'
+```
+
+
+When an un-initialized array element is accessed using random access, JS return `undefined` but that does **not mean that the value of the element is `undefined`** because the value of the non-initialized element **is not set to a value at all**!
+
+When an non-initialized/empty element is changed to `undefined` explicitly, that element is interpreted as any other value:
+
+- it is logged and used by built-in functions/methods
+- it is returned as array/object key using `Object.keys`
+
+
+
+Again, this adds ambiguity in terms of what an empty array actually is. Adding to the previous notes about `what is an empty array`:
+
+- If the array only contains non-initialized values, the array could be considered 'empty' in terms of the absence of an initialized value based on `Object.keys`
+- If the array only contains non-initialized values, the array could be considered 'non-empty' in terms of the `array.length` because non-initialized elements are still counted towards the length of the array
+
+```javascript
+let arr = [];
+arr.length = 3;
+
+// Is arr empty?
+console.log(arr.length);       // 3      No
+console.log(Object.keys(arr))  // []     Yes
+```
+
+
 
 
 
