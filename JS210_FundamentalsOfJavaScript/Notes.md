@@ -1976,17 +1976,136 @@ Object properties can be accessed using `dot notation` and `bracket notation` bu
 
 
 
-#### Arrays and Objects
+#### Arrays are Objects
+
+JS uses objects to implement arrays. For that reason we can access a property like `Array.prototype.length`, it is just another object property that is maintained by JS to track the contents of the 'array' i.e. object.
+
+```javascript
+let array = ['hello', 'world'];
+let object = {0: 'hello', 1: 'world'};
+
+// arrays and objects are both objects
+console.log(typeof(array) === typeof(object));
+
+// since both are object, in this case they return the same 'keys'
+console.log(`array keys: ${Object.keys(array)} match object keys: ${Object.keys(object)}`)
+
+// same access using bracket notation
+console.log(array[1] === object[1]);
+```
+
+**Note**: Arrays and objects do not behave exactly the same, there are some nuanced differences.
 
 
 
 
+
+#### The Array `length` property
+
+
+**Array facts from the [official documentation](https://262.ecma-international.org/5.1/#sec-15.4)**
+
+- The array `length` property is always a non-negative integer less than 2^32
+- The array `length` is always one larger than the largest array index
+- The array `length` property value can be set manually
+
+
+**Array behavior for array 'elements' and key-value pairs**
+
+- A property name, i.e. the value between brackets is considered an `array element index` when it is non-zero. These elements are referred to as `array elements`. 
+
+- Other properties add key-value pairs to the array that are **not** considered `array elements` but key-value pairs of the underlying hash.
+
+- In many contexts, only `array elements` are considered and key-value pairs are **left out or interpreted differently**, for example:
+
+  - `Array.prototype.indexOf` searches only through `array elements` and **not** object key-value pairs
+
+  - logging the content of an 'array' logs `array element` using only their value in order and key-value pairs are output using the key and value
+
+  - `Array.prototype.length` does not include the number of `non index properties` i.e:
+
+    ```javascript
+    const array = [1, 2, 3]; // adds 3 array elements
+    array[-1] = 'John';      // add non-index property
+    array['cool'] = 'aid';   // add another non-index property
+    console.log(array.length === 3); // only array elements are counted
+    console.log(Object.keys(array).length === 5); // Object.keys considers both array elements and non-index properties
+    ```
+
+  - Iterating through an array using `forEach` does not pass `empty elements` and `non-index properties` to the callback  i.e. ignores them, but using a `for / of` loop does consider them.
+
+- Properties names of `array elements` are referred to as `array index property` and properties of key-value pairs can be referred to as `non-index property`
+
+- When an array `length` is set to a lower value, the array is shrunk, loses data right away and the `length` property reflects the new length of the array. 
+
+- empty or uninitialized slots do not count as actual elements but are display to show that there is a gap between actual actual array elements
+
+
+
+**Intuitive thinking**
+
+- Instead of thinking 'array index' when working with arrays, think of a 'property name' that is interpreted as either an array element index or property name in case of key-value pairs
+
+- The number of array elements using `array.length` does include empty/un-initialized elements but not non-index properties
+
+- Un-initialized elements act like normal elements with the difference that they are of value `undefined` and logged as `empty` cells
+
+- Built-in method generally ignore `non-index properties` in arrays/objects, which has implication on the following operation for example:
+
+  ```javascript
+  let array = ['a', 'bb', 'ccc'];
+  array.name = 'Jack';
+  let counts = array.map(string => string.length);  // array.map ignores non-index properties such as array.name
+  console.log(counts); // 1, 2, 3
+  ```
+
+- This ambiguity between `index properties` and `non-index properties` complicate the notion of an `empty array`. What is an empty array?
+
+  This depends on what we mean with empty array, example:
+
+  ```javascript
+  let someArray = []
+  someArray[-5] = 'Jack'
+  
+  // is the array empty? That depends on the context
+  console.log(someArray.length === 0)              // yes that array is empty in terms of the array elements
+  console.log(Object.keys(someArray).length !== 0) // no the array is not empty in terms of the non-element properties
+  ```
+
+  
+
+
+
+#### Using Object operations through arrays
+
+Since arrays are really objects, every operation that works on an object also works on arrays. **Doing this is generally a bad idea though. Use more idiomatic, array based ways to execute the same operations to show the intent!**
+
+Notable examples of these operations are `delete` and `in`, which can be used on objects but **should not be used on arrays**.
+
+- use `splice` on arrays to delete entries instead of `delete`
+- use array properties directly instead of using `in`
+
+
+
+#### Arithmetic operators and arrays and objects
+
+Using arithmetic operators with arrays and objects are  **generally not useful** but here are some rules nonetheless when using arithmetic operators:
+Here a list of examples using the following rules if you really want to learn these: https://launchschool.com/lessons/79b41804/assignments/5dc08268
+
+- When one operand is an object and the other operand is not, JS coerces the object to the string `[object Object]`
+- In certain context, such as when a block literal is used as the first thing on a line, it is interpreted as a block of code instead of an object
+
+Strictly comparing two objects only evaluates to true if both objects are the same exact data in memory, i.e. the same as strict comparison works for arrays.
 
 
 
 #### Random Objects  facts
 
 - the value `undefined` has **no** built-in object counterpart, what about `null`? As it seems both `undefined` **and** `null` have no built-in Object counterpart.
+
+
+
+#
 
 
 
@@ -2044,6 +2163,10 @@ Object properties can be accessed using `dot notation` and `bracket notation` bu
 
 ---
 
+- How exactly do the operators (are they?) `delete` and `in` work? Why should they not be used on arrays?
+  
+- How exactly are the values passed to the array/object bracket notation, for an array, inserting an element using `array['15'] = 'fifteen';` actually adds an element to the 'array' and not a key value pair. Is the 'index' converted to a Number if possible or does it work differently?
+  
 - What is a `collection type` in JavaScript / ECMAScript? This is good to know so I can step through them in different ways.
   
 - In terms of specifying objects with properties, is it important to know, conventionally or otherwise what the difference is between:
@@ -2299,6 +2422,8 @@ Object properties can be accessed using `dot notation` and `bracket notation` bu
   In that we declare something as constant but can then assign that constant thing to a non-constant things and change it through that hack?
 
   I guess not, but what exactly are the mechanics?
+
+
 
 
 
