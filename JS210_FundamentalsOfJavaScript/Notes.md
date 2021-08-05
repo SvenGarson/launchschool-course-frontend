@@ -2149,6 +2149,150 @@ console.log(Object.keys(arr))  // []     Yes
 
 
 
+#### Mutability of values and objects
+
+- Primitive values are **immutable** in that **their content cannot be mutated**
+
+  ![](./res/mutable_objects0.png)
+
+  Operations on primitives always return a new value of the same type of the immutable value.
+
+- Objects **are mutable** in terms of **changing their content without changing the object reference itself**
+  ![](./res/mutable_objects1_rev.png)
+
+  Operations on objects may mutate the object
+
+
+
+**Illustrative example of re-assigning an array element**:
+Assigning or re-assigning an array index/element from one value to another value, means to **change what that particular cell is pointing to**.
+
+![](./res/mutable_objects2.png)
+
+
+
+### Pure functions and side-effects
+
+---
+
+
+
+**When a function does any of the following, the function is considered to 'have side-effects'**:
+
+- **The function call re-assigns non-local variables**
+
+  When variable, that is not local to the function, is re-assigned:
+
+  ```javascript
+  let number = 42;
+  function incrementNumber() {
+    number += 1; // side effect: number is defined in outer scope
+  }
+  ```
+
+- **The function call mutates a value referenced by a non-local variable**
+
+  When an object, that is passed as argument, is mutated in the function and the mutation persists in state outside of the function.
+
+  ```javascript
+  let letters = ['a', 'b', 'c'];
+  function removeLast(array) {
+    array.pop(); // side effect: alters the array referenced by letters
+  }
+  
+  removeLast(letters);
+  ```
+
+- **The function call reads from or writes to any data entity that is non-local to that program**
+
+  This concerns all input and output operations executes during the lifespan of an executed function which includes:
+
+  **Reading and writing to/from**:
+
+  - files on disk
+  - networks
+  - keyboard
+  - command line
+  - display
+  - speakers
+  - system hardware such as: pointing devices; clock; random number generator, system clock, camera etc.
+
+- **The function call raises an exception**
+
+  When a function raises an exception and does not handle that exception itself.
+
+  ```javascript
+  function divideBy(numerator, denominator) {
+    if (denominator === 0) {
+      throw new Error("Divide by zero!"); // side effect: raises an exception
+    }
+  
+    return numerator / denominator;
+  }
+
+- **The function call invokes another function that has side-effects**
+
+  This includes a very wide range of situations where the function itself only has side effects because the functions it invokes do have side effects.
+
+  **Some illustrative examples are:**
+
+  - `console.log`  -  Writes to the command line
+  - `readline.question`  -  Read and writes from/to the command line and probably more under the hood
+  - `new Date()`  -  Accesses the system clock
+  - `Math.random()`  -  Accesses the system random number generator
+
+
+
+**A function is used as intended when**:
+
+- all the required arguments are passed to the function on invocation
+- all the arguments passed to the function on invocation are of the expected type
+- all preparations and precautions specified by the requirements of that function must be met before the function is invoked
+
+
+
+#### Mixing side-effects and return values
+
+A function should, in general, **either** have a side-effect  **or** return a useful value and **not both**.
+
+This is because we tend to forget one or the other. We may disregard the return value for the side-effect and vice-versa, which is a bad thing.
+
+There are exceptions to this off course, when we want to read data from a database, we want to:
+
+1. Access the database to read some data
+2. Return the data returned by the database
+
+**Note**: When a function has both side-effects and returns a value, the return value should be a useful one!
+
+
+
+#### What are pure functions?
+
+**Pure functions have two principal attributes:**
+
+1. They have **no** side effects
+2. They return the **exact same** value given the **exact same input**, **every time**.
+   This implies that the function returns a value based **solely** on the arguments.
+
+
+
+**These rules assure us that:**
+
+- Invoking a pure function does not affect anything outside the function.
+
+- The inner working of a pure function is not affected by any state external to the function itself.
+
+  This is great for testing because we know that no other part of the program affects how the function operates.
+
+
+
+When talking about the purity of functions though, we should focus on the purity of the function `call` and not on the function itself, because
+the same function can pure when invoked/called with some arguments and not-pure when invoked/called with another set of arguments.
+
+
+
+
+
 ### Various bits of information
 
 ---

@@ -62,6 +62,7 @@ function splice(array, start, deleteCount, ...elementsToAdd) {
   const postDeletionRegion = slice(array, start + deleteCount, array.length);
 
   // re-build the the full array based on the results
+  // the array needs to be re-sized in order for the indices to match
   const newArraySize = startRegion.length + elementsToAdd.length + postDeletionRegion.length;
   array.length = newArraySize;
 
