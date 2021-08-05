@@ -1,0 +1,1 @@
+console.log(`Milliseconds passed since  Jan 1st 1970: ${(new Date()).getTime()}`);

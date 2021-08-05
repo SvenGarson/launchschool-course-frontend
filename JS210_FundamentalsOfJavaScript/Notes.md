@@ -2291,6 +2291,78 @@ the same function can pure when invoked/called with some arguments and not-pure 
 
 
 
+### Working with function arguments
+
+---
+
+Sometimes it is useful to have access to arguments that are not specified as parameters in terms of the function definition. When an actual argument is passed for which no corresponding parameter is defined, that argument is simply discarded and when a parameter is defined for which no actual argument is passed, the parameter is bound to `undefined`.
+
+There are ways to access passed arguments, given the parameters or not.
+
+There are **two ways to pass and access an arbitrary number of arguments** to/from a function:
+
+- **The traditional approach**
+
+  Every function block/definition has access to an **array-like** local variable name `arguments`, which contains **all the arguments** passed to the function, no matter what the parameter list is.
+
+  The `arguments` local variable **shares only two attributes with arrays**:
+
+  1. `arguments` has a `length` property that return the number of elements it holds
+
+     ```javascript
+     function meep() {
+      console.log(Array.isArray(arguments) === false);
+      return arguments.length; // returns the number of actual arguments passed to the 'meep' invocation
+     }
+     ```
+
+  2. `arguments` elements can be accessed using the bracket notation just as arrays
+
+     ```javascript
+     function peep() {
+       for (let index = 0; index < arguments.length; index += 1) {
+         const currentArgument = arguments[index];
+         console.log(`argument at index '${index}' is of type ${typeof(currentArgument)} and value ${currentArgument}`);
+       }
+     }
+     ```
+
+  **This is where the similarity between `arguments` and Arrays end**!
+
+  There is a way to convert the arguments 'array-like' value to an actual array using the following approach:
+
+  ```javascript
+  function argumentsAsArray() {
+    // convert the arguments object to an actual array
+    const argumentsArray = Array.prototype.slice.call(arguments);
+    console.log(Array.isArray(argumentsArray) === true);
+    return argumentsArray;
+  }
+  ```
+
+- **The modern approach  -  `rest parameters`**
+
+  ES6 introduces a new mechanism to access an arbitrary number of argument through an array bound to local variables that we can choose a name for by specifying a so called `rest parameter` in the parameter list.
+
+  ```javascript
+  function justDoIt(a, b, ...rest) {
+   console.log(a);
+   console.log(b);
+   console.log(`a parameter is a true array: ${Array.isArray(rest) === true}`)
+   console.log(`rest content: ${rest}`);
+  }
+  ```
+
+  **Note**: Do not name the rest parameter `arguments` as that will shadow the `arguments` local variable mentioned above!
+
+
+
+#### Traditional VS modern approach
+
+The modern approach is to be preferred in general because it is more readable, shows the intentions of the logic and gives us the the arguments as a ready-to-use array.
+
+The traditional approach may be adequate when a function works with an arbitrary number of arguments or may be necessary based on project requirements when the ES/JS version is older than ES6 and `rest parameters` are not supported.
+
 
 
 ### Various bits of information
