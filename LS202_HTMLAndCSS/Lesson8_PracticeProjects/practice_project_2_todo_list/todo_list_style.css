@@ -1,0 +1,72 @@
+html {
+  background-color: lightblue;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+  font-family: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+ol, ul {
+  list-style-type: none;
+}
+
+main {
+  /* takes up the full available width as main app container */
+  width: 100%;
+
+  /* get rid of inter-column whitespace for html line breaks */
+  font-size: 0;
+
+  /* debugging */
+  background-color: white;
+  border: 1px solid black;
+}
+
+/* re-establish font size because of main font size 0 trick  */
+#navigation, #todos {
+  font-size: 1rem;
+}
+
+#navigation {
+  /* fixed column width on the left */
+  display: inline-block;
+  width: 300px;
+
+  /* debugging */
+  background-color: #ffa07a;
+}
+
+#todos {
+  /* take up rest column width on the right */
+  display: inline-block;
+  width: 500px;
+  vertical-align: top; /* may not be necessary later */
+
+  /* debugging */
+  background-color: #f08080;
+}
+
+/* styling the numbered navigation stuff */
+.todos dt,
+.todos dd {
+  /* clearfix */  
+  overflow: hidden;
+}
+
+.todos span:nth-of-type(1) {
+  float: left;
+}
+
+.todos span:nth-of-type(2) {
+  float: right;
+  outline:  red solid 1px;
+
+  /* the circles */
+  background-color: gray; /* overriden later for selection purposed */;
+  border-radius: 9999px;
+}

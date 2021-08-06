@@ -1,0 +1,5 @@
+- should the nav section be a nav element? This would make sense if the list
+  items navigate to other application pages.
+- clear everything
+- use relative sizing based on root font-size is possible where it makes sense
+- use a ccs reset?
