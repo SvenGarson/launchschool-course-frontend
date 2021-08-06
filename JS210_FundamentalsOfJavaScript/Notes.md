@@ -2412,6 +2412,17 @@ The traditional approach may be adequate when a function works with an arbitrary
   1. can be assigned to variables and as elements of data structures (array, objects)
   2. can be passed to a function as argument
   3. can be returned as return value from a function/method
+  
+- Good to know types of errors
+
+  - When a variable is undefined JS raises a `Reference Error`
+
+- When 'stringifying' values, depending on what the value is and how it is stringifyed, the result string is different, here some examples:
+
+  - Passing a function value as argument to `console.log`  outputs `[Function: functionName]`
+  - Using a function value in string interpolation and concatenation results in the full definition of the function as string
+
+- Apparently the object literal notation interprets the following two key-value pair definitions the same way `let obj = {a: 25, 'a': 35}` and the value for  `a` ends up being `35` because `'a'`' and `a` are interpreted the same way.
 
 
 
@@ -2419,6 +2430,17 @@ The traditional approach may be adequate when a function works with an arbitrary
 
 ---
 
+- Learn more about how specifically values are coerced when used as object property names through the bracket notation:
+  
+  ```javascript
+  let someArray = [];
+  someArray[-1] = 15; // What happens exactly, is this coerced implicitly into a string?
+  someArray['-1'] = 16; // is this interpreted the same as above but witout coercion?
+  ```
+  
+  The above example shows what I found to be the case in node.js but is there more to this?
+  I guess we should aways use strings explicitly i.e. use explicit coercion as with all the other cases to avoid problems because of implicit coercion.
+  
 - How exactly do the operators (are they?) `delete` and `in` work? Why should they not be used on arrays?
   
 - How exactly are the values passed to the array/object bracket notation, for an array, inserting an element using `array['15'] = 'fifteen';` actually adds an element to the 'array' and not a key value pair. Is the 'index' converted to a Number if possible or does it work differently?
