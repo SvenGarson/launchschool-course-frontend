@@ -1739,6 +1739,13 @@ LS recommends the [AirBNB JavaScript style guide](https://github.com/airbnb/java
     // do the same thing using an arrow function - better here because the function is // simple to contain everything in a single line
     [1, 2, 3].map(value => value * 2);
     ```
+  
+- **Method/Function choise**
+
+  - Prefer `String()` over `.toString()` when converting from other types to strings. This is for two reasons:
+    1. The `String()` constructor works with all types, including `undefined` and `null`.
+       Invoking `toString` on `null` etc results in an error.
+    2. `String()` always returns a string whereas `toString()` can be overridden by a custom implementation.
 
 
 
@@ -2423,6 +2430,22 @@ The traditional approach may be adequate when a function works with an arbitrary
   - Using a function value in string interpolation and concatenation results in the full definition of the function as string
 
 - Apparently the object literal notation interprets the following two key-value pair definitions the same way `let obj = {a: 25, 'a': 35}` and the value for  `a` ends up being `35` because `'a'`' and `a` are interpreted the same way.
+
+- All this time I wondered the following code needs parentheses around the number part to call Number methods on:
+
+  ```javascript
+  17.toString();   // does not work
+  (17).toString(); // that does work
+  ```
+
+  The first line does not work because we attempt to invoke a method on a number primitive, which has no methods associated with it. The second line implicitly coerces the primitive value `17` into a `Number` object which is why we can invoke Number methods on line `2`.
+
+  
+  Which other types of primitive values require this? Why does the string primitive not require parentheses? It smells like syntactical sugar!?
+
+  
+
+
 
 
 
