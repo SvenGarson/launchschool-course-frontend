@@ -1047,6 +1047,50 @@ When a scope contains both functions and variables (including constants) then we
 
 **Some intuitive illustrations**
 
+- When using `let` to declare a variable, think of it in terms of `block scope` when the same identifier is used multiple times.
+
+  When the same identifier is used successively in the **same** scope, an error is raised, that that same identifier has been declared:
+
+  ```javascript
+  let a = 5; // identifier 'a' now declared
+  let a = 8; // identifier 'a' taken because in the same scope
+  ```
+
+
+  When the same identifier is used in another scope though, that is not a problem:
+
+  ```javascript
+  let a = 5; // identifier 'a' now declared in this outer scope
+  {
+    let a = 8; // identifier 'a' now declared in this inner scope and shadows the
+               // previous 'a' identifier
+  }
+  ```
+
+- When a variable is declared using `var`, and uses the same identifier in two different places, the most recent re-declaration or re-assignment changes what the variable points to and only one variable is created:
+
+  ```javascript
+  // Possible Solution
+  function getSelectedColumns(numbers, cols) {
+    const result = [];
+  
+    for (var i = 0, length = numbers.length; i < length; i += 1) {
+      for (var j = 0, length = cols.length; j < length; j += 1) {
+        if (!result[j]) {
+          result[j] = [];
+        }
+  
+        result[j][i] = numbers[i][cols[j]];
+      }
+    }
+  
+    return result;
+  }
+  ```
+
+  
+  In the example above the `length` variable is declared using `var` in two different scopes, but because `var` variables have function scope, both lines access the same exact variable!
+
 - For `var` variables, rather than thinking that it exists at two point with different states, think that the `var` variable in question has the value `undefined` until it's value is defined on a particular line.
 
 - With these shifty rules, always consider if the global scope screws with the expected outcome.
@@ -1061,7 +1105,20 @@ When a scope contains both functions and variables (including constants) then we
   }
   ```
 
+- When a function and variable are hoisted with the same identifier, the function is hoisted first and the variable after, but does no override what the identifier is pointing to:
+
+  ```javascript
+  function meep() {};
   
+  console.log(meep); // variable hoisted but does not override function
+  
+  var meep = 15;
+  ```
+
+- Hoisting works differently based on which type of declaration is hoisted.
+
+  - For function declarations, both the function name and body are hoisted at the same time along with the variable that is implicitly created with the same identifier as the function. So a hoisted function creates a function scope variable!
+  - For variables, only the variable names are hoisted and not the assignment!
 
 
 
