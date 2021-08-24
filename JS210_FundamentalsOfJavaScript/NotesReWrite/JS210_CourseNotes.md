@@ -1,151 +1,11 @@
-### JavaScript Versions
-
----
-
-JavaScript's official name is `ECMAScript` and is commonly abbreviated as `ES`.
-
-JS/ES versions are often abbreviated using either:
-
-- The release year, like for example `ECMAScript 2019` or `ES2019`
-- The number of the version like for example `ECMAScript 10` or `ES10`
-
-
-
-The version`ES6+` is considered `modern JS` because many improvements have been made starting at that version, but since many code bases still use older JS, also referred to as `traditional ES/JS` that was in use around `2005`, **we should know both for some time to come**.
-
-Most modern browsers support ES6+ features well but older browsers do not, so when the compatibility is questionable:
-
-- Use a [Compatibility Table](http://kangax.github.io/compat-table/es2016plus) to determine if the feature is supported
-- Use a transpilation tool like [Babel](https://babeljs.io/) to automatically mutate scripts into code that used only features for a particular environment
-
-
-
-### Data Types
-
----
-
-
-
 ### Type Coercions
 
 ---
 
-#### Explicit Primitive Type Coercions
-
-Since primitives are immutable, JS returns a new value of a certain type for coercion and does not actually mutate data. Following are some forms of explicit primitive type coercions:
-
-- **Converting Strings to Numbers**
-
-  - **`Number(string)`**  -  The `Number` constructor without `new`?
-
-    Returns a `String` representing the number or `NaN` if the string cannot be converted
-
-  - **`parseInt(string, radix (optional))`**  -  Global function
-
-    Returns a `Number` as integer or `NaN` if the string cannot be converted
-
-  - **`parseFloat(string)`**  -  Global function
-
-    Returns a `Number` as float or `NaN` if the string cannot be converted
-
-- **Converting Numbers to Strings**
-
-  - **`String`**  -  The `String` constructor without `new`?
-  - **`Number.prototype.toString`**
-
-- **Converting Booleans to Strings**
-
-  - **`String`**  -  The `String` constructor without `new`?
-  - **`Boolean.prototype.toString`**
-
-- **Converting any value to Booleans**
-
-  - **`Boolean`**  -  The `Boolean` constructor without `new`?
-  - **Using the binary negation operator twice**  -  `!!someValue`
-
-
-
 #### Implicit Primitive Type Coercions  -  Automatic Type Conversion
-
-When the code does not use a function explicitly to convert data types but JS makes sense of an expression that includes different data types and generates some value based on implicit coercion rules.
-
-**Note**: This type of coercion should generally be avoided. Use explicit coercion whenever possible!
 
 
 The `plus` operator `+` converts **any** value into a Number using a crazy set of rules:
-
-- **Plus operator with a single operand**
-
-  ```javascript
-  +('123')        // 123
-  +(true)         // 1
-  +(false)        // 0
-  +('')           // 0
-  +(' ')          // 0
-  +('\n')         // 0
-  +(null)         // 0
-  +(undefined)    // NaN
-  +('a')          // NaN
-  +('1a')         // NaN
-  ```
-
-- **Plus operator with two operands**
-
-  Then the hole things depends on the type of operands ...
-
-  - **When one the operands is a String**
-    The respective other operand is also converted to a string which results in string concatenation.
-
-    ```javascript
-    '123' + 123     // "123123" -- if a string is present, coerce for string concatenation
-    123 + '123'     // "123123"
-    null + 'a'      // "nulla" -- null is coerced to string
-    '' + true       // "true"
-    ```
-
-  - **When operands are a combination of Numbers; Booleans; null or undefined**
-
-    All operands are converted to Numbers and simply added together.
-
-    ```javascript
-    1 + true        // 2
-    1 + false       // 1
-    true + false    // 1
-    null + false    // 0
-    null + null     // 0
-    1 + undefined   // NaN - JS considers 'undefined' to be NaN
-    ```
-
-  - **When one of the operands is an object, Arrays; Objects or Functions**
-
-    Then both operands are converted to Strings and concatenated together.
-
-    ```javascript
-    [1] + 2                     // "12"
-    [1] + '2'                   // "12"
-    [1, 2] + 3                  // "1,23"
-    [] + 5                      // "5"
-    [] + true                   // "true"
-    42 + {}                     // "42[object Object]"
-    (function foo() {}) + 42    // "function foo() {}42"
-    ```
-
-- **The other arithmetic operators: `-` `*` `/` and `%`**
-  These operators are defined exclusively for numbers, so non-number operands are converted to numbers.
-
-  **Note**: When a String cannot be converted to a number, the operation evaluates to `NaN`
-
-  ```javascript
-  1 - true                // 0
-  '123' * 3               // 369 -- the string is coerced to a number
-  '8' - '1'               // 7
-  -'42'                   // -42
-  null - 42               // -42
-  false / true            // 0
-  true / false            // Infinity
-  '5' % 2                 // 1
-  'Meep' * 255            // 'Meep' cannot be converted to a Number so becomes NaN
-  ```
 
 - **Equality operators**
 
@@ -238,6 +98,7 @@ The `plus` operator `+` converts **any** value into a Number using a crazy set o
       null <= false         // true -- becomes 0 <= 0
       undefined >= 1        // false -- becomes NaN >= 1
       ```
+
 
 
 

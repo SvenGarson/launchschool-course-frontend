@@ -4,8 +4,7 @@
 
 ## Running comments and thoughts
 
-- Clearly differentiate the difference between statement and expression
-- 
+
 
 
 
@@ -24,6 +23,8 @@
 
     **Note**: feature is part of `template literals` and works only in a string between backticks!
 
+- Division by zero is `Infinity` in JS, why?
+
 
 
 ## Terminology
@@ -41,7 +42,7 @@
 
 - `Implicit coercion` means the JavaScript engine determines the data type based on the context.
 
-  This mechanism can also be referred to as `silent` coercion.
+  This mechanism can also be referred to as `silent` or `automatic` coercion.
 
 - `Initializer` refers to the expression a newly declared variable is bound to on creation on the same line.
 
@@ -49,7 +50,25 @@
 
 ## The JavaScript language
 
-- Dynamically typed language which means that a variable can point to any data type.
+JavaScript's official name is `ECMAScript` and is commonly abbreviated as `ES`.
+
+JS/ES versions are often abbreviated using either:
+
+- The release year, like for example `ECMAScript 2019` or `ES2019`
+- The number of the version like for example `ECMAScript 10` or `ES10`
+
+The version`ES6+` is considered `modern JS` because many improvements have been made starting at that version, but since many code bases still use older JS, also referred to as `traditional ES/JS` that was in use around `2005`, **we should know both for some time to come**.
+
+Most modern browsers support ES6+ features well but older browsers do not, so when the compatibility is questionable:
+
+- Use a [Compatibility Table](http://kangax.github.io/compat-table/es2016plus) to determine if the feature is supported
+- Use a transpilation tool like [Babel](https://babeljs.io/) to automatically mutate scripts into code that used only features for a particular environment
+
+
+
+### JavaScript facts
+
+- Dynamically typed language which means that a variable can point to any data type
 
 
 
@@ -61,7 +80,7 @@ JavaScript differentiates between `primitive` and `complex`data types.
 
 ### Primitive data types
 
-Traditional JS specifies `5 primitive data types`, which are:
+Traditional JS specifies `5 primitive data types`:
 
 - `String`
 - `Number`  -  The only numerical data type. Used for both integer and floating point numbers.
@@ -74,6 +93,9 @@ Modern JS introduces `2` more primitive data types over the previous `5`:
 
 - `Symbol` introduced in `ES6`
 - `BigInt` introduced in `ES9`
+
+
+**Primitive values are immutable. No operation can ever mutate the value of a primitive value but always returns a new value.**
 
 
 
@@ -102,6 +124,136 @@ The `typeof` operator returns a string that represents the data type of the oper
 - `undefined` is a primitive value that is used when a variable is declared but not initialized.
   This data type can arise implicitly through non-initialized variables.
 - `null` is a primitive value that is used when a variable is declared and initialized with an 'empty' value i.e. the absence of a value.
+
+
+
+## Type coercion
+
+### Explicit type coercion
+
+Explicit type coercion occurs when functions are used to convert one data type to another. A non-exhaustive list of explicit type coercions:
+
+- **Converting Strings to Numbers**
+  - `Number(string)`  -  Returns a `String` representing the number or `NaN` if the string cannot be converted
+
+  - `parseInt(string, radix (optional))`  -  Global function  -  Returns a `Number` as integer or `NaN` if the string cannot be converted
+
+  - `parseFloat(string)`  -  Global function  -  Returns a `Number` as float or `NaN` if the string cannot be converted
+
+- **Converting Numbers to Strings**
+  - `String`
+  - `Number.prototype.toString`
+
+- **Converting Booleans to Strings**
+  - `String`
+  - `Boolean.prototype.toString`
+
+- **Converting any value to Booleans**
+  - `Boolean`
+  - Using the binary negation operator twice `!!someValue`
+
+
+
+### Implicit type coercion
+
+Implicit type coercion occurs when the JavaScript engine makes sense of an expression and determines the data type to convert a value to implicitly based on the context of the code in question.
+
+**Note**: Implicit type coercions in to be avoided in general!
+
+
+
+### The plus `+` operator
+
+The `+` operator can be used as unary and binary operator.
+
+**As unary operator - The rules are complex and not necessarily useful**
+
+```javascript
++('123')        // 123
++(true)         // 1
++(false)        // 0
++('')           // 0
++(' ')          // 0
++('\n')         // 0
++(null)         // 0
++(undefined)    // NaN
++('a')          // NaN
++('1a')         // NaN
+```
+
+
+**As binary operator - The rules depend on the type of both operands**
+
+- If one operand is of type String, the respective non-string operand is implicitly coerced into a String and the expressions boils down to string concatenation.
+
+  ```javascript
+  '123' + 123     // "123123" -- if a string is present, coerce for string concatenation
+  123 + '123'     // "123123"
+  null + 'a'      // "nulla" -- null is coerced to string
+  '' + true       // "true"
+  ```
+
+- When operands are any combination of Numbers; Booleans; null and undefined, all operands are converted to numbers and summed together.
+
+  ```javascript
+  1 + true        // 2
+  1 + false       // 1
+  true + false    // 1
+  null + false    // 0
+  null + null     // 0
+  1 + undefined   // NaN - JS considers 'undefined' to be NaN
+  ```
+
+- When any of the operands is an object, i.e. an Array; Object or a function, both operands are coerced to a String and concatenated together.
+
+  ```javascript
+  [1] + 2                     // "12"
+  [1] + '2'                   // "12"
+  [1, 2] + 3                  // "1,23"
+  [] + 5                      // "5"
+  [] + true                   // "true"
+  42 + {}                     // "42[object Object]"
+  (function foo() {}) + 42    // "function foo() {}42"
+  ```
+
+
+
+### Arithmetic operators `-`; `*`; `/` and `%`
+
+Non-number operand are coerced into numbers if possible and then the arithmetic is carried out of both number operands.
+In case an operand cannot be coerced into a number, the operator evaluates to `NaN` because the operation cannot possible result in a number.
+This implies how other data types such as strings and booleans are implicitly coerced into a number.
+
+```javascript
+1 - true                // 0
+'123' * 3               // 369 -- the string is coerced to a number
+'8' - '1'               // 7
+-'42'                   // -42
+null - 42               // -42
+false / true            // 0
+true / false            // Infinity
+'5' % 2                 // 1
+'Meep' * 255            // 'Meep' cannot be converted to a Number so becomes NaN
+```
+
+
+
+### Equality operators
+
+There are two types of equality operators that vary in their strictness and how the operands and interpreted.
+
+#### Strict equality
+
+
+
+
+
+### Figuring out how to structure these notes
+
+- equality operators, both strict and non-strict
+- relational operators
+
+
 
 
 
@@ -152,6 +304,11 @@ When a variable is not explicitly initialized with an initializer it is implicit
 
 
 ### Declaration and assignment of constants
+
+Constants are declared using the `const` keyword and must be initialized upon declaration. Constant identifiers are immutable in that:
+
+- their value cannot be mutated
+- they cannot be re-assigned to another value
 
 
 

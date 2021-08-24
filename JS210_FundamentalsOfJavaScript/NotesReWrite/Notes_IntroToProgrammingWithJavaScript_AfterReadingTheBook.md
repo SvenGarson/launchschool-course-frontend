@@ -39,18 +39,6 @@
 
 
 
-### Declaring Constants
-
----
-
-The `const` keyword lets us defined a **constant identifier**. Constants are **immutable and can not be mutated or re-assigned once the are initialized** until the constant can be discarded (programs exits?).
-
-Convention dictates that constant identifiers are uppercase and words divided by underscores such as `const SOME_FIXED_RATE = 0.057;`.
-
-**Note**: Constants must always be initialized with a value on declaration/initialization.
-
-
-
 ### Variable Scope
 
 ---
