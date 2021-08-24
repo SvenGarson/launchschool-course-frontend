@@ -6,8 +6,6 @@
 
 
 
-
-
 ## Running notes to fit somewhere
 
 - About strings
@@ -156,11 +154,13 @@ Explicit type coercion occurs when functions are used to convert one data type t
 
 ### Implicit type coercion
 
-Implicit type coercion occurs when the JavaScript engine makes sense of an expression and determines the data type to convert a value to implicitly based on the context of the code in question.
+Implicit type coercion occurs when the JavaScript engine makes sense of an expression and determines the data type to convert a value to implicitly based on the context of the code in question. Depending on the rules applied, multiple cycles and level of coercions may be triggered before the actual operations are performed.
 
 **Note**: Implicit type coercions in to be avoided in general!
 
 
+
+## Operators
 
 ### The plus `+` operator
 
@@ -242,18 +242,141 @@ true / false            // Infinity
 
 There are two types of equality operators that vary in their strictness and how the operands and interpreted.
 
-#### Strict equality
+
+**Strict equality operator -  Identity Operator  -  No implicit type coercion occurs before comparison**
+
+- `true` only when **both** the **type** and **value** of the operands are the exact same
+- `false` otherwise
+
+```javascript
+1 === 1               // true
+1 === '1'             // false
+0 === false           // false
+'' === undefined      // false
+'' === 0              // false
+true === 1            // false
+'true' === true       // false
+```
+
+**Strict in-equality operator - The same as the strict-equality but opposite result**
+
+- `true` when the type **or** value of the operand is different
+- `false` when the operand have the same type and value
+
+
+**Non-strict equality operator  -  Loose equality operator  -  Implicit type coercion may occur before comparison**
+
+Works the same as the strict-equality operator if, and only if both operand types are the same, otherwise the operands may be implicitly coerced to the same type before their values are compared. Here some cases:
+
+- When one operand is a string and the other a number, the string is coerced into a number
+
+  ```javascript
+  '42' == 42            // true
+  42 == '42'            // true
+  42 == 'a'             // false -- becomes 42 == NaN
+  0 == ''               // true -- becomes 0 == 0
+  0 == '\n'             // true -- becomes 0 == 0
+  ```
+
+- When one operand is a boolean, that boolean operator is coerced into a number 
+
+  ```javascript
+  42 == true            // false -- becomes 42 == 1
+  0 == false            // true -- becomes 0 == 0
+  '0' == false          // true -- becomes '0' == 0, then 0 == 0
+                        // (two conversions)
+  '' == false           // true -- becomes '' == 0, then 0 == 0
+                        // (two conversions)
+  true == '1'           // true
+  true == 'true'        // false -- becomes 1 == 'true', then 1 == NaN
+                        // (two conversions)
+  ```
+
+- When both operands are either `null` or `undefined`, always evaluates to `true`
+
+  ```javascript
+  null == undefined      // true
+  undefined == null      // true
+  null == null           // true
+  undefined == undefined // true
+  ```
+
+- When one of both operands is `null`; `undefined` or `NaN` , always returns `false`
+
+  ```javascript
+  undefined == false     // false
+  null == false          // false
+  undefined == ''        // false
+  undefined === null     // false -- strict comparison
+  ```
+
+
+  ```javascript
+  NaN == 0              // false
+  NaN == NaN            // false
+  NaN === NaN           // false -- even with the strict operator
+  NaN != NaN            // true -- NaN is the only JavaScript value not equal to                       // itself
+  ```
+
+
+**Non-strict in-equality operator  -  Loose in-equality operator  -  The same as non-strict inequality but opposite result**
 
 
 
+### Relational operators `<`; `>`; `<=` and `>=`
+
+Specified exclusively for numbers and strings. There are two cases:
+
+- When both operands are strings, both operands are compared `lexicographically`
+
+- Otherwise both operands are coerced into numbers first
+
+  ```javascript
+  11 > '9'              // true -- '9' is coerced to 9
+  '11' > 9              // true -- '11' is coerced to 11
+  123 > 'a'             // false -- 'a' is coerced to NaN; any comparison with NaN is false
+  123 <= 'a'            // also false
+  true > null           // true -- becomes 1 > 0
+  true > false          // true -- also becomes 1 > 0
+  null <= false         // true -- becomes 0 <= 0
+  undefined >= 1        // false -- becomes NaN >= 1
+  ```
+
+  
+
+### Logical operators `!`; `&&` and `||`
+
+Logical operators enable us to combine other operators in various ways.
+
+**The not operator `!`  -  Evaluates to the opposite of the boolean value of it's operand**
+
+The following works for both boolean and non-boolean operands.
+
+- `true` if the operand evaluates to `false`
+- `false` if the operand evaluates to `true`
 
 
-### Figuring out how to structure these notes
+**The and operator `&&`**
 
-- equality operators, both strict and non-strict
-- relational operators
+Think of it in terms of short-circuit logic. When the first operand is falsy, then and operator is done and returns the first operand. But when the first operand is truthy, we want to check the second operand as well, so that one is returned, boolean or any other type of value.
+
+- returns the first/left operand when the first/left operand is `falsy`
+- returns the second/right operand otherwise
 
 
+
+**The or operator `||`**
+
+Again, think of it in terms of short-circuit logic. When the first operand is truthy, the operator is done and returns the first opeand. But when the first operand is falsy, we want to check the second opeand as well, so the second operand is returned, boolean or any other type of value.
+
+- returns the first/left operand when the first/left operand is `truthy`
+- returns the second/right operand otherwise
+
+
+
+### Short Circuit Evaluation
+
+Given a logical expression, JavaScript stops evaluating that logical expression as soon as the result is known and does not evaluate subsequent logical/conditional expressions unless the answer is unknown.
 
 
 
@@ -287,6 +410,40 @@ let e = (let u = 15);
 
 
 
+## Flow control
+
+### Truthiness  -  Truthy and Falsy
+
+When an expression in a conditional context does not evaluate to a boolean value, the values are evaluated i.e. coerced based on the following rules:
+
+- **Only the following six values are falsy in a conditional context**
+
+  ```javascript
+  if (false)        // false => falsy
+  if (null)         // falsy
+  if (undefined)    // falsy
+  if (0)            // zero  => falsy
+  if (NaN)          // falsy
+  if ('')           // empty string => falsy
+  ```
+
+
+  **Note**: All types of zero's, i.e. zero, negative and BigInt zero evaluate to falsy in a conditional context!
+
+- **Every other value is truthy in a conditional context  -  i.e. every non-falsy value is truthy**
+
+  ```javascript
+  if (true)         // truthy
+  if (1)            // truthy
+  if ('abc')        // truthy
+  if ([])           // truthy
+  if ({})           // truthy
+  ```
+
+
+
+
+
 ## Declaration and assignment of variables and constants
 
 In terms of assigning a value to a variable/constant as part of declaration through an initializer, the `=` is referred to as `assignment operator` rather than just the `equal` operator. In that context, initializing a variable is distinct in terminology:
@@ -312,11 +469,113 @@ Constants are declared using the `const` keyword and must be initialized upon de
 
 
 
+## Functions
+
+### Types of functions and ways to declare them
+
+- **`Function Declarations`  -  `Function Statements`**
+
+  A function declaration must start with the `function` keyword and defines a variable of type `function` with the same name as a function that has the function as it's value. This 'function variable' obeys the same exact rules as any other local variables in terms of scope etc.
+
+  **Note**: Re-assigning this function variable to some value other than the function, irreversibly shadows the function!
+
+- **`Anonymous Function Expressions`**
+
+  An anonymous function expression defines a function without a function name as part of a larger expression, typically to a local variable:
+
+  ```javascript
+  const someFunction = function () { ... } // could also use let for the local variable
+  someFunction(); // invoke the function just as normal
+  ```
+
+- **`Named Function Expressions`**
+
+  Are declared and behave the same as an `anonymous function expression` with the difference that we associate the function to an identifier. 
+
+
+  The function name is **not** actually in the scope the function is declared, but it is accessible in the function definition itself through `methodName.name`:
+
+  ```javascript
+  let someFunction = function someName() {
+   console.log(`I am a named function expression. My name is: ${someName.name}`);
+  }
+  
+  someFunction(); // outputs: I am a named function expression. My name is: someName
+  ```
+
+  A useful advantage of named function expressions rather than anonymous ones is that the debugger can use the function name in the stack trace so that an error is, possibly, easier to track down.
+
+- **`Arrow Functions`**
+
+  Arrow functions are sort of a shorthand way to write function expressions.
+
+  **Here a list of quirks in terms of arrow functions. Arrow functions ... :**
+
+  - return implicitly i.e. no need to use the `return` keyword for one-line arrow functions
+
+  - parameter list does not have to be encased when there is only a single parameter
+
+  - inherit the `execution context` from the context the arrow function is declared in
+
+  - are most often used as callback functions when function fits on a single line
+
+  - steps of the notation
+
+    1. The normal function declaration
+
+       ```javascript
+       const multiply = function(a, b) {
+         return a * b;
+       };
+       ```
+
+    2. Remove the `function` keyword and add the arrow after the parameter list
+
+       ```javascript
+       const multiply = (a, b) => {
+         return a * b;
+       };
+       ```
+
+    3. Put everything on a single line and get and get rid of the braces
+
+       ```javascript
+       const multiply = (a, b) => return a * b;
+       ```
+
+    4. Get rid of the `return` keywords as an arrow function returns implicitly
+
+       ```javascript
+       const multiply = (a, b) => a * b;
+       ```
+
+
+
+
+### Function Declaration and Function Expression subtleties
+
+If a declaration starts with the keyword `function`, as the very first words **without any leading characters** it is a function declaration, otherwise it is a function expression (anonymous or names).
+
+Wrapping a function declaration inside parentheses is enough to go from declaration to expression:
+
+```javascript
+function () { ... }; // proper function declaration
+(function () {} );   // not a declaration but an expression since 'function' not first
+```
+
+
+
+
+
+### Functions facts
+
+- Functions are merely local variables that have a function as the value
+- No exceptions/error is raised when a function is invoked with the wrong number of arguments, more or less but when a parameter does not have a correspondent argument on function invocation, that parameter is bound to `undefined`
+- Functions can be nested
+
 
 
 ## ECMAScript conventions
-
-
 
 ### Styling and formatting conventions
 
@@ -416,6 +675,13 @@ Constants are declared using the `const` keyword and must be initialized upon de
   ```javascript
   function tinyURL() {}; // URL is uppercase because it is an acronym
   ```
+
+
+
+### Best practices
+
+- Use strict-equality comparison whenever possible to make the intentions clear and not rely on implicit coercion
+- Even though strict-equality should be used, only the same type of values should be compared. The implication is that then, the loose-equality operators are totally fine to use since there would be no implicit coercion.
 
 
 
