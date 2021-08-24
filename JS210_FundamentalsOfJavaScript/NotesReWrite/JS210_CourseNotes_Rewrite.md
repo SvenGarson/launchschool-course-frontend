@@ -68,6 +68,33 @@ Most modern browsers support ES6+ features well but older browsers do not, so wh
 
 - Dynamically typed language which means that a variable can point to any data type
 
+- When a function is invoked and the same function identifier was used before, the most recent function is invoked.
+
+- A rule about hoisting. When a scope contains declaration for multiple functions with the **same name**, these functions are apparently hoisted in the order from top to bottom, and in the end, the last i.e. the declaration at the bottom is the one invoked **where ever** that function is invoked.
+
+  ```javascript
+  function some() { console.log('first'); };
+  some(); // third
+  function some() { console.log('second'); };
+  some(); // third
+  function some() { console.log('third'); };
+  some(); // third
+  
+  // because after hoisting
+  function some() { console.log('first'); };
+  function some() { console.log('second'); };
+  function some() { console.log('third'); }; // this is the last declaration
+  ```
+
+- The JS `%` is **not** the module operator but the remainer
+
+- `NaN` is the only JS value that is not equal to itself in terms of using equality operators. To equality between `NaN` values, one of the following two method can be used:
+
+    - `Number.isNaN(value)`
+    - `Object.is(value, NaN)`
+
+- `Infinity` values are considered Numbers
+
 
 
 ## Data types
@@ -469,6 +496,12 @@ Constants are declared using the `const` keyword and must be initialized upon de
 
 
 
+## Variable scope
+
+
+
+
+
 ## Functions
 
 ### Types of functions and ways to declare them
@@ -479,13 +512,39 @@ Constants are declared using the `const` keyword and must be initialized upon de
 
   **Note**: Re-assigning this function variable to some value other than the function, irreversibly shadows the function!
 
+  ```javascript
+  function foo() { /* function declaration */ }
+  (function bar) { /* function keyword not the first in this line, so not a function declaration! */ })
+  ```
+
 - **`Anonymous Function Expressions`**
 
-  An anonymous function expression defines a function without a function name as part of a larger expression, typically to a local variable:
+  An anonymous function expression defines a function without a function name as part of a larger expression, typically to a local variable and does not start with the `function` keyword.
 
   ```javascript
   const someFunction = function () { ... } // could also use let for the local variable
   someFunction(); // invoke the function just as normal
+  ```
+
+   ```javascript
+   // function expression assigned to a local variable  
+   let meep = function sumsum(a, b) { return a + b; }
+   ```
+
+  ```javascript
+  // function expression in parentheses that almost looks like a function declaration
+  (function woof(food) { // function wrapped in parenthesis
+    console.log(`Woofy likes ${food}!`);
+  })
+  ```
+
+  ```javascript
+  // unction expression in higher order function   
+  function better() {
+    return function evenBetter() { // does not start with keyword 'function'
+    console.log('This is so much better!');
+    }
+  }
   ```
 
 - **`Named Function Expressions`**
@@ -504,51 +563,23 @@ Constants are declared using the `const` keyword and must be initialized upon de
   ```
 
   A useful advantage of named function expressions rather than anonymous ones is that the debugger can use the function name in the stack trace so that an error is, possibly, easier to track down.
+  
 
 - **`Arrow Functions`**
 
-  Arrow functions are sort of a shorthand way to write function expressions.
+  Arrow functions are sort of a shorthand way to write function expressions. If the arrow function fits onto a single line, the function returns the value  the expression in the function definition evaluates to implicitly without the need of the `return` keyword.
 
-  **Here a list of quirks in terms of arrow functions. Arrow functions ... :**
+  If the arrow function takes only a single argument, the parameter does not have to be encased in parentheses. An arrow function inherits the `execution context` from the context the function is declared in and so has access to the declaration scope.
 
-  - return implicitly i.e. no need to use the `return` keyword for one-line arrow functions
+  If the function spans multiple code lines, the function does not return the last value implicitly as with one-liners and needs to be encased with curly braces.
 
-  - parameter list does not have to be encased when there is only a single parameter
-
-  - inherit the `execution context` from the context the arrow function is declared in
-
-  - are most often used as callback functions when function fits on a single line
-
-  - steps of the notation
-
-    1. The normal function declaration
-
-       ```javascript
-       const multiply = function(a, b) {
-         return a * b;
-       };
-       ```
-
-    2. Remove the `function` keyword and add the arrow after the parameter list
-
-       ```javascript
-       const multiply = (a, b) => {
-         return a * b;
-       };
-       ```
-
-    3. Put everything on a single line and get and get rid of the braces
-
-       ```javascript
-       const multiply = (a, b) => return a * b;
-       ```
-
-    4. Get rid of the `return` keywords as an arrow function returns implicitly
-
-       ```javascript
-       const multiply = (a, b) => a * b;
-       ```
-
+  ```javascript
+  // multiline arrow function
+   let getNumber = (text) => { // multiline needs curly-braces
+     let input = prompt(text);
+     return Number(input);    // must return desired value explicitly because of multiple lines
+   };
+  ```
 
 
 
@@ -562,8 +593,6 @@ Wrapping a function declaration inside parentheses is enough to go from declarat
 function () { ... }; // proper function declaration
 (function () {} );   // not a declaration but an expression since 'function' not first
 ```
-
-
 
 
 
@@ -693,3 +722,4 @@ function () { ... }; // proper function declaration
 
 ## Questions and answers
 
+- What are higher order functions?

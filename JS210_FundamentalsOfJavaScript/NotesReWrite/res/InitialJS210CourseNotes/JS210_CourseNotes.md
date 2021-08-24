@@ -1,4 +1,516 @@
-## Functions
+### JavaScript Versions
+
+---
+
+JavaScript's official name is `ECMAScript` and is commonly abbreviated as `ES`.
+
+JS/ES versions are often abbreviated using either:
+
+- The release year, like for example `ECMAScript 2019` or `ES2019`
+- The number of the version like for example `ECMAScript 10` or `ES10`
+
+
+
+The version`ES6+` is considered `modern JS` because many improvements have been made starting at that version, but since many code bases still use older JS, also referred to as `traditional ES/JS` that was in use around `2005`, **we should know both for some time to come**.
+
+Most modern browsers support ES6+ features well but older browsers do not, so when the compatibility is questionable:
+
+- Use a [Compatibility Table](http://kangax.github.io/compat-table/es2016plus) to determine if the feature is supported
+- Use a transpilation tool like [Babel](https://babeljs.io/) to automatically mutate scripts into code that used only features for a particular environment
+
+
+
+### How I am approaching this course
+
+---
+
+**The list of files I intend to use as notes in different contexts:**
+
+- questions and answers per lesson and per notes: Once for the notes and once explicitly as another file for later?
+- generality notes to keep track of stuff that does not fit anywhere else and for later reference
+
+
+
+**The current plan**:
+
+1. The JS introduction book is done in terms of rough notes
+2. Finish the course and make notes, do not do much research here
+3. Merge the JS intro and course notes and do the research there
+4. Make Flashcards when notes are good
+
+
+
+#### Code Style
+
+---
+
+- Make flashcards to get the [naming conventions](https://launchschool.com/lessons/7377ece4/assignments/88ed1c52) into my head
+
+
+
+### Data Types
+
+---
+
+#### Primitive Data Types
+
+- `Number`
+- `Boolean`
+- `String`  -  Can hold any UTF-16 Character
+- `null`
+- `undefined`
+- `symbol` (ES6)
+- `BigInt` (ES9)
+
+
+
+#### Compound Data Type
+
+- `Object`
+
+
+
+### Variables
+
+---
+
+#### Assignment and Initializer
+
+A variable can be declared two ways:
+
+1. `Declare` a variable first and then `assign` a value in a separate statement.
+
+   The default value of an un-initialized variable is `undefined`.
+
+2. `Declare` a variable with an `initializer` on the same line.
+
+
+While assignment and initialization look look identical, they are distinct in terminology:
+
+- `Assignment` is a standalone expression that gives a variable a new value
+- An `initializer` is an expression to the right of an `=` in a `variable declaration`
+
+
+
+#### Declaring Variables
+
+- `var` is the traditional way to declare variables
+- use only `let` and `const` unless you work in an old a traditional environment
+
+
+
+#### Dynamic Typing
+
+JS/EC is a dynamically typed language which means that a variable can point to any data type.
+
+
+
+### Expressions and Statements
+
+---
+
+#### Expressions
+
+Any valid code that resolves to a value is an `expression` and can be used anywhere JS expects or allows
+a value.
+
+**Examples of expressions  -  Remember, these evaluate to an actual value**
+
+- lonely string `'Humpty Dumpty'`
+- arithmetic operation `15 + 28`
+- assignment `sum = 95`
+
+
+
+#### Statements
+
+Statements **do not** evaluate to a value, but rather 'do things' that define the execution of a program.
+
+**Examples of statements  -  Remember, these do not evaluate to an actual value**
+
+- variable declaration **with** an initializer `let a = 255;`
+- variable declaration **with** an initializer that used an expression `let f = (p + 55);`
+- variable declaration **without** an initializer `let z;`
+- if...else if; while; for; etc.
+
+
+
+**Examples of invalid constructs with the reason they are not allowed**
+
+- cannot use a statements as part of an expression `let e = (let u = 15);`
+
+
+
+### Type Coercions
+
+---
+
+#### Explicit Primitive Type Coercions
+
+Since primitives are immutable, JS returns a new value of a certain type for coercion and does not actually mutate data. Following are some forms of explicit primitive type coercions:
+
+- **Converting Strings to Numbers**
+
+  - **`Number(string)`**  -  The `Number` constructor without `new`?
+
+    Returns a `String` representing the number or `NaN` if the string cannot be converted
+
+  - **`parseInt(string, radix (optional))`**  -  Global function
+
+    Returns a `Number` as integer or `NaN` if the string cannot be converted
+
+  - **`parseFloat(string)`**  -  Global function
+
+    Returns a `Number` as float or `NaN` if the string cannot be converted
+
+- **Converting Numbers to Strings**
+
+  - **`String`**  -  The `String` constructor without `new`?
+  - **`Number.prototype.toString`**
+
+- **Converting Booleans to Strings**
+
+  - **`String`**  -  The `String` constructor without `new`?
+  - **`Boolean.prototype.toString`**
+
+- **Converting any value to Booleans**
+
+  - **`Boolean`**  -  The `Boolean` constructor without `new`?
+  - **Using the binary negation operator twice**  -  `!!someValue`
+
+
+
+#### Implicit Primitive Type Coercions  -  Automatic Type Conversion
+
+When the code does not use a function explicitly to convert data types but JS makes sense of an expression that includes different data types and generates some value based on implicit coercion rules.
+
+**Note**: This type of coercion should generally be avoided. Use explicit coercion whenever possible!
+
+
+The `plus` operator `+` converts **any** value into a Number using a crazy set of rules:
+
+- **Plus operator with a single operand**
+
+  ```javascript
+  +('123')        // 123
+  +(true)         // 1
+  +(false)        // 0
+  +('')           // 0
+  +(' ')          // 0
+  +('\n')         // 0
+  +(null)         // 0
+  +(undefined)    // NaN
+  +('a')          // NaN
+  +('1a')         // NaN
+  ```
+
+- **Plus operator with two operands**
+
+  Then the hole things depends on the type of operands ...
+
+  - **When one the operands is a String**
+    The respective other operand is also converted to a string which results in string concatenation.
+
+    ```javascript
+    '123' + 123     // "123123" -- if a string is present, coerce for string concatenation
+    123 + '123'     // "123123"
+    null + 'a'      // "nulla" -- null is coerced to string
+    '' + true       // "true"
+    ```
+
+  - **When operands are a combination of Numbers; Booleans; null or undefined**
+
+    All operands are converted to Numbers and simply added together.
+
+    ```javascript
+    1 + true        // 2
+    1 + false       // 1
+    true + false    // 1
+    null + false    // 0
+    null + null     // 0
+    1 + undefined   // NaN - JS considers 'undefined' to be NaN
+    ```
+
+  - **When one of the operands is an object, Arrays; Objects or Functions**
+
+    Then both operands are converted to Strings and concatenated together.
+
+    ```javascript
+    [1] + 2                     // "12"
+    [1] + '2'                   // "12"
+    [1, 2] + 3                  // "1,23"
+    [] + 5                      // "5"
+    [] + true                   // "true"
+    42 + {}                     // "42[object Object]"
+    (function foo() {}) + 42    // "function foo() {}42"
+    ```
+
+- **The other arithmetic operators: `-` `*` `/` and `%`**
+  These operators are defined exclusively for numbers, so non-number operands are converted to numbers.
+
+  **Note**: When a String cannot be converted to a number, the operation evaluates to `NaN`
+
+  ```javascript
+  1 - true                // 0
+  '123' * 3               // 369 -- the string is coerced to a number
+  '8' - '1'               // 7
+  -'42'                   // -42
+  null - 42               // -42
+  false / true            // 0
+  true / false            // Infinity
+  '5' % 2                 // 1
+  'Meep' * 255            // 'Meep' cannot be converted to a Number so becomes NaN
+  ```
+
+- **Equality operators**
+
+  **Note**: Some expressions may trigger multiple cycles of coercion and evaluation!
+
+  - `Strict Equality and Inequality Operators`
+
+    **Never perform type coercion** and return `true` only when **both** the **type** and the **value** match.
+
+    ```javascript
+    1 === 1               // true
+    1 === '1'             // false
+    0 === false           // false
+    '' === undefined      // false
+    '' === 0              // false
+    true === 1            // false
+    'true' === true       // false
+    ```
+
+  - `Non-Strict Equality and Inequality Operators`
+
+    **Note**: Non-strict operators work exactly like the strict variant when operands are the same type!
+
+    When operand types are different, the operands are coerced to the same type implicitly.
+
+    - **When one operand is a String and the other a Number  - String is converted to Number**
+
+      ```javascript
+      '42' == 42            // true
+      42 == '42'            // true
+      42 == 'a'             // false -- becomes 42 == NaN
+      0 == ''               // true -- becomes 0 == 0
+      0 == '\n'             // true -- becomes 0 == 0
+      ```
+
+    - **When one operand is a Boolean  -  That Boolean operand is converted to a Number**
+
+      ```javascript
+      42 == true            // false -- becomes 42 == 1
+      0 == false            // true -- becomes 0 == 0
+      '0' == false          // true -- becomes '0' == 0, then 0 == 0
+                            // (two conversions)
+      '' == false           // true -- becomes '' == 0, then 0 == 0
+                            // (two conversions)
+      true == '1'           // true
+      true == 'true'        // false -- becomes 1 == 'true', then 1 == NaN
+                            // (two conversions)
+      ```
+
+    - **When both operands are either `null` or `undefined`  -  Always returns true**
+
+      ```javascript
+      null == undefined      // true
+      undefined == null      // true
+      null == null           // true
+      undefined == undefined // true
+      ```
+
+    - **When one operand is `null` or `undefined` or `NaN`  -  Always returns false**
+
+      ```javascript
+      undefined == false     // false
+      null == false          // false
+      undefined == ''        // false
+      undefined === null     // false -- strict comparison
+      ```
+
+      ```javascript
+      NaN == 0              // false
+      NaN == NaN            // false
+      NaN === NaN           // false -- even with the strict operator
+      NaN != NaN            // true -- NaN is the only JavaScript value not equal to                       // itself
+      ```
+
+  - **Relational Operators `<` `>` `<=` `>=`**
+
+    These operators are defined only for Numbers and Strings.
+
+    - **When both operands are Strings  -  Both operands are compared `Lexicographically`**
+
+    - **Otherwise both operands are converted to Numbers and compared accordingly**
+
+      ```javascript
+      11 > '9'              // true -- '9' is coerced to 9
+      '11' > 9              // true -- '11' is coerced to 11
+      123 > 'a'             // false -- 'a' is coerced to NaN; any comparison with NaN is false
+      123 <= 'a'            // also false
+      true > null           // true -- becomes 1 > 0
+      true > false          // true -- also becomes 1 > 0
+      null <= false         // true -- becomes 0 <= 0
+      undefined >= 1        // false -- becomes NaN >= 1
+      ```
+
+
+
+#### Best practices
+
+- **For the Launchschool curriculum  -  Always use strict comparison**
+- Use explicity type conversion to make intentions clear and not be surprised by implicit conversions
+- On the other hand side, code should in general not compare values of different types unless there is a good reason for it. So when we use operators on operands with the same type, the non-strict operators are perfectly fine to use
+
+
+
+### Conditionals
+
+---
+
+JavaScript supports the following **two** types of conditional statements.
+
+**Note**: Since these are statements, they do **not** evaluate to a useful value!
+
+
+
+#### Truthy and Falsy
+
+When an expression in a conditional does not evaluate to a boolean value, the following rules apply:
+
+- **Only the following six values are falsy in a conditional context**
+
+  ```javascript
+  if (false)        // falsy
+  if (null)         // falsy
+  if (undefined)    // falsy
+  if (0)            // falsy
+  if (NaN)          // falsy
+  if ('')           // falsy
+  ```
+
+- **Every other value is truthy in a conditional context**
+
+  ```javascript
+  if (true)         // truthy
+  if (1)            // truthy
+  if ('abc')        // truthy
+  if ([])           // truthy
+  if ({})           // truthy
+  ```
+
+
+
+### Functions
+
+---
+
+- invoke function by appending `()` to the name
+  but there are more ways to invoke functions
+- function names are just local variables that have a function as value
+- functions can be bound to variables just like any other value and invoked just as for the original function name!
+- how the language works when the argument passed mismatch the parameter list
+  - invoking a function with the wrong number of arguments, more or less, does not raise an error
+  - a parameter that is note passed as argument is bound to `undefined`
+- functions can be nested and there is not real limit here
+
+
+
+#### Types of functions and ways to declare them
+
+- **`Function Declarations`  -  `Function Statements`**
+
+  A function declaration **must start with the `function` keyword** and defines a variable of type `function` with the same name as a function that has the function as it's value.
+
+  This 'function variable' obeys the same exact scoping rules like other local variables and can be re-assigned to have another value.
+
+  Re-assigning this function variable to some value other than the function, irreversibly shadows the function! (Right?)
+
+- **`Anonymous Function Expressions`**
+
+  An anonymous function expression defines a function **without a function name** as part of a larger expression, typically to a local variable:
+
+  ```javascript
+  const someFunction = function () { ... } // could also use let for the local variable
+  someFunction(); // invoke the function just as normal
+  ```
+
+- **`Named Function Expressions`**
+
+  Are declared and behave the same as an `anonymous function expression` with the difference that **we associate a function name to the function**. Following are some quirks:
+
+  - The function name is **not** actually in the scope the function is declared, but it is accessible in the function definition itself through `methodName.name`:
+
+    ```javascript
+    let someFunction = function someName() {
+     console.log(`I am a named function expression. My name is: ${someName.name}`);
+    }
+    
+    someFunction(); // outputs: I am a named function expression. My name is: someName
+    ```
+
+  - A good reason to use named function expressions rather than anonymous ones is that the debugger can use the function name in the stack trace so that an error is, possibly, easier to track down.
+
+- **`Arrow Functions`**
+
+  Arrow functions are sort of a shorthand way to write function expressions.
+
+  **Here a list of quirks in terms of arrow functions. Arrow functions ... :**
+
+  - return implicitly i.e. no need to use the `return` keyword for one-line arrow functions
+
+  - parameter list does not have to be encased when there is only a single parameter
+
+  - inherit the `execution context` from the context the arrow function is declared in
+
+  - are most often used as callback functions when function fits on a single line
+
+  - steps of the notation
+
+    1. The normal function declaration
+
+       ```javascript
+       const multiply = function(a, b) {
+         return a * b;
+       };
+       ```
+
+    2. Remove the `function` keyword and add the arrow after the parameter list
+
+       ```javascript
+       const multiply = (a, b) => {
+         return a * b;
+       };
+       ```
+
+    3. Put everything on a single line and get and get rid of the braces
+
+       ```javascript
+       const multiply = (a, b) => return a * b;
+       ```
+
+    4. Get rid of the `return` keywords as an arrow function returns implicitly
+
+       ```javascript
+       const multiply = (a, b) => a * b;
+       ```
+
+       
+
+
+
+#### Function Declaration and Function Expression subtleties
+
+If a declaration starts with the keyword `function`, as the very first words **without any leading characters** it is a function declaration, otherwise it is a function expression (anonymous or names).
+
+Wrapping a function declaration inside parentheses is enough to go from declaration to expression:
+
+```javascript
+function () { ... }; // proper function declaration
+(function () {} );   // not a declaration but an expression since 'function' not first
+```
+
+
 
 
 
@@ -12,15 +524,19 @@ Every function or block creates a new variables scope.
 
 - **Global Scope**
 
-  Variables declared outside any functions or blocks exist in the global scope and are thereby global variables. This includes variables declared with `let` and `const`.
+  Variables declared outside any functions or blocks exist in the global scope?
 
   What about declaring variables in some function/block scope and not prepend `let` or `const`, does that have the same effect is that a different mechanism?
 
 - **Function Scope**  - Also referred to as `Local Variable Scope`  -  Yes the same as `Block Scope` Below!
 
   Function scope is the scope inside a function block. This scope behaves the same as local variable scope in that it can access the scope that surrounds it i.e. the `outer scope` where as the `outer scope` cannot access that `inner scope`.
+
   ![](./res/scoping_diagram1-20200720.png)
-  
+
+
+  **Note**: Apparently functions and variables behave the exact same up to the scope outside all blocks.
+
   ```javascript
   let name = 'Julian'; // global scope  -  Accessible to everyone?
   
@@ -32,8 +548,6 @@ Every function or block creates a new variables scope.
     say();  // function scope of 'greet' function
   }
   ```
-  
-  **Note**: Apparently functions and variables behave the exact same up to the scope outside all blocks.
 
 - **Block Scope**  -  Also referred to as `Local Variable Scope`  -  Yes the same as `Function Scope` above!
 
@@ -1894,8 +2408,6 @@ There are **two ways to pass and access an arbitrary number of arguments** to/fr
 
   ES6 introduces a new mechanism to access an arbitrary number of argument through an array bound to local variables that we can choose a name for by specifying a so called `rest parameter` in the parameter list.
 
-  **This is the preferred and more readable way to do this**.
-  
   ```javascript
   function justDoIt(a, b, ...rest) {
    console.log(a);
@@ -1904,14 +2416,33 @@ There are **two ways to pass and access an arbitrary number of arguments** to/fr
    console.log(`rest content: ${rest}`);
   }
   ```
-  
+
   **Note**: Do not name the rest parameter `arguments` as that will shadow the `arguments` local variable mentioned above!
+
+
+
+#### Traditional VS modern approach
+
+The modern approach is to be preferred in general because it is more readable, shows the intentions of the logic and gives us the the arguments as a ready-to-use array.
+
+The traditional approach may be adequate when a function works with an arbitrary number of arguments or may be necessary based on project requirements when the ES/JS version is older than ES6 and `rest parameters` are not supported.
 
 
 
 ### Various bits of information
 
 ---
+
+- JS uses Floating Point to represents all numbers
+
+- can add breakpoints programmatically using the `debugger` keyword as statement, and apparently this statement is ignored unless the browser dev tools are open.
+
+  **Do note leave `debugger` statements in production code, but why exactly:**
+
+  - can it slow the program down?
+  - does it influence the program any other way in production code?
+  - Because it enables users to step through the logic differently? They can open their dev tools and do it anyway!?
+  - Maybe it just does not work the same between browsers and environments?
 
 - `\` at the end of a line forces JS to ignore the new line, this is great to chain long strings together.
   But beware the spaces because JS treats each space/tab etc as an actual space/tab in the string
@@ -1933,12 +2464,22 @@ There are **two ways to pass and access an arbitrary number of arguments** to/fr
 
 - When making a line wrap using a backward slash, the backward slash must be the last character on that line. Even one space after the slash results in a SyntaxError.
 
+- Because a function declaration:
+
+  - 'creates'  the function
+  - creates a variable with the function name with the function as the value
+
+  re-assigning the function name i.e. that local variable really, shadows the actual function!
+  
 - What is a `first-class object`? It has all of the following **three** attributes:
-  **We are mostly interested in the fact that first-class functions create first-class local variables so to say**
 
   1. can be assigned to variables and as elements of data structures (array, objects)
   2. can be passed to a function as argument
   3. can be returned as return value from a function/method
+  
+- Good to know types of errors
+
+  - When a variable is undefined JS raises a `Reference Error`
 
 - When 'stringifying' values, depending on what the value is and how it is stringifyed, the result string is different, here some examples:
 
@@ -1957,21 +2498,113 @@ There are **two ways to pass and access an arbitrary number of arguments** to/fr
   The first line does not work because we attempt to invoke a method on a number primitive, which has no methods associated with it. The second line implicitly coerces the primitive value `17` into a `Number` object which is why we can invoke Number methods on line `2`.
 
   
+  Which other types of primitive values require this? Why does the string primitive not require parentheses? It smells like syntactical sugar!?
+
+  
+
+
+
+
 
 #### More questions and answers
 
 ---
 
-- Does JS coerce values into strings implicitly when non-string values are used as Object keys?
+- Learn more about how specifically values are coerced when used as object property names through the bracket notation:
   
-- Be aware of how default sorting is executed in JS. Apparently `Array.prototype.sort` converts values to strings and then sorts the array based on that string?
-
+  ```javascript
+  let someArray = [];
+  someArray[-1] = 15; // What happens exactly, is this coerced implicitly into a string?
+  someArray['-1'] = 16; // is this interpreted the same as above but witout coercion?
+  ```
+  
+  The above example shows what I found to be the case in node.js but is there more to this?
+  I guess we should aways use strings explicitly i.e. use explicit coercion as with all the other cases to avoid problems because of implicit coercion.
+  
+- How exactly do the operators (are they?) `delete` and `in` work? Why should they not be used on arrays?
+  
+- How exactly are the values passed to the array/object bracket notation, for an array, inserting an element using `array['15'] = 'fifteen';` actually adds an element to the 'array' and not a key value pair. Is the 'index' converted to a Number if possible or does it work differently?
+  
+- What is a `collection type` in JavaScript / ECMAScript? This is good to know so I can step through them in different ways.
+  
+- In terms of specifying objects with properties, is it important to know, conventionally or otherwise what the difference is between:
+  
+  - **`Property as last`**
+  
+    ```javascript
+    let myObj = {
+      prop1: 'sample data',
+      method1: function () {},
+      prop2: 'sample data',
+    };
+    ```
+  
+  - **`Method as last`**
+  
+    ```javascript
+    let myObj = {
+      prop1: 'sample data',
+      prop2: 'sample data',
+      method1: function () {},
+    };
+    ```
+  
+    
+  
+- Be aware of how default sorting is executed in JS. Apparently `Array.prototype.sort` converts values to strings and then sorts the array based on that string.
+  
+- Cards about common operations in JS:
+  
+  - insert at array index and leave rest of array intact:
+  
+    ```javascript
+    let array = [1, 2, 3];
+    // insert number 9 at index 1 and delete nothing
+    array.splice(1, 0, 9);
+    console.log(array); // 1 9 2 3
+    ```
+  
+  - insert at array index and remove insertion index:
+  
+    ```javascript
+    let array = [1, 2, 3];
+    // insert number 9 at index 1 and delete that insertion index
+    array.splice(1, 1, 9);
+    console.log(array); // 1 9 3
+    ```
+  
+    **Note**: So the `Array.prototoype.splice` method can be used to add and delete elements!
+  
+- What is the `rest parameter syntax`?
+  The rest paremeter syntax is a way to express an infinite number of arguments as an array and has the following syntax:
+  
+  ```javascript
+  function someFunc(...args) ...
+  ```
+  
+  What are the requirements of this technique? Must this parameter be the last one?
+  Prefer this one to the `arguments` object or is it the same thing?
+  
+- What is the difference between JS `strict mode` and whatever the alternative is?
+  Does `strict mode` handle scoping of constants and other things differently than in another mode?
+  
+- How to properly use `BigInt` so that computations take place as expected and no weird conversion errors happen?
+  
+- JS's numerical accuracy is a things to learn about.
+  The integer value JS can precisely represents is `9007199254740991` or rather specified by the constant `Number.MAX_SAFE_INTEGER`.
+  If numbers in that range and over are expected, just use the new data type `BigInt` for this purpose, but remember that `BigInt` takes up more memory.
+  
+- So there is a difference between objects and primitives in that primitives are coerced to objects when needed?
+  So there is a difference in the value of a variable based on how it has been initialized, i.e. through a literal or a constructor? and when object level functionality is needed , the value is converted/coerced to the object implicitly!?
+  
+- Understand how the local variable (or constant? or global?) `argument` works, what it contains and how it can be used when given to every function invocation.
+  
 - LS seems to make a difference between variable shadowing and dynamic typing in the following way:
-
+  
   - If some variable is declared and initialized to some value and then re-assigned in the same scope,
     LS does not consider this to be variable shadowing but dynamic typing, since any variable can be
     re-assigned to a value of any type at any point in time.
-
+  
     ```javascript
     var foo = 1;
     
@@ -1982,9 +2615,9 @@ There are **two ways to pass and access an arbitrary number of arguments** to/fr
     function foo() {}
     var foo = 1;      // 'foo' is simply re-assigned to Number 1
     ```
-
+  
   - If some variable declared at an outer scope, and then an insider/deeper scope declares a new variable in that nested scope with the same identifier, LS considers this variable shadowing.
-
+  
     ```javascript
     function bar() {
       let foo = 2;       // this is a new scope, so this 'foo' shadows the global 'foo'
@@ -1994,8 +2627,165 @@ There are **two ways to pass and access an arbitrary number of arguments** to/fr
     let foo = 1; // this global is not accessible until this line
     bar();
     ```
+  
+    
+  
+- The following piece of code runs forever invoking functions and ends in a stackoverflow error because the invocation of the `foo` function as part of the expression passed to the `console.log` on line `8` does not call the previous definition of the previously hoisted `foo` function but rather the function invokes itself recursively with no way to stop recursion.
+  
+  ```javascript
+  console.log(foo());
+  
+  function foo() {
+    console.log('Waiting for bar!');
+  }
+  
+  function foo() {
+    console.log(foo);
+    function bar() {
+      console.log('bar again');
+    }
+  
+    bar();
+  
+    function bar() {
+      console.log('bar again and again');
+    }
+  }
+  ```
+  
+  
+  
+- A rule about hoisting. When a scope contains declaration for multiple functions with the **same name**, these functions are apparently hoisted in the order from top to bottom, and in the end, the last i.e. the declaration at the bottom is the one invoked **where ever** that function is invoked.
+  
+  ```javascript
+  function some() { console.log('first'); };
+  some(); // third
+  function some() { console.log('second'); };
+  some(); // third
+  function some() { console.log('third'); };
+  some(); // third
+  
+  // because after hoisting
+  function some() { console.log('first'); };
+  function some() { console.log('second'); };
+  function some() { console.log('third'); }; // this is the last declaration
+  ```
+  
+  
+  
+- What is the namespace of different types of values/things?
+  The course says that `let`/`const`  declarations cannot have a name identical to a function:
+
+  ```javascript
+  let foo = 3;
+  function foo() {}; // SyntaxError: Identifier 'foo' has already been declared
+  ```
+
+  ```javascript
+  function foo() {};
+  let foo = 3;  // SyntaxError: Identifier 'foo' has already been declared
+  ```
+
+  What else should I know?
+
+- Why is the following code **not exactly the same** as just defining the variable in the global scope?
+  
+  ```javascript
+  function someFunction() {
+    myVar = 'This is global';  // global.myVar is added but it is not exactly the same
+  }                            // as declaring the variable directly in global scope!
+  ```
+
+  This should be answered somewhere in the JS210 course lesson 3 or later!?
+  
+- Apparently JS does add properties on the `global` or `window` object when a variable is declared like so:
+  
+  ```javascript
+  function someFunction() {
+    myVar = 'This is global';  // global.myVar is added
+  }
+  ```
+
+  I though this only happens when the variable is declared at top level using `var`?
+  Research and understand when these properties are actually added and when not.
+  
+- Understand when an identifier is 'taken'.
+  Is the rule that:
+
+  > ... can't have two declarations with the same name if one of those names is declared by `let`
+
+  What about functions and classes with the same names?
+  I think it does as explaines in the course since both of the following examples raise an error for the same reason, that the identifier is already in use but for different reasons:
+
+  - ```javascript
+    let foo = "hello";
+    
+    function foo() {
+      console.log("hello");
+    }
+    ```
+
+  - ```javascript
+    function foo() {
+      console.log("hello");
+    }
+    
+    let foo = "hello";
+    ```
 
 - What exactly is the `global` object?
 
+- Make a distinction between when local variables are created and when not.
+
+  - When variables are declared without `let ` or `const`
+  - When non-existing variables are re-assigned and JS cannot find it up to and including global scope
+
+- What is the purpose of the `global` and `window` objects and how are they similar and/or different in the node/browser context? Are they the exact same thing but depend on the environment?
+
+- What bits of the language make something a statement? Like the `let ` keyword for example?
+
+- So the global scope is just most outer scope of all? And not some special thing?
+
+- Does type coercion from number to String `let someNumberAsString = String(12.99);` use some function, or operator, or is it just the constructor of the `String` type?
+
+  According to [this](https://stackoverflow.com/questions/50082312/difference-between-string-and-new-string-in-javascript) post, using `new String` vs `String` are completely different things, even up to how the primitives compare!
+
+  **I think the real question here is to ask what the difference between invoking a constructor with the `new` keyword and without it is because apparently they return different things!**
+
+- Make note of the fact that JS consider `NaN` to be a Number
+
 - Understand how lexicographical string comparison works
+
+- Can functions, because their names are local variables, made to point elsewhere so that the function is in-accessible? This would suck!
+
+- For the following code snippet:
+
+  ```javascript
+  const name = 'Bob';
+  const saveName = name;
+  ```
+
+  Is it correct that, given the fact that strings are primitive values, declaring initializing the `saveName` variable using another variable identifier allocates **new storage** in memory and actually copies the `name` string rather than pointing to the same string?
+  
+- The following code raises an error because the `average` identifier has been declared previously for the functions. Since a function name is just a variable, this makes sense. But is there more to this?
+
+  ```javascript
+  function average(someNumbers) { // code here ... }
+  let average = average([1, 2, 3]); // average identifier already declared
+  ```
+
+- Can functions only be declared using the `function` keyword as first word, or are there options such as with constant?
+
+- Does the 'accessing constant data through an non-constant pointer' problem exist in JS?
+  In that we declare something as constant but can then assign that constant thing to a non-constant things and change it through that hack?
+
+  I guess not, but what exactly are the mechanics?
+
+
+
+
+
+### Running list of things to do
+
+- make sure all [exercises](https://launchschool.com/exercises#js210_javascript_language_fundamentals) are finished as they are supposed to
 

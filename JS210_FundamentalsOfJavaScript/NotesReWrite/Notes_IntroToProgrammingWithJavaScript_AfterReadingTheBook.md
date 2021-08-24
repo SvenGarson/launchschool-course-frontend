@@ -1,68 +1,8 @@
-### Operations
-
----
-
-#### Addition; Subtraction; Multiplication; Division an others
-
-- If the result of one operand divided into another operand:
-
-  - **is a decimal number** then the **result is also a decimal number**.
-    In other words, the results has a decimal/fractional value.
-  - **is an integer** then the **result is also an integer**.
-    In other words, the result **does not have** a decimal/fractional value.
-
-- The JS `%` operator is referred to as the `remainder operator` **and not the `modulo operator`**.
-  **It does not compute the modulo value of the operands**.
-
-- `NAN` stands for **N**ot **A** **N**umber
-  This `Number` value **signals illegal or undefined operations of numbers** as principally happens in two cases:
-
-  - Undefined operations in the mathematical sense such as `division by zero`
-  - Attempting to convert a non-number value to a number
-
-  **Note**: `NaN` is **the only value in JavaScript that is not equal to itself**!
-  
-  When comparing against `NaN` use one of the following two methods/functions:
-  
-    - `Number.isNaN(value)`
-    - `Object.is(value, NaN)`
-  
-- `Infinity`
-  Describes a number of infinite magnitude and has a negative counterpart. The mathematical operations on infinity are sometimes puzzling.
-  Both `Infinity` and `-Infinity` are considered `Number`s
-
-- **NaN vs Infinity**
-  Most of the time the semantic difference does not matter but think of it this way:
-
-  - `Infinity`  describes a number of infinite magnitude i.e. it cannot be expressed by writing it down because there is always another, larger number
-  - 
-  - `NaN` describes the result of a mathematical operation that is neither a valid number (a consequence of an undefined operation) nor an infinite number
-
-
-
 ### Variable Scope
 
 ---
 
 Variables and constants declared with the keywords `let` and `const` have **block scope**.
-A block is a portion in the program that is contained between a pair or opening and closing curly braces such as:
-
-```javascript
-if (expression) { // block starts here
-  doEpicShazzam();
-} // block ends here
-```
-
-These block scope variables and constants are accessible in the scope they are declared in and any scope contained in that initial scope.
-
-```javascript
-if (true) {
-  let some = 15;
-  console.log(some); // variable 'some' in block scope
-}
-
-console.log(some); // variable 'some' NOT in block scope
-```
 
 
 
@@ -166,27 +106,6 @@ The `prompt` method can be used as follows:
 
 ---
 
-#### Declaration / Definition
-
-JS functions are declared/defined as follows:
-
-```javascript
-function say() {
-  // do something
-}
-```
-
-
-
-**And consist of the following**:
-
-- `function` keyword
-- name of the function
-- list of comma separated parameters
-- block of statements as the functions^body
-
-
-
 #### Return Values
 
 All JS functions evaluate to a value:
@@ -272,94 +191,7 @@ mult(sum(1, 5), sub(10, 8));
 ```
 
 
-
-### Three Ways to Declare Functions in JavaScript
-
----
-
-The following are different ways to declare functions:
-
-
-
-
-   **First-class functions**  - The thing about them is that first-class functions can treated as any other value
-
-   In fact, all JavaScript functions are:
-
-   - first-class functions
-   - are just objects, and thus can be, for instance:
-     - passed to a function as arguments
-     - returned from a function
-
-   **Quirks:**
-
-   - **Cannot** be invoked before it is declared since it is bound to a particular variable/constant
-
-   - Any function definition that **does not start with the keyword `function`** is a **function expression** and **not a function declaration**!
-
-
-     **Examples of function expressions in different situations:**
-    
-     - Function expression bound to a variable:
-    
-       ```javascript
-       let meep = function sumsum(a, b) { return a + b; }
-       ```
-    
-     - Function expression in parentheses that almost looks like a function declaration
-    
-       ```javascript
-       (function woof(food) { // function wrapped in parenthesis
-         console.log(`Woofy likes ${food}!`);
-       })
-       ```
-    
-     - Function expression in higher order function
-    
-       ```javascript
-       function better() {
-         return function evenBetter() { // does not start with keyword 'function'
-           console.log('This is so much better!');
-         }
-       }
-       ```
-
-3. **`Arrow Functions`**
-   This type of function declaration is similar to `Function Expression` with the differences:
-
-   1. Uses a different syntax
-   2. Returns a return value implicitly
-
-
-   An examples of an `add` function expressed as `Arrow Function` that return the expression implicitly:
-
-   ```javascript
-   let add = (a, b) => a + b;
-   ```
-
-
-   Behaviour and requirements of `Arrow Functions`:
-
-   - we can omit the `return` keyword **only if the function body expression evaluates to a single value**. This can be a single expression, or expressions with sub-expressions.
-
-   - if the body does not evaluate to a single value we must:
-     **Note**: Here we can still use the `Arrow Function` syntax for the functions name and arguments!
-     - explicitly specify a return value just as in normal functions
-     - use curly braces around the multi-line function body
-
-
-     **Example**:
-    
-     ```javascript
-     // just use a function expression instead?
-     let getNumber = (text) => {
-       let input = prompt(text);
-       return Number(input);
-     };
-     ```
-
-
-​     
+​    
 
 ### The Call Stack
 
