@@ -1,7 +1,8 @@
-### Useful editor settings
+##### Useful editor setting for any project
 
----
+----
 
-- stripping trailing whitespace
-- the correct number of spaces for indentation
-- always convert tabs to spaces 
+- Specify number of spaces per tab
+- Convert tabs to spaces?
+- Vertical lines for max line length
+
