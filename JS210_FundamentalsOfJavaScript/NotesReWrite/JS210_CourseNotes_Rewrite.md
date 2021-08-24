@@ -439,6 +439,12 @@ let e = (let u = 15);
 
 ## Variable scope
 
+
+
+**Remember:** Every function definition and block creates a new variable scope in terms of the call stack.
+
+
+
 ### Conceptual types of scopes
 
 - **Global scope**
@@ -449,7 +455,6 @@ let e = (let u = 15);
 - **Function scope and block scope**
   Function and block scope can both be referred to as `local variable scope` in terms of how the scope works in different parts of the program.
   Both of the following types of conceptual scopes work the same way in terms of relative, i.e. inner and outer scopes, but at different levels because we want to differentiate between function and further, more deeply nested scopes.
-  
 
   **The differentiation to make is the following:**
 
@@ -497,7 +502,66 @@ let e = (let u = 15);
     }
     ```
 
-    
+
+
+### Common variable scoping rule gotcha
+
+***Given the following code***:
+
+```javascript
+if (true) {
+  // We assume that the 'some' variable has not previously been defined in any scope i.e.
+  // the following is a declaration and not assignment or re-assignment
+  some = 'I am a global now';
+}
+
+console.log(some); // 'some' is in scope since it is a global
+```
+
+**What is expected**: The `some` variable is declared inside the block scope delimited by the conditional and not accessible outside the conditional
+**What actually happens**: The `some` variable ends up being a gloa
+
+**The lesson**: 
+
+
+
+## Lexical scope
+
+Lexical scope means that the structure of the source code defines a variable's scope, lexical scope has nothing to do with how the program is executed i.e. the 'static' source code so to say, which is why lexical scope is often referred to as `static scope`.
+
+Every time a function or block is declared, a new variable scope is introduced to that scope structure, executed or not, which is why this type of scoping is referred to as `static scoping`. Every time we refer to some variable in a 'local scope', JavaScript walks up that hierarchy of scope structures from the local up to the global scope (possibly) and resolves a variable with the **first** occurrence of that particular identifier/name.
+
+This implies that variable shadowing can occur over this scope hierarchy.
+
+Whenever we references/access or declare a variable, JavaScript walks up the lexical hierarchy of the source code up to the global scope in order to check if a particular identifier is already declared.
+
+
+
+#### Here a few ways new variables are added to a local scope
+
+- By using the `let`,  `const` or `var` keyword
+
+  ```javascript
+  let a = 15;
+  const MEEPS = 5;
+  ```
+
+- By defining parameters for a function
+
+  ```javascript
+  function woof(a, b) {
+    // a and b are local variables in the 'woof' function scope
+  }
+  ```
+
+- Declaring a function creates a variable with the same name as the function
+
+  ```javascript
+  function eek() { /* do stuff */ }
+  // eek is now accessible as local variable
+  ```
+
+- Declaring a class also creates a variable with the class name
 
 
 
