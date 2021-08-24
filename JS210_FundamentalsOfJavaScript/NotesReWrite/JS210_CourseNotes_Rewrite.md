@@ -519,9 +519,12 @@ console.log(some); // 'some' is in scope since it is a global
 ```
 
 **What is expected**: The `some` variable is declared inside the block scope delimited by the conditional and not accessible outside the conditional
-**What actually happens**: The `some` variable ends up being a gloa
 
-**The lesson**: 
+**What actually happens**: The `some` variable ends up being declared as a new global variable
+
+**The lesson**: When a block scope variable is desired declare the variable using `let` or `const`
+
+**The mechanism**: When JavaScript sees the assignment on line `4` it searched up the lexical scope up to the global scope and does not find a declaration for a variable with the identifier `some`. The engine then finally declares a new local variable at the global scope with the identifier `some` and initializes it to the string value `I am a global now`.
 
 
 
@@ -562,6 +565,14 @@ Whenever we references/access or declare a variable, JavaScript walks up the lex
   ```
 
 - Declaring a class also creates a variable with the class name
+
+
+
+## Declared scope VS visibility scope  -  A mental model by Launchschool
+
+
+
+
 
 
 

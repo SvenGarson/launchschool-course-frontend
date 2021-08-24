@@ -9,21 +9,6 @@
 
 
 
-#### Common Variable Gotcha
-
-**The lesson**: Always declare constants and variables using the `let` and `const` keywords
-**The Problem**: When a variable is **declared without `let` or `const`**, that variabel/constant has global hoisscope:
-
-```javascript
-if (true) {
-  some = 'I am a global now';
-}
-
-console.log(some); // 'some' is in scope since it is a global
-```
-
-
-
 ### Functions
 
 ---
