@@ -1,11 +1,3 @@
-### Variable Scope
-
----
-
-Variables and constants declared with the keywords `let` and `const` have **block scope**.
-
-
-
 #### Exceptions  - Not everything between curly braces is a block, technically!
 
 **While it is convenient** to think of the following two cases of `block`s **they are technically not blocks**:
@@ -17,27 +9,10 @@ Variables and constants declared with the keywords `let` and `const` have **bloc
 
 
 
-#### Types of Scopes
-
-JavaScript supports **two** **types of variables in terms of the scope**:
-
-1. **Global Variables**  -  Available everywhere in the program
-   Any variable **not** declared **inside a function or a block** is a global variable!
-   **Note**: This includes variables prefixed with `let` and `const`!
-
-   > Global variables are generally to be avoided
-
-1. **Local Variables**  -  Available only in the confines of a function or block (as well as the nested scope(s))
-   Any variable declared **inside a function or a block** is a local variable and their use is limited to only that scope they are declared in or nested scopes it contains.
-
-   Local variables in terms functions (local variables and parameters) come into scope when the function starts execution and are discarded when the function finished execution.
-
-
-
 #### Common Variable Gotcha
 
 **The lesson**: Always declare constants and variables using the `let` and `const` keywords
-**The Problem**: When a variable is **declared without `let` or `const`**, that variabel/constant has global scope:
+**The Problem**: When a variable is **declared without `let` or `const`**, that variabel/constant has global hoisscope:
 
 ```javascript
 if (true) {
@@ -48,59 +23,6 @@ console.log(some); // 'some' is in scope since it is a global
 ```
 
 
-
-### Input / Output
-
----
-
-#### Output
-
-While `node.js` has more output methods through it's environment, the method that works both in node.js and the browser is `console.log();`.
-
-Depending on what environment the program runs in, the `console.log();` method pipes the output to the browser console or the command line interface through node.js.
-
-#### Input
-
-- **Input through `node.js`**
-
-  The JS input API is not straightforwards but depends on:
-
-  - asynchronous programming concepts
-  - higher order functions
-
-  Which are not explore in this book but certainly in the course. The work-around used here is the `readline-sync library` through node's `npm`.
-
-  Using it in Javascript in a node.js environment goes as follows:
-
-  ```javascript
-  let rlSync = require('readline-sync');
-  let number1 = rlSync.question('Prompt message here ...');
-  ```
-
-  
-
-- **Input in a browser**
-  The browser environment is vastly different from the one node.js operates in and communicates with a JavaScript program in a different manner, which means we need to understand concepts such as:
-
-  - DOM - The Document Object Model
-  - Asynchronous programming
-
-  Browsers also typically support the `prompt` input method that uses a pop-up in the browser to get text, user input and pipes it to the executing JavaScript program similar to the terminal application through node.js.
-
-The `prompt` method can be used as follows:
-
-  ```javascript
-  // This JavaScript program should be executed in a browser through HTML
-  let name = prompt('Your name: '); // browser uses a pop-up to get user input
-  console.log(`Hi, ${name}!`);
-  ```
-
-**Return values**:
-
-- if the user pushes the `OK` button, `prompt` returns the entered value as a String, which can be empty
-- if the user pushed the `Cancel` button, `prompt` returns `null` whatever the input was
-
-  
 
 ### Functions
 
@@ -193,24 +115,6 @@ mult(sum(1, 5), sub(10, 8));
 
 ​    
 
-### The Call Stack
-
----
-
-This is the same as for other programming languages but the idea, again is the following:
-
-- When a JavaScript program starts the `main` call frame is pushed onto the call stack.
-- The flow of the program then dictates, through the functions executes, what other stack frames are pushed onto the stack
-- When a function is executed, a stack frame is pushed onto the call stack containing contextual information about that particular function and it's argument data:
-  - function name/address
-  - arguments
-  - space for local variables
-- Only the topmost stack frame is executed and the stack frames below are paused
-- When a function finished execution, the stack frame from that particular function is popped of the call stack and the stack frame below, if any exists, resumes execution where it left of
-- This happens until the `main` stack frame finished execution and the program exits because it has nothing more to execute
-
-
-
 ### Flow Control
 
 ---
@@ -229,7 +133,6 @@ Another mechanic to know about is associativity, which specifies in what order o
 
 **Note**: To make the intention of a program clear, always parenthesize the operators we want evaluated first
            instead of working with rules implicitly!
-
 
 **The rules for complex expressions that use many parentheses to show intended precedence**:
 
@@ -455,7 +358,6 @@ thatSameArray = someArray;
 someArray === thatSameArray; // true
 ```
 
-
 **Note**: When creating custome functions to compare arrays remember that nested arrays, that are 
 		   compared using the strict or loose evaluation operator probably do not return the expected result
 		   as nested arrays are seldom bound to the same data in memory!
@@ -544,41 +446,6 @@ const MyObj = Object.freeze({ foo: "bar", qux: "xyz" });
 ```
 
 **Note**: The behaviour works 1-level deep again and not for nested properties.
-
-
-
-#### Object VS Primitives
-
-**JS has two categories of data types along with the respective types they cover**
-
-1. **`Primitives`**
-
-   **Primitives are always immutable and can only every be re-assigned, never mutated!**
-
-   - `String`
-   - `Number`
-   - `Boolean`
-   - `null`
-   - `undefined`
-   - `BigInt` (ES9)
-   - `Symbol` (ES6)
-
-2. **`Objects`  -  Include, but aren't limited to the following types**
-
-   **Objects are complex values composed of primitive values and other objects and can be mutable, but do not have to be!s**
-
-   1. `Simple Object`  -  Use keys and values
-   2. `Array`  -  Also an `Object` but use indexes instead of keys
-   3. `Date`
-   4. `Function`
-
-Any 'thing' that makes up a program that is **not** either a `primitive` or `Object` is one of (non-exhaustive list):
-
-- variables/identifiers
-- statements like `if`; `return`; `try` etc
-- keywords like `new`; `function`; `let` etc
-- comments
-- any other 'thing' that is **not** a primitive or object
 
 
 
@@ -732,24 +599,6 @@ There are several ways to iterate over they keys; values or key-value pairs of o
 
 
 
-#### Regex
-
-- Skipped this portion because getting into this is more than just reading this tutorial
-
-
-
-#### The Math Object
-
-- Provides mathematical functions through static methods
-
-
-
-#### Dates
-
-- Provides date related functionality that are sometimes hard to use
-
-
-
 #### Exceptions
 
 **Notes to order**:
@@ -803,70 +652,12 @@ Here some things to keep in mind about how `SyntaxError` is **typically** genera
 
 
 
-#### ES& and Beyond
-
-- The recent JS/ECMAScript version is `ECMAScript `  -  `ES6`  - `ES2015`
-- The keywords `let` and `const` are part of `ES6` and did not exist in traditional ES and before `ES6` ES did not have block scope.
-  In traditional ES variables were scope either locally to a function or global for the whole program.
-- The introduction of `arrow functions` solves a problem referred to as `lost execution context` i.e. `context-loss`
-
-
-
-
-#### More Stuff - Terminology
-
-- JS does not differentiate between pointers and references, so these terms are interchangeable in this context
-
-
-
-
-
 ### Other facts
 
 ---
 
-- JS uses overloaded syntax
-
 - `template literal syntax` is a string that allows embedding expressions i.e. strings that allow interpolation. **These strings are enclosed by backticks rather than double/single quotes!**
-
-- function parameters are actually local variables with a scope limited to the function being executed.
-  These function local variables, i.e. parameters are initialized through the function argument passed to the function when invoked.
-  
-- Use the `Object.create(someOtherObject)` to create an object that inherits from the argument object
-
-  ```javascript
-  let bob = { name: 'Bob', age: 22 };
-  let studentBob = Object.create(bob);
-  ```
-
-
-
-
-### Intuitive facts
-
----
-
-- understand and use correct terminology for the types of functions: static functions/methods; prototype functions/methods
-
-- think in terms of primitive  and complex data types
-
-- if an `Object` refers to a complex data type that is a Hash, the term object should be used in the right context?
-
-- use node or the browser console to execute JavaScript code
-
-- running JS in the browser has a different environment and capabilities than running JS through node.js
-
-- In JS functions and class names are variables
-
-- preceeding an identifier with `let` or `const` triggers local scope for that particular identifier
-
-- Primitive values are immutable and we can never change the value they point to but rather we can only every re-assign them to point to some other thing in memory, which means that an expression like the following evaluates to value to a separate, new value/object/pointer, and nothing else.
-
-  ```javascript
-  1 + 5 // evaluates to a new primitive value of 6
-  ```
-
-- The data and functions used in a program are the either one or the other category of data type, primitive or object. Any other 'thing' that is **not** one of these two is a variables; statements; keywords, comments and more that is **not** data or a function.
+- The introduction of `arrow functions` solves a problem referred to as `lost execution context` i.e. `context-loss`
 
 
 
@@ -895,238 +686,5 @@ Here some things to keep in mind about how `SyntaxError` is **typically** genera
                   // and NOT the number after incrementation
     ```
   
-- At a later point in time, understand the differences between traditional and modern JS/ECMASCript?
-  
-- Learn the basics of how to read the Stack Trace
-  
-- What does JS check before the code is run despite the language to the interpreted by and interpreter or just-in-time compiler?
-  
-  - variables/identifiers that are misnames, re-assigned but are already declared, constants?
-  - it is important to know, for testing, when the program can fail and how much needs to be accounted for such as for instance triggering a piece of conditional code so that syntax errors, like undefined references can be caught and don't just screw up something implicitly!
-  - .Understand what js interpreters/JITC do **before and during execution** which can be categorized as `preliminary phase` and `execution phase`
-  
-- Which type of operations does JS:
-  
-  - fail silently for by returning a value like `null` or `-1 `?
-  - fail by raising an exception?
-  
-  Dividing zero into another number fails silently for instance! This stuff is very important to know!
-  
-- In terms of the `for/in` and `for/of` iterations:
-  
-  - what are all `enumerable properties of an object` for the `for/of` variant?
-  - what are all the `values of an iterable collection` for the `for/of` variant?
-  
-- How are strings stored in JS and how come they act like other primitives? Does it have something to do with how C stores string in a different portion of memory and scans for strings that already exist? A `static memory` is the spot in program memory C stores strings, if I remember correctly?
-  
-- What is the 'arity' of arguments/parameters?
-  In the following code snippet we want to flow based on wether some argument was passed or not:
-  
-  ```javascript
-  function copyObj(sourceObject, keys) {
-    let destinationObject = {};
-  
-    if (keys) { // so an array was passed, could also default to empty array
-      keys.forEach(function(key) {
-        destinationObject[key] = sourceObject[key];
-      });
-  
-      return destinationObject;
-    } else {
-      return Object.assign(destinationObject, sourceObject);
-    }
-  }
-  ```
   
   
-  **Is this typical/semantics JS to not pass an argument and then determine if it was passed ** based on whether or not the identifier is `undefined` or not?
-  
-- JS is garbage collected (right?) which may have implications such as for instance the way the `delete` operator is described in the MDN docs:
-  
-  > The JavaScript **`delete` operator** removes a property from an object; if no more references to the same property are held, it is eventually released automatically.
-  
-- What exactly does the terms `declare` refer to when creating variables?
-  
-- Hard know and understand JS's primitive and complex data types.
-  
-- Is there any intuitive JS built-in way to compare arrays?
-  Since the `===` is not very helpful for arrays that are not the exact same pointer.
-  
-- How and what does the `console.log` method output and for which values does it not output anything.
-  
-- What is the syntax to specify multiple program lines in an arrow function expressed on a single line?
-  
-- How do return statements work in callback functions when passed and invoked by some other  function?
-  
-- What happens when two identifiers are specified the following way:
-  
-  ```javascript
-  vario = 15; // a global variable
-  let vario = 22; // a local variable
-  ```
-  
-  - is there a problem if we change the order of operations?
-  - to these live in different 'namespaces'?
-  
-- We should, in general, avoid passing first-level functions to another function that has implicit side effects based some, for instance, variable as in the following example:
-  
-  ```javascript
-  let squares = [];
-  [1, 2, 3, 4].forEach(num => squares.push(num * num)); // is the squares array in scope?
-  ```
-  
-- What is the scope of  variables when passing a function to an array. Are the variables in scope when the  array method is invoked also in scope for first-level functions when the function is executed somewhere else?
-  
-  ```javascript
-  let numbers = [1, 2, 3, 4]
-  let squares = [];
-  numbers.forEach(num => squares.push(num * num)); // is the squares array in scope?
-  ```
-  
-  Apparently it is but learn the specifics!
-  
-- What are the typical return values for functions like `Array.prototype.forEeach` or is there no common thread like in ruby?
-  
-- What is a callback function in JavaScript?
-  Simply a function that is passed to another function which is invoked at a later point in time.
-  
-- understand how `Object.freeze(someObject)` works. It has something to do with constants pointers.
-  Weirdly, JS does not throw an error when we attempt to change what a frozen array elements points to but just 'disregards' the operation silently. Wtf?
-  
-  Freezing an array also just affects part of the array, i.e. the first level, which is the items values stored in the frozen array as values, everything that is 'deeper' is not 'frozen', so must be frozen manually.
-  
-- are the following operators `a += 2`; `a *= 5` etc really operators in JavaScript?
-  
-- what do control flow structures such as `if` statements evaluate to if they are bound to a variables such as for instance:
-  
-  ```javascript
-  result = if true
-    5
-  else
-    15
-  ```
-  
-  Is this a thing in JS?
-  
-- Research and understand the actual difference between an expression and a statement.
-  
-- what does a JavaScript switch statement use to determine the equality of the argument and the cases?
-  Is there any coercion involved? If it is it is certainly based on one of the equality operators!
-
-- Is it necessary to return form a thrown error is that error is thrown in a function such as for example:
-
-  ```javascript
-  function evenOrOdd(number) {
-    if (!Number.isInteger(number)) {
-      console.log('Sorry, the value you passed is not an integer');
-      return;
-    }
-      
-    // more code ...
-  }
-  ```
-
-  
-
-- read up the JS terminology about properties in terms of instance variables  and OO etc.
-  Before making any research, I think that `property` is the terminology used for an instance variables accessible through the object that 'owns' that particular variables, or method even?
-
-- read up and understand the most common comparisons between operands and different operators.
-  Here some interesting ones to look up:
-
-  - `"42" < "402"` evaluates to `false`
-  - `"42" < "420"` evaluates to `true`
-  - `"42" < 420` evaluates to `true`
-
-- do some research on the error raising model of JS:
-
-  - what are the ones to be aware of?
-  - how to implement custom errors?
-  - what is the most language semantic way to implement errors etc
-  
-- are there global constants? Also get an absolutely detailed understanding of the types of objects and their scope such as (these just come to mind, check what JavaScript actually supports):
-
-  - local variables 
-  - local constants
-  - global constants
-  - public/private
-  - what about functions?
-
-- does a nested function have the same scope rules like variables/constants? What else should I know?
-
-- so variables are global when:
-
-  - declared **outside** any function definition or block
-  - not prefixed with `let` or `const`
-
-- LS calls a nested function a `private function`, is this a way to explain it or the actual mechanic to make a function private?
-
-- In which type of String i.e. single quoted; double quoted or the special syntax does JS interpret escape sequences?
-
-- get an idea what node's `npm` is and how it works
-
-- syntax style or necessity: specifiy JS functions with or without trailing semicolon?
-
-- learn how JS types are converted for different operators
-
-- For the following code snippet using constants:
-
-  ```javascript
-  const FOO = 'bar';
-  {
-    const FOO = 'qux';
-  }
-  
-  console.log(FOO);
-  ```
-
-  **This code does not throw an error!**
-  While I though it would raise an error, without doing research, I think that when constants are in different scopes, the constants identifiers can be 're-used' because it is not accessible in another scope.
-
-  Two important rules to remember here (**confirm this through research!**):
-
-  1. Constants **cannot be re-assigned** **nor can they be re-declared** in the same scope
-  2. **Identical constant identifiers can be re-used** as long as they are re-used in **different scopes**
-
-- The following describes a method that returns true only when the argument is `NaN`:
-  
-  ```javascript
-  // This works because NaN is the only value that is not '===' to itself
-  function isNotANumber(value) {
-    return value !== value;
-  }
-  ```
-  
-  **This is important, know the mechanism that NaN is the only value for which `NaN === NaN` is false**
-  
-- What are the rules concerning the declaration of variables not prefixed with `let` or `const`?
-  (And probably also `var` for that matter) apart from the global thing?
-
-- In case the differentiation between variables, identifiers and constants is somehow not clear check up on the following LS book portion again: https://launchschool.com/books/javascript/read/variables
-
-- Get a better feeling for what statements really are.
-
-- What is the `typeof` operator and how does it work?
-
-- After checking the return value of the `typeof` operator, I found that an `Array` literal does not return the type `Array` but rather `Object`.
-
-  Look up the following stackoverflow post to get pointed into the right direction by a user named `Prinzhorn`: https://stackoverflow.com/questions/12996871/why-does-typeof-array-with-objects-return-object-and-not-array
-
-  I can already say by flying over it that is has to do with the fact that JS principally differentiates between:
-
-  - `primitive data types`
-  - `compound data type` / `special objects`
-  
-  **Note**: The answer here should be container by the h3 content: `The typeof operator and some type oddities`
-  
-- Unless that is taught in the course before I get back to this question, check the following.
-  Order of operations of JS and how operations are performed on different primitive data types, are there promotions/demotions?
-
-  I heard that JS is not that great with numbers?
-
-- Learn about numerical data types and how they are represented in memory that cause mathematical operations like `26.4 - 25` to result in `1.3999999999999986` instead of `1.4`.
-
-- Learn about the difference between a `remainder operation and modulo operation`. This will prove useful since the `%` in JavaScript **does not perform a modulo operation**.
-  The the link and the portion from LS that waters it down: https://launchschool.com/books/javascript/read/basics
-
-  ![](res/remainder_vs_modulo.png)

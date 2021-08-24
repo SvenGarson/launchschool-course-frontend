@@ -4,6 +4,8 @@
 
 ## Running comments and thoughts
 
+- Gather up the lists of random nodes per category and determine if they should stay in these random lists or be categorized properly
+
 
 
 ## Running notes to fit somewhere
@@ -46,7 +48,7 @@
 
 
 
-## The JavaScript language
+## The JavaScript language and other random JavaScript facts
 
 JavaScript's official name is `ECMAScript` and is commonly abbreviated as `ES`.
 
@@ -63,8 +65,7 @@ Most modern browsers support ES6+ features well but older browsers do not, so wh
 - Use a transpilation tool like [Babel](https://babeljs.io/) to automatically mutate scripts into code that used only features for a particular environment
 
 
-
-### JavaScript facts
+**More facts:**
 
 - Dynamically typed language which means that a variable can point to any data type
 
@@ -119,16 +120,15 @@ Modern JS introduces `2` more primitive data types over the previous `5`:
 - `Symbol` introduced in `ES6`
 - `BigInt` introduced in `ES9`
 
-
 **Primitive values are immutable. No operation can ever mutate the value of a primitive value but always returns a new value.**
 
 
 
 ### Complex/Compound/Composite data types
 
-All data types that are not one of the traditional or modern JS primitive data types are referred to as `complex`; `compound` or `composite` data types.
+All data types that are not one of the traditional or modern JS primitive data types are referred to as `complex`; `compound` or `composite` data types. These can be made up of other objects and values.
 
-Examples of complex data types are the built-in `Array` and `Object`.
+Examples of complex data types are the built-in `Array` and `Simple Object`; `Date` and `Function` .
 
 
 
@@ -437,6 +437,70 @@ let e = (let u = 15);
 
 
 
+## Variable scope
+
+### Conceptual types of scopes
+
+- **Global scope**
+
+  Variables declared outside any function and block have global scope which makes them accessible everywhere in the program.
+  This includes declarations using `let` and `const`.
+
+- **Function scope and block scope**
+  Function and block scope can both be referred to as `local variable scope` in terms of how the scope works in different parts of the program.
+  Both of the following types of conceptual scopes work the same way in terms of relative, i.e. inner and outer scopes, but at different levels because we want to differentiate between function and further, more deeply nested scopes.
+  
+
+  **The differentiation to make is the following:**
+
+  - `Function scope` means that a variable/constant is declared immediately inside a function definition but outside any block inside that function. These variable/constants are accessible in the function as well as any nested/inner function relative to the top level of the function definition, but the specifics depend on which keyword has been used for the declaration, i.e. `let`; `const` or `var` and where the variable/constant was declared.
+
+    ![](./res/scoping_diagram1-20200720.png)
+
+    __*Code example*__
+
+    ```javascript
+    let name = 'Julian'; // global scope  -  Accessible to everyone?
+    
+    function greet() { // function declared in global scope - which makes this a global function
+      function say() { // nested function is declared directly in function scope - equivalend to local variable/block scope
+        console.log(name); // function invocation in nested function scope
+      }
+    
+      say();  // function scope invocation of the 'say' function
+    }
+    ```
+
+  - `Block scope`  means that a variable/constant is declared in the confines of a curly-braces delimited block which can be achieved in different ways, for instance:
+
+    - Simple `{}` block that contains the declarations
+    - Control flow such as if-statements and switches
+    - Looping constructs
+    - etc.
+
+
+    __*Code example*__
+
+    ```javascript
+    let name = 'Julian'; // global scope  -  Accessible to everyone?
+    
+    function greet() { // declared in global scope -  nothing special
+      function say() { // function scope  -  behaves as local vaiables would
+        console.log(name); // nested function scope  -  again, nothing special
+      }
+        
+      while(true) {
+       console.log("Hello!"); // block scope
+      }
+    
+      say();  // function scope of 'greet' function
+    }
+    ```
+
+    
+
+
+
 ## Flow control
 
 ### Truthiness  -  Truthy and Falsy
@@ -493,10 +557,6 @@ Constants are declared using the `const` keyword and must be initialized upon de
 
 - their value cannot be mutated
 - they cannot be re-assigned to another value
-
-
-
-## Variable scope
 
 
 
@@ -563,7 +623,7 @@ Constants are declared using the `const` keyword and must be initialized upon de
   ```
 
   A useful advantage of named function expressions rather than anonymous ones is that the debugger can use the function name in the stack trace so that an error is, possibly, easier to track down.
-  
+
 
 - **`Arrow Functions`**
 
@@ -601,6 +661,74 @@ function () { ... }; // proper function declaration
 - Functions are merely local variables that have a function as the value
 - No exceptions/error is raised when a function is invoked with the wrong number of arguments, more or less but when a parameter does not have a correspondent argument on function invocation, that parameter is bound to `undefined`
 - Functions can be nested
+
+
+
+
+
+## **Input** and Output
+
+### Output
+
+While `node.js` has more output methods through it's environment, the method that works both in node.js and the browser is `console.log();`.
+
+Depending on what environment the program runs in, the `console.log();` method pipes the output to the browser console or the command line interface through node.js.
+
+ ### Input
+
+There are typically two contexts in which we want to get input and both have different mechanisms in place to do so.
+
+1. **Input in the context of a program running in `node.js`**
+
+   The JS input API depends on asynchronous programming concepts and higher order functions. These are explored later in the course.
+   A workaround to not deal with asynchronous concepts is to use the `readline-sync` library which can be used as follows in a node.js program:
+
+   ```javascript
+   let rlSync = require('readline-sync');
+   let number1 = rlSync.question('Prompt message here ...');
+   ```
+
+2. **Input in the context of a program running in a browser**
+
+   The browser environment is vastly different from the one node.js operates in and communicates with a JavaScript program in a different manner tht required working knowledge of the concepts:
+
+   - DOM - The Document Object Model
+   - Asynchronous programming
+
+   Browsers also typically support the `prompt` input method that uses a pop-up in the browser to get text, user input and pipes it to the executing JavaScript program similar to the terminal application through node.js.
+
+   The `prompt` method can be used as follows:
+
+     ```javascript
+   // This JavaScript program should be executed in a browser through HTML
+   let name = prompt('Your name: '); // browser uses a pop-up to get user input
+   console.log(`Hi, ${name}!`);
+     ```
+
+   **The `prompt` function returns the following values based on the user input**
+
+   - if the user pushes the `OK` button, `prompt` returns the entered value as a String, which can be empty
+   - if the user pushed the `Cancel` button, `prompt` returns `null` whatever the input was
+
+
+
+## The Call Stack
+
+The concept of a Call Stack in terms of JavaScript as a programming language coincides with the concepts I learned in `Grokking Algorithms`.
+Nevertheless, here is the concept as illustrative sequence in terms of a JavaScript program:
+
+1. When a JavaScript program starts the `main` call frame is pushed onto the call stack.
+2. The flow of the program then dictates, through the functions executes, what other stack frames are pushed onto the stack
+3. When a function is executed, a stack frame is pushed onto the call stack containing contextual information about that particular function and it's argument data:
+   - function name/address
+   - arguments
+   - space for local variables
+
+4. Only the topmost stack frame is executed and the stack frames below are paused
+
+5. When a function finished execution, the stack frame from that particular function is popped of the call stack and the stack frame below (if any exists) resumes execution where it left of
+
+6. This happens until the `main` stack frame finished execution and the program exits because it has nothing more to execute
 
 
 

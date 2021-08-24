@@ -1,59 +1,22 @@
+
+
+
+
+
+
+
+
 ## Functions
 
 
 
-### Function/Functional Scope and Lexical Scoping
+### Function Scope and Lexical Scoping
 
 ---
 
 Every function or block creates a new variables scope.
 
 #### Different types of scopes
-
-- **Global Scope**
-
-  Variables declared outside any functions or blocks exist in the global scope and are thereby global variables. This includes variables declared with `let` and `const`.
-
-  What about declaring variables in some function/block scope and not prepend `let` or `const`, does that have the same effect is that a different mechanism?
-
-- **Function Scope**  - Also referred to as `Local Variable Scope`  -  Yes the same as `Block Scope` Below!
-
-  Function scope is the scope inside a function block. This scope behaves the same as local variable scope in that it can access the scope that surrounds it i.e. the `outer scope` where as the `outer scope` cannot access that `inner scope`.
-  ![](./res/scoping_diagram1-20200720.png)
-  
-  ```javascript
-  let name = 'Julian'; // global scope  -  Accessible to everyone?
-  
-  function greet() { // declared in global scope -  nothing special
-    function say() { // function scope  -  behaves as local vaiables would
-      console.log(name); // nested function scope  -  again, nothing special
-    }
-  
-    say();  // function scope of 'greet' function
-  }
-  ```
-  
-  **Note**: Apparently functions and variables behave the exact same up to the scope outside all blocks.
-
-- **Block Scope**  -  Also referred to as `Local Variable Scope`  -  Yes the same as `Function Scope` above!
-
-  The scope introduced when constructs such as `while` loops are used confined to the opening and closing curly braces.
-
-  ```javascript
-  let name = 'Julian'; // global scope  -  Accessible to everyone?
-  
-  function greet() { // declared in global scope -  nothing special
-    function say() { // function scope  -  behaves as local vaiables would
-      console.log(name); // nested function scope  -  again, nothing special
-    }
-      
-    while(true) {
-     console.log("Hello!"); // block scope
-    }
-  
-    say();  // function scope of 'greet' function
-  }
-  ```
 
 
 
