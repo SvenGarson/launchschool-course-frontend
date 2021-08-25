@@ -722,6 +722,64 @@ function bar() {    // visibility scope is global
 
 ## Hoisting
 
+### Difference between declarations using `let` or `const` and `var`
+
+When a variable is declared using `var` at top-level that identifier is added to the `global` or `window` object as new property.
+If the code is executed through Node.js the `global` object is used, in a browser environment the `window` object is used.
+
+When a variable is declared using `var` but **not** at top-level, **no** property is added to the global/window object.
+
+Identifiers declared using `var` have `function scope` while identifiers declared with `let` or `const` have `local scope`.
+
+
+
+### The two phases of a JavaScript engine
+
+JavaScript does not just execute code straight away, but rather executes a procedure that can be divided into two steps, the `creation phase` and `execution phase`.
+
+- **Creation phase  -  Before the program is executed**
+
+  Does preliminary work to prepare for the execution phase. One task of this creation phase is to find all declarations, such as variables; constants; and functions, and move them up to the top of their respective containing scope. **This process is referred to as `hoisting`**.
+
+  - Function scoped declarations,  `var` and `function` declarations, are 'moved' to the top of their respective function, which can be global scope!
+  - Block scopes declarations, `let` and `const` declarations, are 'moved' to the top of their respective block, which can also be global.
+
+- **Execution phase  -  The actual execution of the prepared program**
+
+  Executes the program prepared by the `creation phase`.
+
+
+
+### The temporal dead zone
+
+Variables declared with `let`; `const` and `var` are all hoisted, but in different ways, which affects the values a given variable has at different points in the program:
+
+- **When `var` variables are hoisted** during the creation phase (before any execution occurs), they are initialized with the value `undefined`.
+  This includes both declarations that will be executed and declarations that will never occur since every declaration is hoisted during the creation phase. 
+
+  ***Example of a defined identifier for a declaration that is never executed during the execution phase***
+
+  ```javascript
+  // the 'meep' variable was initialized with value 'undefined' when hoisted
+  console.log(meep === undefined);
+  
+  if (false) {
+    // even though this block is never executed, the creation phase
+    // still hoists the declarations based on the source code and initialized them
+    var meep = 'piep pieep';
+  }
+  
+  // the 'meep' identifier is still defined but un-initialized in terms of the
+  // execution phase
+  console.log(meep === undefined); 
+  ```
+
+  **Note**: Accessing `var` variables resolves to `undefined` before they are initialized during the execution phase
+
+- **When `let` and `const` variables are hoisted** ...???
+
+
+
 
 
 ## Flow control

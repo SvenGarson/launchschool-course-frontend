@@ -627,7 +627,6 @@ Here some things to keep in mind about how `SyntaxError` is **typically** genera
 - `SyntaxError`  can be reported for a particular line that is far away from where the issue originates from, typically much later
 - `SyntaxError`  are caught before the `execution phase`, so the program is not actually executed in this `preliminary phase`
 
-
 **Note**: There are situations for which the `execution phase` can throw a `SyntaxError` just as other errors, which means that for 
            some cases, a `SyntaxError` can be caught using `try/catch/finally` such as for example:
 
@@ -670,6 +669,5 @@ Here some things to keep in mind about how `SyntaxError` is **typically** genera
                   // 5 is returned since the post-increment operator returns the number BEFORE incr.
                   // and NOT the number after incrementation
     ```
-  
   
   

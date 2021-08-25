@@ -1,100 +1,16 @@
-### Hoisting
-
----
-
-#### Differences between declaring variables with `let` and `var`
-
-- **At top-level**, `var` adds a property to the `global` or `window` object (depending on the execution context) where:
-
-  - inside the `node.js` context, a property is added to the `global` object
-  - inside the browser context, a property is added to the `window` object
-
-  whereas `let` does not add that property.
-
-  **The takeaway is that, at the top-level of the program, `let` is 'safer' because it does not add properties to the `global` or `window` objects, in other words, no global variable is created!**
-
-- **Inside a function i.e. inside function scope**, `var` does **not** add a property to the `global`/`window`  object or any other object for that matter!
-
-- `let` is `block scoped` which means that the variable is accessible only in the scope where it is originally declared (including nested/inner scopes) which is defined by curly braces **whereas** `var` is `function scoped` which means that the variable is accessible **within the function it is declared in**.
-
-  ```javascript
-  function foo() {
-    if (true) {
-      var a = 1;  // function scope  - i.e. accessible in the whole 'foo' function
-      let b = 2;  // block scope  -  i.e. not accessible outsie the conditional
-    }
-  
-    console.log(a); // 1
-    console.log(b); // ReferenceError: a is not defined
-  }
-  
-  foo();
-  ```
-
-- `block scope` variables that are declared with the `var` keyword are defined without the code ever being executed as in the following example:
-
-  ```javascript
-  function foo() {
-    if (false) {
-      var a = 1;  // this code is never executed, yet the variable is initialized to
-    }             // the value undefined
-  
-    console.log(a); // undefined
-  }
-  
-  foo();
-  ```
-
 
 
 ### What is Hoisting?
 
 ---
 
-JavaScript engines do not just execute the code but rather execute operate under two phases.
+**Important facts to find a place for:**
 
-#### Creation Phase  -  Before the program is executed
+- When functions are hoisted, the function name/identifier is hoisted along with the function definition, which means that a hoisted function is accessible after the point is has been hoisted to and not in some sort of temporal dead zone.
 
-Does preliminary work to prepare for the execution phase. One task of this phase is to find all declarations such as variable, function and class declarations and move them 'up' to the top of their respective scope where:
+  This is the reason why functions can be invoked 'before' they are declared, in terms of the code structure.
 
-- Function scoped declarations are moved to the top of the function (or global!?)
-- Block scoped declarations are moved to the top of the block (or global?!)
-
-
-**Note**: When functions are hoisted, the function name/identifier is hoisted **along with the function definition**, which means that a hoisted function is
-           accessible after the point is has been hoisted to and **not** in some sort of temporal dead zone.
-
-
-
-This is the reason why functions can be invoked 'before' they are declared, in terms of the code structure.
-
-**Illustration of this process**
-
-1. The creation phase scans for, amongst other things, function declarations, such as for example:
-
-   ```javascript
-   console.log(getName());// invoking the function before it is defined in code structure
-   
-   function getName() {   // the creation phase scans the program to find this function
-     return "Pete";
-   }
-   ```
-
-2. The creation phase then moves the function to the top of it's scope, **which can be thought of** re-arranging the original code  into the following:
-
-   ```javascript
-   function getName() {  // function declaration is now a the top of it's scope
-     return "Pete";
-   }
-   
-   console.log(getName());  // the function can be invoked since it is declared before
-   ```
-
-
-
-#### Execution Phase  -  The execution of the prepared program
-
-It the process where the program executes line-by-line.
+- Functions are merely local variables the have a function as their value, this is useful to know for hoisting if it behaves the same way as variables!?
 
 
 
@@ -104,36 +20,19 @@ It the process where the program executes line-by-line.
 
 Variables declared with `let`, `const` and `var`  are also hoisted but behave differently in terms of how they are hoisted and how they can be accessed:
 
-- Hoisted `var` variables are initialized with the value `undefined`. Since hoisting happens during the creations phase, `var` variables that are declared on program lines that never execute are also hoisted and initialized with the value `undefined` regardless.
-
-  This is why the variable `meep` in the following code is declared, while never executed!
-
-  ```javascript
-  console.log(meep === undefined);  // hoisted and initialized to the value 'undefined'
-  
-  if (false) {
-    // this block will never run
-    var meep = 'piep pieep'; // hoisted even if never executed
-  }
-  
-  console.log(meep === undefined);  // the same as the first case
-  ```
-
-
-  **In other words  -  Accessing `var` variables before their declaration resolves to `undefined` ** !
-
 - Hoisted `let` variables and `const` constants are **not** initialized to any value and stay **not-defined** as if they did not exist i.e. as if they are not declared and we get a `ReferenceError` for both `let` and `const`.
 
-  ```javascript
+
+- ```javascript
   console.log(foo); // ReferenceError: Cannot access 'foo' before initialization
   let foo;
   ```
-
+  
   ```javascript
   console.log(qux); // ReferenceError: Cannot access 'qux' before initialization
   const qux = 42;
   ```
-
+  
   **Note**: Do not use the term `undefined` here since it has nothing to do with the `undefined` primitive!
 
   
