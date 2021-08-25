@@ -776,9 +776,125 @@ Variables declared with `let`; `const` and `var` are all hoisted, but in differe
 
   **Note**: Accessing `var` variables resolves to `undefined` before they are initialized during the execution phase
 
-- **When `let` and `const` variables are hoisted** ...???
+- **When `let` and `const` variables are hoisted** during the creation phase they:
+
+  - are **not initialized** to a value
+
+  - stay **not defined** as if they do not exist up to the lexical point in the program where the variable is declared.
+
+    **Note**: If they are accessed before they are declared in the lexical sense, JavaScript raises a `ReferenceError`.
+
+  In other words, `let` and `const` variables **cannot be accessed before they are declared lexically**.
 
 
+  ***Example of a program that attempts to access a local variable in the temporal dead zone***
+
+  ```javascript
+  console.log(foo); // ReferenceError: Cannot access 'foo' before initialization
+  let foo;
+  ```
+
+  
+
+  When talking about variables in the temporal dead zone do not call them `undefined` as this is misleading in terms of the language terminology, but call them `not defined`.
+
+
+The `Temporal Dead Zone` is the region in a program where hoisted variables/constants are not accessible until they are declared, so the dead zone ranges from the point where the hoisting process raises the variable to up to and excluding where the variable is declared.
+
+
+
+#### Error messages differentiate between different reference cases
+
+JavaScript engines make the difference between variables that are declared and variables that are not declared:
+
+- If the variable `qux` is declared, hoisted and accessed before definition/initialization:
+
+  > // ReferenceError: Cannot access 'qux' before initialization
+
+- If the variable `baz` is never declared:
+
+  > console.log(baz); // ReferenceError: baz is not defined
+
+
+
+### Hoisting functions
+
+There is an important difference between the way variables and functions are hoisted:
+
+- When a function declaration is hoisted, both the local variable identifier and the value that is the function are hoisted together.
+  Functions are not initialized to `undefined` when hoisted!
+- When a normal variable is hoisted using `var`, the variable is initialized to `undefined`.
+
+
+Other than that, function declarations of different types such as function declarations and functions expressions behave exactly the same like 'normal' variables when hoisted, with the difference that the variables point to a function instead of anther primitive of object.
+
+This is the reason why functions can be accessed before they are declared lexically.
+
+
+
+### Undefined function declaration behaviour
+
+Implementations of JavaScript engines are inconsistent when `function declarations` are nested inside `non-function blocks`.
+
+***For example***
+
+```javascript
+function someFunction() {
+  if (true) {  // conditionals have block scope
+    function mayWorkMayNot() { // this function declaration occurs in a non-function block
+        // code goes here
+    }
+  }
+    
+  mayWorkMayNot(); // this may or may not work
+}
+```
+
+
+So never do this, when a conditional function declaration is needed or a function declaration needs to be positioned inside a non-function, use function expressions with variables instead.
+
+```javascript
+function someFunction() {
+  if (true) {
+    // use a function expression instead
+    var thisWillWork = function () { // this function declaration occurs in a non-function block
+      console.log('This will work!');
+    }
+  }
+    
+  thisWillWork();
+}
+```
+
+
+
+### Hoisting when both functions and variables are declared
+
+When a scope contains both functions and variables (including constants) then we can assume that:
+
+1. Function declarations are hoisted **first** i.e. **above variable declarations**
+2. Variables and constants are hoisted **second** i.e. **below function declarations**
+
+
+
+### Best practices to reduce hoisting based problems
+
+- Do not use `var` for declarations unless it is really necessary for some very good reason
+
+- If `var` must be used for declaration (again, for a very good reason), position the declarations at the top of the scope so the lexical structure of the program resembles the conceptual structure of the program after the creation phase i.e. hoisting.
+
+  ```javascript
+  function foo() {
+    var a = 1;
+    var b = 'hello';
+    var c = false;
+    // now we know which variables are used in this function and do not have to go hunting for them
+  }
+  ```
+
+- Declare `let` and `const` variables as close to their usage as possible.
+
+- Declare functions before using them when possible. Even though hoisting enables us to invoke functions before they are declared lexically, we should not leverage that mechanism without a good reason. It is confusing.
 
 
 
