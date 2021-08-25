@@ -485,7 +485,7 @@ let e = (let u = 15);
 
 
     __*Code example*__
-
+    
     ```javascript
     let name = 'Julian'; // global scope  -  Accessible to everyone?
     
@@ -570,7 +570,16 @@ Whenever we references/access or declare a variable, JavaScript walks up the lex
 
 ## Declared scope VS visibility scope  -  A mental model by Launchschool
 
+### The problem with the term `global scope`
 
+While the scope where identifiers are accessible to the whole program or file are typically referred to as `global scope`, the terms `module scope` and `file scope` would technically be more representative of what is actually happening.
+
+In JavaScript, identifiers cannot have their scope specified as global explicitly as is typical in many other languages, but rather, the global scope is a consequence of where and how specifically an identifier is declared.  The keyword used to declare something  has a great impact on the scope at the declaration level:
+
+- When using the `var` and `function` keywords the identifier has `function scope`
+- When using the `let`; `const` and `class` keywords the identifier has `block scope`
+
+**Note**: When used at top-level, both `function scope` and `block scope` coincide with `global scope`!
 
 
 
