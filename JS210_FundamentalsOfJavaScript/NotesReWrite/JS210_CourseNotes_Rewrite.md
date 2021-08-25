@@ -744,6 +744,19 @@ JavaScript does not just execute code straight away, but rather executes a proce
   - Function scoped declarations,  `var` and `function` declarations, are 'moved' to the top of their respective function, which can be global scope!
   - Block scopes declarations, `let` and `const` declarations, are 'moved' to the top of their respective block, which can also be global.
 
+
+  The creation phase can also raise exceptions. This happens for example when declarations use the same identifier multiple times:
+
+  ```javascript
+  let foo = "hello";
+  
+  function foo() {         // 'foo' has already been declared
+    console.log("hello");
+  }
+  ```
+
+  
+
 - **Execution phase  -  The actual execution of the prepared program**
 
   Executes the program prepared by the `creation phase`.
@@ -832,7 +845,7 @@ This is the reason why functions can be accessed before they are declared lexica
 
 
 
-### Undefined function declaration behaviour
+### Undefined JavaScript behavior in terms of function declaration
 
 Implementations of JavaScript engines are inconsistent when `function declarations` are nested inside `non-function blocks`.
 
@@ -895,6 +908,156 @@ When a scope contains both functions and variables (including constants) then we
 - Declare `let` and `const` variables as close to their usage as possible.
 
 - Declare functions before using them when possible. Even though hoisting enables us to invoke functions before they are declared lexically, we should not leverage that mechanism without a good reason. It is confusing.
+
+
+
+### Hoisting is not actually real  -  It is a mental model to explain scope
+
+The behavior we try to explain using the `hoisting` model is merely a consequence of the `creation` and `execution` phase.
+
+The `creation` phase prepares code for execution. Each time the `creation` phase encounters a declaration, this identifier is added to the current scope, which depending on the context, is either the local or global scope (either function or block).
+
+At this point JS know which identifiers exist and what exact scope each one belongs to.
+
+During the `execution` phase JS does not care about the declarations, but it does care about the initialization and function/class definitions. At this point JS merely needs to lookup identifiers as they arrive.
+
+
+
+### Hoisting and scope examples
+
+- When using `let` to declare a variable, think of it in terms of `block scope` when the same identifier is used multiple times.
+
+  When the same identifier is used successively in the **same** scope, an error is raised, that that same identifier has been declared:
+
+  ```javascript
+  let a = 5; // identifier 'a' now declared
+  let a = 8; // identifier 'a' taken because in the same scope - error raised
+  ```
+
+    When the same identifier is used in another scope though, that is not a problem.
+
+  ```javascript
+  let a = 5; // identifier 'a' now declared in this outer scope
+  {
+    let a = 8; // identifier 'a' now declared in this inner scope and shadows the
+               // previous 'a' identifier
+  }
+  ```
+
+- When successive `var` declarations are made using a previously declared identifier, the variable is hoisted as if there were only one during the creation phase. When the program is executed, the variable is the re-assigned as the code executes:
+
+  ```javascript
+  function meep() {
+    var a = 1;
+    console.log(a === 1);
+  
+    if (false) {
+      // this code never executes
+      var a = 33;
+      console.log(a === 33);
+    }
+    
+    var a = 44;
+    console.log(a === 44);
+  }
+  
+  meep();
+  ```
+
+- **Demonstration:** *The variable is not in scope in the function definition*!
+
+  **Before**:
+
+  ```javascript
+  bar();              // logs undefined
+  var foo = 'hello';
+  
+  function bar() {
+    console.log(foo);
+  }
+  ```
+
+  **After**:
+
+  ```javascript
+  function bar() {
+    console.log(foo);
+  }
+  
+  var foo;
+  
+  bar();          // logs undefined because it has not bee re-assigned before invocation
+  foo = 'hello';
+  ```
+
+- **Demonstration** : *Variable is a function and then re-assigned to a string primitive (Not used in this example)*
+
+  **Before**:
+
+  ```javascript
+  bar();             // logs "world"
+  var bar = 'hello';
+  
+  function bar() {
+    console.log('world');
+  }
+  ```
+
+  **After**: 
+
+  ```javascript
+  function bar() {
+    console.log('world');
+  }
+  
+  bar();
+  bar = 'hello';
+  ```
+
+- **Demonstration**: *Functions are hoisted first, the variables follow. In this case the `bar` variable follows the function definition and thereby shadows the function 'variable' through which the function was available* 
+
+  **Before**:
+
+  ```javascript
+  var bar = 'hello';
+  bar();             // raises "TypeError: bar is not a function"
+  
+  function bar() {
+    console.log('world');
+  }
+  ```
+
+  **After**:
+
+  ```javascript
+  function bar() {
+    console.log('world');
+  }
+  
+  bar = 'hello';
+  bar();
+  ```
+
+- all from [this](https://launchschool.com/lessons/7cd4abf4/assignments/1d43f233) and the previous page
+
+- When a `var` variable is declared many times as in the following example:
+
+  ```javascript
+  var a = 'hello';
+  
+  for (var index = 0; index < 5; index += 1) {
+    // merely re-assigns the local variable 'a' 
+    var a = index;
+  }
+  
+  console.log(a); // 4
+  ```
+
+  The creation phase scans the code for declarations and ends up initializing the `a` identifier once with the value `undefined` and does not care about the rest. Then during the execution phase, JavaScript merely re-assigns the `a` variable. 
+
+  **Note**: Duplicate declarations of `var`  variables are ignored during the creation phase.
+
+
 
 
 

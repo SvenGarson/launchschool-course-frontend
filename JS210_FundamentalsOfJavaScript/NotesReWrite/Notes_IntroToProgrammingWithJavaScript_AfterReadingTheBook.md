@@ -275,7 +275,6 @@ JavaScript arrays are `heterogenous`, which means that they can contain any valu
 
   **In other words**, array elements that have not been initialized **can** be treated differently from elements that were set to `undefined` after the fact even though un-initialized elements compare to the primitive `undefined` as true.
 
-
 **Primer to some common `Array` operations**:
 
 - Accessing elements with `[]`
