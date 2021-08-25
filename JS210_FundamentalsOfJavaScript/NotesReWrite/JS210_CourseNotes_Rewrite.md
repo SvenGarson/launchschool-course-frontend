@@ -583,6 +583,122 @@ In JavaScript, identifiers cannot have their scope specified as global explicitl
 
 
 
+### Example of the ambiguity
+
+***Given the following code***
+
+```javascript
+let foo = 1;      // variable declaration at top-level i.e. global
+console.log(foo);
+```
+
+When we answer the question `What scope does the variable 'foo' have?`, we can deduce the following from the previous explanation:
+
+- Since `foo` was declared using the `let` keyword, `foo` has `block scope`
+- But since the variable is declared at top-level, `foo` ends up having `global scope` merely because of where it is declared
+
+**Note**: The result would be the same if `foo` were declared using the `var` keyword. 
+
+
+
+This is the ambiguity in talking about what scope a variable has specifically, to clarify the ambiguity in terms of the example, we could say in other words:
+
+- `foo` was declared in `block scope` but  the declaration location is at the top-level so `foo` ends up having `global scope`
+
+
+**This is the basis for the mental model, the point is to differentiate between:**
+
+- how and where an identifier has been declared
+
+  **and**
+
+- what the final scope of that identifier is
+
+
+
+### The mental model
+
+In order to express the actual scope of an identifier with less ambiguity, determine **both** of the following scopes for a particular case:
+
+#### 1) Declared scope  -  Based on which keyword was used to declare something
+
+The declared scope can be one of the following two options:
+
+- If the keyword for declaration used is `var` or `function`, the declared scope is `function scope`
+- If the keyword for declaration used is `let`; `const` or `class`, the declared scope is `block scope`
+
+
+**Note**: Here we disregard where something is declared i.e. we only consider how specifically something was declared based on the keyword!
+
+***A few examples of declared scope***
+
+```javascript
+let foo = 1;        // declared scope is block scope
+var bar = 2;        // declared scope is function scope
+
+if (true) {
+  let foo = 3;      // declared scope is block scope
+  var qux = 4;      // declared scope is function scope
+}
+
+function bar() {    // declared scope is function scope
+  let foo = 5;      // declared scope is block scope
+  var bar = 6;      // declared scope is function scope
+
+  if (true) {
+    let foo = 7;    // declared scope is block scope
+    var qux = 8;    // declared scope is function scope
+  }
+}
+```
+
+
+
+#### 2) Visibility scope  -  Based on where something is accessible in terms of the scope of an executing program
+
+When talking about the concept of 'scope' in general, this is typically the scope we are interested in when programming because this tells us where exactly identifiers are accessible.
+
+The visibility scope can be one of the following options:
+
+- If the declaration occurs outside any function and/or block, the visibility scope is `global scope`
+
+  **Note**: An exception here seems to be the case where an identifier is inside a block at top-level and declared with `var`. This is hoisted to a global.
+
+- If the declaration occurs inside any function and/or block, the visibility scope is `local scope`.
+
+  Here we can additionally specify whether an identifier is:
+
+  - `local scope -> function scope`  -  the identifier is not global and has function scope
+
+    **or**
+
+  - `local scope -> block scope`  -  the identifier is not global and has not function scope
+
+
+***A few examples of declared scope***
+
+```javascript
+let foo = 1;        // visibility scope is global
+var bar = 2;        // visibility scope is global
+
+if (true) {
+  let foo = 3;      // visibility scope is local (block)
+  var qux = 4;      // visibility scope is global - it is inside a block but 'var' is used which hoists to top of current scope
+}
+
+function bar() {    // visibility scope is global
+  let foo = 5;      // visibility scope is local (function)
+  var bar = 6;      // visibility scope is local (function)
+
+  if (true) {
+    let foo = 7;    // visibility scope is local (block)
+    var qux = 8;    // visibility scope is local (function)
+  }
+}
+```
+
+
+
 
 
 ## Flow control
