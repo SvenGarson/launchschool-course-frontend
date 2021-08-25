@@ -437,13 +437,34 @@ let e = (let u = 15);
 
 
 
+## Declaration and assignment of variables and constants
+
+In terms of assigning a value to a variable/constant as part of declaration through an initializer, the `=` is referred to as `assignment operator` rather than just the `equal` operator. In that context, initializing a variable is distinct in terminology:
+
+- `Assignment` is a standalone expression that gives a variable a new value **not during declaration**
+- An `initializer` is an expression to the right of an `assignment operator` **during variable declaration**
+
+
+
+### Declaration and assignment of variables
+
+Variable can be declared with and without initializer on declaration.
+When a variable is not explicitly initialized with an initializer it is implicitly initialized to `undefined`.
+
+
+
+### Declaration and assignment of constants
+
+Constants are declared using the `const` keyword and must be initialized upon declaration. Constant identifiers are immutable in that:
+
+- their value cannot be mutated
+- they cannot be re-assigned to another value
+
+
+
 ## Variable scope
 
-
-
 **Remember:** Every function definition and block creates a new variable scope in terms of the call stack.
-
-
 
 ### Conceptual types of scopes
 
@@ -699,6 +720,8 @@ function bar() {    // visibility scope is global
 
 
 
+## Hoisting
+
 
 
 ## Flow control
@@ -730,33 +753,6 @@ When an expression in a conditional context does not evaluate to a boolean value
   if ([])           // truthy
   if ({})           // truthy
   ```
-
-
-
-
-
-## Declaration and assignment of variables and constants
-
-In terms of assigning a value to a variable/constant as part of declaration through an initializer, the `=` is referred to as `assignment operator` rather than just the `equal` operator. In that context, initializing a variable is distinct in terminology:
-
-- `Assignment` is a standalone expression that gives a variable a new value **not during declaration**
-- An `initializer` is an expression to the right of an `assignment operator` **during variable declaration**
-
-
-
-### Declaration and assignment of variables
-
-Variable can be declared with and without initializer on declaration.
-When a variable is not explicitly initialized with an initializer it is implicitly initialized to `undefined`.
-
-
-
-### Declaration and assignment of constants
-
-Constants are declared using the `const` keyword and must be initialized upon declaration. Constant identifiers are immutable in that:
-
-- their value cannot be mutated
-- they cannot be re-assigned to another value
 
 
 
@@ -929,6 +925,95 @@ Nevertheless, here is the concept as illustrative sequence in terms of a JavaScr
 5. When a function finished execution, the stack frame from that particular function is popped of the call stack and the stack frame below (if any exists) resumes execution where it left of
 
 6. This happens until the `main` stack frame finished execution and the program exits because it has nothing more to execute
+
+
+
+
+
+## Discrepancies of code execution between the Node.js REPL and Node.js
+
+### How the same code changes structure
+
+When Node.js executes code, that code is not executed as is but is wrapped inside the following function, and then executed thereafter:
+
+```javascript
+(function (exports, require, module, __filename, __dirname) {
+  // code executed by Node.js is wrapped in this anonymous function
+});
+```
+
+**The Node.js REPL does not to that, rather the REPL executes the code line-by-line as is.**
+
+The consequence is that the execution of the same code can behave differently based on whether it is executed through Node.js directly or the REPL.
+
+
+
+### Typical problems
+
+Typical problems involve the declarations at the top-level when using the `var` keyword. Running the following code through Node.js and the REPL produces wildly different results:
+
+***The code to to be executed in both contexts***
+
+```java$var bar = 42;
+// without any further context we are at top-level here
+console.log(global.bar);
+bar += 1;
+console.log(global.bar);
+
+let foo = 86;
+console.log(global.foo);
+```
+
+
+
+#### Running the code through the REPL line-by-line
+
+*How the code executes in the context of an active Node.js REPL session*
+
+```javascript
+var bar = 42;
+console.log(global.bar); // 42
+bar += 1;
+console.log(global.bar); // 43
+
+let foo = 86;
+console.log(global.foo); // undefined
+```
+
+**Observations to make:**
+
+- The code is executes as is
+- Since the code executes at top-level i.e. global scope, the `var` keywords adds a `bar` property to the `global` object
+- Declaring the variable `foo` at top-level using `let` does not add a property to the `global` object
+
+
+
+#### Running the code through Node.js
+
+*How the code executes in the context of being executed by Node.js*
+
+```javascript
+(function (exports, require, module, __filename, __dirname) {
+  // with this context we know the code is not executed at top-level as in the REPL
+  var bar = 42;
+  console.log(global.bar); // undefined
+  bar += 1;
+  console.log(global.bar); // undefined
+
+  let foo = 86;
+  console.log(global.foo); // undefined
+});
+```
+
+**Observations to make:**
+
+- The code is wrapped into an anonymous function declaration implicitly by Node.js before execution
+
+- Since the variable declaration using `var` is not at top-level, no property is added to the `global` object and is thus `undefined`.
+
+  `bar` is not a global but a variable with `function scope`.
+
+- The situation does not change for the `foo` variable
 
 
 
