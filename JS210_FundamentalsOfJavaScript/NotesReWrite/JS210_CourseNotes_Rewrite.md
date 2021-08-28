@@ -1059,8 +1059,6 @@ During the `execution` phase JS does not care about the declarations, but it doe
 
 
 
-
-
 ## Flow control
 
 ### Truthiness  -  Truthy and Falsy
@@ -1093,88 +1091,141 @@ When an expression in a conditional context does not evaluate to a boolean value
 
 
 
+### Operator precedence
+
+Operator precedence governs the order in which operators in a multi-operator expression are evaluated. Operators are resolved in the order governed by operator precedence.
+
+***Example of operator precedence***
+
+```javascript
+// multiplication and division operators have precedence over addition and subtraction
+const result = (11 - 2 / 5 * 3 + 2);
+console.log(result === 11.8);
+```
+
+
+
+### Operator associativity
+
+Operator associativity governs the order in which operators in a multi-operator expression are evaluated in case the precedence of said operators in that expression are the same.
+
+***Example of operator associativity when the precedence of all operators is the same***
+
+```javascript
+// precedence of the multiplication operator is the same accross the expression
+// and the associativity of the multiplication operator is left to right
+// which means that the order of computation is ((1 * 2) * 3)
+const result = 1 * 2 * 3;
+console.log(result === 6);
+```
+
+
+
+### Complex expressions using operators
+
+When expression using operators become complex, we should make our intentions clear with parentheses instead of relying on precedence and associativity rules. 
+
+JavaScript evaluates parenthesized expressions in `algebraic order` which means:
+
+- innermost parentheses are evaluates first towards to outer parentheses
+- multiple parentheses at the same 'depth' are evaluated from left to right
+
 
 
 ## Functions
 
+### Pass by reference or pass by value
+
+JavaScript used both, there are two cases to differentiate
+
+- primitive values are pass by value
+- objects are passed by reference
+  
+
+### Mutating the caller
+
+Mutability depends on the type of JavaScript value:
+
+- JavaScript primitives are immutable. They cannot be mutated through methods or functions.
+- JavaScript objects are mutable, but not every methods mutates an object. This depends on the specifics of the method.
+
+
+
 ### Types of functions and ways to declare them
 
-- **`Function Declarations`  -  `Function Statements`**
+##### `Function declarations`  -  `Function statements`
 
-  A function declaration must start with the `function` keyword and defines a variable of type `function` with the same name as a function that has the function as it's value. This 'function variable' obeys the same exact rules as any other local variables in terms of scope etc.
+A function declaration must start with the `function` keyword and defines a variable of type `function` with the same name as a function that has the function as it's value. This 'function variable' obeys the same exact rules as any other local variables in terms of scope etc.
 
-  **Note**: Re-assigning this function variable to some value other than the function, irreversibly shadows the function!
+**Note**: Re-assigning this function variable to some value other than the function, irreversibly shadows the function!
 
-  ```javascript
-  function foo() { /* function declaration */ }
-  (function bar) { /* function keyword not the first in this line, so not a function declaration! */ })
-  ```
+```javascript
+function foo() { /* function declaration */ }
+(function bar) { /* function keyword not the first in this line, so not a function declaration! */ })
+```
 
-- **`Anonymous Function Expressions`**
+##### `Anonymous function expressions`
 
-  An anonymous function expression defines a function without a function name as part of a larger expression, typically to a local variable and does not start with the `function` keyword.
+An anonymous function expression defines a function without a function name as part of a larger expression, typically to a local variable and does not start with the `function` keyword.
 
-  ```javascript
-  const someFunction = function () { ... } // could also use let for the local variable
-  someFunction(); // invoke the function just as normal
-  ```
+```javascript
+const someFunction = function () { ... } // could also use let for the local variable
+someFunction(); // invoke the function just as normal
+```
 
-   ```javascript
-   // function expression assigned to a local variable  
-   let meep = function sumsum(a, b) { return a + b; }
-   ```
+```javascript
+// function expression assigned to a local variable  
+let meep = function sumsum(a, b) { return a + b; }
+```
 
-  ```javascript
-  // function expression in parentheses that almost looks like a function declaration
-  (function woof(food) { // function wrapped in parenthesis
-    console.log(`Woofy likes ${food}!`);
-  })
-  ```
+```javascript
+// function expression in parentheses that almost looks like a function declaration
+(function woof(food) { // function wrapped in parenthesis
+  console.log(`Woofy likes ${food}!`);
+})
+```
 
-  ```javascript
-  // unction expression in higher order function   
-  function better() {
-    return function evenBetter() { // does not start with keyword 'function'
-    console.log('This is so much better!');
-    }
+```javascript
+// unction expression in higher order function   
+function better() {
+  return function evenBetter() { // does not start with keyword 'function'
+  console.log('This is so much better!');
   }
-  ```
+}
+```
 
-- **`Named Function Expressions`**
+##### `Named function expressions`
 
-  Are declared and behave the same as an `anonymous function expression` with the difference that we associate the function to an identifier. 
+Are declared and behave the same as an `anonymous function expression` with the difference that we associate the function to an identifier. The function name is **not** actually in the scope the function is declared, but it is accessible in the function definition itself through `methodName.name`:
 
+```javascript
+let someFunction = function someName() {
+ console.log(`I am a named function expression. My name is: ${someName.name}`);
+}
 
-  The function name is **not** actually in the scope the function is declared, but it is accessible in the function definition itself through `methodName.name`:
+someFunction(); // outputs: I am a named function expression. My name is: someName
+```
 
-  ```javascript
-  let someFunction = function someName() {
-   console.log(`I am a named function expression. My name is: ${someName.name}`);
-  }
-  
-  someFunction(); // outputs: I am a named function expression. My name is: someName
-  ```
+ A useful advantage of named function expressions rather than anonymous ones is that the debugger can use the function name in the stack trace so that an error is, possibly, easier to track down.
 
-  A useful advantage of named function expressions rather than anonymous ones is that the debugger can use the function name in the stack trace so that an error is, possibly, easier to track down.
+##### `Arrow functions`
 
+Arrow functions are sort of a shorthand way to write function expressions. If the arrow function fits onto a single line, the function returns the value  the expression in the function definition evaluates to implicitly without the need of the `return` keyword.
 
-- **`Arrow Functions`**
+If the arrow function takes only a single argument, the parameter does not have to be encased in parentheses. An arrow function inherits the `execution context` from the context the function is declared in and so has access to the declaration scope.
 
-  Arrow functions are sort of a shorthand way to write function expressions. If the arrow function fits onto a single line, the function returns the value  the expression in the function definition evaluates to implicitly without the need of the `return` keyword.
+If the function spans multiple code lines, the function does not return the last value implicitly as with one-liners and needs to be encased with curly braces.
 
-  If the arrow function takes only a single argument, the parameter does not have to be encased in parentheses. An arrow function inherits the `execution context` from the context the function is declared in and so has access to the declaration scope.
-
-  If the function spans multiple code lines, the function does not return the last value implicitly as with one-liners and needs to be encased with curly braces.
-
-  ```javascript
-  // multiline arrow function
-   let getNumber = (text) => { // multiline needs curly-braces
-     let input = prompt(text);
-     return Number(input);    // must return desired value explicitly because of multiple lines
-   };
-  ```
+```javascript
+// multiline arrow function
+ let getNumber = (text) => { // multiline needs curly-braces
+   let input = prompt(text);
+   return Number(input);    // must return desired value explicitly because of multiple lines
+ };
+```
 
 
+ 
 
 ### Function Declaration and Function Expression subtleties
 
@@ -1189,13 +1240,132 @@ function () { ... }; // proper function declaration
 
 
 
-### Functions facts
+### Return values
 
+Every JavaScript function returns a value every time. This can happen **two** ways:
+
+- A function returns the value `undefined` implicitly if no return value is specified explicitly using the `return` keyword
+- A function return the value specified by the `return` keyword
+
+
+
+### Nested functions
+
+Function declarations; functions expressions and arrow functions can be nested in some other function's scope. Nested functions are 'created' and 'destroyed' exactly like any other local variable in function scope and behave the exact same as local variables otherwise.
+
+```javascript
+function outerFunction() {
+  console.log('I am the outer function!');
+  function nestedFunction() {
+    console.log('I am the nested function!');
+  }
+
+  nestedFunction();
+}
+
+outerFunction();
+```
+
+
+
+### Function composition
+
+This is merely the technique of invoking a function/method as argument to another function/method without intermediate variable creation.
+
+```javascript
+function sum(a, b) { return a + b; }
+function sub(a, b) { return a - b; }
+function mult(a, b) { return a * b; }
+
+// using function composition rather than intermediate variables
+mult(sum(1, 5), sub(10, 8));
+```
+
+
+
+### Other functions facts and terminology
+
+- Functions that always return a boolean value, true or false, are referred to as `predicates`
+- Functions that are called on some receiving object/value are referred to as `methods`
 - Functions are merely local variables that have a function as the value
 - No exceptions/error is raised when a function is invoked with the wrong number of arguments, more or less but when a parameter does not have a correspondent argument on function invocation, that parameter is bound to `undefined`
-- Functions can be nested
 
 
+
+## Variables as pointers  -  A mental model
+
+As usual in JavaScript we differentiate between the case where a value is a primitive and where it is an object.
+
+### The case for primitive values
+
+Primitives are stored at some memory location which is allocated when values are declared. Pointers to primitive values are merely pointers to a value in a piece of memory. A `primitive pointer` so to say.
+
+![](./res/vars-with-primitive-values.png)
+
+***Example of initializing a variable to another, 'primitive pointer'***
+
+```javascript
+let a = 'I am Groot';
+let b = a;
+
+// a and b now point to the same immutable primitive value 'I am Groot'
+console.log(a === 'I am Groot');
+console.log(b === 'I am Groot');
+console.log(a === b);
+
+// re-assign 'b' to another primitive value
+b = 'I am Superman';
+
+// 'b' now points to a new memory location that contains the new
+// primitive value 'I am Superman'
+console.log(a === 'I am Groot');
+console.log(b === 'I am Superman');
+console.log(a !== b);
+```
+
+
+
+### The case for object values
+
+Objects are stored in memory and identifiers that point to object values just point to these pieces of memory. 
+![](./res/vars-with-objects.png)
+
+When multiple identifiers point to the same object in memory, any mutative and non-mutative operation occurs on the same object pointed at by the identifiers no matter which identifier is used.
+This scenario is referred to as `aliasing`, one identifier can be an `alias` for another identifier.
+
+***Example of aliasing***
+
+```javascript
+let a = [1, 2]
+let b = a;
+
+// both 'a' and 'b' now point the same array(an object) in memory
+// 'b' is now an alias of 'a'
+console.log(a);
+console.log(b);
+
+// operations on 'a' and 'b' now occur on the same exact piece of memory
+b.push(3);
+
+// so both identifiers reflect the change because the point to the same data
+console.log(a);
+console.log(b);
+```
+
+
+
+### How arguments are passed to functions
+
+Conceptually, here is how it works:
+
+- Arguments are always passed by value apparently
+- But when the value is an object, the value of that object happens to be it's refrence.
+  This seems to coincide with the above table `case for object values`.
+
+This means that inside functions, primitive values are copies of the original primitive and objects are references to the original object in memory. We could say that JS is similar to ruby, JS is:
+
+- pass by value for primitive values
+- pass by reference value for objects
 
 
 
@@ -1473,3 +1643,5 @@ console.log(global.foo); // undefined
 ## Questions and answers
 
 - What are higher order functions?
+- Go through this post and add any relevant concept.
+  This will fit well into the `variables as pointer` (name of chapter may differ slightly)

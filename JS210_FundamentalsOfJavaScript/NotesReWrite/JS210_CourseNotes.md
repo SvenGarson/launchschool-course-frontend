@@ -1,9 +1,5 @@
 
 
-### What is Hoisting?
-
----
-
 ### Closures
 
 ---
