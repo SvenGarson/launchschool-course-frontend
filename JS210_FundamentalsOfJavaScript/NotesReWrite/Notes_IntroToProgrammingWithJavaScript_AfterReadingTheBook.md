@@ -16,69 +16,9 @@
 
 
 
-### Loops and Iteration
+### Iteration
 
 ---
-
-**A short overview of the types and quirks of loops:**
-
-- **`While Loop`**
-
-  Executes the loop as long as the expression after the `while` keyword evaluates to `true`.
-
-  ```javascript
-  while (condition) { // first JS checks is the condition is still truthy
-   // runs once, only if the condition is truthy
-  }
-  ```
-
-- **`Do/While Loop`**
-
-  Executes the loop **at least once** and then works exactly like a `While Loop` after the initial loop execution.
-
-  ```javascript
-  do {
-    console.log('You see this at least once!');
-  } while (condition); // the loop runs again only if the condition is truthy
-  ```
-
-- **`For Loop`**
-
-  Executes the loop based on the first line which includes the `initialization`; `condition` and `incrementation`:
-
-  ```javascript
-  for(initialization; condition; incrementation) { // looped code ... }
-  ```
-
-
-
-#### Controlling Loop Flow
-
-JavaScript provides **two** keywords to provide more control over how loops execute:
-
-- **`continue`**  -  Skips the rest of the loop and starts the next cycle as if the loop finished execution
-- **`break`**  -  Stops looping altogether and resumes execution the line after the loop definition
-
-
-
-**Operators**
-
-- **`someVariable++`  -  `Post-Increment Operator`**
-
-  Increments the operand by one and returns the value of the variable **before incrementation**
-
-- **`++someVariable`  -  `Pre-Increment Operator`**
-  Also increments the operand by one and returns the new value of the variable **after incrementation**
-
-- **Pre and Post-Decrement operators function the exact same but decrement the value**.
-
-
-
-**Note**: Apparently the modern opinion is to **not** use incr/decrement operators for incr/decrementing   
-           numbers, apart from a for loop `for(var index = 0; index <= 5; index++) ...` because they can 
-           lead to strange bugs/results, especially if programmers are not aware/mindful of the return value.
-
-
 
 #### Iterating Arrays using built-in instance methods
 

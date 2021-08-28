@@ -1132,6 +1132,83 @@ JavaScript evaluates parenthesized expressions in `algebraic order` which means:
 
 
 
+### Looping and controlling loop flow
+
+**There are different types of loops**
+
+- **`While Loop`**
+
+  Executes the loop as long as the expression after the `while` keyword evaluates to `true`:
+
+  ```javascript
+  while (condition) { // first JS checks is the condition is still truthy
+   // runs once, only if the condition is truthy
+  }
+  ```
+
+- **`Do/While Loop`**
+
+  Executes the loop **at least once** and then works exactly like a `While Loop` after the initial loop execution:
+
+  ```javascript
+  do {
+    console.log('You see this at least once!');
+  } while (condition); // the loop runs again only if the condition is truthy
+  ```
+
+- **`For Loop`**
+
+  Executes the loop based on the first line which includes the `initialization`; `condition` and `incrementation`:
+
+  ```javascript
+  for(initialization; condition; incrementation) { // looped code ... }
+  ```
+
+  **Note**: There are more `for` loop variants in terms of the keywords used. See `iteration of objects`.
+
+
+**The loop flow can be controlled using the following two keywords**
+
+- **`continue`**  -  Skip the rest of the current iteration and go to the next step based on the loop type
+- **`break`**  -  Stop executing the loop immediately and resume execution at the line right after the loop
+
+
+**Increment and decrement operators**
+
+- **`someVariable++`  -  `Post-Increment Operator`**
+
+  Increments the operand by one and returns the value of the variable **before incrementation**
+
+- **`++someVariable`  -  `Pre-Increment Operator`**
+  Also increments the operand by one and returns the new value of the variable **after incrementation**
+
+
+
+### Iteration of objects
+
+There are different ways of iterating compound objects, but all of them are based on loops and compound object methods. **Keep in mind that arrays are objects!**
+
+- `[info::1]`
+
+
+##### 
+
+
+
+**Organizing this information**
+
+- how arrays and objects can be iterated. Since arrays are objects, just differentiate between specifics.
+  - loop
+  - for loop on properties
+  - array methods
+    - `forEach(callback)`
+
+
+
+
+
+
+
 ## Functions
 
 ### Pass by reference or pass by value
@@ -1642,6 +1719,17 @@ console.log(global.foo); // undefined
 
 ## Questions and answers
 
+- I left markers in this document that map questions and comment to different parts of the document for fast mapping of additional information later.
+
 - What are higher order functions?
+
 - Go through this post and add any relevant concept.
   This will fit well into the `variables as pointer` (name of chapter may differ slightly)
+
+- Make note and understand the difference in iteration techniques and how they interact with the inheritance model i.e for example:
+
+  A `for..in` loop iterates over the prototype chain properties while `Object.entries()` does not return these properties.
+
+  This may not be relevant right now, but in terms of OO JS this is really important.
+
+  `[info::1]`

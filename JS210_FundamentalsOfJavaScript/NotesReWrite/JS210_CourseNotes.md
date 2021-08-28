@@ -507,6 +507,12 @@ LS recommends the [AirBNB JavaScript style guide](https://github.com/airbnb/java
     1. The `String()` constructor works with all types, including `undefined` and `null`.
        Invoking `toString` on `null` etc results in an error.
     2. `String()` always returns a string whereas `toString()` can be overridden by a custom implementation.
+  
+- **Looping**
+
+  - Apparently the modern opinion is to **not** use incr/decrement operators for incr/decrementing           numbers, apart from a for loop `for(var index = 0; index <= 5; index++) ...` because they can lead to strange bugs/results, especially if programmers are not aware/mindful of the return value.
+
+    The problem here is not the fact that these operators increment and decrement in various ways, but rather what exact value the operator evaluates to if it is not used with numbers etc.
 
 
 
