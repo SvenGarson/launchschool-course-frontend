@@ -1190,24 +1190,77 @@ There are different ways of iterating compound objects, but all of them are base
 
 - `[info::1]`
 
+##### Iteration using basic looping constructs
 
-##### 
+*Using basic loops to iterate over an array for example*
 
+```javascript
+const numbers = [5, 88, 14, 39, 27];
 
-
-**Organizing this information**
-
-- how arrays and objects can be iterated. Since arrays are objects, just differentiate between specifics.
-  - loop
-  - for loop on properties
-  - array methods
-    - `forEach(callback)`
-
+for(let index = 0; index < numbers.length; index += 1) {
+  console.log(`${index}) ${numbers[index]}`);
+}
+```
 
 
 
+##### Iterating arrays and objects using built-in methods
+
+Using the built-in `Array.prototype.forEach` method:
+
+```javascript
+const numbers = [5, 88, 14, 39, 27];
+
+numbers.forEach((num, index) => {
+  console.log(`${num} is at index ${index}`);
+});
+```
+
+Using the built-in `Object.prototype.keys` method. Note that the `keys` method **does not include the keys of the object prototype**.
+
+```javascript
+const obj = {a: 65, b:66, c:66};
+
+const keys = Object.keys(obj);
+keys.forEach(key => {
+  const value = obj[key];
+  console.log(`${key}: ${value}`);
+});
+```
 
 
+
+##### Iterating over enumerable object properties
+
+While ES6 iterates objects in a predictable patterns (whereas traditional JS did not), that order should
+never be relied on.
+
+We can use a for loop to iterate over objects in two different ways:
+
+- **Iterating all `enumerable properties`  using `for/in`  -  Both traditional and modern JavaScript**
+
+  This technique iterates over the object keys, where the keys of array object are merely the indices.
+
+  When the object iterated over has a prototype, `for/in` iterates over
+  the keys of the object specified in the for loop first and then
+  over the keys in the prototype object.
+
+- **Iterating all values of an `iterable collection`  using `for/of`  -  Modern JavaScript only**
+
+  This technique iterates over the object values, where the keys of an array are the values stored in cells.
+
+  Another data type that can be iterated over are strings.
+
+
+  ```javascript
+  const someString = 'abc'
+  for(character of someString) console.log(character);
+  
+  const numbers = [11, 22, 33];
+  for(number of numbers) console.log(number);
+  ```
+
+  
 
 ## Functions
 
@@ -1302,7 +1355,7 @@ If the function spans multiple code lines, the function does not return the last
 ```
 
 
- 
+
 
 ### Function Declaration and Function Expression subtleties
 
@@ -1360,12 +1413,197 @@ mult(sum(1, 5), sub(10, 8));
 
 
 
+### Variable function arguments
+
+JavaScript does not raise an error for the reason of a function being invoked with the wrong set of arguments. But there are two things to keep in mind:
+
+- An actual argument, for which no corresponding parameters is defined, is discarded
+- A formal parameter, for which no corresponding argument is passed, in bound to `undefined`
+
+
+
+##### Variable arguments  -  The traditional approach
+
+All arguments passed to the invocation can be inspected using the `arguments` object that is passed to every function that is executed. The `arguments` object is an array-like local variable which contains all the arguments passed to a particular function invocation:
+
+- The `arguments.length` property return the number of arguments passed
+
+  ```javascript
+  function countingArguments() {
+    console.log(`countingArguments received '${arguments.length}' arguments`);
+  }
+  
+  countingArguments(1, 2, 3, 4, 5);
+  ```
+
+- The arguments can be accessed as a normal array using bracket notation
+
+  ```javascript
+  function countingArguments() {
+    console.log('countingArguments received the following arguments');
+    for (let argumentIndex = 0; argumentIndex < arguments.length; argumentIndex += 1) {
+      const currentArgument = arguments[argumentIndex];
+      console.log(`  ${argumentIndex}) ${currentArgument}`);
+    }
+  }
+  
+  countingArguments(true, [], 12345, 'Heidi');
+  ```
+
+This is where the similarities end, the `arguments` object does not have a `forEach` method for example.
+
+
+
+##### Variable arguments  -  The modern approach
+
+ES6 introduces a new mechanism to access an arbitrary number of argument through an array bound to a local variable that we can choose a name for by specifying a so called `rest parameter` in the parameter list.
+
+***Example specifying a rest parameter***
+
+```javascript
+function manyArguments(a, b, ...rest) {
+ console.log(a);
+ console.log(b);
+ console.log(`a parameter is a true array: ${Array.isArray(rest) === true}`)
+ console.log(`rest content: ${rest}`);
+}
+
+manyArguments('first', 'second', 'all', 'the', 'rest');
+```
+
+This is the preferred, ES6+ way to specify variable parameters
+
+**Note**: Do not use the identifier `arguments` for the rest parameter as that will shadow `arguments`
+
 ### Other functions facts and terminology
 
 - Functions that always return a boolean value, true or false, are referred to as `predicates`
 - Functions that are called on some receiving object/value are referred to as `methods`
 - Functions are merely local variables that have a function as the value
 - No exceptions/error is raised when a function is invoked with the wrong number of arguments, more or less but when a parameter does not have a correspondent argument on function invocation, that parameter is bound to `undefined`
+
+
+
+## Pure functions and side-effects
+
+### What are side-effects
+
+A function that does any of the following is considered to have side-effects
+
+
+
+##### The function call re-assigns non-local variables
+
+When variable, that is not local to the function, is re-assigned:
+
+```javascript
+let number = 42;
+function incrementNumber() {
+  number += 1; // side effect: number is defined in outer scope
+}
+```
+
+##### The function call mutates a value referenced by a non-local variable
+
+When an object, that is passed as argument, is mutated in the function and the mutation persists in state outside of the function:
+
+```javascript
+let letters = ['a', 'b', 'c'];
+function removeLast(array) {
+  array.pop(); // side effect: alters the array referenced by letters
+}
+
+removeLast(letters);
+```
+
+##### The function call reads from or writes to any data entity that is non-local to that program
+
+This concerns all input and output operations executes during the lifespan of an executed function.
+
+**Examples of this are:**
+
+- **Reading and writing to/from**:
+
+  - files on disk
+  - networks
+  - keyboard
+  - command line
+  - display
+  - speakers
+  - system hardware such as: pointing devices; clock; random number generator, system clock, camera etc.
+
+- **The function call raises an exception**
+
+  When a function raises an exception and does not handle that exception itself.
+
+  ```javascript
+  function divideBy(numerator, denominator) {
+    if (denominator === 0) {
+      throw new Error("Divide by zero!"); // side effect: raises an exception
+    }
+  
+    return numerator / denominator;
+  }
+  ```
+
+- **The function call invokes another function that has side-effects**
+
+  This includes a very wide range of situations where the function itself only has side effects because the functions it invokes do have side effects.
+
+  **Some illustrative examples are:**
+
+  - `console.log`  -  Writes to the command line
+  - `readline.question`  -  Read and writes from/to the command line and probably more under the hood
+  - `new Date()`  -  Accesses the system clock
+  - `Math.random()`  -  Accesses the system random number generator
+
+
+
+### When is a function used as intended
+
+A function is used as intended when:
+
+- all the required arguments are passed to the function on invocation
+- all the arguments passed to the function on invocation are of the expected type
+- all preparations and precautions specified by the requirements of that function must be met before the function is invoked
+
+
+
+### Mixing side-effects and return value
+
+A function should, in general, **either** have a side-effect  **or** return a useful value and **not both**.
+
+This is because we tend to forget one or the other. We may disregard the return value for the side-effect and vice-versa, which is a bad thing.
+
+There are exceptions to this off course, when we want to read data from a database, we want to:
+
+1. Access the database to read some data
+2. Return the data returned by the database
+
+When a function has both side-effects and returns a value, the return value should be a useful one!
+
+
+
+### What are pure functions
+
+**Pure functions have two principal attributes:**
+
+1. They have **no** side effects
+2. They return the **exact same** value given the **exact same input**, **every time**.
+   This implies that the function returns a value based **solely** on the arguments.
+
+
+
+**These rules assure us that:**
+
+- Invoking a pure function does not affect anything outside the function.
+
+- The inner working of a pure function is not affected by any state external to the function itself.
+
+  This is great for testing because we know that no other part of the program affects how the function operates.
+
+
+When talking about the purity of functions though, we should focus on the purity of the function `call` and not on the function itself, because the same function can pure when invoked/called with some arguments and not-pure when invoked/called with another set of arguments.
 
 
 
@@ -1401,6 +1639,13 @@ console.log(a !== b);
 ```
 
 
+Primitive values are **immutable** in that **their content cannot be mutated**
+
+![](./res/mutable_objects0.png)
+
+Operations on primitives always return a new value of the same type of the immutable value.
+
+
 
 ### The case for object values
 
@@ -1431,6 +1676,17 @@ console.log(b);
 
 
 
+Objects **are mutable** in terms of **changing their content without changing the object reference itself**.
+
+![](./res/mutable_objects1_rev.png)
+
+Operations on objects may mutate the object. Assigning or re-assigning an array index/element from one value to another value, means to **change what that particular cell is pointing to**.
+![](./res/mutable_objects2.png)
+
+
+
+
+
 ### How arguments are passed to functions
 
 Conceptually, here is how it works:
@@ -1443,6 +1699,53 @@ This means that inside functions, primitive values are copies of the original pr
 
 - pass by value for primitive values
 - pass by reference value for objects
+
+
+
+## Arrays
+
+JavaScript arrays are `heterogenous`, which means that a single array does not have to contain a single data type but can contain all sorts of data types concurrently.
+
+
+
+- continue here with organizing Array content from the temporary `array_temp.md` file into this clean document. At this point the temporary file should contain 95% of the array specific notes from both rough notes documents so no need to scan for more right now.
+
+
+
+### Arrays are JavaScript objects
+
+Arrays are implemented as JavaScript `Object`, which has many consequences in terms of an array's capabilities. This is why the `typeof` operator returns `object` and why arrays can house key-value pairs other that indexed array elements.
+
+**Adding here?**
+
+- The array `length` property is always a non-negative integer less than 2^32
+- The array `length` is always one larger than the largest array index
+
+
+
+### Arrays automatically shrink and expand
+
+
+
+### Sparse arrays
+
+
+
+### Constant arrays
+
+
+
+### Arrays and equality
+
+
+
+### Arrays and operators
+
+
+
+### Array CRUD operations
+
+
 
 
 
@@ -1733,3 +2036,8 @@ console.log(global.foo); // undefined
   This may not be relevant right now, but in terms of OO JS this is really important.
 
   `[info::1]`
+  
+- What exactly are and what is the difference between`enumerable properties` and `iterable collections`
+
+- What does console.log show exactly? 
+  An empty empty does not have any output for example!
