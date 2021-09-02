@@ -1216,7 +1216,11 @@ numbers.forEach((num, index) => {
 });
 ```
 
-Using the built-in `Object.prototype.keys` method. Note that the `keys` method **does not include the keys of the object prototype**.
+Using the built-in `Object.prototype.keys` method. Note that the `keys` method:
+
+- does not include the keys of the object prototype
+- does not include un-initialized array elements
+- returns the keys as strings
 
 ```javascript
 const obj = {a: 65, b:66, c:66};
@@ -1708,42 +1712,244 @@ JavaScript arrays are `heterogenous`, which means that a single array does not h
 
 
 
-- continue here with organizing Array content from the temporary `array_temp.md` file into this clean document. At this point the temporary file should contain 95% of the array specific notes from both rough notes documents so no need to scan for more right now.
-
-
-
 ### Arrays are JavaScript objects
 
 Arrays are implemented as JavaScript `Object`, which has many consequences in terms of an array's capabilities. This is why the `typeof` operator returns `object` and why arrays can house key-value pairs other that indexed array elements.
 
-**Adding here?**
+To check whether a value is an array the `Array.isArray` method must be used since `typeof` does not differentiate between objects and 'arrays' because arrays are implemented in terms of objects.
+
+```javascript
+let array = ['hello', 'world'];
+let object = {0: 'hello', 1: 'world'};
+console.log(typeof(array) === typeof(object)); // true
+```
+
+
+Keep in mind that bracket notation on arrays implicitly coerces the value.
+
+***Example of implicit coercion when using the bracket operator on array***
+
+```javascript
+let array = ['a', 'b', 'c'];
+console.log(array[1] === 'b');
+
+// integer in bracket operator is implicitly coerced into a string representation
+array[1] = 'f';
+console.log(array[1] === 'f');
+
+// strings are used as is and access the same array elements
+array['1'] = 'z';
+console.log(array[1] === 'z');
+```
+
+**Note**: Despite the similarities, arrays and objects differ beyond this point
+
+
+
+### Array properties
+
+Array have some interesting properties:
 
 - The array `length` property is always a non-negative integer less than 2^32
 - The array `length` is always one larger than the largest array index
 
 
 
+### Types of array entries
+
+Since arrays are objects, every entry in an array is internally represented as a key-value pair, but we differentiate between entries where the key has a natural relationship with non-negative array indices, in other words when the key is in the range `[0; +inf[`. 
+
+Because any other array index such as negative numbers or any other value for that matter would not make sense in a raw array, we differentiate between the two following types of array entries:
+
+
+
+##### Array index properties  -  True array elements
+
+These array elements/properties have non-zero key that is a typical, zero-based array index and are reflected by the arrays `length` property.
+
+##### Array properties
+
+These array elements/properties can have any key apart from non-zero integers that do not make sense as ordinary array indices and behave a little different as one would expect, such as negative indices or any other value that is not automatically coerced into a non-negative number.
+
+Array properties have a few quirks to be aware of:
+
+- these do not count towards the array `length` property although they add key/value pairs to an array
+- these are added as key/value pairs and treated separately from true array elements
+- these are disregarded by many built-in methods such as `Array.prototype.forEach`, which does not iterate array properties
+
+
+
 ### Arrays automatically shrink and expand
+
+Setting the `length` property of an array directly affects the array cells in various ways:
+
+- Adding a true array element at an out-of-bounds index automatically expands the array length and pads the array with `empty` elements
+- Increasing or decreasing the length property of an array directly affects the size of the array in memory.
+  Depending on the previous and new size, elements may be created, deleted or padded.
 
 
 
 ### Sparse arrays
 
+A sparse array refers to an array that contains less initialized elements than the `length` property returns. In other words, a sparse array contains `non-defined` elements which do not count to the array length.
+
+***Examples of sparse arrays***
+
+```javascript
+let array = [1, 2]; 
+array.length += 2;
+console.log(array);              // 1, 2, <2 empty>
+console.log(Object.keys(array)); // '0', '1' Object.keys ignores non-initialized elements
+
+// initializing an empty item to undefined is interpreted like any other value
+array[3] = undefined;
+console.log(array);             // 1, 2, <1 empty item>, undefined
+console.log(Object.keys(array)) // '0', '1', '3'
+```
+
+
+When `empty` cells are accessed, the bracket operator returns `undefined`, but that does **not** mean that the value of the cell is `undefined` because the value of that array cell is not set to a value at all!
+
+From the moment an `empty` value is initialized to any value, including `undefined`, it is treated as a true array element.
+
+
+
+### What is an empty array
+
+Again, this adds ambiguity in terms of what an empty array actually is. Adding to the previous notes about `what is an empty array`:
+
+- If the array only contains non-initialized values, the array could be considered 'empty' in terms of the absence of an initialized value based on `Object.keys`
+- If the array only contains non-initialized values, the array could be considered 'non-empty' in terms of the `array.length` because non-initialized elements are still counted towards the length of the array
+
+```javascript
+let arr = [];
+arr.length = 3;
+
+// whether array is empty or not depends on how you look at it
+console.log(arr.length);       // 3      No it is not empty - It contains three elements
+console.log(Object.keys(arr))  // []     Yes it is empty in terms of Object.keys
+```
+
 
 
 ### Constant arrays
+
+Constant identifiers such as identifiers pointing to arrays must be initialized to a value, but cannot be re-assigned to point to another value, but the array cells are not constant by default, which means that they can be re-assigned to anything even through the array (the identifier pointing to the array) is constant.
+
+```javascript
+const array = [1, 2, 3];
+array[1] = 'X';    // does work even in a constant array because the cell is not constants
+array = [4, 5, 6]; // constant identifers cannot be re-assigned,including array references
+```
+
+I think this is a consequence of how pointers work. We cannot change the address a constant pointer is pointing to but we can still change the memory contents of what the constant pointer points to.
+
+**Note**: This may not be accurate in how JS works under the hood, but it seems to be conceptually correct.
 
 
 
 ### Arrays and equality
 
+When comparing arrays, both the strict and loose comparison operators compare array operands based on their pointer value and completely disregard the length and contents of the array. The same thing happens for nested arrays off course:
+
+There are three cases to be aware of:
+
+- `someArray === otherArray` evaluates to `true` only if both values are aliases of each other
+- `someArray == otherArray` works the exact same as the strict version
+- `someArray === notAnArray` the array is coerced into a string first and other rules may apply
 
 
-### Arrays and operators
+Here a few examples:
+
+
+```javascript
+[] == '0';               // false -- becomes '' == '0'
+[] == 0;                 // true -- becomes '' == 0, then 0 == 0
+[] == false;             // true -- becomes '' == false, then 0 == 0
+[] == ![];               // true -- same as above
+[null] == '';            // true -- becomes '' == ''
+[undefined] == false;    // true -- becomes '' == ''
+[false] == false;        // false -- becomes 'false' == 0, then NaN == 0
+```
+
+
+
+### Arrays and other operators
+
+Using arithmetic operators such as `+`; `-`; `*` and `/` are generally not useful as they rely on complex implicit coercion rules. Here a few interesting cases though:
+
+```javascript
+[5] - 2;              // 3
+[5] - [2];            // 3
+5 - [2];              // 3
+5 - [2, 3];           // NaN -- becomes 5 - '2,3', then 5 - NaN
+[] + [];              // '' -- becomes '' + ''
+[] - [];              // 0 -- becomes '' - '', then 0 - 0
++[];                  // 0
+-[];                  // -0
+```
+
+
+Do not use relative operators such as `>`; `<`; `>=` and `<=` with arrays as they evaluate to boolean values in completely unexpected and typically useless ways.
 
 
 
 ### Array CRUD operations
+
+JavaScript includes a variety of methods and functions to operator on arrays and the contents of an array.
+
+These operations can be divided into categories. Some methods belong in more than one of these categories. (I made these categories up to remember typical use-cases for the functions better)
+
+- **Insertion**
+
+  Methods like: `push`; `concat`; `unshift`; `splice`
+
+- **Deletion**
+
+  Methods like: `pop`; `splice`; `shift`
+
+- **Access**
+
+  Using the `[]` operator and using methods such as `slice`; `indexOf`; `lastIndexOf`
+
+- **Transformation**
+
+  Methods like `map`; `filter`; `reverse`; `join`
+
+- **Aggregation**
+
+  Methods like `reduce`
+
+- **Inclusion**
+
+  Methods like `includes`
+
+
+
+### Intuitive array facts
+
+- When using bracket notation on an array, think of accessing an array property rather than an array elements. This way the notion of the array as an object is always in context.
+- Always be aware of how functions interpret `non index` and `empty` elements as well as how the array `prototype` properties are interpreted
+- When talking about `empty` arrays, make sure to define what `empty` means in that context
+
+
+
+### Do not misuse arrays as objects
+
+While many Object operations such as `delete object.property` work on arrays, it is generally a bad idea for multiple reasons. Use idiomatic array functions and operators for arrays to avoid weird edge cases and to make the intentions clear.
+
+Some examples to be aware of are:
+
+- Instead of deleting array properties using the object `delete` operator use the `splice` method
+- Access array properties directly instead of using the object `in` operator to determine if property is defined
+
+
+
+## Objects
+
+### Carry over from other parts of the notes
+
+- When one operand is an object and the other operand is not, JS coerces the object to the string `[object Object]`
 
 
 
