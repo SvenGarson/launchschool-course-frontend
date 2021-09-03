@@ -1947,11 +1947,258 @@ Some examples to be aware of are:
 
 ## Objects
 
+A JavaScript Object is based on the idea of a hash map, which in JavaScript are used for two purposes conceputally:
+
+1. As hashes, like hashes, dictionaries et. Al in other language
+2. As basis for object-oriented programming i.e. bundling state and functionality
+
+
+
+### Terminology example
+
+***Declaring an object***
+
+```javascript
+const someObject = {
+  name: 'Bob',
+};
+```
+
+- the `someObject` is an object
+- `someObject` has a property called `name`
+- the `value` of the `name` `property` is the string primitive `Bob`
+
+
+
+### JavaScript Objects as state/functionality containers
+
+JavaScript objects can be used to mimic how an instance of a class in other languages could behave by using an Object as a means to map from properties to state and functions, which in terms of the Object itself are the exact same key-value pairs where:
+
+- **Properties** refer to an object's key-value pair that represents the **attributes** or **state** of that particular object. These are typically accessed using dot notation but can also be accessed using bracket notation.
+- **Methods** refer to an object's key-value pair that holds a function as **functionality** that operates on that particular object's properties. These methods, which are functions contained in objects as properties, can then be accessed like any other property and be invoked by appending parentheses.
+
+
+
+### Discerning the difference between primitives and objects
+
+JavaScript provides many built-in objects such as for instance `String`; `Array`; `Object`; `Math`; `Date` and many more, but these are not to be confused with their primitive types counterparts such as `strings` and `numbers` even though their names are the same.
+
+In other words, technically, we cannot invoke methods on primitive values:
+
+```javascript
+'hello'.length // evaluates to 5 - this works through, why is that?
+```
+
+The reason the above code works is because JavaScript automatically and temporarily coerces the primitive into a built-in object counterpart so we can indeed invoke that method on the 'primitive', which means:
+
+- **we do not need to instanciate built-in objects just use the methods on values**
+- **we do not to make a difference between primitives and Objects for the purpose of invoking methods**
+
+
+```javascript
+let stringPrimitive = 'doctor';                    // using a string literal
+let uppercase = stringPrimitive.toUpperCase();     // DOCTOR
+console.log(uppercase === 'DOCTOR');               // temporarily coerced to String object
+console.log(typeof(stringPrimitive) === 'string'); // true
+
+let stringObject = new String('who?');             // using a constructor
+console.log(typeof(stringObject) === 'object');    // true because String is a built-in 
+                                                   // Object
+```
+
+
+
+### Setting and accessing object properties
+
+Object properties can be specified and accessed using `bracket notation` and `dot notation`.
+
+```javascript
+let person = {};
+person.name = 'Sheila'; // dot notation
+person['age'] = 29;     // bracket notation
+```
+
+Dot notation does not work for invalid identifiers such as for example when the object property key/identifier contains a space:
+
+```javascript
+let animal = {};
+animal.the sound = 'Grrrrr'; // SyntaxError: Unexpected identifer
+animal['the sound'] = 'Grrrrrrrr!'; // works fine
+```
+
+Values used inside the brackets are implicitly coerced into a string before the operation is executed, this is the case for all values provided between brackets such as numbers; booleans etc:
+
+```javascript
+> let myObj = {}
+> myObj[true] = 'hello'   // implicitly coerces the boolean true to the string 'true'
+> myObj['true'] = 'world' // overrride the value store previously using the boolean
+> myObj[true] // world
+```
+
+When re-assigning an already existing object property, the existing property value is overriden by the new one.
+
+​                                                     **Use dot notation whenever possible**
+
+
+
+##### Property keys and values data types
+
+- Property keys must strings
+- Property values can by any object value
+
+
+
+### Object properties insertion and deletion
+
+- **Property insertion**  -  Using bracket and dot notation
+
+- **Property deletion**  -  Using the `delete` keyword with either dot or bracket notation:
+
+  ```javascript
+  let colors = {red: 'red', green: 'green'};
+  delete colors.red;
+  delete colors['green'];
+  ```
+
+
+
+### Common operations on objects
+
+##### Iterating object properties and/or property values
+
+- `Object.values(someObject)`  -  returns an array of properties as strings
+- `Object.entries(someObject)`  -  returns a nested array where the arrays are two element arrays with the first element representing a property as string and the second element the property value as the data type it is stored as.
+
+##### Merging objects
+
+Multiple objects can be merged into another object using the `Object.assig(target, ...sources)` method. This function mutates the `target` by adding all property-value pairs into `target` and returns `target`.
+
+```javascript
+const objA = {a: 'A entry'};
+const objB = {b: 'B entry'};
+const objC = {b: 'Last entry'};
+const merged = Object.assign({}, objA, objB, objC);
+console.log(merged);
+```
+
+
+**Note**: Property values are overriden in the `target` object when `sources` contain the same properties!
+**Note**: When extracting the properties and values from an object, never rely of the order of those key-value pairs.
+
+
+
+### Ways to declare custom objects
+
+There are three ways to declare objects. The terms `object` refers to a unit of state and functionality and not the concept of a hash in order to move towards understanding object-oriented concepts as they are implemented in JavaScript. (OO specifics are discussed in a later object-oriented specific course)
+
+- **Custom object using object literal notation**
+
+  ```javascript
+  const customObject = {
+    color: 'green',
+    toString: function () { return 'I like green!'; },
+  };	
+  console.log(customObject.color === 'green');
+  console.log(customObject.toString()) // I like green
+  ```
+
+- **Declaring an object through built-in and custom classes through a constructor**
+
+  ```javascript
+  let string = new String('Meep');
+  console.log(typeof(string) === typeof({}));
+  console.log(typeof(string) === 'object');
+  
+  let array = new Array(0);
+  console.log(typeof(array) === typeof({}));
+  console.log(typeof(array) === 'object');
+  ```
+
+- **Using the `Object.create` method using a prototype**
+
+  ```javascript
+  let prototype = {};
+  let newObject = Object.create(prototype);
+  
+  console.log(typeof(newObject) === 'object');
+  ```
+
+
+
+### Prototypes  - The basis for object-oriented JavaScript
+
+When an object inherits from another object in terms of object-oriented concepts, the 'parent' is referred to  as `prototype`. So when `object b inherits from object a` we say `object b has object a as it's prototype`.
+
+
+
+### ES6 compact method notation
+
+Specifying a function as property value is a matter of setting a property value to a function:
+
+***Using a function expression as property value***
+
+```javascript
+const dog = {
+  speak: function() {
+    console.log('Dogs go woof!');
+  }
+};
+```
+
+But ES6 adds syntactic sugar to set a property value to a function in a less verbose manner
+
+```javascript
+const dog = {
+  speak() {
+    console.log('Dogs go woof!');
+  }
+};
+
+dog.speak();
+```
+
+**If ES6 features are available, the preferred way is to use compact method notation**.
+
+
+
+### Constant objects
+
+An `Object` behaves the same as an `Array` in terms of it being a constant.
+
+A constant `Object` pointer can not be pointed to something else but any values in the object are not constant by default and hence can be changed. To make the key and values, i.e. `properties` adhere to the same rules, the `Object.freeze();` method must be used one the object to 'freeze' the properties.
+
+```javascript
+const MyObj = Object.freeze({ foo: "bar", qux: "xyz" });
+```
+
+**Note**: The behaviour works 1-level deep again and not for nested properties.
+
+
+
 ### Carry over from other parts of the notes
 
 - When one operand is an object and the other operand is not, JS coerces the object to the string `[object Object]`
 
 
+
+## Styles and conventions
+
+- Multi-line object declarations should be declared with a trailing `,` after every key-value pair, including the last one, to make copying and stuff easier:
+
+  ```javascript
+  let someObject = {
+    a: 65,
+    b: 66,
+  };
+  ```
+
+  But single single object declarations should not have a trailing comma after the last property
+
+  ```javascript
+  let singleLineObject = { a: 65, b: 66 };
+  ```
+
+  
 
 
 
@@ -2247,3 +2494,5 @@ console.log(global.foo); // undefined
 
 - What does console.log show exactly? 
   An empty empty does not have any output for example!
+  
+- the value `undefined` has **no** built-in object counterpart, what about `null`? As it seems both `undefined` **and** `null` have no built-in Object counterpart. Is this really true
