@@ -2475,24 +2475,28 @@ console.log(global.foo); // undefined
 
 ## Questions and answers
 
-- I left markers in this document that map questions and comment to different parts of the document for fast mapping of additional information later.
+- **What is, and how specifically does `import` work in JavaScript?**
 
-- What are higher order functions?
-
-- Go through this post and add any relevant concept.
-  This will fit well into the `variables as pointer` (name of chapter may differ slightly)
-
-- Make note and understand the difference in iteration techniques and how they interact with the inheritance model i.e for example:
-
-  A `for..in` loop iterates over the prototype chain properties while `Object.entries()` does not return these properties.
-
-  This may not be relevant right now, but in terms of OO JS this is really important.
-
-  `[info::1]`
   
-- What exactly are and what is the difference between`enumerable properties` and `iterable collections`
 
-- What does console.log show exactly? 
-  An empty empty does not have any output for example!
+- **I left markers in this document that map questions and comment to different parts of the document for fast mapping of additional information later.**
+
+- **What are higher order functions?**
+
+- **Go through this post and add any relevant concept.**
+  **This will fit well into the `variables as pointer` (name of chapter may differ slightly)**
+
+- **Make note and understand the difference in iteration techniques and how they interact with the inheritance model i.e for example:**
+
+  **A `for..in` loop iterates over the prototype chain properties while `Object.entries()` does not return these properties.**
+
+  **This may not be relevant right now, but in terms of OO JS this is really important.**
+
+  **`[info::1]`**
   
-- the value `undefined` has **no** built-in object counterpart, what about `null`? As it seems both `undefined` **and** `null` have no built-in Object counterpart. Is this really true
+- **What exactly are and what is the difference between`enumerable properties` and `iterable collections`**
+
+- **What does console.log show exactly?** 
+  **An empty empty does not have any output for example!**
+  
+- **the value `undefined` has no built-in object counterpart, what about `null`? As it seems both `undefined` and `null` have no built-in Object counterpart. Is this really true**
