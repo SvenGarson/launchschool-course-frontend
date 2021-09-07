@@ -4,26 +4,9 @@
 
 ## Running comments and thoughts
 
-- Gather up the lists of random nodes per category and determine if they should stay in these random lists or be categorized properly
-
-
-
-## Running notes to fit somewhere
-
-- About strings
-
-  - Double and single quotes can be escaped using `\` or the other type used for the
-    respective other type of quote
-
-  - Starting and ending the string with backticks (`) enables interpolation in the string using
-
-    ```javascript
-    ${someExpression}
-    ```
-
-    **Note**: feature is part of `template literals` and works only in a string between backticks!
-
-- Division by zero is `Infinity` in JS, why?
+- Group random facts into a single category
+- Go over the questions and answer them seriously
+- Answer course questions that may come up in the exam
 
 
 
@@ -45,6 +28,16 @@
   This mechanism can also be referred to as `silent` or `automatic` coercion.
 
 - `Initializer` refers to the expression a newly declared variable is bound to on creation on the same line.
+
+- `template literal syntax` are strings literals that allow embedding/interpolating of expressions and are nested between a pair of back-ticks:
+
+  ```javascript
+  const name = 'Heisenberg';
+  const sayMyName = `${name}. Daaamn right!` // uses template literal syntax
+  console.log(sayMyName);
+  ```
+
+  
 
 
 
@@ -94,7 +87,51 @@ Most modern browsers support ES6+ features well but older browsers do not, so wh
     - `Number.isNaN(value)`
     - `Object.is(value, NaN)`
 
-- `Infinity` values are considered Numbers
+- `Infinity` is considered to be a `Number`
+
+- `\` at the end of a line forces JS to ignore the new line, this is great to chain long strings together.
+    But beware the spaces because JS treats each space/tab etc as an actual space/tab in the string
+
+    - The verbose version
+
+      ```javascript
+      let longText = 'esfesvsfawesvef ef sev es esfse es\n' +
+                     'esfesf ef sef osjefn sief iosnevion';
+      ```
+
+    - The less verbose and less flexible version
+
+      ```javascript
+      let longText = 'awdd awca cesesfsefs es se\n\
+      dawd  awdwdwad wad wa dwa\n\
+      dwawd wf ffesfes skf sef';
+      ```
+
+    **Note**: When wrapping lines using `\`, the backward slash must be the last character on the wrapped line. Any character after the backward slash raises a `SyntaxError`.
+
+- JavaScript functions are first-class function that have the following attributes:
+
+    1. can be assigned to variables and as elements of data structures (array, objects)
+    2. can be passed to a function as argument
+    3. can be returned as return value from a function/method
+
+- When 'stringifying' values, depending on what the value is and how it is stringifyed, the result string is different, here some examples:
+
+    - Passing a function value as argument to `console.log`  outputs `[Function: functionName]`
+    - Using a function value in string interpolation and concatenation results in the full definition of the function as string
+
+- Apparently the object literal notation interprets the following two key-value pair definitions the same way `let obj = {a: 25, 'a': 35}` and the value for  `a` ends up being `35` because `'a'`' and `a` are interpreted the same way.
+
+- All this time I wondered the following code needs parentheses around the number part to call Number methods on:
+
+    ```javascript
+    17.toString();   // does not work
+    (17).toString(); // that does work
+    ```
+
+    The first line does not work because we attempt to invoke a method on a number primitive, which has no methods associated with it. The second line implicitly coerces the primitive value `17` into a `Number` object which is why we can invoke Number methods on line `2`.
+
+
 
 
 
@@ -1479,12 +1516,18 @@ This is the preferred, ES6+ way to specify variable parameters
 
 **Note**: Do not use the identifier `arguments` for the rest parameter as that will shadow `arguments`
 
+
+
 ### Other functions facts and terminology
 
 - Functions that always return a boolean value, true or false, are referred to as `predicates`
 - Functions that are called on some receiving object/value are referred to as `methods`
 - Functions are merely local variables that have a function as the value
 - No exceptions/error is raised when a function is invoked with the wrong number of arguments, more or less but when a parameter does not have a correspondent argument on function invocation, that parameter is bound to `undefined`
+- **While it is convenient** to think of the following two cases of `block`s **they are technically not blocks**:
+
+  - braces that surround an objects literal such as `{ a: 65, b: 66 }`
+  - braces that surround a function body such as `function meep() { // do stuff }` are not blocks but **can be treated as blocks most of the time** which is why other blocks are usually referred to as `non-function blocks` i.e. blocks that exclude function definitions.
 
 
 
@@ -1493,8 +1536,6 @@ This is the preferred, ES6+ way to specify variable parameters
 ### What are side-effects
 
 A function that does any of the following is considered to have side-effects
-
-
 
 ##### The function call re-assigns non-local variables
 
@@ -1703,6 +1744,89 @@ This means that inside functions, primitive values are copies of the original pr
 
 - pass by value for primitive values
 - pass by reference value for objects
+
+
+
+## Closures
+
+The concept of closures are technically a mix of lexical and runtime features, but right now it is more effective to think of closures as merely lexical features that depend on the raw structure of the source code.
+
+### What is a closure
+
+Closures and scope are intimately connected concepts because closures effectively use the scope at a particular point in the program lexically to determine what surrounding variables some closure can access. The variables that are in scope when a function is executed depends on the closure that is created when a function is defined.
+
+> A closure is the combination of a function and the lexical environment within which that function was defined.
+
+In the above definition, the term `defined` is accurate since a function can be declared and bound to a local variable using function declarations and function expressions of different types. This term includes both because saying `declared` would exclude function expressions such as arrow functions and anonymous functions.
+
+
+
+### What a closure keeps track of
+
+When a function definition accesses identifiers not declared in that function definition itself, these referenced identifiers (variables; constants ...) are then  'tracked' as part of the functions closure, so the function can access these identifiers when the function/closure is executed later.
+
+In my words, a closure is a chunk of code that has access to the identifiers the chunk of code itself accesses based on what identifiers were in scope lexically when the closure was created.
+
+
+Closures have access to:
+
+- Identifiers that exist and are in scope lexically in the scope the closure is created
+- Only the identifiers that are used in the closure. If the closure does not reference a given identifier, that particular reference is not part of the closure
+
+
+When a closure is created, that closure then has access to the surrounding 'context' which is defined by what is in scope lexically.
+
+
+
+### When is a closure created
+
+A closure is created when a function is **defined**. Again, we say **defined** because that includes the definition of:
+
+- functions through function declaration which defines the function body
+- function expressions which are not function declarations but still **define** the function body, this includes `anonymous functions expressions`; `named function expressions` and `arrow functions`.
+
+
+
+### What is the relationship between closures and scope?
+
+Their relationship is somewhat circular but we can think of the following way conceptually:
+
+- A closure is an executable piece of code that has access to it's lexical surroundings/context, which is based on the scope the closure was defined in and the available identifiers at the point of closure definition
+- Under the hood, the scope makes use of closures that are created during the creation phase.
+  That is because the closures track the lexical execution environment and with that what is accessible at a specific point in the program.
+
+
+
+### What do we mean when say that closures are defined lexically?
+
+It means that a closure determines the identifiers that are accessible to the closure itself based on the lexical/static structure of the source code.
+
+
+
+### How does a closure keep track of identifiers?
+
+An executing closure has access to the identifiers as if they were actually in scope, which means that these identifiers can be treated exactly as in their actual context, which, most interestingly, includes how variables can be re-assigned.
+
+***Example: Re-assigning local variable in closure***
+
+```javascript
+let name = 'Abigale';
+
+const closure = function(newName) {
+  // this function has access to 'name' wherever it is executed
+  // this is actual re-assignment of the local variable 'name'
+  name = newName;
+};
+
+console.log(name === 'Abigale');
+
+// the closure has access to the 'name' variable
+closure('Jack');
+
+console.log(name === 'Jack');
+```
+
+
 
 
 
@@ -2181,24 +2305,56 @@ const MyObj = Object.freeze({ foo: "bar", qux: "xyz" });
 
 
 
-## Styles and conventions
+## JavaScript exceptions
 
-- Multi-line object declarations should be declared with a trailing `,` after every key-value pair, including the last one, to make copying and stuff easier:
+JavaScript is generally a more 'forgiving' language in terms of the reasons that trigger exception-throwing.
+The language often fails silently in that a return value such as `null`; `undefined` or `-1` signal an error, which must then be handled on that return value.
 
-  ```javascript
-  let someObject = {
-    a: 65,
-    b: 66,
-  };
-  ```
+The problem is that these errors can be ignored and are not necessarily handled gracefully.
 
-  But single single object declarations should not have a trailing comma after the last property
+Exceptions close this gap, in that exceptions are not silent and must be dealt with one way or another based on the [error type](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) raised.
 
-  ```javascript
-  let singleLineObject = { a: 65, b: 66 };
-  ```
+***Example: Catching an exception***
 
-  
+```javascript
+try {
+  // code that may throw an exception
+} catch(exception) {
+  // do something when an exception occured with access to that specific exception
+} finally {
+  // executes whether an exception has been raised or not
+}
+```
+
+***Example: Throwing and exception***
+
+```javascript
+throw new TypeError('Some error message');
+```
+
+**Note**: Use exceptions only for exceptional circumstances and avoid throwing exceptions when a return value does the trick.
+
+
+
+### `Syntax Error`
+
+The `SyntaxError` is a type of exception that generally occurs before the program is executed when the JavaScript engine finds a problem with the syntax of the source code, in other words, this error is **not necessarily** based on runtime conditions but can be thrown based on the static source code or during the execution phase.
+
+
+***Example: Runtime throwing a `SyntaxError`***
+
+```javascript
+try {
+  JSON.parse('Now a real json :(');
+} catch(exception) {
+  console.log(`Error thrown ==> ${exception}`);
+} finally {
+  console.log('I am always there');
+}
+
+```
+
+
 
 
 
@@ -2359,6 +2515,8 @@ console.log(global.foo); // undefined
 
 ## ECMAScript conventions
 
+
+
 ### Styling and formatting conventions
 
 #### Control flow
@@ -2378,6 +2536,22 @@ console.log(global.foo); // undefined
   if (dingDong) { // good - spaces missing }
   ```
 
+
+
+#### Variable Declarations
+
+- Always prefer `let` and `const` to `var`
+
+- Declare variables as close to their use as possible **when not using `var`**
+
+- When declaring variables using `var`, **do declare at the top of the scope**
+
+- Use `const` if the 'variable' will never be re-assigned (but it might still be mutated unless the contents are frozen).
+
+  Use `let` or `const` as you see fit, but keep the naming and intentions clear and constants.
+
+
+
 #### Functions
 
 - Spacing and positioning of curly braces around function definition/declaration
@@ -2387,6 +2561,65 @@ console.log(global.foo); // undefined
       // more code here
   }
   ```
+  
+- Never declare functions in a non-function block. Part of the reason is that the function will be accessible in the 'outer ' scope regardless, and putting a function declaration inside a conditional does not change that.
+
+  If you must declare a function in a non-function block such as a conditional, use a function expression instead and bind the function to a local variable with the expected scope.
+
+  ```javascript
+  // bad - Do not declare functions in non-function blocks
+  if (someThing) {
+    function meep() {  // this function is accessible outside conditional anyway
+      // do stuff
+    }
+  }
+  
+  // good - clear intention of defining the function if conditional executes
+  let maybe;
+  if (true) {
+    maybe = () => console.log('Yep. This works!'); // can also be multi-line
+  }
+  ```
+
+- Never use the identifier `arguments` for a parameter or variable, constant or not inside function scope. If you do, the built-in `arguments` object, that is passed to every function invocation implicitly is 'shadowed'. Instead use an identifier such as `args`.
+
+  ```javascript
+  function meep(name, arguments) {
+    // 'arguments' parameter now shadows 'arguments' that is passed to every function
+  }
+  
+  function meep(name, args) {
+    // this is fine
+  }
+  ```
+
+- Passing a callback function to a function invocation can be done a few ways, where if it the complexity oft the function allows, arrow functions are the preferred way to do this.
+
+  ```javascript
+  // pass as function expression to a function invocation as callback
+  [1, 2, 3].map(function (value) {
+    return value * 2;
+  });
+  
+  // do the same thing using an arrow function - better here because the function is // simple to contain everything in a single line
+  [1, 2, 3].map(value => value * 2);
+  ```
+
+- Prefer `String()` over `.toString()` when converting from other types to strings. This is for two reasons:
+
+  1. The `String()` constructor works with all types, including `undefined` and `null`.
+     Invoking `toString` on `null` etc results in an error.
+  2. `String()` always returns a string whereas `toString()` can be overridden by a custom implementation.
+
+
+
+#### Looping
+
+- Apparently the modern opinion is to **not** use incrementing/decrement operators for incrementing/decrementing numbers, apart from a for loop `for(var index = 0; index <= 5; index++) ...` because they can lead to strange bugs/results, especially if programmers are not aware/mindful of the return value.
+
+  The problem here is not the fact that these operators increment and decrement in various ways, but rather what exact value the operator evaluates to if it is not used with numbers etc.
+
+
 
 #### Expressions
 
@@ -2396,8 +2629,251 @@ console.log(global.foo); // undefined
   let meep = 5 + 8
   ```
 
+#### Objects
 
-#### Source code
+- Multi-line object declarations should be declared with a trailing `,` after every key-value pair, including the last one, to make copying and stuff easier:
+
+  ```javascript
+  let someObject = {
+    a: 65,
+    b: 66,
+  };
+  ```
+
+  But single single object declarations should not have a trailing comma after the last property
+
+  ```javascript
+  let singleLineObject = { a: 65, b: 66 };
+  ```
+
+
+
+#### Blocks
+
+- Leave a blank line after blocks and before the statements after that block
+
+  ```javascript
+  if (goNoGo) {
+    // do stuff
+  }
+  
+  moreStuff();
+  ```
+
+- Do not padd blocks with empty lines
+
+  ```javascript
+  if (someThing) {
+                   // bad - unnecessary padding  
+    return 5;
+  } else {
+    return -1;
+                   // bad - unnecessary padding
+  }
+  
+  
+  ```
+
+- single line control flow can go without braces **on the same line**
+
+  ```javascript
+  if (someThing) doThis(); // good
+  ```
+
+- always use braces for multi line statements
+
+  ```javascript
+  if (someThing) {  // good
+    doThis();
+  }
+  ```
+
+- function declarations should always use multiple lines and braces (this excludes arrow functions!?
+
+  ```javascript
+  function woof() { return false; }  //  bad
+  
+  function woof() {  // good
+    return false;
+  }
+  ```
+
+- For if-else if statements put the else (and else if) on the same line as previous closing brace
+
+  ```javascript
+  if (truthy) {
+    // event 1
+  } else {        // on the same line as previous block closing brace
+    // event 2
+  }
+  ```
+
+**Semicolons**
+
+- Use semicolon after every statement apart from behind a block **unless that block is a function expression (both function expressions in normal and arrow syntax)**
+
+  ```javascript
+  let woof = 'doggy';  // good  -  finalize statements with semicolon
+  
+  while (true) {
+    // do epic stuff
+  };                   // bad  -  no semicolon after block
+  
+  while (true) {
+    // do more good stuff
+  }                    // good  -  no semicolon ...
+  ```
+
+  ```javascript
+  // do not finalize function declaration with semicolon
+  function meep() {
+    // do stuff
+  }                   // good  -  this is not a function expression
+  
+  // DO finalize a function expression with semicolon
+  const foo = function () {
+   return -1;
+  };                  // good  -  this IS a function expression
+  
+  // DO finalize function expression for arrow style syntax, TOO!
+  const melon = () => true;  //  good  -  this is also a function expression
+  ```
+
+  
+
+#### Semicolons
+
+- Use semicolon after every statement apart from behind a block **unless that block is a function expression (both function expressions in normal and arrow syntax)**
+
+  ```javascript
+  let woof = 'doggy';  // good  -  finalize statements with semicolon
+  
+  while (true) {
+    // do epic stuff
+  };                   // bad  -  no semicolon after block
+  
+  while (true) {
+    // do more good stuff
+  }                    // good  -  no semicolon ...
+  ```
+
+  ```javascript
+  // do not finalize function declaration with semicolon
+  function meep() {
+    // do stuff
+  }                   // good  -  this is not a function expression
+  
+  // DO finalize a function expression with semicolon
+  const foo = function () {
+   return -1;
+  };                  // good  -  this IS a function expression
+  
+  // DO finalize function expression for arrow style syntax, TOO!
+  const melon = () => true;  //  good  -  this is also a function expression
+  ```
+
+  
+
+#### Spacing
+
+- Use only spaces for indentation. If using tabs convert tabs to spaces. Use two spaces per level.
+
+  ``` javascript
+  // a · represents a single space
+  function foo() {
+  ··let bob = 'omp';
+  }
+  ```
+
+- Use single space before the opening curly brace
+
+  ```javascript
+  function test()·{
+    // do stuff
+  }
+  ```
+
+- Place single space before opening parenthesis in control statements:
+
+  ```javascript
+  if·(someThing)·{
+    // do stuff
+  }
+  ```
+
+- Do not precede a function parameter list with a space
+
+  ```javascript
+  function·meep·(a, b)·{  // not good, no space before argument list!
+    // do stuff
+  }
+  
+  function·meep(a, b)·{  // good, no space before argument list
+    // do stuff
+  }
+  ```
+
+- Distance operators and operands with single space
+
+  ```javascript
+  let x=5*u; // bad
+  let x = 5 * u;
+  ```
+
+- Do not padd parenthesis with spaces
+
+  ```javascript
+  if ( someThing ) { /**/ } // bad
+  if (someThing) { /**/ }   // good
+  ```
+
+- No spaces preceeding `,` and `;`
+
+  ```javascript
+  someFunc(a ,b) ; // bad
+  someFunc(a, b);  // good
+  ```
+
+- No whitespace at the end of lines and no white space in 'empty' lines
+
+  ```javascript
+  let x = 5 * 9;·· // bad
+  let x = 5 * 9;   // good
+  ···              // bad  -  this is supposed to be an empty line
+  ```
+
+- Never nest ternary operators
+
+
+
+#### Numbers
+
+- Always use the  `Number` constructor for type casting values into numbers (if `parseInt` is not used)
+
+  ```javascript
+  let toNumber = Number('3.1415');
+  ```
+
+- Always specify the `parseInt` `radix` argument to make intentions clear (if `Number()` is not used)
+
+  ```javascript
+  let toInt = parseInt('154.58');
+  ```
+
+
+
+#### Booleans
+
+- When converting any value to the boolean equivalent based on the value's truthiness, use one of the following two methods
+
+  ```javascript
+  let toBoolean = Boolean(25);  // good
+  let alsoToBoolean = !!99;     // best    
+  ```
+
+
+
+#### Source code editor
 
 - Always use spaces and not tabs for indentation
 
@@ -2406,6 +2882,13 @@ console.log(global.foo); // undefined
 ### Naming conventions
 
 #### Functions
+
+- Use `camelCase` for both variables and function names
+
+  ```javascript
+  let fooBar = () => true;
+  let heightMap = [1, 2, 3];
+  ```
 
 - Use `camelCase` for non-constructor function identifiers
 
@@ -2428,6 +2911,13 @@ console.log(global.foo); // undefined
   ```
 
 #### Constants
+
+- Constants **can** be `SCREAMING_SNAKE_CASE` but it is acceptable to use `camelCase`
+
+  ```javascript
+  const PI_SQUARED = (3.1415 ** 2);
+  const piSquared = (3.1415 ** 2); // acceptable
+  ```
 
 - For constants that do not point to a function and un-changing configuration values use screaming snake case
 
@@ -2460,10 +2950,12 @@ console.log(global.foo); // undefined
 
 
 
-### Best practices
+### Other best practices
 
 - Use strict-equality comparison whenever possible to make the intentions clear and not rely on implicit coercion
 - Even though strict-equality should be used, only the same type of values should be compared. The implication is that then, the loose-equality operators are totally fine to use since there would be no implicit coercion.
+- Use single quotes for strings wherever possible
+- Prefer explicit coercion over implicit coercion
 
 
 
@@ -2500,3 +2992,74 @@ console.log(global.foo); // undefined
   **An empty empty does not have any output for example!**
   
 - **the value `undefined` has no built-in object counterpart, what about `null`? As it seems both `undefined` and `null` have no built-in Object counterpart. Is this really true**
+
+- **Apparently arrow functions solve a problem called `lost execution context`. What is that that `lost execution context` exactly?**
+
+- **One example why knowing when what is coerced in to what is essential to know.**
+
+  - When `x` is a `String`, the expressions `x = x + 1;` and `x++` are **not equivalent**.
+
+  What happens is the following:
+
+  - ```javascript
+    > let x = "5" // declare a local variable with identifier 'x' to hold the string "5"
+    > x = x + 1   // number 1 is coerced into a string and concatenated to the string "5" ==> "51"
+    = "51"        // which changes the value of 'x' from "5" to "51"
+    ```
+
+  - ```javascript
+    > let y = "5" // declare a local variables with identifier 'y' to hold the string "5"
+    > y++         // string is coerced into a Number and that number is incremented from 5 to 6.
+                  // 5 is returned since the post-increment operator returns the number BEFORE incr.
+                  // and NOT the number after incrementation
+    ```
+
+- Does JS coerce values into strings implicitly when non-string values are used as Object keys?
+
+- Be aware of how default sorting is executed in JS. Apparently `Array.prototype.sort` converts values to strings and then sorts the array based on that string?
+
+- LS seems to make a difference between variable shadowing and dynamic typing in the following way:
+
+  - If some variable is declared and initialized to some value and then re-assigned in the same scope,
+    LS does not consider this to be variable shadowing but dynamic typing, since any variable can be
+    re-assigned to a value of any type at any point in time.
+
+    ```javascript
+    var foo = 1;
+    
+    function foo() {}
+    
+    // after hoisting
+    
+    function foo() {}
+    var foo = 1;      // 'foo' is simply re-assigned to Number 1
+    ```
+
+  - If some variable declared at an outer scope, and then an insider/deeper scope declares a new variable in that nested scope with the same identifier, LS considers this variable shadowing.
+
+    ```javascript
+    function bar() {
+      let foo = 2;       // this is a new scope, so this 'foo' shadows the global 'foo'
+      console.log(foo);  // logs 2
+    }
+    
+    let foo = 1; // this global is not accessible until this line
+    bar();
+    ```
+
+- What exactly is the `global` object?
+
+- Understand how lexicographical string comparison works
+
+- Why should arrow functions not be used to declare actual functions?
+
+  #### Do not use arrow methods to define an actual method
+
+  Arrow functions can be used as we did up until know i.e. passed as callback argument to a function invocation but arrows functions should never be used to define an actual method as arrow functions have the following  subtle difference in behavior as opposed to 'normally declared functions' which usually make arrow functions unsuitable for function/method declaration.
+
+  This important distinction is ??? !!!
+
+- What does a closure keep track of?
+
+- Understand how a JavaScript program read from source code, how the modules are loaded into a program (which is probably different depending on the environment the program is executed in browser; node; other?) and what procedure the program goes through up to execution.
+
