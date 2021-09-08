@@ -1828,6 +1828,158 @@ console.log(name === 'Jack');
 
 
 
+### Partial function application
+
+A function is said to use `partial function application` when a function is invoked with one argument and returns a function, which when invoked takes the rest of the arguments including the initial function through the context.
+
+This technique is useful when we need to call a function many times with the same, or partially same arguments.
+
+```javascript
+function add(first, second) {
+  return first + second;
+}
+
+function makeAdder(firstNumber) {           // takes one argument  -  others later
+  return function(secondNumber) {           // returns a function
+    return add(firstNumber, secondNumber);  // gets parameters from two invocations
+  };
+}
+
+let addFive = makeAdder(5);
+let addTen = makeAdder(10);
+
+console.log(addFive(3));  // 8
+console.log(addFive(55)); // 60
+console.log(addTen(3));   // 13
+console.log(addTen(55));  // 65
+```
+
+In other words:
+
+> The term 'partial function application' refers to the creation of a function that can call a second function with fewer arguments than the second function expects. The created function supplies the remaining arguments.
+
+
+
+In order for a function to use partial function application, a **reduction of the number of arguments** must take place from the 'outer' function to the returned function, in other words, the returned function must take less arguments that the function that returns that function.
+
+
+
+***Example: Not partial function application because there is not reduction in arguments***
+
+```javascript
+function makeLogger(identifier) {
+  return function(msg) {                  // single argument
+    console.log(identifier + ' ' + msg);  // also single argument
+  };
+}
+```
+
+
+***Example: Partial function application***
+
+```javascript
+function makeLogger(identifier) {
+  return function(msg) {           // only one argument needed  -  reduced!
+    console.log(identifier, msg);  // two arguments needed
+  };
+}
+
+const loggerOne = makeLogger('First logger');
+const loggerTwo = makeLogger('Second logger');
+
+loggerOne('Beat it!');
+loggerTwo('Fasteeeeer!');
+```
+
+**Note**: The `console.log` function takes two arguments where `loggerOne` and two require only one!
+
+
+
+Partial function application is a good use case when repeated function invocations take take the same argument because partial function application can be used to pass the argument to a function once and then use that returned function, which has access to the repeated argument implicitly through it's closure.
+
+
+
+### Use-cases for closures
+
+##### Private containers of state and functionality
+
+- The `counter` variable is private to the `makeCounter` function and cannot be accessed elsewhere.
+
+  ```javascript
+  function makeCounter() {
+    let counter = 0;
+  
+    return function() {
+      counter += 1;
+      return counter;
+    }
+  }
+  
+  let incrementCounter = makeCounter();
+  console.log(incrementCounter()); // 1
+  console.log(incrementCounter()); // 2
+  ```
+
+- Partial function application and `currying`
+
+- Emulating private methods
+
+- Creating functions that can be executed only once
+
+- Memoization
+
+- Iterators and generators
+
+- The module pattern i.e. putting code and data into modules
+
+- Asynchronous operations
+
+
+
+
+
+### Intuitive closure facts
+
+- When a function i.e. a closure is executed and accesses an identifier, that identifier must be resolved which JavaScript does by:
+
+  1. Checking if the identifier is accessible through the local function scope
+
+     **and if the identifier is not in scope**
+
+  2. Checking the closure of the function context and whether it has access to that identifier through the closure.
+
+- The closures used in the execution phase (which are used to look-up up tracked identifiers) are created during the creation phase. **Is this accurate through?**
+
+- The thing that determines what identifiers a closure has access to is the context in which the closure is created and in and **not** what context the closure is executed in.
+
+- Right now it's useful to think of closures as being based solely on source code structure
+
+- Closures can access everything that is accessible at the point of closure creation
+
+- Closures are **not snaphots** of the context they are created in but rather has access to everything that was accessible when the closure was created as if these entities were actually in scope. This implies that the  closures have the ability to:
+
+  - re-assign variables to another value
+  - and do every other thing that can be done in the original context
+
+- Example of creating a closure that has access to and uses a variable that was available in the creation context.
+
+  ```javascript
+  const numberList = [];
+  
+  const closure = function(number) {
+    // this context has access to the 'numberList' constant
+    numberList.push(number + number * 10);
+  };
+  
+  [1, 2, 3].forEach(closure);
+  
+  // the closure add the number to the list for every item in [1, 2, 3]
+  // which means that the 'numberList' variable ends up being [11, 22, 33]
+  console.log(numberList);
+  ```
+
+  
+
 
 
 ## Arrays
@@ -3062,4 +3214,6 @@ console.log(global.foo); // undefined
 - What does a closure keep track of?
 
 - Understand how a JavaScript program read from source code, how the modules are loaded into a program (which is probably different depending on the environment the program is executed in browser; node; other?) and what procedure the program goes through up to execution.
+
+- Is it accurate that closures used in the execution phase (which are used to look-up up tracked identifiers) are created during the creation phase?
 
