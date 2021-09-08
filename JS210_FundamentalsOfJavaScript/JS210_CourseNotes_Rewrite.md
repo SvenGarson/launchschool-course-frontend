@@ -1,15 +1,5 @@
 # JS210 Notes Rewrite
 
-
-
-## Running comments and thoughts
-
-- Group random facts into a single category
-- Go over the questions and answer them seriously
-- Answer course questions that may come up in the exam
-
-
-
 ## Terminology
 
 - In terms of the official documentation:
@@ -514,53 +504,56 @@ Constants are declared using the `const` keyword and must be initialized upon de
   Function and block scope can both be referred to as `local variable scope` in terms of how the scope works in different parts of the program.
   Both of the following types of conceptual scopes work the same way in terms of relative, i.e. inner and outer scopes, but at different levels because we want to differentiate between function and further, more deeply nested scopes.
 
+
   **The differentiation to make is the following:**
 
-  - `Function scope` means that a variable/constant is declared immediately inside a function definition but outside any block inside that function. These variable/constants are accessible in the function as well as any nested/inner function relative to the top level of the function definition, but the specifics depend on which keyword has been used for the declaration, i.e. `let`; `const` or `var` and where the variable/constant was declared.
+  `Function scope` means that a variable/constant is declared immediately inside a function definition but outside any block inside that function. These variable/constants are accessible in the function as well as any nested/inner function relative to the top level of the function definition, but the specifics depend on which keyword has been used for the declaration, i.e. `let`; `const` or `var` and where the variable/constant was declared.
 
-    ![](./res/scoping_diagram1-20200720.png)
+  ![](./res/scoping_diagram1-20200720.png)
 
-    __*Code example*__
+  __*Code example*__
 
-    ```javascript
-    let name = 'Julian'; // global scope  -  Accessible to everyone?
-    
-    function greet() { // function declared in global scope - which makes this a global function
-      function say() { // nested function is declared directly in function scope - equivalend to local variable/block scope
-        console.log(name); // function invocation in nested function scope
-      }
-    
-      say();  // function scope invocation of the 'say' function
+  ```javascript
+  let name = 'Julian'; // global scope  -  Accessible to everyone?
+  
+  function greet() { // function declared in global scope - which makes this a global function
+    function say() { // nested function is declared directly in function scope - equivalend to local variable/block scope
+      console.log(name); // function invocation in nested function scope
     }
-    ```
+  
+    say();  // function scope invocation of the 'say' function
+  }
+  ```
 
-  - `Block scope`  means that a variable/constant is declared in the confines of a curly-braces delimited block which can be achieved in different ways, for instance:
+  
 
-    - Simple `{}` block that contains the declarations
-    - Control flow such as if-statements and switches
-    - Looping constructs
-    - etc.
+  `Block scope`  means that a variable/constant is declared in the confines of a curly-braces delimited block which can be achieved in different ways, for instance:
+
+  - Simple `{}` block that contains the declarations
+  - Control flow such as if-statements and switches
+  - Looping constructs
+  - etc.
 
 
-    __*Code example*__
-    
-    ```javascript
-    let name = 'Julian'; // global scope  -  Accessible to everyone?
-    
-    function greet() { // declared in global scope -  nothing special
-      function say() { // function scope  -  behaves as local vaiables would
-        console.log(name); // nested function scope  -  again, nothing special
-      }
-        
-      while(true) {
-       console.log("Hello!"); // block scope
-      }
-    
-      say();  // function scope of 'greet' function
+  __*Code example*__
+
+  ```javascript
+  let name = 'Julian'; // global scope  -  Accessible to everyone?
+  
+  function greet() { // declared in global scope -  nothing special
+    function say() { // function scope  -  behaves as local vaiables would
+      console.log(name); // nested function scope  -  again, nothing special
     }
-    ```
+      
+    while(true) {
+     console.log("Hello!"); // block scope
+    }
+  
+    say();  // function scope of 'greet' function
+  }
+  ```
 
-
+  
 
 ### Common variable scoping rule gotcha
 
@@ -2505,8 +2498,6 @@ try {
 }
 
 ```
-
-
 
 
 
