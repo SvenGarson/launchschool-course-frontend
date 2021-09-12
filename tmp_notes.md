@@ -6,89 +6,10 @@
 
 ## Notes
 
-- an object is a dynamic collection of properties where every property has a key string that is unique withing that particular object
-
-- fundamental object operations are get; set and delete
-
-- What is a property?
-
-  A property is a named collection of attributes, and the attributes of these properties
-  are:
-
-  - property value
-  - writeable boolean
-  - enumerable boolean
-  - configurable boolean
-  - get
-  - set
-
-- two kinds of properties in the language
-
-  - Data properties
-  - Accessor properties
-
-- ES uses one single data type to represent number which is a double precision 64-Bit floating point type.  Decimal fractions are approximate so the following is the case:
-
-  ```javascript
-  a = 0.1;
-  b = 0.2;
-  c = 0.3;
-  
-  (a + b) + c === a + (b + c); // false - because fractions are approximate
-  ```
-
-  and in order to work with numbers like this correctly, the numbers should be converted to integers before doing the work and the converted back into the decimal representation. The upper limit of the numbers that are intuitively handled in ES is  about 9 quadrillion, at which weird behaviour occurs.
-
-  Also, the associative law does not always work as expected.
-
-- The built-in prototypes can be 'extended' or 'augmented' by changing the properties of those particular objects. This is useful when browser do not yet support features that will be supported in the future, as a work-around. 
-
-  The problem is that when the functionality gets added to a particular environment and we change the prototype to implement out own, we probably want to use the standard version for it's probably higher speed and documentation.
-
-- The `Math` object is an idea from Java and most of the method in that object should have been `Number` methods
-
-- About the `NaN` nastyness
-
-  ```javascript
-  NaN === NaN // false
-  NaN !== NaN // true
-  ```
-
-- String are sequences of 16-bit unicode characters
-
-- The `parseint` function stops reading the string given when on the first non-digit character.
-  The radix argument should always be used to avoid the following, very common problem where a number starting with a zero is interpreted as octal number.:
-
-  ```javascript
-  parseInt('08') === 0 // true
-  parseInt('08', 10) === 8 // true
-  ```
-
-- Arrays
-
-  Inherit from `object` and use that hash that an object is to simulate the functionality of an array through that hash.
-  Array indices are converted to strings and used to lookup array elements in terms of the underlying hash through hashing and linked list buckets.
-
-  ES Arrays are not very efficient in general because of that, but they are for sparse arrays, which are rarelly used.
-
-  Advantages are though:
-
-  - No need to specify a length, because the array is based on a hash
-  - No need to specify a type
+- **Arrays**
 
 
-  The size of an array is always one larger than the largest index key? This allows the use or traditional constructs to iterate over a range of number.
-
-  Avoid the use of `for/in` loops for arrays as the indices may not be iterated in order and avoid using the dot notation for arrays.
-
-  Dont use delete for deletion because it leaves an empty element, use the `split` method instead, which is slow as it needs to rehash the whole hash potentially to reflect the new indices
-
-- When to use arrays vs object
-
-  - Use objects when names/keys are arbitrary strings
-  - Use arrays when the names/keys are sequential integers
-
-  In this language, objects are the `associative arrays`.
+ When to use arrays vs object
 
 - `null` and `undefined` are special in that they are not objects
 
@@ -187,7 +108,7 @@
   ```
 
 
-  
+
   The above technique follows the following recipe to create an object with **state; behaviour and an interface** through a simple ES object.
   `Crockford` refers to this as the `Power Constructor`:
 
@@ -226,6 +147,7 @@
   - https://www.youtube.com/watch?v=_YwQwVIaNZg
 - Will Smith
 - Jim Carrey
+- David Goggins
 
 
 

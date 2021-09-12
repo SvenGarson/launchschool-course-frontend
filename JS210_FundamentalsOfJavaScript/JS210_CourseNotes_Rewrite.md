@@ -3102,6 +3102,177 @@ console.log(global.foo); // undefined
 
 
 
+## Douglas Crockford . JavaScript the good parts
+
+### Objects - Good and bad parts
+
+ES objects are dynamic collections of properties where every property has a string key unique withing that object. Each object property is a named collection of attributes. The attributes of object properties are:
+
+- **property value**  -  the value associated to the unique property string key
+- **writeable boolean**  -  specifies if the property is writeable
+- **enumerable boolean**
+- **configurable boolean**
+- **get**
+- **set**
+
+
+There are **two types** of properties in ES:
+
+- **Data properties**
+
+  A data property associates the property name to the value, so the property name can be used to retrieve the value directly, like public class instance fields.
+
+  There is no control over how property values are accessed and no encapsulation.
+
+- **Accessor properties**
+
+  An accessor property associates the property name with **one or two** accessor functions, i.e. a `get` and/or `set` function which then specify how the properties are to be accessed and set.
+
+  This seems to be done by associating an object to the property name that specifies any or both of the get and set functions to specify said getter and setter functions.
+
+  This gives us control over how the property values are accessed and enables us to encapsulate object state.
+  
+
+The fundamental operations on objects are:
+
+- getting
+- setting
+- deleting
+
+
+
+### Data types - Good and bad parts
+
+##### Numbers
+
+ES uses a single data type to represent all numbers, that is a 64-bit floating point `double` number.
+All number with a decimal fraction are approximate even with this precision.
+
+The mathematical 'associative' rule typically does not hold with mathematical operations in ES
+
+```javascript
+a = 0.1;
+b = 0.2;
+c = 0.3;
+
+(a + b) + c === a + (b + c); // false - because fractions are approximate
+```
+
+In order for numbers to behave as expected when associativity is needed or when we want to compare decimals between numbers, an approach is to:
+
+1. **Convert the 64-floating point numbers to integers.**
+
+   Example: Convert a dollar amount to cents.
+
+2. **Do the work on the numbers.**
+
+   Example: Compare if two dollar amounts match in terms of the whole number of cents.
+
+3. **Convert the numbers back to decimal representation for intended use.**
+
+
+ES handles number up to about 9 quadrillion properly, which means that when working with huge numbers (when converting decimal numbers to integers for instance) the number and the work done on them **should never exceed 9 quadrillion** in order for operations to work as expected.
+
+ES starts doing weird stuff to larger numbers.
+
+
+
+##### Strings
+
+ES strings are sequences of 16-bit unicode characters.
+
+
+
+##### null and undefined
+
+
+
+
+
+### Converting between data types  - Good and bad parts
+
+##### Converting strings to numbers
+
+The `parseint` function stops reading the string given when on the first non-digit character.
+The radix argument should always be used to avoid the following, very common problem where a number starting with a zero is interpreted as octal number:
+
+```javascript
+parseInt('08') === 0 // true
+parseInt('08', 10) === 8 // true
+```
+
+
+
+### Arrays  - Good and bad parts
+
+Inherit from `Object` and uses that hash-like data structure to simulate array functionality by converting array indices to strings and mapping these index strings to a value in the object hash using standard hash operations and linked-lists.
+
+This makes arrays in-efficient compared to other implementation where arrays are consecutive cells of memory. For sparse arrays (arrays with holes in them) ES objects are more efficient, but these are rarely used nor are they generally useful.
+
+The implementation has advantages though:
+
+- No need to specify a length because the array is based on a hash data structure
+- No need to specify a type because there is no need to map values into a sequence of memory cells with the same size
+
+
+
+While arrays are technically objects, we can technically access array 'cells' using dot notation and bracket notation. Usage of dot notation for array properties such as `length` is a good thing, accessing 'elements' should always be done using bracket notation for idiomatic use of the prototype and clear intentions.
+
+##### The size of an array
+
+An array has a special `length` property, which is always `1` larger than the largest **array element index key**.
+
+
+
+##### Iteration and order of array 'elements'
+
+Iteration of elements in an array occurs by iterating the array object key-strings in numerical, ascending order. There are two ways to do this excluding explicit iteration:
+
+- `for/in`  -  Iterates over the keys of an object. In the case of an array, these are the indices.
+
+  This is discouraged for arrays when the order of iteration is important, because the algorithm may change in the future, potentially ruining previously working code. So do not use for array iteration if order is important.
+
+- `for/of`  -  Iterates over the values of an object. In the case of an array, these are the elements.
+
+
+
+##### Deleting elements from an array
+
+Array elements should be deleted using the `splice` method and never using the `delete` operator.
+
+The principal reason is that `delete` merely removes the object property, as in the key-value in the underlying hash, leaving a hole in the array in terms of the indices, whereas `splice` does the same as `delete` first and then shifts array elements around to reflect the new indices by re-building the entire hash in the worst case.
+
+```javascript
+// using the delete operator leaves whole in the array
+const arr1 = [50, 60, 70];
+delete arr1['1'];
+arr1; // [ 50, <1 empty item>, 70 ]
+
+// using the splice method rebuild the array and leaves no holes
+const arr2 = [110, 120, 130];
+arr2.splice(1, 1);
+arr2; // [ 110, 130 ]
+```
+
+
+
+##### When to use arrays VS when to use objects
+
+- Use objects when properties/keys are arbitrary strings
+- Use arrays when properties/keys are sequential integers and order is important
+
+
+
+
+
+### Extending and augmenting language functionality
+
+The built-in prototypes can be 'extended' or 'augmented' by changing the properties of said objects directly. This is useful when a desired feature is not yet supported by the environment or language standard.
+
+We can then simply specify the functionality as if it were part of the language, but this has a drawback, when the functionality is supported at some point, our implementation is probably slower, less robust, and the behavior and documentation probably does not match the language reference.
+
+
+
 ## Documentation
 
 - [Official ECMAScript Documentation](https://www.ecma-international.org/publications-and-standards/standards/ecma-262/)
@@ -3207,4 +3378,8 @@ console.log(global.foo); // undefined
 - Understand how a JavaScript program read from source code, how the modules are loaded into a program (which is probably different depending on the environment the program is executed in browser; node; other?) and what procedure the program goes through up to execution.
 
 - Is it accurate that closures used in the execution phase (which are used to look-up up tracked identifiers) are created during the creation phase?
+
+- How does JavaScript iterate arrays if the use of `for/in`, which is based on the array index keys is not recommended because the order might not be as expected?
+
+  If `for/of` can properly determine the order of array elements by iterating the key from lowest to highest index, why can `for/in` not do that?
 
