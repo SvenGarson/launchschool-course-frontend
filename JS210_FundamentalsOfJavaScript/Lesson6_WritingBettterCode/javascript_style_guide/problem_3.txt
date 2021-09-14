@@ -1,0 +1,6 @@
+# How does the following code violalate the Airbnb JS
+# style guide?
+
+let completed = lastPageRead == 400;
+
+Use the strict equality operator off course...

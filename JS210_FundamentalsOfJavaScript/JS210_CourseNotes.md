@@ -2707,6 +2707,13 @@ console.log(global.foo); // undefined
 
 #### Functions
 
+- Use named function declarations instead of declaring functions.
+  This is good  because function declarations are hoisted while variables are not.
+  
+- When declaring functions using function expressions, always name the function expression with a clear and descriptive name because this can help in a stack trace.
+
+  The variable name that points to the function can be short.
+  
 - Spacing and positioning of curly braces around function definition/declaration
 
   ```javascript
@@ -3387,6 +3394,52 @@ The above technique follows the following recipe to create an object with **stat
 The built-in prototypes can be 'extended' or 'augmented' by changing the properties of said objects directly. This is useful when a desired feature is not yet supported by the environment or language standard.
 
 We can then simply specify the functionality as if it were part of the language, but this has a drawback, when the functionality is supported at some point, our implementation is probably slower, less robust, and the behavior and documentation probably does not match the language reference.
+
+
+
+## Strict mode
+
+### What is strict mode? What does strict mode do?
+
+Strict mode changes JavaScript in **three** significant ways:
+
+- Errors are thrown in strict mode for which no errors are thrown in sloppy mode.
+  In other word, strict mode is less silent in terms of problems that occur.
+- Disables some JS functionality to make the language engine perform better.
+- Prohibits the usage of names and syntax that may conflict with future JS versions.
+
+
+
+### What are the benefits of strict mode?
+
+When strict mode is enabled:
+
+- some bugs are prevented/mitigated
+- debugging is typically easier
+- code typically executes faster
+- conflicts with future language changes are avoided
+
+
+
+### How does strict mode differ from sloppy mode?
+
+
+
+### How to enable strict mode at global or function level?
+
+
+
+### Describe how code behaves under strict and sloppy mode?
+
+
+
+### When is strict mode enabled automatically?
+
+
+
+###  When should strict mode be used or not be used?
+
+ 
 
 
 

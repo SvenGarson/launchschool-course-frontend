@@ -1,0 +1,6 @@
+# How does the following code violalate the Airbnb JS
+# style guide?
+let title = "The Three-Body Problem";
+
+# My guess
+	- The string should use single quotes

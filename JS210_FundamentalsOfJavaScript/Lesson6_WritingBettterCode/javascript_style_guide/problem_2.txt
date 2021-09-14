@@ -1,0 +1,12 @@
+# How does the following code violalate the Airbnb JS
+# style guide?
+
+let title = 'The Three-Body Problem',
+    author = 'Cixin Liu',
+    page_count = 400;
+
+Every variable declaration should use it's own 'let' keyword
+and not a single one to declare three variables.
+
+I missed the snake_case identifier. ES variables should use
+camelCase and not snake_case.

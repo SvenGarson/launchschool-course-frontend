@@ -1,0 +1,16 @@
+# How does the following code violate the Airbnb style guide?
+if (finishedBook())
+  console.log('You have finished reading this book');
+
+
+The conditional should be on one line with the branch if not
+curly braces are used, but should always use curly braces for
+multi-line conditionals.
+
+# single-line conditional
+if (finishedBook())console.log('You have finished reading this book');
+
+# multi-line conditional
+if (finishedBook()) {
+  console.log('You have finished reading this book');}
+}
