@@ -8,3 +8,9 @@ function read(pages) {
 }
 
 read(400);
+
+
+# Violations
+	- indentation should be 2 spaces and not 5
+	- there should be a single character spacing between operators and
+	  qoperands

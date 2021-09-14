@@ -1,4 +1,4 @@
-# JS210 Notes Rewrite
+# JS210 Notes (Rewritten)
 
 ## Terminology
 
@@ -3421,25 +3421,261 @@ When strict mode is enabled:
 
 
 
-### How does strict mode differ from sloppy mode?
+### Enabling strict mode
+
+Strict mode can be enabled at global scope or individual function scope with a`pragma` either at the very beginning of the file or the very beginning of a function, not anywhere else.
+
+Once strict mode is enabled, it cannot be disabled!
+
+```javascript
+"use strict" // double quote version at the start of global scope
+
+function meep() {
+  'use strict' // single quote version in function scope
+}
+```
+
+**Note**: a `pragma` instructs the compiler; interpreter etc. to process the code in a different way
+
+Strict mode is lexically scopes i.e. strict mode is enabled where it occurs in the source code, and because we can specify strict mode in different scopes, different portions of code can run in sloppy and strict mode when the program flow  changes.
+
+***Example: Sloppy mode function invokes strict mode function***
+
+```javascript
+function foo() {
+  "use strict";
+  // All code here runs in strict mode
+}
+
+function bar() {
+  // All code here runs in sloppy mode
+  foo(); // This invocation is sloppy mode, but `foo` runs in strict mode
+  // All code here runs in sloppy mode
+}
+```
+
+***Example: Strict mode function invokes sloppy mode function***
+
+```javascript
+function foo() {
+  // All code here runs in sloppy mode
+}
+
+function bar() {
+  "use strict";
+  // All code here runs in strict mode
+  foo(); // This invocation is strict mode, but `foo` runs in sloppy mode
+  // All code here runs in strict mode
+}
+```
 
 
 
-### How to enable strict mode at global or function level?
+JavaScript always treats code within the body of a `class` in strict  mode and this cannot be configured. 
 
 
 
-### Describe how code behaves under strict and sloppy mode?
+### Implicit global variables
+
+Implicit global variables are global variables that are created when when a value is assigned to an identifier that is not defined in a particular scope. That variable is also added the global object `global` or `window` as new property.
+
+***Example: Creation of implicit global variable***
+
+```javascript
+function foo() {
+  bar = 3.1415;
+}
+
+foo();
+console.log(bar); // 3.1415
+```
 
 
 
-### When is strict mode enabled automatically?
+Strict mode disables this mechanism by setting the implicit execution context to `undefined`  instead of the `global` or `widow` object. I understand this to be a concept similar to the Ruby default object `self`, where that default object self is the receiver of messages in case not explicit receiver is specified.
+
+In other words, in strict mode, JS does not use the global object as 'default receiver' if none other is specified.
+
+***Example: Strict mode does not use the global object implicitly***
+
+```javascript
+"use strict";
+
+function foo() {
+  bar = 3.1415; // ReferenceError: bar is not defined
+}
+
+foo();
+console.log(bar);
+```
+
+***Example: Better way to declare global variables in a clearer way***
+
+```javascript
+"use strict";
+
+// intention to make this a global variable are now clear
+// and strict mode keeps us from using the global object implicitly
+let bar;
+
+function foo() {
+  bar = 3.1415;
+}
+
+foo();
+console.log(bar); // 3.1415
+```
+
+
+The same problem often occurs in the scenario when a local variable is re-assigned with the identifier spelled wrong. Instead of re-assigning the local variable, a global variable is created implicitly. Strict mode helps to catch these problems because the global variable is not used implicitly
+
+
+
+### Strict mode and numbers with a leading zero
+
+In sloppy mode, when an integer literal:
+
+- starts with a zero
+
+  **and**
+
+- does not contain the digits `8` and `9`
+
+JavaScript interprets the number as octal number.
+
+```javascript
+console.log(1234567);  // 1234567
+console.log(01234567); // 342391 (the same as octal 0o1234567)
+```
+
+
+
+In strict mode, any number that JS would otherwise interpret as octal, an error is raised for  to avoid this problem.
+
+***Example: Errors raised for integer literals that look like octals in strict mode***
+
+```javascript
+"use strict";
+
+console.log(1234567);   // 1234567
+console.log(0);         // This is okay
+console.log(0.123);     // So is this
+console.log(-0.123);    // So is this
+console.log(01234567);  // SyntaxError: Octal literals are not allowed in strict mode.
+console.log(089);       // SyntaxError: Numbers can't begin with 0
+console.log(01.23);     // SyntaxError: Numbers can't begin with 0
+console.log(-01234567); // SyntaxError: Octal literals are not allowed in strict mode.
+console.log(-089);      // SyntaxError: Numbers can't begin with 0
+console.log(-01.23);    // SyntaxError: Numbers can't begin with 0
+```
+
+
+
+**Note**: Modern implementations seem to make decimal the default mode for `parseInt`
+
+
+
+### Additional rules strict mode enforces
+
+- (*****) prevents you from using function declarations in blocks.
+- (*****) prevents declaring two properties with the same name in an object.
+- prevents declaring two function parameters with the same name.
+- prevents using some newer reserved keywords, such as `let` and `static`, as variable names.
+- prevents you from using the `delete` operator on a variable name.
+- forbids binding of `eval` and `arguments` in any way.
+- disables access to some properties of the `arguments` object in functions.
+- disables the `with` statement, a statement whose use is not recommended even in sloppy mode.
+
+(*****) These prohibitions were in effect for ES5, but both are now allowed. However, we recommend that you avoid declaring functions inside blocks and declaring multiple properties with the same name.
+
+Use  a linter to avoid these problems.
 
 
 
 ###  When should strict mode be used or not be used?
 
- 
+- Use strict mode when writing new code
+
+- When adding functions to and old codebase, we can use strict  mode inside the new functions.
+  This works because the strict mode is contained within the function and has no effect on the rest of the program
+
+- When adding code to an old codebase that is not inside new functions, we should probably not use strict mode because the changes in semantics; variable declarations; how `this` operates and previously silent failures now raise errors/exceptions.
+
+  In other words, it may break the assumptions of the environment the code was designed to operate in. 
+
+
+
+## Modern JavaScript - Syntactic sugar
+
+ES6 introduced many shorthand notations to work with objects and arrays. While not mandatory, these are very useful and see widespread use in modern JS code.
+
+
+
+### Concise property initializers - [MDN Object initializer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer)
+
+When we want to initialize object property values using variables when the variables have the same identifier as the property name we can use
+
+```javascript
+function xyzzy(foo, bar, qux) {
+  return {
+    foo,
+    bar,
+    qux,
+  };
+}
+```
+
+Instead of the more tedious, but totally valid
+
+```javascript
+function xyzzy(foo, bar, qux) {
+  return {
+    foo: foo,
+    bar: bar,
+    qux: qux,
+  };
+}
+```
+
+These two notations can even bee mixed
+
+```javascript
+function xyzzy(foo, bar, qux) {
+  return {
+    foo,
+    bar,
+    answer: qux,
+  };
+}
+```
+
+
+
+### Concise methods - [MDN Concise methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer)
+
+When declaring a function as a property of an object, we can specify the function to be a property as usual
+
+```javascript
+// adding a property named 'foo' with a function as value
+let obj = {
+  foo: function() {
+    // do something
+  },
+}
+```
+
+but the shorthand notation lets us skip the property name. The function name is then taken as the property name and the function is then taken as the value for that property
+
+``` javascript
+// adding a property with the name of the function using concise method notation
+let obj = {
+  foo() {
+    // do something
+  },
+}
+```
+
+
 
 
 
@@ -3554,4 +3790,6 @@ When strict mode is enabled:
   If `for/of` can properly determine the order of array elements by iterating the key from lowest to highest index, why can `for/in` not do that?
   
 - Since objects are passed by reference, even when they are returned by a function, does the language keep track of what the program references and so return the pointer + does the usual garbage collection thing and deallocate memory if there is no reference to the thing anymore, or does it work differently?
+
+- What is the `execution context`?
 
