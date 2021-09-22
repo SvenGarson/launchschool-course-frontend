@@ -3677,6 +3677,8 @@ let obj = {
 
 
 
+### Object desctructuring
+
 
 
 ## Documentation
