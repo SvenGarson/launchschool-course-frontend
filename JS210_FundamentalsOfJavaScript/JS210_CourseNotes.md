@@ -2473,7 +2473,11 @@ The problem is that these errors can be ignored and are not necessarily handled 
 
 Exceptions close this gap, in that exceptions are not silent and must be dealt with one way or another based on the [error type](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) raised.
 
-***Example: Catching an exception***
+
+
+### Catching an exception/error
+
+***Example: Catching an exception/error***
 
 ```javascript
 try {
@@ -2485,6 +2489,10 @@ try {
 }
 ```
 
+
+
+### Raising/throwing exceptions/errors
+
 ***Example: Throwing and exception***
 
 ```javascript
@@ -2495,23 +2503,50 @@ throw new TypeError('Some error message');
 
 
 
-### `Syntax Error`
+### Some types of JavaScript errors
 
-The `SyntaxError` is a type of exception that generally occurs before the program is executed when the JavaScript engine finds a problem with the syntax of the source code, in other words, this error is **not necessarily** based on runtime conditions but can be thrown based on the static source code or during the execution phase.
+- **`ReferenceError`**  -  When the program attempts to access a variable or function that does not exist
 
+- **`TypeError`**  -  When the program attempts to access a property on a value that does not have properties such as for example `null` and when the program attempts to invoke something that is not a function:
 
-***Example: Runtime throwing a `SyntaxError`***
+  ```javascript
+  var a;      // a is declared but is empty, as it has not been set to a value.
+  typeof(a);  // "undefined"
+  
+  a.name;     // TypeError: Cannot read property 'name' of undefined
+  
+  a = 1;
+  a();        // TypeError: Property 'a' is not a function
+  ```
 
-```javascript
-try {
-  JSON.parse('Now a real json :(');
-} catch(exception) {
-  console.log(`Error thrown ==> ${exception}`);
-} finally {
-  console.log('I am always there');
-}
+  
 
-```
+- **`SyntaxError`**
+
+  This type of error can occur in different contexts such as during:
+
+  - `creation phase`
+
+    When the JavaScript engine finds a problem with the syntax of the source code.
+
+    ```javascript
+    function ( {}                   // SyntaxError: Unexpected token (
+    ```
+
+  - `execution phase` i.e. during runtime
+
+    ```javascript
+    try {
+      JSON.parse('Now a real json :(');
+    } catch(exception) {
+      console.log(`Error thrown ==> ${exception}`);
+    } finally {
+      console.log('I am always there');
+    }
+    
+    ```
+
+    
 
 
 
@@ -2559,7 +2594,13 @@ There are typically two contexts in which we want to get input and both have dif
    - if the user pushes the `OK` button, `prompt` returns the entered value as a String, which can be empty
    - if the user pushed the `Cancel` button, `prompt` returns `null` whatever the input was
 
+var a;      // a is declared but is empty, as it has not been set to a value.
+typeof(a);  // "undefined"
 
+a.name;     // TypeError: Cannot read property 'name' of undefined
+
+a = 1;
+a();        // TypeError: Property 'a' is not a function
 
 ## The Call Stack
 
@@ -3922,7 +3963,8 @@ The typical use case is to use rest syntax as a ways to group an arbitrary numbe
 
 ```javascript
 function restParameters(first, ...moreArgs) {
-  // first = 
+  // first = 2
+  // moreArgs = [6, 10, 4, -3]
 }
 
 maxItem(2, 6, 10, 4, -3);
