@@ -133,6 +133,10 @@ Most modern browsers support ES6+ features well but older browsers do not, so wh
 
 - Switch statements have a fall-through hazard. The switch value can be an expression i.e. does not need to be a constants. This expression can then evaluate to anything? It does not have to evaluate to a string or an integer and the cases will be compared using the strict-equality operator.
 
+- An object prototype is not enumerable
+
+- An array length property is not enumerable
+
 
 
 ## Data types
@@ -3677,7 +3681,254 @@ let obj = {
 
 
 
-### Object desctructuring
+### Object destructuring
+
+Destructuring is a shorthand syntax to perform multiple assignment in a single expression and it has different uses:.
+
+##### Creating variables from objects
+
+We can declare variables from object by specifying the object property names to be pulled from the object.
+
+```javascript
+// the object to pull the data from
+let obj = {
+  foo: "foo",
+  bar: "bar",
+  qux: 42,
+};
+
+// long and tedious version
+let foo = obj.foo;
+let bar = obj.bar;
+let qux = obj.qux;
+
+// the same thing as the 3 previous lines but shorter using destructuring syntax
+let { foo, bar, qux } = obj;
+
+// the order of property names does not matter
+let { qux, foo, bar } = obj;
+
+// we can use only a sub-set of the properties needed
+let { qux, bar } = obj;
+```
+
+
+Additionally, we can specify the variable identifier using the following notation:
+
+```javascript
+// let { actualPropertyName: actualIdentifer } = obj;
+
+// declare a variable with identifier 'someThing' that points to 'obj.qux' property value
+let { qux: someThing, foo } = obj;
+```
+
+
+
+##### Using destructuring in parameter lists
+
+Destructuring can be used to pull out properties in parameter list when an object is passed as actual argument:
+
+```javascript
+function xyzzy({ foo, bar, qux }) {
+  console.log(qux); // 3
+  console.log(bar); // 2
+  console.log(foo); // 1
+}
+
+let obj = {
+  foo: 1,
+  bar: 2,
+  qux: 3,
+};
+
+xyzzy(obj);xxxxxxxxxx function xyzzy({ foo, bar, qux }) {  console.log(qux); // 3  console.log(bar); // 2  console.log(foo); // 1}let obj = {  foo: 1,  bar: 2,  qux: 3,};xyzzy(obj);
+```
+
+
+
+##### Using destructuring for assignment
+
+For assignment/re-assignment the lexical context matters. If destructuring is used for assignment without declaring variables, the whole statement must be wrapped inside parentheses:
+
+```javascript
+// throws a syntax error: the curly braces are interpreted as object literal notation
+{ foo, bar, qux } = obj;
+
+// wrapping this inside parentheses fixes that problem
+({ foo, bar, qux } = obj);
+```
+
+
+
+### Array destructuring
+
+The syntax is similar but the destructuring syntax binds the values of the array elements to the identifiers starting at the first array element i.e. elements with property names = `0`; `1` etc.
+
+```javascript
+// the array to pull data out of
+let foo = [1, 2, 3];
+
+// the long and tedious version
+let first = foo[0];
+let second = foo[1];
+let third = foo[2];
+
+// using array destructuring
+// 'first' is bound to the value of foo[0]
+// 'second' is bound to the value of foo[1]
+// etc
+let [first, second, third] = foo;
+```
+
+
+We can skip array elements explicitly, but the syntax still pulls the values from the array from start to end
+
+```javascript
+let bar = [1, 2, 3, 4, 5, 6, 7];
+let [ first, /*second*/,/*third*/ , fourth, fifth, , seventh ] = bar;
+```
+
+
+
+##### Swapping two values
+
+```javascript
+let one = 1;
+let two = 2;
+
+[ one, two ] =  [two, one];
+
+console.log(one);   // 2
+console.log(two);   // 1
+```
+
+
+
+### Spread syntax
+
+The spread and rest syntax look identical through the `...` but they are interpreted differently based on context.
+
+The spread syntax uses `...` to spread the elements of an array into separate items as if they were typed out in the source code
+
+```javascript
+// some function that specifies three single parameters
+function add3(item1, item2, item3) {
+  return item1 + item2 + item3;
+}
+
+// the array to be passed to the 'add3' function but cannot be passed as array
+let foo = [3, 7, 11];
+
+// we can pass every array item manually using index/object notation - this is tedious
+add3(foo[0], foo[1], foo[2]); // => 21
+
+// we can spread the array into separate items and implicitly pass every array element
+// one-by-one
+add3(...foo)
+```
+
+
+
+##### Common use cases for spread syntax
+
+- **Cloning arrays**
+
+  ```javascript
+  let foo = [1, 2, 3];
+  let bar = [...foo];
+  console.log(bar);         // [1, 2, 3]
+  console.log(foo === bar); // false -- bar is a new array
+  ```
+
+- **Concatenating arrays**
+
+  ```javascript
+  let foo = [1, 2, 3];
+  let bar = [4, 5, 6];
+  let qux = [...foo, ...bar];
+  qux;  // => [1, 2, 3, 4, 5, 6]
+  ```
+
+- **Inserting arrays into other arrays**
+
+  ```javascript
+  let foo = [1, 2, 3]
+  let bar = [...foo, 4, 5, 6, ...foo];
+  bar; // => [1, 2, 3, 4, 5, 6, 1, 2, 3]
+  ```
+
+  
+
+### Spread syntax on object
+
+Object using spread syntax are similar to array using spread syntax:
+
+- **Cloning objects**
+
+  ```javascript
+  let foo = { qux: 1, baz: 2 };
+  let bar = { ...foo };
+  console.log(bar);         // { qux: 1, baz: 2 }
+  console.log(foo === bar); // false -- bar is a new object
+  ```
+
+- **Merging object**
+
+  ```javascript
+  let foo = { qux: 1, baz: 2 };
+  let xyz = { baz: 3, sup: 4 };
+  let obj = { ...foo, ...xyz };
+  obj;  // => { qux: 1, baz: 3, sup: 4 }
+  ```
+
+
+**But there is an important difference for spread syntax on objects:**
+
+- The spread syntax with objects returns the properties that `Object.keys` returns.
+
+  This means only the **own** enumerable properties of an object, which excludes the properties of the parent object a child object inherits from.
+
+- This has the consequence of 'loosing' the prototype for a particular object
+
+
+
+### Rest syntax
+
+The rest syntax can be though of the opposite of the spread syntax where multiple single items are collected into an array.
+
+```javascript
+let foo = [1, 2, 3, 4];
+let [ bar, ...otherStuff ] = foo; // uses rest syntax inside destructuring syntax
+console.log(bar);        // 1
+console.log(otherStuff); // [2, 3, 4]
+```
+
+
+The same can be achieved with objects:
+
+```javascript
+let foo = {bar: 1, qux: 2, baz: 3, xyz: 4};
+let { bar, baz, ...otherStuff } = foo; // rest syntax inside destructuring syntax
+console.log(bar);        // 1
+console.log(baz);        // 3
+console.log(otherStuff); // {qux: 2, xyz: 4}
+```
+
+**Note**: The rest element must always be the last item in any expression that uses it and there may only ever 
+            be a single rest element.
+
+
+The typical use case is to use rest syntax as a ways to group an arbitrary number of arguments during a function call into an array
+
+```javascript
+function restParameters(first, ...moreArgs) {
+  // first = 
+}
+
+maxItem(2, 6, 10, 4, -3);
+```
+
+
 
 
 
