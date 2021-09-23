@@ -52,23 +52,21 @@ Most modern browsers support ES6+ features well but older browsers do not, so wh
 
 - Dynamically typed language which means that a variable can point to any data type
 
-- When a function is invoked and the same function identifier was used before, the most recent function is invoked.
-
 - A rule about hoisting. When a scope contains declaration for multiple functions with the **same name**, these functions are apparently hoisted in the order from top to bottom, and in the end, the last i.e. the declaration at the bottom is the one invoked **where ever** that function is invoked.
 
-  ```javascript
-  function some() { console.log('first'); };
-  some(); // third
-  function some() { console.log('second'); };
-  some(); // third
-  function some() { console.log('third'); };
-  some(); // third
-  
-  // because after hoisting
-  function some() { console.log('first'); };
-  function some() { console.log('second'); };
-  function some() { console.log('third'); }; // this is the last declaration
-  ```
+    ```javascript
+    function some() { console.log('first'); };
+    some(); // third
+    function some() { console.log('second'); };
+    some(); // third
+    function some() { console.log('third'); };
+    some(); // third
+    
+    // because after hoisting
+    function some() { console.log('first'); };
+    function some() { console.log('second'); };
+    function some() { console.log('third'); }; // this is the last declaration
+    ```
 
 - The JS `%` is **not** the module operator but the remainer
 
@@ -2548,6 +2546,13 @@ throw new TypeError('Some error message');
 
     
 
+### When to use try/catch statements
+
+In general, use try/catch statements when the following conditions are given:
+
+1. The functionality used in the `try` block can actually raise an Error
+2. A guard clause is impossible or impractical to avoid the error
+
 
 
 ## **Input** and Output
@@ -3971,6 +3976,20 @@ maxItem(2, 6, 10, 4, -3);
 ```
 
 
+
+### Finishing the JS210 course
+
+- Make active learning flashcards for the whole thing in two contexts:
+  - my notes as they are
+  - the study guide for JS210
+- Finish exercises
+  - Go through lessons learned from the previous, finished exercises
+  - all JavaScript language fundamentals
+  - JS210 - Small problems Easy 1 to Easy 5 + optionally do all of them for exam prep
+- Do the exam and focus on
+  - precision of language
+  - distinctions to be made and how to use certain terminology in the exam
+  - each question tests on multiple levels of understanding, read the study guide again before the exam
 
 
 
