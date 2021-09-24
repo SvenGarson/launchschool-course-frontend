@@ -302,7 +302,7 @@ true / false            // Infinity
 'Meep' * 255            // 'Meep' cannot be converted to a Number so becomes NaN
 ```
 
-
+ 
 
 ### Equality operators
 
